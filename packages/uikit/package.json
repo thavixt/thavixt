@@ -1,7 +1,7 @@
 {
   "name": "@thavixt/uikit",
   "description": "React UI component library",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
   "publishConfig": {
     "access": "public",
@@ -49,7 +49,5 @@
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.8",
     "thavixt-scrollbar-react": "^1.6.1"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  }
 }
