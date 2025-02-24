@@ -10,9 +10,8 @@
     "lerna:publish": "npx lerna publish --no-private --force-publish",
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
     "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
-    "storybook:build": "npm run storybook:clear && storybook build",
-    "storybook:deploy": "npm run storybook:build && vercel --force --prod storybook-static",
-    "publish-deploy": "npm run lerna:build && npm run lerna:publish && npm run storybook:build && npm run storybook:deploy"
+    "storybook:deploy": "npm run storybook:clear && storybook build && vercel --force --prod storybook-static",
+    "publish-deploy": "npm run lerna:build && npm run lerna:publish && npm run storybook:deploy"
   },
   "dependencies": {
     "classnames": "^2.5.1",
