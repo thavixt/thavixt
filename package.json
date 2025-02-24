@@ -5,13 +5,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "storybook build",
-    "deploy-preview": "vercel --force storybook-static",
-    "deploy-prod": "vercel --force --prod storybook-static",
+    "storybook-build": "storybook build",
+    "storybook-deploy": "vercel --force --prod storybook-static",
     "dev": "storybook dev -p 6006",
-    "lerna:build": "npm run build",
-    "lerna:publish": "npx lerna publish --no-private --force-publish",
-    "lint": "eslint ."
+    "lerna:build": "npx lerna run build --scope=@thavixt/uikit",
+    "lerna:publish": "npx lerna publish --no-private --force-publish"
   },
   "dependencies": {
     "classnames": "^2.5.1",
