@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "lerna:build": "npx lerna run build --scope=@thavixt/uikit",
-    "lerna:publish": "npx lerna publish --scope=@thavixt/uikit --no-private",
+    "lerna:publish": "npx lerna publish --no-private --force-publish",
     "storybook:deploy": "storybook build && vercel --force --prod storybook-static",
     "storybook:dev": "storybook dev -p 6006"
   },
