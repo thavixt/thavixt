@@ -1,5 +1,6 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, RefObject } from "react";
 
-export interface CommonProps extends PropsWithChildren {
+export type CommonProps<T = HTMLDivElement> = PropsWithChildren<{
   className?: string;
-}
+  ref?: RefObject<T | null>;
+}>;

@@ -4,14 +4,14 @@ import { fn } from '@storybook/test';
 
 function StoryChildren() {
   return (
-    <div className='h-[200px]'>
+    <div className='h-[300px]'>
       {new Array(20).fill('Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, possimus officiis aut laudantium accusantium sint nam. Corporis nulla tempora id unde maiores dolorum, quae tempore? Nemo officiis aliquid dicta tempora.').join(' ')}
     </div>
   )
 }
 
 const meta = {
-  title: 'Scrollbar',
+  title: 'Wrapper/Scrollbar',
   component: Scrollbar,
   tags: ['autodocs'],
   args: {

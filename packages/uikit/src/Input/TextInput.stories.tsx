@@ -7,7 +7,7 @@ const meta = {
   component: TextInput,
   tags: ['autodocs'],
   args: {
-    defaultValue: 12345,
+    defaultValue: 'some input string',
     onChange: fn(),
     type: 'input',
   }

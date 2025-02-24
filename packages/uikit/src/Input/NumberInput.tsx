@@ -14,8 +14,8 @@ export interface NumberInputProps extends Omit<CommonProps, 'children'> {
 
 export function NumberInput({ name, label, min = 0, max = 999_999, onChange: providedOnChange, ...props }: NumberInputProps) {
   const classes = classNames(
-    'text-black border rounded-md border-slate-600',
-    'text-center w-32',
+    'text-black border rounded-sm border-slate-600',
+    'bg-slate-200 text-center w-32',
     props.className,
   );
 
