@@ -6,7 +6,7 @@ import { Button } from '../Button/Button';
 import { TextInput } from '../Input/TextInput';
 
 const meta = {
-  title: 'Wrapper/Form dialog',
+  title: 'Form dialog',
   component: FormDialog,
   parameters: {
     docs: {

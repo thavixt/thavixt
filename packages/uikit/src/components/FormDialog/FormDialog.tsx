@@ -63,6 +63,8 @@ export function FormDialog(props: DialogProps) {
 
   const classes = classNames(
     "m-auto p-6 rounded-lg border-2 border-slate-500 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-md w-fit max-w-[900px]",
+    'bg-slate-100 text-slate-800',
+    'dark:bg-slate-700 dark:text-slate-100',
     props.className,
   );
 

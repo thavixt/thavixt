@@ -7,8 +7,10 @@
   "scripts": {
     "lerna:build": "npx lerna run build --scope=@thavixt/uikit",
     "lerna:publish": "npx lerna publish --no-private --force-publish",
-    "storybook:deploy": "storybook build && vercel --force --prod storybook-static",
-    "storybook:dev": "storybook dev -p 6006"
+    "storybook:clear": "rm -rf node_modules/.cache/storybook",
+    "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
+    "storybook:build": "npm run storybook:clear && storybook build",
+    "storybook:deploy": "npm run storybook:build && vercel --force --prod storybook-static"
   },
   "dependencies": {
     "classnames": "^2.5.1",
@@ -23,6 +25,7 @@
     "@storybook/addon-docs": "^8.5.8",
     "@storybook/addon-essentials": "^8.5.8",
     "@storybook/addon-interactions": "^8.5.8",
+    "@storybook/addon-themes": "^8.5.8",
     "@storybook/blocks": "^8.5.8",
     "@storybook/react": "^8.5.8",
     "@storybook/react-vite": "^8.5.8",

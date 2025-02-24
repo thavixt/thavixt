@@ -4,14 +4,14 @@ import { fn } from '@storybook/test';
 
 function StoryChildren() {
   return (
-    <div className='h-[300px]'>
+    <div className='h-[300px] dark:text-slate-100'>
       {new Array(20).fill('Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, possimus officiis aut laudantium accusantium sint nam. Corporis nulla tempora id unde maiores dolorum, quae tempore? Nemo officiis aliquid dicta tempora.').join(' ')}
     </div>
   )
 }
 
 const meta = {
-  title: 'Wrapper/Scrollbar',
+  title: 'Scrollbar',
   component: Scrollbar,
   tags: ['autodocs'],
 } satisfies Meta<typeof Scrollbar>;
@@ -36,9 +36,9 @@ export const Custom: Story = {
       width: 16,
       borderRadius: 0,
       thumbColor: '#4f4',
-      thumbColorDark: '#4f4',
+      thumbColorDark: 'red',
       trackColor: '#ccd',
-      trackColorDark: '#ccd',
+      trackColorDark: 'blue',
     }
   }
 };

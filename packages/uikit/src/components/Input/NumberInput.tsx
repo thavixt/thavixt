@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
+import { themedClasses } from "../../common/theme";
 
 export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'children'> {
   value?: number;
@@ -16,8 +17,9 @@ export function NumberInput({
   name, label, min = 0, max = 999_999, onChange: providedOnChange, ...props
 }: NumberInputProps) {
   const classes = classNames(
-    'text-black border rounded-sm border-slate-600',
-    'bg-slate-100 text-center w-32',
+    'border rounded-sm',
+    'text-center w-32',
+    themedClasses,
     props.className,
   );
 

@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root,
+.docs-story {
+  @apply dark:bg-slate-700;
+}

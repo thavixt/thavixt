@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
+import { themedClasses } from "../../common/theme";
 
 export interface SelectProps<T extends Record<string, string>>
   extends Omit<CommonProps<HTMLSelectElement>, 'children'> {
@@ -27,8 +28,9 @@ export function Select<T extends Record<string, string>>({
   ...props
 }: SelectProps<T>) {
   const classes = classNames(
-    'text-black border rounded-sm border-slate-600',
-    'bg-slate-100 text-center w-fit text-left',
+    'w-fit text-left',
+    'border rounded-sm',
+    themedClasses,
     props.className,
   );
 

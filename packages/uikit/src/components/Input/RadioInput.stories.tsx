@@ -3,7 +3,7 @@ import { RadioInput } from './RadioInput';
 import { fn } from '@storybook/test';
 
 const meta = {
-  title: 'Input/RadioInput',
+  title: 'Input/Radio',
   component: RadioInput,
   tags: ['autodocs'],
 } satisfies Meta<typeof RadioInput>;
