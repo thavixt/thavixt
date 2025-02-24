@@ -4,20 +4,22 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": ["packages/uikit"],
   "scripts": {
     "lerna:build": "npx lerna run build --scope=@thavixt/uikit",
     "lerna:publish": "npx lerna publish --no-private --force-publish",
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
     "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
     "storybook:build": "npm run storybook:clear && storybook build",
-    "storybook:deploy": "npm run storybook:build && vercel --force --prod storybook-static"
+    "storybook:deploy": "npm run storybook:build && vercel --force --prod storybook-static",
+    "publish-deploy": "npm run lerna:build && npm run lerna:publish && npm run storybook:build && npm run storybook:deploy"
   },
   "dependencies": {
     "classnames": "^2.5.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.8",
-    "thavixt-scrollbar-react": "^1.6.1"
+    "thavixt-scrollbar-react": "1.6.4"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.4",

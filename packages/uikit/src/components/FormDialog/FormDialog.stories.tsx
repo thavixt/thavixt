@@ -59,7 +59,7 @@ export const ErrorOnSubmit: Story = {
     defaultOpen: false,
     onCancel: fn(),
     onSubmit: fn(() => {
-      throw new Error('whoooops');
+      throw new Error('uhmmm, are you really called that?');
     }),
     submitBtn: undefined,
     title: 'Dialog example title',

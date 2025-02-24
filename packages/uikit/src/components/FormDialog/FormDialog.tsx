@@ -62,7 +62,7 @@ export function FormDialog(props: DialogProps) {
   };
 
   const classes = classNames(
-    "m-auto p-6 rounded-lg border-2 border-slate-500 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-md w-fit max-w-[900px]",
+    "m-auto min-w-[400px] p-6 rounded-lg border-2 border-slate-500 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-md w-fit max-w-[900px]",
     'bg-slate-100 text-slate-800',
     'dark:bg-slate-700 dark:text-slate-100',
     props.className,
@@ -84,13 +84,15 @@ export function FormDialog(props: DialogProps) {
           </div>
           {error ? (
             <>
-              <hr />
-              <p className="text-red-700">{error}</p>
+              <hr className="text-slate-400" />
+              <p className="dark:text-red-400 text-red-700">{error}</p>
             </>
           ) : null}
-          <div className="flex space-x-2 justify-end">
-            <Button variant="danger" onClick={() => onCancel()} className="inverse">{cancel ?? 'Cancel'}</Button>
-            <Button variant="secondary" type="reset">{reset ?? 'Reset'}</Button>
+          <div className="flex space-x-2 justify-between">
+            <div className="flex space-x-2">
+              <Button variant="danger" onClick={() => onCancel()}>{cancel ?? 'Cancel'}</Button>
+              <Button variant="secondary" type="reset">{reset ?? 'Reset'}</Button>
+            </div>
             <Button type="submit">{submit ?? 'Submit'}</Button>
           </div>
         </div>

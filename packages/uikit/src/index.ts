@@ -1,4 +1,5 @@
 export * from './components/Button/Button'
+export * from './components/ClickTarget/ClickTarget'
 export * from './components/FormDialog/FormDialog'
 export * from './components/Input/NumberInput'
 export * from './components/Input/RadioInput'

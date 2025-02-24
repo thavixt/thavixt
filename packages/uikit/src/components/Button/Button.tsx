@@ -9,16 +9,6 @@ export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonEle
 }
 
 export function Button({ ref, onClick, type = 'button', className, children, variant = 'primary' }: ButtonProps) {
-  const variantClasses: string[] = [];
-
-  if (variant === 'primary') {
-    variantClasses.push('');
-  }
-
-  if (variant === 'secondary') {
-    variantClasses.push('');
-  }
-
   return (
     <button
       ref={ref}
