@@ -26,3 +26,5 @@ dist-ssr
 # storybook
 *storybook.log
 storybook-static
+
+.vercel
