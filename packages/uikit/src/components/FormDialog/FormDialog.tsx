@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { Button } from "../Button/Button";
-import { CommonProps } from "../common/commonProps";
+import { CommonProps } from "../../common/commonProps";
 
 interface DialogProps extends PropsWithChildren<CommonProps<HTMLDialogElement>> {
   defaultOpen?: boolean,

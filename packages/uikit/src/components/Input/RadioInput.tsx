@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { CommonProps } from "../common/commonProps";
+import { CommonProps } from "../../common/commonProps";
 
 export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 'children'> {
   value?: string;

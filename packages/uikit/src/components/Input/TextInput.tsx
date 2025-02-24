@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { CommonProps } from "../common/commonProps";
-import { WithLabel } from "../common/WithLabel";
+import { CommonProps } from "../../common/commonProps";
+import { WithLabel } from "../../common/WithLabel";
 import { RefObject } from "react";
 
 export interface TextInputProps extends CommonProps<HTMLInputElement | HTMLTextAreaElement> {

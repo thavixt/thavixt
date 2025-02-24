@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { CommonProps } from "../common/commonProps";
-import { WithLabel } from "../common/WithLabel";
+import { CommonProps } from "../../common/commonProps";
+import { WithLabel } from "../../common/WithLabel";
 
 export interface SelectProps<T extends Record<string, string>>
   extends Omit<CommonProps<HTMLSelectElement>, 'children'> {

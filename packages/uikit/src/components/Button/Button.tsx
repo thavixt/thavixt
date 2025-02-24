@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { CommonProps } from "../common/commonProps";
 import { PropsWithChildren } from "react";
+import { CommonProps } from "../../common/commonProps";
 
 export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>> {
   onClick?: () => void;
