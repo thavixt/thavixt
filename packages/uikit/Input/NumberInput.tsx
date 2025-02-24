@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { CommonProps } from "../common";
+import { CommonProps } from "../common/commonProps";
 import { WithLabel } from "../common/WithLabel";
 
 export interface NumberInputProps extends Omit<CommonProps, 'children'> {

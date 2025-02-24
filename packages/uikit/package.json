@@ -1,0 +1,55 @@
+{
+  "name": "@thavixt/uikit",
+  "description": "React UI component library",
+  "version": "0.0.0",
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Péter Komlósi",
+    "email": "komlosi.peti@gmail.com",
+    "url": "https://github.com/thavixt"
+  },
+  "keywords": [
+    "uikit",
+    "ui-kit",
+    "component",
+    "components",
+    "component-library",
+    "library",
+    "react",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thavixt/uikit.git",
+    "directory": "packages/uikit"
+  },
+  "bugs": {
+    "url": "https://github.com/thavixt/uikit/issues"
+  },
+  "homepage": "https://github.com/thavixt/uikit#readme",
+  "main": "./dist/index.js",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "dev": "tsc --watch --project tsconfig.build.json",
+    "prebuild": "vitest --run . && eslint .",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "classnames": "^2.5.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.8",
+    "thavixt-scrollbar-react": "^1.6.1"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { CommonProps } from "../common";
+import { CommonProps } from "../common/commonProps";
 
 export interface ButtonProps extends CommonProps {
   onClick?: () => void;
