@@ -2,7 +2,7 @@ import { PropsWithChildren, useImperativeHandle } from "react";
 import { ScrollbarStyles, ScrollDirection, useScrollbar } from 'thavixt-scrollbar-react';
 import { CommonProps } from "../common/commonProps";
 
-interface ScrollbarProps extends PropsWithChildren, CommonProps<HTMLDivElement> {
+interface ScrollbarProps extends PropsWithChildren<CommonProps<HTMLDivElement>> {
   styles?: ScrollbarStyles;
   onScroll?: () => void;
   onScrollToEnd?: (direction: ScrollDirection[]) => void;

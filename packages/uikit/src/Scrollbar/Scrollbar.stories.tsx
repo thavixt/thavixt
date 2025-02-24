@@ -14,21 +14,23 @@ const meta = {
   title: 'Wrapper/Scrollbar',
   component: Scrollbar,
   tags: ['autodocs'],
-  args: {
-    children: StoryChildren(),
-    onScroll: fn(),
-    onScrollToEnd: fn(),
-  }
 } satisfies Meta<typeof Scrollbar>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    children: StoryChildren(),
+    onScroll: fn(),
+    onScrollToEnd: fn(),
+  }
+};
 
 export const Custom: Story = {
   args: {
+    children: StoryChildren(),
     styles: {
       height: 16,
       width: 16,

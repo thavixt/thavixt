@@ -16,16 +16,6 @@ const meta = {
     },
   },
   tags: ['autodocs'],
-  args: {
-    cancelBtn: undefined,
-    children: undefined,
-    className: 'border-red-500 text-sm',
-    defaultOpen: false,
-    onCancel: fn(),
-    onSubmit: fn(),
-    submitBtn: undefined,
-    title: 'Dialog example title',
-  },
   render: function StoryComponent(args: ComponentProps<typeof FormDialog>) {
     const ref = useRef<HTMLDialogElement>(null);
     const onClick = () => ref.current?.showModal();
@@ -48,12 +38,30 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    cancelBtn: undefined,
+    children: undefined,
+    className: 'border-red-500 text-sm',
+    defaultOpen: false,
+    onCancel: fn(),
+    onSubmit: fn(),
+    submitBtn: undefined,
+    title: 'Dialog example title',
+  },
+};
 
 export const ErrorOnSubmit: Story = {
   args: {
+    cancelBtn: undefined,
+    children: undefined,
+    className: 'border-red-500 text-sm',
+    defaultOpen: false,
+    onCancel: fn(),
     onSubmit: fn(() => {
       throw new Error('whoooops');
     }),
-  }
+    submitBtn: undefined,
+    title: 'Dialog example title',
+  },
 };

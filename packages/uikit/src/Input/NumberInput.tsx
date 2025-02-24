@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { CommonProps } from "../common/commonProps";
 import { WithLabel } from "../common/WithLabel";
 
-export interface NumberInputProps extends Omit<CommonProps, 'children'> {
+export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'children'> {
   value?: number;
   defaultValue?: number;
   name?: string;
@@ -12,10 +12,12 @@ export interface NumberInputProps extends Omit<CommonProps, 'children'> {
   onChange?: (value: number) => void;
 }
 
-export function NumberInput({ name, label, min = 0, max = 999_999, onChange: providedOnChange, ...props }: NumberInputProps) {
+export function NumberInput({
+  name, label, min = 0, max = 999_999, onChange: providedOnChange, ...props
+}: NumberInputProps) {
   const classes = classNames(
     'text-black border rounded-sm border-slate-600',
-    'bg-slate-200 text-center w-32',
+    'bg-slate-100 text-center w-32',
     props.className,
   );
 
@@ -29,6 +31,7 @@ export function NumberInput({ name, label, min = 0, max = 999_999, onChange: pro
       <input
         className={classes}
         name={name}
+        id={`${props.value}-numberinput`}
         type="number"
         min={min}
         max={max}

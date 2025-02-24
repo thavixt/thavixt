@@ -16,7 +16,7 @@ export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 
 export function RadioInput(props: RadioInputProps) {
   const classes = classNames(
     'border rounded-sm border-slate-500',
-    'px-2 pb-1',
+    'bg-slate-100 px-2 pb-1',
     props.className,
   );
 
@@ -57,7 +57,7 @@ function Radio(props: RadioProps) {
     <div className={classes}>
       <input
         type="radio"
-        id={props.value}
+        id={`${props.value}-radio`}
         name={props.name}
         value={props.value}
         checked={props.checked}
