@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "files": ["packages/uikit/index.ts"]
+  "files": ["packages/uikit/src/index.ts"]
 }

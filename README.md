@@ -2,6 +2,6 @@
 
 React component library
 
-Install: `@todo`
+Install: `npm i @thavixt/uikit`
 
-Storybook: @todo
+[Storybook](https://thavixt-uikit.komlosidev.net/)
