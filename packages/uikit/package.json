@@ -38,9 +38,9 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
-    "dev": "tsc --watch --project tsconfig.build.json",
-    "prebuild": "vitest --run . && eslint .",
+    "build": "tsc --project ./tsconfig.build.json",
+    "dev": "tsc --watch --project ./tsconfig.build.json",
+    "prebuild": "rm -rf ./dist",
     "prepack": "npm run build"
   },
   "peerDependencies": {

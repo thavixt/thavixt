@@ -9,6 +9,8 @@
     "deploy-preview": "vercel --force storybook-static",
     "deploy-prod": "vercel --force --prod storybook-static",
     "dev": "storybook dev -p 6006",
+    "lerna:build": "npm run build",
+    "lerna:publish": "npx lerna publish --no-private --force-publish",
     "lint": "eslint ."
   },
   "dependencies": {
