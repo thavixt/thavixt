@@ -10,7 +10,7 @@ const meta = {
     children: 'Hover here',
     tooltip: 'Tooltip',
     position: 'bottom',
-    visible: true,
+    visible: false,
   },
   render: function StoryComponent(args: ComponentProps<typeof Tooltip>) {
     return (
@@ -37,18 +37,18 @@ export const AlwaysVisible: Story = {
 export const AllOrientations: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Tooltip>) {
     return (
-      <div className='m-16 grid grid-cols-2 gap-8 max-w-[300px]'>
+      <div className='m-16 grid grid-cols-2 gap-8 max-w-[400px]'>
         <Tooltip {...args} position='top'>
-          {args.children}
+          {args.children} (top)
         </Tooltip>
         <Tooltip {...args} position='right'>
-          {args.children}
+          {args.children} (right)
         </Tooltip>
         <Tooltip {...args} position='left'>
-          {args.children}
+          {args.children} (left)
         </Tooltip>
         <Tooltip {...args} position='bottom'>
-          {args.children}
+          {args.children} (bottom)
         </Tooltip>
       </div>
     )
