@@ -2,8 +2,7 @@ import { createElement } from "react";
 import { SpinnerList, SpinnerType } from "./SpinnerList";
 import classNames from "classnames";
 
-
-interface SpinnerProps {
+export interface SpinnerProps {
   icon?: SpinnerType;
   /**
    * `x * 4` (tailwind scale)
