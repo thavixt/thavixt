@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { ComponentProps, useRef } from 'react';
 import { FormDialog } from './FormDialog';
-import { Button } from '../Button/Button';
-import { TextInput } from '../Input/TextInput';
+import { TextInput } from './TextInput';
+import { Button } from '../Basic/Button';
 
 const meta = {
-  title: 'Form dialog',
+  title: 'Input/Form dialog',
   component: FormDialog,
   parameters: {
     docs: {
@@ -27,7 +27,7 @@ const meta = {
         </Button>
         <FormDialog {...args} ref={ref}>
         {/* <FormDialog {...args}> */}
-          <TextInput defaultValue="Your name" name='name'/>
+          <TextInput defaultValue="Your name" name='name' label="Name"/>
         </FormDialog>
       </>
     )
@@ -44,7 +44,6 @@ export const Default: Story = {
     children: undefined,
     className: 'border-red-500 text-sm',
     defaultOpen: false,
-    onCancel: fn(),
     onSubmit: fn(),
     submitBtn: undefined,
     title: 'Dialog example title',
@@ -57,7 +56,6 @@ export const ErrorOnSubmit: Story = {
     children: undefined,
     className: 'border-red-500 text-sm',
     defaultOpen: false,
-    onCancel: fn(),
     onSubmit: fn(() => {
       throw new Error('uhmmm, are you really called that?');
     }),

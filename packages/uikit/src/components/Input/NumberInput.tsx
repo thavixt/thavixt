@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
-import { themedClasses } from "../../common/theme";
+import { themedBackgroundClasses } from "../../common/theme";
 
 export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'children'> {
   value?: number;
@@ -19,7 +19,7 @@ export function NumberInput({
   const classes = classNames(
     'border rounded-sm',
     'text-center w-32',
-    themedClasses,
+    themedBackgroundClasses,
     props.className,
   );
 

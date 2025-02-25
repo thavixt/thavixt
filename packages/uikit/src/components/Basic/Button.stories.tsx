@@ -3,32 +3,42 @@ import { Button } from './Button';
 import { fn } from '@storybook/test';
  
 const meta = {
-  title: 'Button',
+  title: 'Basic/Button',
   component: Button,
   tags: ['autodocs'],
-  args: {
-    variant: 'primary',
-    children: 'Click me!',
-    onClick: fn(),
-  }
 } satisfies Meta<typeof Button>;
  
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+export const Default: Story = {
+  args: {
+    variant: 'default',
+    children: 'Click me!',
+    onClick: fn(),
+  },
+};
+
 export const Primary: Story = {
   args: {
-    // variant: 'primary',
+    variant: 'primary',
+    children: 'Click me!',
+    onClick: fn(),
   },
 };
 export const Secondary: Story = {
   args: {
     variant: 'secondary',
+    children: 'Click me!',
+    onClick: fn(),
   },
 };
+
 export const Danger: Story = {
   args: {
     variant: 'danger',
+    children: 'Click me!',
+    onClick: fn(),
   },
 };

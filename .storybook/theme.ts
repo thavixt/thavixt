@@ -1,7 +1,7 @@
 import { create } from '@storybook/theming';
  
 export default create({
-  base: 'light',
+  base: 'dark',
   brandTitle: '@thavixt/uikit',
   brandUrl: 'https://github.com/thavixt/uikit',
   // // @todo get a cool logo

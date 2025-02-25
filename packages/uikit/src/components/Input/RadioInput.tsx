@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
-import { themedClasses } from "../../common/theme";
+import { themedTextClasses } from "../../common/theme";
 
 export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 'children'> {
   value?: string;
@@ -17,8 +17,7 @@ export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 
 export function RadioInput(props: RadioInputProps) {
   const classes = classNames(
     'px-1 pl-2 w-fit',
-    'border rounded-sm',
-    themedClasses,
+    themedTextClasses,
     props.className,
   );
 
@@ -28,7 +27,7 @@ export function RadioInput(props: RadioInputProps) {
 
   return (
     <fieldset className={classes} onChange={onChange} ref={props.ref}>
-      <legend className={themedClasses}>&nbsp;{props.label}:&nbsp;</legend>
+      <legend>{props.label}:</legend>
       {props.values.map(value => (
         <Radio
           key={value}

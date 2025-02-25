@@ -17,11 +17,13 @@ export const Default: Story = {
     defaultValue: 'some input string',
     onChange: fn(),
     type: 'input',
+    label: 'Input:',
   }
 };
 
 export const Textarea: Story = {
   args: {
+    label: 'Input:',
     type: 'textarea',
   }
 };

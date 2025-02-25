@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
 import { RefObject } from "react";
-import { themedClasses } from "../../common/theme";
+import { themedBackgroundClasses } from "../../common/theme";
 
 export interface TextInputProps extends CommonProps<HTMLInputElement | HTMLTextAreaElement> {
   value?: string;
@@ -10,13 +10,14 @@ export interface TextInputProps extends CommonProps<HTMLInputElement | HTMLTextA
   name?: string;
   onChange?: (value: string) => void;
   type?: 'input' | 'textarea',
+  label: string;
 }
 
-export function TextInput({ ref, type = 'input', onChange: providedOnChange, name, ...props }: TextInputProps) {
+export function TextInput({ label, ref, type = 'input', onChange: providedOnChange, name, ...props }: TextInputProps) {
   const classes = classNames(
     'px-1 w-full',
     'border rounded-sm',
-    themedClasses,
+    themedBackgroundClasses,
     {
       'h-20 py-1': type === 'textarea',
     },
@@ -28,7 +29,7 @@ export function TextInput({ ref, type = 'input', onChange: providedOnChange, nam
   }
 
   return (
-    <WithLabel label="Label" name={name}>
+    <WithLabel label={label} name={name}>
       {type === 'input' ? (
         <input
           ref={ref as RefObject<HTMLInputElement>}

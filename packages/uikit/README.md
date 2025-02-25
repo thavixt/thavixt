@@ -14,6 +14,8 @@
 npm install @thavixt/uikit
 ```
 
+> Note: This library depends on `tailwind`'s default classes.
+
 ## Usage
 
 ```tsx

@@ -1,7 +1,7 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
-  "stories": [
+  stories: [
     '../packages/uikit/src/Readme.mdx',
     "../packages/uikit/src/components/**/*.stories.mdx",
     "../packages/uikit/src/components/**/*.stories.@(js|jsx|ts|tsx)"
@@ -12,9 +12,9 @@ const config: StorybookConfig = {
     "@storybook/addon-interactions",
     "@storybook/addon-themes"
   ],
-  framework: {
-    name: "@storybook/react-vite",
-    options: {},
-  },
+  framework: "@storybook/react-vite",
+  core: {
+    disableTelemetry: true,
+  }
 };
 export default config;

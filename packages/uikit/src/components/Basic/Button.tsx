@@ -4,11 +4,11 @@ import { CommonProps } from "../../common/commonProps";
 
 export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>> {
   onClick?: () => void;
-  variant?: 'primary' | 'secondary' | 'danger',
+  variant?: 'default' | 'primary' | 'secondary' | 'danger',
   type?: HTMLButtonElement['type'],
 }
 
-export function Button({ ref, onClick, type = 'button', className, children, variant = 'primary' }: ButtonProps) {
+export function Button({ ref, onClick, type = 'button', className, children, variant = 'default' }: ButtonProps) {
   return (
     <button
       ref={ref}
@@ -16,8 +16,9 @@ export function Button({ ref, onClick, type = 'button', className, children, var
       onClick={onClick}
       className={
         classNames(
-          'cursor-pointer font-bold px-2 py-1 rounded-sm active:scale-95',
+          'cursor-pointer px-2 py-1 rounded-sm shadow-gray-400 hover:shadow-sm transition-shadow',
           {
+            'text-slate-700 bg-gray-200': variant === 'default',
             'text-slate-100 bg-green-600': variant === 'primary',
             'text-slate-100 bg-indigo-500': variant === 'secondary',
             'text-slate-100 bg-red-500': variant === 'danger',

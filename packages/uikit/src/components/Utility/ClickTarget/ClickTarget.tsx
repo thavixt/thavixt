@@ -1,5 +1,5 @@
-import { CommonProps } from "../../common/commonProps";
 import { PropsWithChildren, useEffect, useRef } from "react";
+import { CommonProps } from "../../../common/commonProps";
 
 export interface ClickOutsideProps extends PropsWithChildren<Omit<CommonProps<HTMLDivElement>, 'ref'>> {
   onClickOutside: () => void;

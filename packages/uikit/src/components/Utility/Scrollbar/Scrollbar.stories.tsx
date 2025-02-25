@@ -11,7 +11,7 @@ function StoryChildren() {
 }
 
 const meta = {
-  title: 'Scrollbar',
+  title: 'Utility/Scrollbar',
   component: Scrollbar,
   tags: ['autodocs'],
 } satisfies Meta<typeof Scrollbar>;

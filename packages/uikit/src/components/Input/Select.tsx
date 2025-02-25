@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
-import { themedClasses } from "../../common/theme";
+import { themedBackgroundClasses } from "../../common/theme";
 
 export interface SelectProps<T extends Record<string, string>>
   extends Omit<CommonProps<HTMLSelectElement>, 'children'> {
@@ -30,7 +30,7 @@ export function Select<T extends Record<string, string>>({
   const classes = classNames(
     'w-fit text-left',
     'border rounded-sm',
-    themedClasses,
+    themedBackgroundClasses,
     props.className,
   );
 
