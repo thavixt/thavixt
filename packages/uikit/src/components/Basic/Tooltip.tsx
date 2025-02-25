@@ -11,7 +11,7 @@ interface TooltipProps extends PropsWithChildren<CommonProps> {
   visible?: boolean;
 }
 
-export function Tooltip({ children, tooltip, position = 'bottom', visible }: TooltipProps) {
+export function Tooltip({ ref, children, tooltip, position = 'bottom', visible }: TooltipProps) {
   const tooltipClasses = classNames(
     'hidden size-fit z-100',
     'opacity-0 transition-opacity',
@@ -33,7 +33,7 @@ export function Tooltip({ children, tooltip, position = 'bottom', visible }: Too
   )
 
   return (
-    <div className="group size-fit relative">
+    <div ref={ref} className="group size-fit relative">
       <div className={textClasses}>{children}</div>
       <div className={tooltipClasses}>
         <Arrow position={position} />

@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import { Children, PropsWithChildren } from "react";
+import { Children, Fragment, PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { themedTextClasses } from "../../common/theme";
 
-export type BreadcrumbProps = PropsWithChildren<CommonProps<HTMLElement>>;
+export type BreadcrumbProps = PropsWithChildren<CommonProps<HTMLDivElement>>;
 
 export function Breadcrumbs(props: BreadcrumbProps) {
   const classes = classNames(
@@ -14,12 +14,12 @@ export function Breadcrumbs(props: BreadcrumbProps) {
   const children = Children.toArray(props.children);
 
   return (
-    <div className={classNames(classes)}>
+    <div ref={props.ref} className={classNames(classes)}>
       {children.map((child, i) => (
-        <>
+        <Fragment key={i}>
           <span>{child}</span>
           <span>{i < children.length - 1 ? <span className="text-slate-400">{' / '}</span> : ''}</span>
-        </>
+        </Fragment>
       ))}
     </div>
   )
