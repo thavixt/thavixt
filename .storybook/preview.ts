@@ -11,11 +11,11 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    options: {
-      // by default, stories are sorted by import order - which is not exposed out of the box i guess..
-      storySort: (a, b) =>
-        a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, { numeric: true }),
-    },
+    // storySort: {
+    //   method: 'alphabetical',
+    //   includeNames: true,
+    //   order: ['Basic', 'Input', 'Utility'],
+    // },
   },
 };
 
