@@ -1,3 +1,4 @@
+import { dirname, join } from "path";
 import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
@@ -7,14 +8,18 @@ const config: StorybookConfig = {
     "../packages/uikit/src/components/**/*.stories.@(js|jsx|ts|tsx)"
   ],
   addons: [
-    "@chromatic-com/storybook",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/addon-themes"
+    getAbsolutePath("@chromatic-com/storybook"),
+    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("@storybook/addon-themes")
   ],
-  framework: "@storybook/react-vite",
+  framework: getAbsolutePath("@storybook/react-vite"),
   core: {
-    disableTelemetry: true,
+    disableTelemetry: false,
   }
 };
 export default config;
+
+function getAbsolutePath(value: string) {
+  return dirname(require.resolve(join(value, "package.json")));
+}
