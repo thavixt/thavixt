@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { ComponentProps, useRef } from 'react';
-import { FormDialog } from './FormDialog';
+import { FormDialog, FormDialogRef } from './FormDialog';
 import { TextInput } from './TextInput';
 import { Button } from '../Basic/Button';
 
@@ -17,8 +17,8 @@ const meta = {
   },
   tags: ['autodocs'],
   render: function StoryComponent(args: ComponentProps<typeof FormDialog>) {
-    const ref = useRef<HTMLDialogElement>(null);
-    const onClick = () => ref.current?.showModal();
+    const ref = useRef<FormDialogRef>(null);
+    const onClick = () => ref.current?.dialog?.showModal();
 
     return (
       <>
@@ -26,7 +26,6 @@ const meta = {
           Open dialog
         </Button>
         <FormDialog {...args} ref={ref}>
-        {/* <FormDialog {...args}> */}
           <TextInput defaultValue="Your name" name='name' label="Name"/>
         </FormDialog>
       </>
@@ -40,26 +39,32 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    cancelBtn: undefined,
+    cancel: undefined,
     children: undefined,
     className: 'border-red-500 text-sm',
     defaultOpen: false,
-    onSubmit: fn(),
-    submitBtn: undefined,
+    onSubmit: fn(async () => {
+      console.log('submitting...');
+      await new Promise(resolve => setTimeout(resolve, 2_000));
+      console.log('submit done');
+    }),
+    submit: undefined,
     title: 'Dialog example title',
   },
 };
 
 export const ErrorOnSubmit: Story = {
   args: {
-    cancelBtn: undefined,
+    cancel: undefined,
     children: undefined,
     className: 'border-red-500 text-sm',
     defaultOpen: false,
-    onSubmit: fn(() => {
+    onSubmit: fn(async () => {
+      console.log('submitting...');
+      await new Promise(resolve => setTimeout(resolve, 2_000));
       throw new Error('uhmmm, are you really called that?');
     }),
-    submitBtn: undefined,
+    submit: undefined,
     title: 'Dialog example title',
   },
 };

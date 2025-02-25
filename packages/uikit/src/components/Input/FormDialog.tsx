@@ -1,58 +1,74 @@
 import classNames from "classnames";
-import { PropsWithChildren, useEffect } from "react";
-import { CommonProps } from "../../common/commonProps";
-import { Form } from "./Form";
+import { RefObject, useEffect, useImperativeHandle, useRef } from "react";
+import { Form, FormProps } from "./Form";
 
-interface DialogProps extends PropsWithChildren<CommonProps<HTMLDialogElement>> {
+export type FormDialogRef = {
+  form: HTMLFormElement | null,
+  dialog: HTMLDialogElement | null,
+}
+
+export interface FormDialogProps extends Omit<FormProps, 'onCancel' | 'ref'> {
   defaultOpen?: boolean,
   title: string;
 
-  cancelBtn?: React.ReactElement,
-  resetBtn?: React.ReactElement,
-  submitBtn?: React.ReactElement,
-  
-  onSubmit: (values: Record<string, FormDataEntryValue>) => void | Promise<void>,
+  ref?: RefObject<FormDialogRef | null>,
 }
 
-export function FormDialog(props: DialogProps) {
-  const {
-    cancelBtn: cancel,
-    submitBtn: submit,
-    resetBtn: reset,
-    onSubmit,
-    children,
-    title,
-    ref,
-  } = props;
-  useEffect(() => {
-    if (props.defaultOpen && ref?.current) {
-      ref.current?.showModal();
-    }
-  }, [props.defaultOpen, ref]);
+export function FormDialog({
+  cancel,
+  children,
+  className,
+  defaultOpen,
+  ref,
+  reset,
+  submit,
+  title,
+  onSubmit,
+}: FormDialogProps) {
+  const formRef = useRef<HTMLFormElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useImperativeHandle<FormDialogRef, FormDialogRef>(ref, () => ({
+    form: formRef.current,
+    dialog: dialogRef.current,
+  }));
 
   const onCancel = () => {
-    if (ref) {
-      ref.current?.close();
+    if (dialogRef.current) {
+      dialogRef.current.close();
     }
   };
+  const onSubmitSuccess = () => {
+    if (dialogRef.current) {
+      dialogRef.current.close();
+    }
+  }
+
+  useEffect(() => {
+    if (defaultOpen && dialogRef.current) {
+      dialogRef.current.showModal();
+    }
+  }, [defaultOpen, ref]);
 
   const classes = classNames(
     "m-auto min-w-[400px] p-6 rounded-lg border-2 border-slate-500 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-md w-fit max-w-[900px]",
     'bg-slate-100 text-slate-800',
     'dark:bg-slate-700 dark:text-slate-100',
-    props.className,
+    className,
   );
 
   return (
-    <dialog ref={ref} className={classes} >
+    <dialog ref={dialogRef} className={classes} >
       <Form
+        ref={formRef}
         onSubmit={onSubmit}
-        cancelBtn={cancel}
+        onSubmitSuccess={onSubmitSuccess}
+        cancel={cancel ?? 'Cancel'}
         onCancel={onCancel}
-        resetBtn={reset}
-        submitBtn={submit}
+        reset={reset}
+        submit={submit}
       >
-        <p className="text-xl text-center">{title}</p>
+        <div className="text-xl text-center pb-4">{title}</div>
         {children}
       </Form>
     </dialog >

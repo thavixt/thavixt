@@ -1,12 +1,14 @@
 import classNames from "classnames";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { themedTextClasses } from "../../common/theme";
 
 export interface LinkProps extends PropsWithChildren<CommonProps<HTMLAnchorElement>> {
   href: string;
-  icon?: boolean;
-  new?: 'blank' | null
+  /** Render a default or custom icon */
+  icon?: boolean | ReactNode;
+  /** Open link in new window (target="_blank") */
+  blank?: 'blank'
 };
 
 export function Link(props: LinkProps) {
@@ -18,9 +20,11 @@ export function Link(props: LinkProps) {
   );
 
   return (
-    <a ref={props.ref} className={classes} href={props.href} target={props.new ? '_blank' : undefined}>
+    <a ref={props.ref} className={classes} href={props.href} target={props.blank ? '_blank' : undefined}>
       {props.children}
-      {props.icon ? <LinkSvg fill="currentColor" /> : null}
+      {props.icon ? (
+        typeof props.icon === 'boolean' ? <LinkSvg fill="currentColor" /> : props.icon
+      ) : null}
     </a>
   )
 }

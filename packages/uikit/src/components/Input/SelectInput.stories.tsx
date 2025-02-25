@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Select } from './Select';
+import { Select } from './SelectInput';
 import { fn } from '@storybook/test';
 
 const meta = {
-  title: 'Input/Select',
+  title: 'Input/SelectInput',
   component: Select,
   tags: ['autodocs'],
 } satisfies Meta<typeof Select>;

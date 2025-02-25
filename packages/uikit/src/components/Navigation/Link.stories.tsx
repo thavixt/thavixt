@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Link } from './Link';
 
 const meta = {
-  title: 'Basic/Link',
+  title: 'Navigation/Link',
   component: Link,
   tags: ['autodocs'],
 } satisfies Meta<typeof Link>;
@@ -23,5 +23,13 @@ export const WithIcon: Story = {
     children: 'Click here to go somewhere',
     href: 'https://komlosidev.net/',
     icon: true,
+  }
+};
+
+export const WithCustomCion: Story = {
+  args: {
+    children: 'Click here to go somewhere',
+    href: 'https://komlosidev.net/',
+    icon: "🌍",
   }
 };

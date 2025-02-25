@@ -10,7 +10,7 @@ const meta = {
     children: 'Hover here',
     tooltip: 'Tooltip',
     position: 'bottom',
-    visible: false,
+    visible: true,
   },
   render: function StoryComponent(args: ComponentProps<typeof Tooltip>) {
     return (

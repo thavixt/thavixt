@@ -6,3 +6,7 @@
 .docs-story {
   @apply dark:bg-slate-700;
 }
+
+.docs-story > div:first-child {
+  @apply p-0 pb-6;
+}

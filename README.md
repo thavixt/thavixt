@@ -5,8 +5,6 @@
 ![downloads](https://img.shields.io/npm/dm/@thavixt/uikit)
 
 ![last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
- 
-[Storybook](https://thavixt-uikit.komlosidev.net/)
 
 ## Installation
 
@@ -14,7 +12,13 @@
 npm install @thavixt/uikit
 ```
 
+> **Important:** This library depends on `tailwind`'s default classes.
+>
+> For this lib to work, make sure you have [Tailwind CSS](https://tailwindcss.com/) installed.
+
 ## Usage
+
+Visit the [Storybook](https://thavixt-uikit.komlosidev.net/) to view all available components with examples.
 
 ```tsx
 import {Button} from '@thavixt/uikit';
