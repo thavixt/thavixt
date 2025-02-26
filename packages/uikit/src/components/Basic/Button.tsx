@@ -1,17 +1,18 @@
 import classNames from "classnames";
-import { PropsWithChildren } from "react";
+import { MouseEvent, PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { Spinner } from "../Illustration/Spinner/Spinner";
 
 export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>> {
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   variant?: 'default' | 'primary' | 'secondary' | 'danger',
   type?: HTMLButtonElement['type'],
   loading?: boolean;
   disabled?: boolean;
+  round?: boolean;
 }
 
-export function Button({ disabled, loading, ref, onClick, type = 'button', className, children, variant = 'default' }: ButtonProps) {
+export function Button({ disabled, loading, ref, onClick, type = 'button', className, children, variant = 'default', round }: ButtonProps) {
   return (
     <button
       ref={ref}
@@ -20,7 +21,7 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
       disabled={loading}
       className={
         classNames(
-          'min-w-16 px-2 py-1 rounded-sm shadow-gray-400 hover:shadow-sm active:shadow-none transition-shadow',
+          'min-w-16 px-2 py-1 shadow-gray-400 hover:shadow-sm active:shadow-none transition-shadow',
           {
             'cursor-pointer': !(disabled || loading),
             'cursor-not-allowed opacity-60': disabled || loading,
@@ -28,6 +29,10 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
             'text-slate-100 bg-green-600': variant === 'primary',
             'text-slate-100 bg-indigo-500': variant === 'secondary',
             'text-slate-100 bg-red-500': variant === 'danger',
+          },
+          {
+            'rounded-sm': !round,
+            'h-[60px] w-[60px] border-[50%] rounded-[50%]': round,
           },
           className,
         )

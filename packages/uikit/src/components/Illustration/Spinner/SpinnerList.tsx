@@ -5,7 +5,8 @@ export type SpinnerType =
   | 'GearSpinner'
   | 'InfiniteSpinner'
   | 'SpinningDots'
-  | 'TubeSpinner';
+  | 'TubeSpinner'
+  ;
 
 export const SpinnerList: Record<SpinnerType, ({ height }: { height?: number, color?: string }) => JSX.Element> = {
   FadeStaggerCircles: function FadeStaggerCircles({ height = 4, color = 'currentColor' }) {

@@ -7,9 +7,14 @@
   @apply dark:bg-slate-700;
 }
 
-.docs-story > div:first-child {
-  @apply p-0 pb-6;
-}
+/* .docs-story > div {
+  @apply max-h-[400px];
+} */
+
+/* .docs-story > div:first-child {
+  @apply p-0;
+  @apply pb-6;
+} */
 
 /* .sb-main-padded {
   @apply !p-0;

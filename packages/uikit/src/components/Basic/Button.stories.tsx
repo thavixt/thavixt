@@ -42,3 +42,11 @@ export const Danger: Story = {
     onClick: fn(),
   },
 };
+
+export const Round: Story = {
+  args: {
+    round: true,
+    children: 'Click me!',
+    onClick: fn(),
+  },
+};

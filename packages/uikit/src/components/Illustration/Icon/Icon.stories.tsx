@@ -1,31 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Spinner } from './Spinner';
+import { Icon } from './Icon';
 import { ComponentProps } from 'react';
-import { SpinnerList, SpinnerType } from './SpinnerList';
+import { IconList, IconType } from './IconList';
 
 const meta = {
-  title: 'Illustration/Spinner',
-  component: Spinner,
+  title: 'Illustration/Icon',
+  component: Icon,
   tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component: 'Animated SVGs suggesting that backdround tasks are in-progress, or some data is loading',
-      },
-    },
-  },
-  render: function StoryComponent(args: ComponentProps<typeof Spinner>) {
+  render: function StoryComponent(args: ComponentProps<typeof Icon>) {
     return (
       <>
         <table className="table-auto border-collapse text-slate-800 dark:text-slate-100">
           <tbody>
-            {Object.keys(SpinnerList).sort().map((key) => (
+            {Object.keys(IconList).sort().map((key) => (
               <tr>
                 <td className='p-2 border border-slate-200 dark:border-slate-500'>
                   <code>{key}</code>
                 </td>
                 <td className='p-2 border border-slate-200 dark:border-slate-500'>
-                  <Spinner {...args} icon={key as SpinnerType} />
+                  <Icon {...args} icon={key as IconType} />
                 </td>
               </tr>
             ))}
@@ -38,7 +31,7 @@ const meta = {
     className: 'text-indigo-500 dark:text-green-400',
     height: 10,
   }
-} satisfies Meta<typeof Spinner>;
+} satisfies Meta<typeof Icon>;
 
 export default meta;
 
