@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Drawer } from './Drawer';
 import { Button } from '../Basic/Button';
 import { HorizontalRule } from '../Basic/HorizontalRule';
+import { ComponentProps } from 'react';
 
 const meta = {
   title: 'Navigation/Drawer',
@@ -22,6 +23,13 @@ const meta = {
         </ul>
         <HorizontalRule />
         <Button onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
+      </div>
+    )
+  },
+  render: function StoryComponent(args: ComponentProps<typeof Drawer>) {
+    return (
+      <div className='h-[400px]'>
+        <Drawer {...args}/>
       </div>
     )
   },

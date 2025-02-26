@@ -21,14 +21,20 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
       disabled={loading}
       className={
         classNames(
-          'min-w-16 px-2 py-1 hover:shadow-md active:shadow-none transition-shadow',
+          'min-w-16 px-2 py-1 transition-colors',
           {
             'cursor-pointer': !(disabled || loading),
             'cursor-not-allowed opacity-60': disabled || loading,
-            'text-slate-700 bg-gray-200 dark:bg-slate-300 hover:shadow-slate-300': variant === 'default',
-            'text-slate-100 bg-green-600 hover:shadow-green-600': variant === 'primary',
-            'text-slate-100 bg-indigo-500 hover:shadow-indigo-500': variant === 'secondary',
-            'text-slate-100 bg-red-500 hover:shadow-red-500': variant === 'danger',
+          },
+          {
+            'text-slate-700': variant === 'default',
+            'text-slate-100': variant !== 'default',
+          },
+          {
+            'bg-gray-200 hover:bg-gray-300 active:bg-gray-400': variant === 'default',
+            'bg-green-500 hover:bg-green-600 active:bg-green-700': variant === 'primary',
+            'bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700': variant === 'secondary',
+            'bg-red-500 hover:bg-red-600 active:bg-red-700': variant === 'danger',
           },
           {
             'rounded-sm': !round,
