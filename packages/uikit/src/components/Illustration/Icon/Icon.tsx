@@ -10,7 +10,7 @@ export interface IconProps {
   className?: string;
 }
 
-export function Icon({ icon = 'UpArrow', height = 5, className }: IconProps) {
+export function Icon({ icon = 'ArrowUp', height = 5, className }: IconProps) {
   const iconFn = IconList[icon];
 
   return (
