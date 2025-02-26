@@ -9,7 +9,7 @@ export const themedTextClasses = classNames(
 export const themedBorderClasses = classNames(
   themedTextClasses,
   'border-1 rounded-sm',
-  'border-slate-300 dark:border-slate-600',
+  'border-slate-300 dark:border-slate-500',
 );
 
 export const themedBackgroundClasses = classNames(
@@ -19,5 +19,5 @@ export const themedBackgroundClasses = classNames(
 
 export const themedInputClasses = classNames(
   themedBorderClasses,
-  'bg-slate-200 dark:bg-slate-700',
+  'bg-slate-200 dark:bg-slate-600',
 );

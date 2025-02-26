@@ -1,13 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Drawer } from './Drawer';
 import { Button } from '../Basic/Button';
-import { HorizontalRule } from '../Basic/HorizontalRule';
+import { Divider } from '../Basic/Divider';
 import { ComponentProps } from 'react';
 
 const meta = {
   title: 'Navigation/Drawer',
   component: Drawer,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Check the separate `Default` story page instead for a better demo',
+      },
+    },
+  },
   args: {
     side: 'left',
     children: (isOpen, toggle, side) => (
@@ -16,12 +23,12 @@ const meta = {
     content: (isOpen, toggle, side) => (
       <div>
         <b>App name here</b>
-        <HorizontalRule />
+        <Divider />
         <ul>
           <li>stuff</li>
           <li>stuff2</li>
         </ul>
-        <HorizontalRule />
+        <Divider />
         <Button onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
       </div>
     )

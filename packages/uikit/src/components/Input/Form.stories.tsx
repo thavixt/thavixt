@@ -18,6 +18,12 @@ const meta = {
       </Form>
     )
   },
+  args: {
+    className: 'border-red-500 text-sm',
+    // onCancel: fn(),
+    onSubmitError: fn(),
+    onSubmitSuccess: fn(),
+  }
 } satisfies Meta<typeof Form>;
 
 export default meta;
@@ -26,30 +32,17 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    cancel: 'Cancel',
-    children: undefined,
-    className: 'border-red-500 text-sm',
-    onCancel: fn(),
     onSubmit: fn(async () => {
-      console.log('submitting...');
       await new Promise(resolve => setTimeout(resolve, 2_000));
-      console.log('submit done');
     }),
-    submit: undefined,
   },
 };
 
 export const ErrorOnSubmit: Story = {
   args: {
-    cancel: undefined,
-    children: undefined,
-    className: 'border-red-500 text-sm',
-    onCancel: fn(),
     onSubmit: fn(async () => {
-      console.log('submitting...');
       await new Promise(resolve => setTimeout(resolve, 2_000));
       throw new Error('uhmmm, are you really called that?');
     }),
-    submit: undefined,
   },
 };

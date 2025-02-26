@@ -1,29 +1,31 @@
 import { PropsWithChildren, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { Button } from "../Basic/Button";
-import { HorizontalRule } from "../Basic/HorizontalRule";
+import { Divider } from "../Basic/Divider";
 import classNames from "classnames";
 
 export interface FormProps extends PropsWithChildren<CommonProps<HTMLFormElement>> {
-  cancel?: string,
-  reset?: string,
-  submit?: string,
+  cancelText?: string,
+  resetText?: string,
+  submitText?: string,
 
   onCancel?: () => void | Promise<void>,
   onSubmit?: (values: Record<string, FormDataEntryValue>) => void | Promise<void>,
   onSubmitSuccess?: (values: Record<string, FormDataEntryValue>) => void | Promise<void>,
+  onSubmitError?: (error: Error, values: Record<string, FormDataEntryValue>) => void | Promise<void>,
 }
 
 export function Form({
-  cancel,
+  cancelText,
+  resetText,
+  submitText,
   children,
   className,
   ref,
-  reset,
-  submit,
   onCancel: onFormCancel,
   onSubmit: providedOnSubmit,
   onSubmitSuccess,
+  onSubmitError,
 }: FormProps) {
   const formName = useRef(`dialogForm_${crypto.randomUUID().slice(0, 8)}`);
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +43,10 @@ export function Form({
     } catch (e) {
       const error = e as Error;
       console.warn(e);
-      setError(`${error.name} - ${error.message}`);
+      const name = error.name ?? 'Error'
+      const message = error.message ?? 'Something went wrong :('
+      setError(`${name} - ${message}`);
+      onSubmitError?.(error, formData);
       setLoading(false);
       return;
     }
@@ -70,23 +75,23 @@ export function Form({
           </div>
           {error ? (
             <>
-              <HorizontalRule />
+              <Divider />
               <p className="dark:text-red-400 text-red-700">{error}</p>
             </>
           ) : null}
           <div className="flex space-x-2 justify-between">
             <div className="flex space-x-2">
-              {cancel ? (
+              {onFormCancel ? (
                 <Button variant="default" onClick={onCancel} disabled={loading}>
-                  {typeof cancel === 'string' ? cancel : 'Cancel'}
+                  {typeof cancelText === 'string' ? cancelText : 'Cancel'}
                 </Button>
               ) : null}
               <Button variant="default" type="reset" disabled={loading}>
-                {reset ?? 'Reset'}
+                {resetText ?? 'Reset'}
               </Button>
             </div>
             <Button type="submit" variant="primary" loading={loading}>
-              {submit ?? 'Submit'}
+              {submitText ?? 'Submit'}
             </Button>
           </div>
         </div>

@@ -13,7 +13,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Check the individual `Default` story page instead for a better demo',
+        component: 'Check the separate `Default` story page instead for a better demo',
       },
     },
   },

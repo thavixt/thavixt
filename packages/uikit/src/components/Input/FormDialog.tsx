@@ -15,13 +15,13 @@ export interface FormDialogProps extends Omit<FormProps, 'onCancel' | 'ref'> {
 }
 
 export function FormDialog({
-  cancel,
+  cancelText: cancel,
   children,
   className,
   defaultOpen,
   ref,
-  reset,
-  submit,
+  resetText: reset,
+  submitText: submit,
   title,
   onSubmit,
 }: FormDialogProps) {
@@ -63,10 +63,10 @@ export function FormDialog({
         ref={formRef}
         onSubmit={onSubmit}
         onSubmitSuccess={onSubmitSuccess}
-        cancel={cancel ?? 'Cancel'}
+        cancelText={cancel ?? 'Cancel'}
         onCancel={onCancel}
-        reset={reset}
-        submit={submit}
+        resetText={reset}
+        submitText={submit}
       >
         <div className="text-xl text-center pb-4">{title}</div>
         {children}

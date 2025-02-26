@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { themedBackgroundClasses } from "../../common/theme";
-import { HorizontalRule } from "./HorizontalRule";
+import { Divider } from "./Divider";
 
 export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDetailsElement>> {
   defaultOpen?: boolean;
@@ -31,7 +31,7 @@ export function Accordion({ className, children, defaultOpen, title, openedTitle
         </svg>
       </summary>
       <div className="p-1 text-slate-500 dark:text-slate-400">
-        <HorizontalRule />
+        <Divider />
         {children}
       </div>
     </details>

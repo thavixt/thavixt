@@ -9,7 +9,7 @@ import {
   useRef,
   useState
 } from "react";
-import { HorizontalRule } from "../Basic/HorizontalRule";
+import { Divider } from "../Basic/Divider";
 import { themedBackgroundClasses } from "../../common/theme";
 
 export type TabsHandle = {
@@ -61,7 +61,7 @@ export function Tabs({ defaultTabIndex = 0, ref, ...props }: TabsProps) {
         )
       })}
       </div>
-      <HorizontalRule />
+      <Divider />
       <div className="flex flex-col pt-2">
         {tabs.map((c, i) => {
           return cloneElement(c, { active: i === activeTab, key: `tab-${i}` })
