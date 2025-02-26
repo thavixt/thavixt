@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { Button } from "../Basic/Button";
 import { JSX, MouseEvent } from 'react';
-import { Icon } from "../Illustration/Icon/Icon";
+import { Icon } from "../Illustration/Icon";
 
 type ScrollTo = 'top' | 'bottom';
 

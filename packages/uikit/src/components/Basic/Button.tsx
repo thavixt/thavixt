@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { MouseEvent, PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
-import { Spinner } from "../Illustration/Spinner/Spinner";
+import { Spinner } from "../Illustration/Spinner";
 
 export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>> {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
