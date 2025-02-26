@@ -8,17 +8,15 @@ const meta = {
   tags: ['autodocs'],
   render: function StoryComponent(args: ComponentProps<typeof HorizontalRule>) {
     return (
-      <div className='flex flex-col'>
-        Some text
-        <HorizontalRule {...args} />
-        divided by
+      <div className='flex flex-col text-slate-900 dark:text-slate-200 text-center'>
+        This text is divided by
         <HorizontalRule {...args} />
         HorizontalRule components
         <HorizontalRule {...args} unicorn />
-        colorful one
+        which are just some lines which could be
         <HorizontalRule {...args} small />
         <HorizontalRule {...args} unicorn small />
-        and smaller ones
+        full-width or smaller, colorful or plain gray by default.
       </div>
     )
   }
