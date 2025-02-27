@@ -7,18 +7,6 @@ const meta = {
   title: 'Navigation/Tabs',
   component: Tabs,
   tags: ['autodocs'],
-  // render: function StoryComponent(args: ComponentProps<typeof Tabs>) {
-  //   const ref = useRef<TabsHandle>(null);
-  //   return (
-  //     <div className="flex flex-col space-y-8">
-  //       <Tabs {...args} ref={ref}/>
-  //       <div className="flex space-x-4">
-  //         <Button onClick={() => ref.current?.prevTab()}>prev tab</Button>
-  //         <Button onClick={() => ref.current?.nextTab()}>next tab</Button>
-  //       </div>
-  //     </div>
-  //   )
-  // },
 } satisfies Meta<typeof Tabs>;
 
 export default meta;
@@ -39,10 +27,10 @@ export const Default: Story = {
       </Tabs.Tab>,
       <Tabs.Tab title='Tab with a form'>
         <Form>
-          <TextInput label='Title' placeholder={placeholder} />
-          <TextInput label='Subject' placeholder={placeholder} />
-          <TextInput label='Description' placeholder={placeholder} />
-          <TextInput label='Thoughts' placeholder={placeholder} />
+          <TextInput name="input1" label='Title' placeholder={placeholder} />
+          <TextInput name="input2" label='Subject' placeholder={placeholder} />
+          <TextInput name="input3" label='Description' placeholder={placeholder} />
+          <TextInput name="input4" label='Thoughts' placeholder={placeholder} />
         </Form>
       </Tabs.Tab>
     ]

@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { themedTextClasses } from "../../common/theme";
+import { WithLabel } from "../../common/WithLabel";
 
 export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 'children'> {
   value?: string;
@@ -56,6 +57,7 @@ function Radio(props: RadioProps) {
 
   return (
     <div className={classes}>
+      <WithLabel name={props.name} label={props.value}>
       <input
         type="radio"
         id={props.name}
@@ -65,7 +67,7 @@ function Radio(props: RadioProps) {
         defaultChecked={props.defaultChecked}
         required
       />
-      <label htmlFor={props.value}>{props.value}</label>
+      </WithLabel>
     </div>
   )
 }

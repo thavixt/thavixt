@@ -8,7 +8,7 @@ export interface SelectProps<T extends Record<string, string>>
   defaultValue?: keyof T;
   disabled?: boolean;
   label?: string;
-  name?: string;
+  name: string;
   onChange?: (value: keyof T) => void;
   placeholder?: string;
   value?: keyof T;

@@ -6,6 +6,12 @@ const meta = {
   title: 'Input/TextInput',
   component: TextInput,
   tags: ['autodocs'],
+  args: {
+    name: 'input',
+    label: 'Input',
+    defaultValue: 'something about that',
+    onChange: fn(),
+  }
 } satisfies Meta<typeof TextInput>;
 
 export default meta;
@@ -14,16 +20,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    defaultValue: 'some input string',
-    onChange: fn(),
     type: 'input',
-    label: 'Input',
   }
 };
 
 export const Textarea: Story = {
   args: {
-    label: 'Input:',
     type: 'textarea',
   }
 };

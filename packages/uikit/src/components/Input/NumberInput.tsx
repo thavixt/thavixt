@@ -6,7 +6,7 @@ import { themedInputClasses } from "../../common/theme";
 export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'children'> {
   value?: number;
   defaultValue?: number;
-  name?: string;
+  name: string;
   label?: string;
   max?: number;
   min?: number;
