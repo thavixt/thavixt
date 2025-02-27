@@ -58,7 +58,7 @@ function Radio(props: RadioProps) {
     <div className={classes}>
       <input
         type="radio"
-        id={`${props.value}-radio`}
+        id={props.name}
         name={props.name}
         value={props.value}
         checked={props.checked}

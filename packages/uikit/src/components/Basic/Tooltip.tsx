@@ -6,7 +6,7 @@ import { themedTextClasses } from "../../common/theme";
 type Position = 'left' | 'right' | 'top' | 'bottom';
 
 interface TooltipProps extends PropsWithChildren<CommonProps> {
-  tooltip: string;
+  tooltip: string | number;
   position?: Position;
   visible?: boolean;
 }
@@ -48,8 +48,8 @@ function Arrow({position}: {position: Position}) {
   const classes = classNames(
     'w-0 h-0 border-slate-500',
     {
-      'border-x-8 border-x-transparent border-t-8 absolute inset-y-full inset-x-2': position === 'top',
-      'border-x-8 border-x-transparent border-b-8 absolute -inset-y-2 inset-x-2': position === 'bottom',
+      'border-x-8 border-x-transparent border-t-8 absolute inset-y-full inset-x-1': position === 'top',
+      'border-x-8 border-x-transparent border-b-8 absolute -inset-y-2 inset-x-1': position === 'bottom',
       'border-y-8 border-y-transparent border-l-8 absolute inset-x-full inset-y-1': position === 'left',
       'border-y-8 border-y-transparent border-r-8 absolute -inset-x-2 inset-y-1': position === 'right',
     }

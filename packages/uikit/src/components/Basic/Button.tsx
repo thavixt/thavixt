@@ -10,18 +10,20 @@ export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonEle
   loading?: boolean;
   disabled?: boolean;
   round?: boolean;
+  title?: string;
 }
 
-export function Button({ disabled, loading, ref, onClick, type = 'button', className, children, variant = 'default', round }: ButtonProps) {
+export function Button({ disabled, loading, ref, onClick, type = 'button', className, children, variant = 'default', round, title }: ButtonProps) {
   return (
     <button
       ref={ref}
       type={type}
       onClick={onClick}
       disabled={loading}
+      title={title}
       className={
         classNames(
-          'min-w-16 px-2 py-1 transition-colors',
+          'min-w-12 px-2 py-1 transition-colors',
           {
             'cursor-pointer': !(disabled || loading),
             'cursor-not-allowed opacity-60': disabled || loading,

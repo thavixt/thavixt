@@ -29,7 +29,8 @@ const meta = {
   },
   args: {
     className: 'text-indigo-500 dark:text-green-400',
-    height: 10,
+    height: 8,
+    icon: 'ArrowDown'
   }
 } satisfies Meta<typeof Icon>;
 

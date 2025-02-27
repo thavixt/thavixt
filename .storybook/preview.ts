@@ -11,6 +11,11 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    // docs: {
+    //   source: {
+    //     type: 'auto' // 'code'
+    //   }
+    // },
     // storySort: {
     //   method: 'alphabetical',
     //   includeNames: true,
