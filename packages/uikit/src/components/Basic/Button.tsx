@@ -45,7 +45,7 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
       }
     >
       <div className="flex items-center justify-center">
-        {loading ? <Spinner icon="TubeSpinner" /> : children}
+        {loading ? <Spinner type="TubeSpinner" /> : children}
       </div>
     </button>
   )

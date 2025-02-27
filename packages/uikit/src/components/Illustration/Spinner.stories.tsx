@@ -25,7 +25,7 @@ const meta = {
                   <code>{key}</code>
                 </td>
                 <td className='p-2 border border-slate-200 dark:border-slate-500'>
-                  <Spinner {...args} icon={key as SpinnerType} />
+                  <Spinner {...args} type={key as SpinnerType} />
                 </td>
               </tr>
             ))}

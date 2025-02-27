@@ -3,7 +3,7 @@ import { SpinnerList, SpinnerType } from "./SpinnerList";
 import classNames from "classnames";
 
 export interface SpinnerProps {
-  icon?: SpinnerType;
+  type?: SpinnerType;
   /**
    * `x * 4` (tailwind scale)
    * */
@@ -11,7 +11,7 @@ export interface SpinnerProps {
   className?: string;
 }
 
-export function Spinner({ icon = 'InfiniteSpinner', height = 5, className }: SpinnerProps) {
+export function Spinner({ type: icon = 'TubeSpinner', height = 5, className }: SpinnerProps) {
   const iconFn = SpinnerList[icon];
 
   return (
