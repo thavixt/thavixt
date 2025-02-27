@@ -13,24 +13,22 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const placeholder = "type something and go back to the previous tab";
 export const Default: Story = {
   args: {
     children: [
-      <p>asd</p>,
       <Tabs.Tab title='First tab'>
-        <p>content of the first tab</p>
-        <p>anything could go here...</p>
+        <p>Content of the first tab</p>
+        <p>Anything could go here</p>
       </Tabs.Tab>,
       <Tabs.Tab title="Second tab that has a much longer title">
-        <p>so I guess you've already read the first tab?</p>
+        <p>So I guess you've already read the first tab?</p>
       </Tabs.Tab>,
       <Tabs.Tab title='Tab with a form'>
         <Form>
-          <TextInput name="input1" label='Title' placeholder={placeholder} />
-          <TextInput name="input2" label='Subject' placeholder={placeholder} />
-          <TextInput name="input3" label='Description' placeholder={placeholder} />
-          <TextInput name="input4" label='Thoughts' placeholder={placeholder} />
+          <TextInput name="input1" label='Title' placeholder="Type something and go back to the previous tab" />
+          <TextInput name="input2" label='Subject'/>
+          <TextInput name="input3" label='Description' placeholder="It'll still be here, dont worry =)" />
+          <TextInput name="input4" label='Thoughts'/>
         </Form>
       </Tabs.Tab>
     ]

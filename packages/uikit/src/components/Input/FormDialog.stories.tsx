@@ -4,6 +4,7 @@ import { ComponentProps, useRef } from 'react';
 import { FormDialog, FormDialogRef } from './FormDialog';
 import { TextInput } from './TextInput';
 import { Button } from '../Basic/Button';
+import { NumberInput } from './NumberInput';
 
 const meta = {
   title: 'Input/Form dialog',
@@ -26,7 +27,9 @@ const meta = {
           Open dialog
         </Button>
         <FormDialog {...args} ref={ref}>
-          <TextInput defaultValue="Your name" name='name' label="Name"/>
+          <TextInput placeholder="Your name" name='name' label="Name"/>
+          <TextInput label="Occupation" placeholder="Job title" name='job'/>
+          <NumberInput label='Age' defaultValue={18} name='experience'/>
         </FormDialog>
       </>
     )

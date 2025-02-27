@@ -12,9 +12,9 @@ const meta = {
   render: function StoryComponent(args: ComponentProps<typeof Form>) {
     return (
       <Form {...args}>
-        <TextInput label="Name" defaultValue="Your name" name='name'/>
-        <TextInput label="Title" defaultValue="Job title" name='job'/>
-        <NumberInput label='Past work experience (years)' defaultValue={10} name='experience'/>
+        <TextInput label="Name" placeholder="Your name" name='name'/>
+        <TextInput label="Occupation" placeholder="Job title" name='job'/>
+        <NumberInput label='Age' defaultValue={18} name='experience'/>
       </Form>
     )
   },

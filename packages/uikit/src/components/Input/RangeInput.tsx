@@ -63,7 +63,7 @@ export function RangeInput({ showValue = true, ...props }: RangeInputProps) {
 
   return (
     <div className="flex space-x-2">
-      <WithLabel label={props.label} name={props.name}>
+      <WithLabel label={props.label} id={props.name}>
         <div className="flex space-x-1 items-center">
           {props.before?.(getValue(currentValue), props.min, props.max)}
           <input
@@ -74,6 +74,7 @@ export function RangeInput({ showValue = true, ...props }: RangeInputProps) {
             max={props.max}
             min={props.min}
             name={props.name}
+            id={`${props.name}-range`}
             onChange={onChange}
             step={props.step}
             type="range"

@@ -69,7 +69,9 @@ export function FormDialog({
         submitText={submit}
       >
         <div className="text-xl text-center pb-4">{title}</div>
-        {children}
+        <div className="mb-2 flex flex-col space-y-2">
+          {children}
+        </div>
       </Form>
     </dialog >
   )

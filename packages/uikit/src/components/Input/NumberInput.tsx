@@ -28,12 +28,14 @@ export function NumberInput({name, label, min = 0, max = 999_999, onChange: prov
     providedOnChange?.(value);
   }
 
+  const id = `${name}-number`;
+
   return (
-    <WithLabel label={label} name={name}>
+    <WithLabel label={label} id={id}>
       <input
         className={classes}
         name={name}
-        id={`${props.value}-numberinput`}
+        id={id}
         type="number"
         min={min}
         max={max}

@@ -38,14 +38,16 @@ export function Select<T extends Record<string, string>>({
     providedOnChange?.(e.currentTarget.value as keyof T);
   }
 
+  const id = `${name}-select`;
+
   return (
-    <WithLabel label={label} name={name}>
+    <WithLabel label={label} id={id}>
       <select
         ref={ref}
         className={classes}
         disabled={disabled}
         name={name}
-        id={`${name}-select`}
+        id={id}
         onChange={onChange}
         defaultValue={defaultValue as string}
         value={value as string}

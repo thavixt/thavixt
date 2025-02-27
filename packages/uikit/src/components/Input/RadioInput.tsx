@@ -55,12 +55,14 @@ function Radio(props: RadioProps) {
     props.className,
   );
 
+  const id = `${props.name}-radio`;
+
   return (
     <div className={classes}>
-      <WithLabel name={props.name} label={props.value}>
+      <WithLabel id={id} label={props.value}>
       <input
         type="radio"
-        id={props.name}
+        id={id}
         name={props.name}
         value={props.value}
         checked={props.checked}

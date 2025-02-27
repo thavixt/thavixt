@@ -30,12 +30,14 @@ export function TextInput({ label, ref, type = 'input', onChange: providedOnChan
     providedOnChange?.(e.currentTarget.value);
   }
 
+  const id = `${name}-text`;
+
   return (
-    <WithLabel label={label} name={name}>
+    <WithLabel label={label} id={id}>
       {type === 'input' ? (
         <input
           ref={ref as RefObject<HTMLInputElement>}
-          id={`${props.value}-textinput`}
+          id={id}
           className={classes}
           name={name}
           type="text"
@@ -45,7 +47,7 @@ export function TextInput({ label, ref, type = 'input', onChange: providedOnChan
       ) : (
         <textarea
           ref={ref as RefObject<HTMLTextAreaElement>}
-          id={`${props.value}-textarea`}
+          id={id}
           className={classes}
           name={name}
           onChange={onChange}
