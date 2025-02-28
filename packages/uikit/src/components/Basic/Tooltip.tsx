@@ -9,24 +9,23 @@ interface TooltipProps extends PropsWithChildren<CommonProps> {
   tooltip: string | number;
   position?: Position;
   visible?: boolean;
+  className?: string;
 }
 
-export function Tooltip({ ref, children, tooltip, position = 'bottom', visible }: TooltipProps) {
+export function Tooltip({ ref, className, children, tooltip, position = 'bottom', visible }: TooltipProps) {
   const tooltipClasses = classNames(
-    'hidden size-fit z-100',
-    'opacity-0 transition-opacity',
-    'text-xs text-slate-100 bg-slate-500 rounded-sm px-2 py-1',
+    'min-w-24 z-100 max-w-64 w-fit h-fit',
+    'text-xs text-slate-100 bg-slate-500 rounded-sm drop-shadow-lg px-2 py-1',
     'group-hover:block group-hover:opacity-100',
-    'drop-shadow-lg',
     {
-      '!block opacity-100': visible,
-      'absolute inset-x-2 bottom-full mb-3': position === 'top',
-      'absolute inset-x-2 top-full mt-3': position === 'bottom',
-      'absolute inset-y-1 right-full mr-3': position === 'left',
-      'absolute inset-y-1 left-full ml-3': position === 'right',
-      'w-fit w-max-32': position === 'top' || position === 'bottom',
-      'h-fit h-max-32': position === 'left' || position === 'right',
-    }
+      'block': visible,
+      'hidden': !visible,
+      'absolute inset-x-1/3 bottom-full mb-3': position === 'top',
+      'absolute inset-x-1/3 top-full mt-3': position === 'bottom',
+      'absolute inset-y-1/4 right-full mr-3': position === 'left',
+      'absolute inset-y-1/4 left-full ml-3': position === 'right',
+    },
+    className,
   );
   const textClasses = classNames(
     themedTextClasses,
@@ -37,14 +36,14 @@ export function Tooltip({ ref, children, tooltip, position = 'bottom', visible }
     <div ref={ref} className="group size-fit relative">
       <div className={textClasses}>{children}</div>
       <div className={tooltipClasses}>
+        {tooltip}
         <Arrow position={position} />
-        <span>{tooltip}</span>
       </div>
     </div>
   )
 }
 
-function Arrow({position}: {position: Position}) {
+function Arrow({ position }: { position: Position }) {
   const classes = classNames(
     'w-0 h-0 border-slate-500',
     {
@@ -55,6 +54,6 @@ function Arrow({position}: {position: Position}) {
     }
   )
   return (
-    <div className={classes}/>
+    <div className={classes} />
   )
 }

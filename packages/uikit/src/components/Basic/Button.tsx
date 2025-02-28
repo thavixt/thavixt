@@ -19,24 +19,30 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
       ref={ref}
       type={type}
       onClick={onClick}
-      disabled={loading}
+      disabled={disabled || loading}
       title={title}
       className={
         classNames(
           'min-w-12 px-2 py-1 transition-colors',
           {
             'cursor-pointer': !(disabled || loading),
-            'cursor-not-allowed opacity-60': disabled || loading,
+            'cursor-not-allowed opacity-60 select-none': disabled || loading,
           },
           {
-            'text-slate-700': variant === 'default',
-            'text-slate-100': variant !== 'default',
+            'text-slate-100 dark:text-slate-700': variant === 'default',
+            'text-slate-700 dark:text-slate-100': variant !== 'default',
           },
           {
-            'bg-gray-200 hover:bg-gray-300 active:bg-gray-400': variant === 'default',
-            'bg-green-500 hover:bg-green-600 active:bg-green-700': variant === 'primary',
-            'bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700': variant === 'secondary',
-            'bg-red-500 hover:bg-red-600 active:bg-red-700': variant === 'danger',
+            'bg-gray-200': variant === 'default',
+            'bg-green-500': variant === 'primary',
+            'bg-indigo-500': variant === 'secondary',
+            'bg-red-500': variant === 'danger',
+          },
+          {
+            'hover:bg-gray-300 active:bg-gray-400': !(disabled || loading) && variant === 'default',
+            'hover:bg-green-600 active:bg-green-700': !(disabled || loading) && variant === 'primary',
+            'hover:bg-indigo-600 active:bg-indigo-700': !(disabled || loading) && variant === 'secondary',
+            'hover:bg-red-600 active:bg-red-700': !(disabled || loading) && variant === 'danger',
           },
           {
             'rounded-sm': !round,

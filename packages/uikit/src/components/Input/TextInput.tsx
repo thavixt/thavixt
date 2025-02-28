@@ -6,7 +6,7 @@ import { themedInputClasses } from "../../common/theme";
 
 export interface TextInputProps extends CommonProps<HTMLInputElement | HTMLTextAreaElement> {
   defaultValue?: string;
-  label: string;
+  label?: string;
   name: string;
   placeholder?: string;
   type?: 'input' | 'textarea',

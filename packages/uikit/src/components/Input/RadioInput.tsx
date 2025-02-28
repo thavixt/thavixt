@@ -7,7 +7,7 @@ export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 
   value?: string;
   defaultValue?: string;
   values: string[];
-  label: string;
+  label?: string;
   /**
    * also a `name` to associate with a `<form>`
    */
@@ -28,7 +28,7 @@ export function RadioInput(props: RadioInputProps) {
 
   return (
     <fieldset className={classes} onChange={onChange} ref={props.ref}>
-      <legend>{props.label}:</legend>
+      {props.label ? <legend>{props.label}:</legend> : null}
       {props.values.map(value => (
         <Radio
           key={value}
