@@ -26,7 +26,7 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
           'min-w-12 px-2 py-1 transition-colors duration-150',
           {
             'cursor-pointer': !(disabled || loading),
-            'cursor-not-allowed opacity-60 select-none': disabled || loading,
+            'cursor-default opacity-60 select-none': disabled || loading,
           },
           {
             'text-slate-100': variant !== 'default',

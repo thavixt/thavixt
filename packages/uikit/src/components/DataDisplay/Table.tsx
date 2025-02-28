@@ -3,12 +3,11 @@ import { ReactElement, RefObject, useImperativeHandle, useRef, useState } from "
 import { TextInput } from "../Input/TextInput";
 import useScrollbar from "thavixt-scrollbar-react";
 import { omitKey } from "../../common/utils";
-import { Button } from "../Basic/Button";
 
 const CHECK_ALL_KEY = 'table_check_all';
 const PADDING_CLASSES = 'px-4 py-2';
 
-const CONTAINER_CLASSES = 'flex-grow overflow-auto rounded-lg text-normal text-slate-500 dark:text-slate-200';
+const CONTAINER_CLASSES = 'flex-grow overflow-auto rounded-lg text-normal text-slate-500 dark:text-slate-300';
 const TABLE_CONTAINER_CLASSES = 'w-full min-h-0';
 const TABLE_CLASSES = 'relative table-auto w-full text-sm bg-slate-100 dark:bg-slate-700';
 
@@ -17,12 +16,16 @@ const TH_CLASSES = classNames(PADDING_CLASSES, 'text-left truncate');
 
 const TBODY_CLASSES = '';
 const PLACEHOLDER_TR_CLASSES = 'h-11';
-const TR_CLASSES = classNames(PLACEHOLDER_TR_CLASSES,'border-collapse border-b border-gray-300 dark:border-gray-700');
+const TR_CLASSES = classNames(
+  PLACEHOLDER_TR_CLASSES,
+  'outline outline-gray-200 dark:outline-gray-600');
 
 const TD_CLASSES = classNames(PADDING_CLASSES, 'whitespace-nowrap truncate max-w-[200px]');
 
 const TFOOT_CLASSES = 'text-xs bg-slate-200 dark:bg-slate-800'
 const TFOOTTD_CLASSES = classNames(PADDING_CLASSES);
+
+const BUTTON_CLASSES = 'w-2 text-xs bg-transparent cursor-pointer disabled:cursor-default disabled:text-transparent';
 
 const CHECK_COL_CLASSES = 'w-10 text-center'
 
@@ -109,6 +112,8 @@ export function Table<T extends Record<string, string | number>>({
 
   const full = pageSize ? true : providedFull;
 
+  // @todo: better spacing/layout
+  // ideally dynamic/responsive...
   const containerClasses = classNames(
     CONTAINER_CLASSES,
     {
@@ -152,7 +157,7 @@ export function Table<T extends Record<string, string | number>>({
   }
 
   const placeholderCount = pageSize ? pageSize - pagedData.length : 0;
-  const placeholderRows = new Array(placeholderCount).fill('placeholder').map((v, i) => <PlaceholderTR key={`${v}-${i}`}/>);
+  const placeholderRows = new Array(placeholderCount).fill('placeholder').map((v, i) => <PlaceholderTR key={`${v}-${i}`} />);
 
   return (
     <div ref={containerRef} className={containerClasses}>
@@ -230,9 +235,27 @@ export function Table<T extends Record<string, string | number>>({
               <td className={classNames(TFOOTTD_CLASSES, 'text-right')} colSpan={Object.keys(dataKeys).length + (search ? 0 : 1)}>
                 {pageSize ? (
                   <div className="flex space-x-2 justify-end items-center">
-                    <Button title="Previous page" className="text-xs !min-w-8 bg-transparent" onClick={prevPage} disabled={!hasPrevPage}>{'<'}</Button>
-                    <span title="Current page" className="text-xs min-w-16 text-center">{currentPage + 1} / {pageCount}</span>
-                    <Button title="Next page" className="text-xs !min-w-8 bg-transparent" onClick={nextPage} disabled={!hasNextPage}>{'>'}</Button>
+                    <button
+                      title="Previous page"
+                      className={BUTTON_CLASSES}
+                      onClick={prevPage}
+                      disabled={!hasPrevPage}
+                    >
+                      {'<'}
+                    </button>
+                    <span
+                      title="Current page"
+                      className="text-xs min-w-16 text-center">
+                      {currentPage + 1} / {pageCount}
+                    </span>
+                    <button
+                      title="Next page"
+                      className={BUTTON_CLASSES}
+                      onClick={nextPage}
+                      disabled={!hasNextPage}
+                    >
+                      {'>'}
+                    </button>
                   </div>
                 ) : null}
               </td>
