@@ -9,7 +9,7 @@ import {
   useRef,
   useState
 } from "react";
-import { Divider } from "../Basic/Divider";
+import { Divider } from "../DataDisplay/Divider";
 import { themedBackgroundClasses } from "../../common/theme";
 
 export type TabsHandle = {

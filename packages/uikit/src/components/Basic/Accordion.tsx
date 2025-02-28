@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { themedBackgroundClasses } from "../../common/theme";
-import { Divider } from "./Divider";
+import { Divider } from "../DataDisplay/Divider";
 
 export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDetailsElement>> {
   defaultOpen?: boolean;

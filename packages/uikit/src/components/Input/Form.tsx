@@ -1,7 +1,7 @@
 import { PropsWithChildren, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { Button } from "../Basic/Button";
-import { Divider } from "../Basic/Divider";
+import { Divider } from "../DataDisplay/Divider";
 import classNames from "classnames";
 
 export interface FormProps extends PropsWithChildren<CommonProps<HTMLFormElement>> {

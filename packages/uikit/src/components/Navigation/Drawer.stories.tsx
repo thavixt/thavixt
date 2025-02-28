@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Drawer } from './Drawer';
 import { Button } from '../Basic/Button';
-import { Divider } from '../Basic/Divider';
+import { Divider } from '../DataDisplay/Divider';
 import { ComponentProps } from 'react';
 
 const meta = {

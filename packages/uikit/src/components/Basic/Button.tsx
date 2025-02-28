@@ -23,14 +23,14 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
       title={title}
       className={
         classNames(
-          'min-w-12 px-2 py-1 transition-colors',
+          'min-w-12 px-2 py-1 transition-colors duration-150',
           {
             'cursor-pointer': !(disabled || loading),
             'cursor-not-allowed opacity-60 select-none': disabled || loading,
           },
           {
-            'text-slate-100 dark:text-slate-700': variant === 'default',
-            'text-slate-700 dark:text-slate-100': variant !== 'default',
+            'text-slate-100': variant !== 'default',
+            'text-slate-700': variant === 'default',
           },
           {
             'bg-gray-200': variant === 'default',

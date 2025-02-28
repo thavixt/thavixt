@@ -3,7 +3,7 @@ import { Divider } from './Divider';
 import { ComponentProps } from 'react';
 
 const meta = {
-  title: 'Basic/Divider',
+  title: 'Data display/Divider',
   component: Divider,
   tags: ['autodocs'],
   render: function StoryComponent(args: ComponentProps<typeof Divider>) {

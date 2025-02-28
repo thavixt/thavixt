@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { ReactNode, useState } from "react";
+import { ReactNode, RefObject, useImperativeHandle, useState } from "react";
 import { Icon } from "../Illustration/Icon";
 
 export type SnackbarType = 'info' | 'success' | 'warning';
@@ -12,23 +12,38 @@ const Snackbar_COLORS: Record<SnackbarType, string> = {
 
 export type SnackbarPosition = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
 
+export type SnackbarHandle = {
+  show: () => void,
+  hide: () => void,
+}
+
 export interface SnackbarProps {
   children: ReactNode;
   className?: string;
   position?: SnackbarPosition;
   type?: SnackbarType;
   open?: boolean;
+  ref?: RefObject<SnackbarHandle | null>,
 }
 
 export function Snackbar({
-  position = 'bottom-right', className, children, type = 'info', open = false
+  position = 'bottom-right', className, children, type = 'info', open = false, ref
 }: SnackbarProps) {
   const [hidden, setHidden] = useState(false);
 
+  useImperativeHandle(
+    ref,
+    () => ({
+      show: () => setHidden(false),
+      hide: () => setHidden(true),
+    }),
+    [],
+  );
+
   const classes = classNames(
     'flex items-center space-x-2 p-2 text-slate-100 w-fit max-w-80 fixed',
-    'rounded-sm shadow-lg shadow-slate-400 dark:shadow-slate-800',
-    'transition-opacity ease-in-out delay-150 duration-300',
+    'rounded-sm shadow-lg dark:shadow-gray-500',
+    'transition-opacity ease-in-out duration-200',
     {
       'opacity-0 pointer-events-none': !open || hidden,
       'opacity-100': open && !hidden,
