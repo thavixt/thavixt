@@ -52,5 +52,8 @@
   "dependencies": {
     "thavixt-scrollbar-react": "1.6.4"
   },
-  "gitHead": "b7a323c9a02dd07a64fe36d125e15aa6ead65ad3"
+  "gitHead": "b7a323c9a02dd07a64fe36d125e15aa6ead65ad3",
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
 }
