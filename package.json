@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/uikit"
+    "packages/uikit",
+    "packages/uikit-website"
   ],
   "scripts": {
     "lerna:build": "npx lerna run build --scope=@thavixt/uikit",
-    "lerna:publish": "npx lerna publish --no-private --force-publish",
+    "lerna:publish": "npx lerna publish --no-private --force-publish --scope=@thavixt/uikit",
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
     "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
     "storybook:deploy": "npm run storybook:clear && storybook build && cp -r .vercel storybook-static/.vercel && vercel --prod storybook-static",
