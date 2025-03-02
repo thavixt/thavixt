@@ -4,8 +4,8 @@ import type { StorybookConfig } from "@storybook/react-vite";
 const config: StorybookConfig = {
   stories: [
     '../packages/uikit/src/Readme.mdx',
-    "../packages/uikit/src/components/**/*.stories.mdx",
-    "../packages/uikit/src/components/**/*.stories.@(js|jsx|ts|tsx)"
+    "../packages/uikit/src/stories/**/*.stories.mdx",
+    "../packages/uikit/src/stories/**/*.stories.@(js|jsx|ts|tsx)"
   ],
   addons: [
     getAbsolutePath("@chromatic-com/storybook"),

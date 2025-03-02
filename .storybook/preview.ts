@@ -19,7 +19,16 @@ const preview: Preview = {
     // storySort: {
     //   method: 'alphabetical',
     //   includeNames: true,
-    //   order: ['Basic', 'Input', 'Utility'],
+    //   order: [
+    //     'Basic',
+    //     'Data display',
+    //     'Feedback',
+    //     'Illustration',
+    //     'Input',
+    //     'Layout',
+    //     'Navigation',
+    //     'Utility',
+    //   ],
     // },
   },
 };
