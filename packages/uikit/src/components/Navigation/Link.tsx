@@ -13,7 +13,8 @@ export interface LinkProps extends PropsWithChildren<CommonProps<HTMLAnchorEleme
 
 export function Link(props: LinkProps) {
   const classes = classNames(
-    'font-semibold text-indigo-500 hover:underline visited:text-purple-600',
+    'font-semibold hover:underline',
+    '!text-indigo-500 visited:text-purple-600',
     'inline-flex items-center',
     themedTextClasses,
     props.className,

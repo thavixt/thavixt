@@ -4,26 +4,5 @@
 
 :root,
 .docs-story {
-  @apply dark:bg-slate-900;
+  @apply bg-[#fdfdfd] dark:bg-[#333333];
 }
-
-/* .docs-story > div {
-  @apply max-h-[400px];
-} */
-
-/* .docs-story > div:first-child {
-  @apply p-0;
-  @apply pb-6;
-} */
-
-/* .sb-main-padded {
-  @apply !p-0;
-} */
-
-/* .innerZoomElementWrapper > * {
-  @apply !border-1 !border-red-600;
-} */
-
-/* .innerZoomElementWrapper > div {
-  @apply !border-0;
-} */

@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { MouseEvent, PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { Spinner } from "../Illustration/Spinner";
+import { Typography } from "../DataDisplay/Typography";
 
 export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>> {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -53,7 +54,7 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
       }
     >
       <div className="flex items-center justify-center">
-        {loading ? <Spinner type="TubeSpinner" /> : children}
+        {loading ? <Spinner type="TubeSpinner" /> : <Typography.Button>{children}</Typography.Button>}
       </div>
     </button>
   )
