@@ -84,10 +84,13 @@ function TreeItem({ item, onClick, defaultOpen }: TreeItemProps) {
       'ml-6': !hasChildren,
     },
   );
-  const childClasses = classNames({
-    'ml-4': open,
-    'hidden': !open,
-  });
+  const childClasses = classNames(
+    'transition-all ml-0 opacity-0 h-0',
+    {
+      '-z-1': !open,
+      'ml-4 opacity-100 h-full z-10': open,
+    },
+  );
   const svgClasses = classNames(
     'size-5 transition-transform rotate-270',
     {
