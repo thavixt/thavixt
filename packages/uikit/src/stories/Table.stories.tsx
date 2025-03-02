@@ -36,7 +36,7 @@ const meta = {
       { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$999', year: 2020 },
       { key: 'unknown', name: `Unidentifiable tech thing ${crypto.randomUUID()}`, price: '$299' },
       { key: 'lenovoFx205', name: 'Lenovo FX 205', category: 'Laptop', price: '$649', year: 2019 },
-      ...getMockData(35)
+      ...getMockData(100)
     ],
     dataKeys: {
       name: 'Name',
@@ -73,7 +73,7 @@ export const Paginated: Story = {
 
 export const Checkable: Story = {
   args: {
-    check: true,
+    checkable: true,
   }
 };
 
@@ -81,6 +81,22 @@ export const FullFeatured: Story = {
   args: {
     search: true,
     pageSize: 10,
-    check: true,
+    checkable: true,
   }
 };
+
+// @todo
+// export const FullFeaturedInContainer: Story = {
+//   args: {
+//     search: true,
+//     pageSize: 10,
+//     checkable: true,
+//   },
+//   render: function StoryComponent(args: ComponentProps<typeof Table>) {
+//     return (
+//       <div className="size-1/2 border-2 border-red-500">
+//         <Table {...args} />
+//       </div>
+//     )
+//   }
+// };

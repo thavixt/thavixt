@@ -44,3 +44,9 @@ export const Round: Story = {
     round: true,
   },
 };
+
+export const Silent: Story = {
+  args: {
+    variant: 'silent',
+  },
+};

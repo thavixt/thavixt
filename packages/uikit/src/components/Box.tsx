@@ -39,6 +39,6 @@ function getSizeClasses(size?: Size) {
     case '2xl':
       return 'w-fit max-w-2xl';
     default:
-      return 'w-fit';
+      return 'w-full';
   }
 }

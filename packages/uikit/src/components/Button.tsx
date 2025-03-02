@@ -1,12 +1,12 @@
 import classNames from "classnames";
-import { MouseEvent, PropsWithChildren } from "react";
+import { HTMLAttributes, MouseEvent, PropsWithChildren } from "react";
 import { CommonProps } from "../common/commonProps";
 import { Spinner } from "./Spinner";
 import { Typography } from "./Typography";
 
-export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>> {
+export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>>, HTMLAttributes<HTMLButtonElement> {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  variant?: 'default' | 'primary' | 'secondary' | 'danger',
+  variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'silent',
   type?: HTMLButtonElement['type'],
   loading?: boolean;
   disabled?: boolean;
@@ -14,7 +14,9 @@ export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonEle
   title?: string;
 }
 
-export function Button({ disabled, loading, ref, onClick, type = 'button', className, children, variant = 'default', round, title }: ButtonProps) {
+export function Button({
+  disabled, loading, ref, onClick, type = 'button', className, children, variant = 'default', round, title, ...props
+}: ButtonProps) {
   return (
     <button
       ref={ref}
@@ -24,14 +26,15 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
       title={title}
       className={
         classNames(
-          'min-w-12 px-2 py-1 transition-colors duration-150',
+          'min-w-10 px-2 py-1 transition-colors duration-150',
           {
             'cursor-pointer': !(disabled || loading),
-            'cursor-default opacity-60 select-none': disabled || loading,
+            'cursor-default opacity-30 select-none': disabled || loading,
           },
           {
             'text-slate-100': variant !== 'default',
             'text-slate-700': variant === 'default',
+            'text-slate-700 dark:text-slate-100': variant === 'silent',
           },
           {
             'bg-gray-200': variant === 'default',
@@ -44,14 +47,16 @@ export function Button({ disabled, loading, ref, onClick, type = 'button', class
             'hover:bg-green-600 active:bg-green-700': !(disabled || loading) && variant === 'primary',
             'hover:bg-indigo-600 active:bg-indigo-700': !(disabled || loading) && variant === 'secondary',
             'hover:bg-red-600 active:bg-red-700': !(disabled || loading) && variant === 'danger',
+            'hover:bg-gray-100 active:bg-gray-200 hover:dark:bg-gray-700 active:dark:bg-gray-600': !(disabled || loading) && variant === 'silent',
           },
           {
             'rounded-sm': !round,
-            'h-[60px] w-[60px] border-[50%] rounded-[50%]': round,
+            'h-[48px] w-[48px] border-[50%] rounded-[50%]': round,
           },
           className,
         )
       }
+      {...props}
     >
       <div className="flex items-center justify-center">
         {loading ? <Spinner type="TubeSpinner" /> : <Typography.Button>{children}</Typography.Button>}

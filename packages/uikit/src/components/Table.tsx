@@ -3,11 +3,13 @@ import { ReactElement, RefObject, useImperativeHandle, useRef, useState } from "
 import { TextInput } from "./TextInput";
 import useScrollbar from "thavixt-scrollbar-react";
 import { omitKey } from "../common/utils";
+import { Icon } from "./Icon";
+import { DEFAULT_SCROLLBAR_STYLES } from "./Scrollbar";
 
 const CHECK_ALL_KEY = 'table_check_all';
 const PADDING_CLASSES = 'px-4 py-2';
 
-const CONTAINER_CLASSES = 'flex-grow overflow-auto rounded-lg text-normal text-slate-500 dark:text-slate-300';
+const CONTAINER_CLASSES = 'flex-grow shadow-lg max-h-full overflow-auto rounded-lg text-normal text-slate-500 dark:text-slate-300';
 const TABLE_CONTAINER_CLASSES = 'w-full min-h-0';
 const TABLE_CLASSES = 'relative table-auto w-full text-sm bg-slate-100 dark:bg-slate-700';
 
@@ -25,7 +27,7 @@ const TD_CLASSES = classNames(PADDING_CLASSES, 'whitespace-nowrap truncate max-w
 const TFOOT_CLASSES = 'text-xs bg-slate-200 dark:bg-slate-800'
 const TFOOTTD_CLASSES = classNames(PADDING_CLASSES);
 
-const BUTTON_CLASSES = 'w-2 text-xs bg-transparent cursor-pointer disabled:cursor-default disabled:text-transparent';
+const BUTTON_CLASSES = 'w-fit text-xs bg-transparent cursor-pointer disabled:cursor-default disabled:text-transparent';
 
 const CHECK_COL_CLASSES = 'w-10 text-center'
 
@@ -56,7 +58,10 @@ export interface TableProps<T extends Record<string, string | number>> {
   /** Pagination - number of rows a single page displays */
   pageSize?: number;
   /** Selectable - render a checkbox column at the start */
-  check?: boolean;
+  checkable?: boolean;
+  /** Tighter spacing */
+  // @todo
+  // compact?: boolean;
 
   actions?: (dataKey: DataKey, row: T) => ReactElement;
   onSelect?: (selectedDataKeys: DataKey[], data: T[]) => void;
@@ -64,7 +69,7 @@ export interface TableProps<T extends Record<string, string | number>> {
 
 export function Table<T extends Record<string, string | number>>({
   actions,
-  check,
+  checkable,
   className,
   data,
   dataKeys,
@@ -76,7 +81,7 @@ export function Table<T extends Record<string, string | number>>({
   search,
   onSelect,
 }: TableProps<T>) {
-  const containerRef = useScrollbar<HTMLDivElement>();
+  const containerRef = useScrollbar<HTMLDivElement>({ styles: DEFAULT_SCROLLBAR_STYLES });
   const tableRef = useRef<HTMLTableElement>(null);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -110,10 +115,8 @@ export function Table<T extends Record<string, string | number>>({
     [checked, containerRef, data],
   );
 
+  // @todo fix layout / should fit in container, viewport etc..
   const full = pageSize ? true : providedFull;
-
-  // @todo: better spacing/layout
-  // ideally dynamic/responsive...
   const containerClasses = classNames(
     CONTAINER_CLASSES,
     {
@@ -156,8 +159,10 @@ export function Table<T extends Record<string, string | number>>({
     });
   }
 
-  const placeholderCount = pageSize ? pageSize - pagedData.length : 0;
-  const placeholderRows = new Array(placeholderCount).fill('placeholder').map((v, i) => <PlaceholderTR key={`${v}-${i}`} />);
+  const placeholderRows = [];
+  if (!filteredData.length) {
+    placeholderRows.push(<PlaceholderTR key="notfound_placeholder" checkable={checkable} />);
+  }
 
   return (
     <div ref={containerRef} className={containerClasses}>
@@ -165,7 +170,7 @@ export function Table<T extends Record<string, string | number>>({
         <table ref={tableRef} className={TABLE_CLASSES}>
           <thead className={theadClasses}>
             <tr>
-              {check ? (
+              {checkable ? (
                 <th className={CHECK_COL_CLASSES}>
                   <input
                     checked={checked.size === data.length}
@@ -196,24 +201,34 @@ export function Table<T extends Record<string, string | number>>({
             {pagedData.map(row => {
               return (
                 <tr key={row.key} className={TR_CLASSES}>
-                  {check ? (
+                  {checkable ? (
                     <td className={CHECK_COL_CLASSES}>
-                      <input type="checkbox" name={row.key.toString()} onChange={onCheck} checked={checked.has(row.key)} />
+                      <input className="cursor-pointer" type="checkbox" name={row.key.toString()} id={row.key.toString()} onChange={onCheck} checked={checked.has(row.key)} />
                     </td>
                   ) : null}
                   {Object.keys(dataKeys).map((key) => {
                     const cellContent = row[key] ?? placeholder;
-                    return (
-                      <td
-                        title={cellContent.toString()}
-                        key={`td-${key}`}
-                        className={
-                          key === primaryKey ? classNames(TD_CLASSES, 'font-bold', 'text-left') : classNames(TD_CLASSES, 'text-right')
-                        }
-                      >
-                        {cellContent}
-                      </td>
-                    )
+                    if (key === primaryKey) {
+                      return (
+                        <td
+                          title={cellContent.toString()}
+                          key={`td-${key}`}
+                          className={classNames(TD_CLASSES, 'font-bold', 'text-left')}
+                        >
+                          <label className="cursor-pointer" htmlFor={row.key.toString()}>{cellContent}</label>
+                        </td>
+                      )
+                    } else {
+                      return (
+                        <td
+                          title={cellContent.toString()}
+                          key={`td-${key}`}
+                          className={classNames(TD_CLASSES, 'text-right')}
+                        >
+                          {cellContent}
+                        </td>
+                      )
+                    }
                   })}
                   {actions ? (
                     <td className={classNames(TD_CLASSES, "flex items-center")}>
@@ -228,24 +243,24 @@ export function Table<T extends Record<string, string | number>>({
           <tfoot className={tfootClasses} hidden={!search && !pageSize}>
             <tr>
               {search ? (
-                <td className={TFOOTTD_CLASSES} colSpan={check ? 2 : 1}>
+                <td className={TFOOTTD_CLASSES} colSpan={checkable ? 2 : 1}>
                   <TextInput placeholder="Search" name="search" onChange={setSearchTerm} />
                 </td>
               ) : null}
               <td className={classNames(TFOOTTD_CLASSES, 'text-right')} colSpan={Object.keys(dataKeys).length + (search ? 0 : 1)}>
                 {pageSize ? (
-                  <div className="flex space-x-2 justify-end items-center">
+                  <div className="flex justify-end items-center">
                     <button
                       title="Previous page"
                       className={BUTTON_CLASSES}
                       onClick={prevPage}
                       disabled={!hasPrevPage}
                     >
-                      {'<'}
+                      <Icon icon="Arrow" height={3} className="rotate-180" />
                     </button>
                     <span
                       title="Current page"
-                      className="text-xs min-w-16 text-center">
+                      className="text-sm min-w-16 text-center">
                       {currentPage + 1} / {pageCount}
                     </span>
                     <button
@@ -254,7 +269,7 @@ export function Table<T extends Record<string, string | number>>({
                       onClick={nextPage}
                       disabled={!hasNextPage}
                     >
-                      {'>'}
+                      <Icon icon="Arrow" height={3} />
                     </button>
                   </div>
                 ) : null}
@@ -267,10 +282,11 @@ export function Table<T extends Record<string, string | number>>({
   );
 }
 
-function PlaceholderTR() {
+function PlaceholderTR({checkable}: { checkable?: boolean }) {
   return (
     <tr className={PLACEHOLDER_TR_CLASSES}>
-      {/* <td className={TD_CLASSES} /> */}
+      {checkable ? <td /> : null}
+      <td className={TD_CLASSES}>No rows found</td>
     </tr>
   );
 }

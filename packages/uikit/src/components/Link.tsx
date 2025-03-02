@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { PropsWithChildren, ReactNode } from "react";
 import { CommonProps } from "../common/commonProps";
-import { themedTextClasses } from "../common/theme";
 
 export interface LinkProps extends PropsWithChildren<CommonProps<HTMLAnchorElement>> {
   /** URL to go to */
@@ -14,10 +13,9 @@ export interface LinkProps extends PropsWithChildren<CommonProps<HTMLAnchorEleme
 
 export function Link({ blank = true, ...props}: LinkProps) {
   const classes = classNames(
-    'font-semibold hover:underline underline-offset-4',
-    '!text-indigo-500 visited:text-purple-600',
     'inline-flex items-center',
-    themedTextClasses,
+    'font-semibold underline underline-offset-4',
+    'text-indigo-500 hover:text-blue-500 visited:text-purple-600',
     props.className,
   );
 

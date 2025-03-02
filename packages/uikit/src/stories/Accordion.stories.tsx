@@ -13,8 +13,8 @@ const meta = {
     ),
     defaultOpen: false,
     onOpen: fn(),
-    openedTitle: <Typography.Caption>How xyz actually works</Typography.Caption>,
-    title: <Typography.Caption>An important note about xyz</Typography.Caption>,
+    openedTitle: <Typography.Body>How xyz actually works</Typography.Body>,
+    title: <Typography.Body>An important note about xyz</Typography.Body>,
   },
 } satisfies Meta<typeof Accordion>;
 

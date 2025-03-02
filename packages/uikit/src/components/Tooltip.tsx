@@ -16,10 +16,10 @@ export function Tooltip({ ref, className, children, tooltip, position = 'bottom'
   const tooltipClasses = classNames(
     'min-w-24 z-100 max-w-64 w-fit h-fit',
     'text-xs text-slate-100 bg-slate-500 rounded-sm drop-shadow-lg px-2 py-1',
-    'group-hover:block group-hover:opacity-100',
+    'group-hover:block group-hover:opacity-100 transition-opacity',
     {
-      'block': visible,
-      'hidden': !visible,
+      'block opacity-100': visible,
+      'opacity-0 pointer-events-none': !visible,
       'absolute inset-x-1/3 bottom-full mb-3': position === 'top',
       'absolute inset-x-1/3 top-full mt-3': position === 'bottom',
       'absolute inset-y-1/4 right-full mr-3': position === 'left',

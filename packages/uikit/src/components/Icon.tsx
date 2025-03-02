@@ -11,12 +11,12 @@ export interface IconProps {
   onClick?: () => void;
 }
 
-export function Icon({ icon, height = 5, className, onClick }: IconProps) {
+export function Icon({ icon, height = 4, className, onClick }: IconProps) {
   const iconFn = IconList[icon];
 
   return (
-    <span className={className} onClick={onClick}>
-      {createElement(iconFn, { height })}
+    <span onClick={onClick}>
+      {createElement(iconFn, { height, className })}
     </span>
   );
 }

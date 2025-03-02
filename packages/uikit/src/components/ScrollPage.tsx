@@ -13,8 +13,8 @@ interface ScrollPageProps extends CommonProps<HTMLButtonElement> {
 }
 
 const DEFAULT_LABELS: Record<ScrollTo, JSX.Element> = {
-  bottom: <Icon icon="ArrowDown" />,
-  top: <Icon icon="ArrowUp" />,
+  bottom: <Icon icon="Arrow" className="rotate-90" />,
+  top: <Icon icon="Arrow" className="-rotate-90" />,
 }
 
 export function ScrollPage({ to = 'top', ...props }: ScrollPageProps) {

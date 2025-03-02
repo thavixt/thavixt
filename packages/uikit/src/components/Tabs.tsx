@@ -62,7 +62,7 @@ export function Tabs({ defaultTabIndex = 0, ref, ...props }: TabsProps) {
       })}
       </div>
       <Divider />
-      <div className="flex flex-col pt-2">
+      <div className="flex flex-col pt-2 relative">
         {tabs.map((c, i) => {
           return cloneElement(c, { active: i === activeTab, key: `tab-${i}` })
         })}
@@ -78,10 +78,16 @@ export interface TabProps {
   active?: boolean;
 }
 function Tab({ children, active }: PropsWithChildren<TabProps>) {
+  const classes = classNames(
+    'transition-all duration-200',
+    {
+      'absolute w-full h-full': !active,
+      'opacity-0 h-0 -ml-1': !active,
+      'opacity-100 h-full ml-0': active,
+    }
+  )
   return (
-    <div className={classNames({
-      'hidden': !active,
-    })}>
+    <div className={classes}>
       {children}
     </div>
   )
