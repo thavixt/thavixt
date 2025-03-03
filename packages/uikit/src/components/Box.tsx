@@ -10,7 +10,7 @@ export type BoxProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
   type?: 'card' | 'paper';
 };
 
-export function Box({ type = 'card', className, children, size = 'sm' }: BoxProps) {
+export function Box({ type = 'card', className, children, size = 'full' }: BoxProps) {
   const slots = Children.toArray(children) as ReactElement[];
   const header = slots.filter((child) => child.type === Header);
   const content = slots.filter((child) => child.type === Content);

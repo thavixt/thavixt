@@ -121,7 +121,7 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
     } else {
       setSelected(prev => prev.filter(key => !selectedInpuNames.includes(key)));
     }
-    
+
     // if (from === 'available') {
     //   setAvailableChecked([]);
     // } else {
@@ -182,20 +182,22 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
   return (
     <div ref={ref} className="w-full">
       <form ref={formRef} className={classes}>
-        <Box.Paper className="flex flex-col space-y-2" onDrop={onDrop('available')} onDragOver={onDragOver}>
-          <div className="flex justify-between items-center">
-            <Button variant="silent" onClick={selectAll('available')}>Select all</Button>
-            <small>({items.length - selected.length})</small>
-            <Button variant="silent" onClick={selectAll('available', false)}>Deselect all</Button>
-          </div>
-          <Scrollbar className={scrollbarClasses}>
-            {availableItems.map(item => (
-              <div ref={sourceScrollRef} key={item.key} className={itemClasses} draggable onDragStart={onDragStart('available')} onDragEnd={onDragEnd}>
-                <TransferListListItem item={item} side="available" onCheck={onCheck('available')} />
-              </div>
-            ))}
-          </Scrollbar>
-        </Box.Paper>
+        <Box type="paper" className="flex flex-col space-y-2" onDrop={onDrop('available')} onDragOver={onDragOver}>
+          <Box.Content>
+            <div className="flex justify-between items-center pb-1">
+              <Button variant="silent" onClick={selectAll('available')}>Select all</Button>
+              <small>({items.length - selected.length})</small>
+              <Button variant="silent" onClick={selectAll('available', false)}>Deselect all</Button>
+            </div>
+            <Scrollbar className={scrollbarClasses}>
+              {availableItems.map(item => (
+                <div ref={sourceScrollRef} key={item.key} className={itemClasses} draggable onDragStart={onDragStart('available')} onDragEnd={onDragEnd}>
+                  <TransferListListItem item={item} side="available" onCheck={onCheck('available')} />
+                </div>
+              ))}
+            </Scrollbar>
+          </Box.Content>
+        </Box>
 
         <div className="flex flex-col justify-center space-y-1">
           <Button
@@ -232,20 +234,22 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
           </Button>
         </div>
 
-        <Box.Paper className="flex flex-col space-y-2" onDrop={onDrop('selected')} onDragOver={onDragOver}>
-          <div className="flex justify-between items-center">
-            <Button className="text-xs" variant="silent" onClick={selectAll('selected')}>Select all</Button>
-            <small>({selected.length})</small>
-            <Button className="text-xs" variant="silent" onClick={selectAll('selected', false)}>Deselect all</Button>
-          </div>
-          <Scrollbar className={scrollbarClasses}>
-            {selectedItems.map(item => (
-              <div ref={selectedScrollRef} key={item.key} className={itemClasses} draggable onDragStart={onDragStart('selected')}>
-                <TransferListListItem item={item} side="selected" onCheck={onCheck('selected')} />
-              </div>
-            ))}
-          </Scrollbar>
-        </Box.Paper>
+        <Box type="paper" className="flex flex-col space-y-2" onDrop={onDrop('selected')} onDragOver={onDragOver}>
+          <Box.Content>
+            <div className="flex justify-between items-center pb-1">
+              <Button className="text-xs" variant="silent" onClick={selectAll('selected')}>Select all</Button>
+              <small>({selected.length})</small>
+              <Button className="text-xs" variant="silent" onClick={selectAll('selected', false)}>Deselect all</Button>
+            </div>
+            <Scrollbar className={scrollbarClasses}>
+              {selectedItems.map(item => (
+                <div ref={selectedScrollRef} key={item.key} className={itemClasses} draggable onDragStart={onDragStart('selected')}>
+                  <TransferListListItem item={item} side="selected" onCheck={onCheck('selected')} />
+                </div>
+              ))}
+            </Scrollbar>
+          </Box.Content>
+        </Box>
       </form>
     </div>
   )
@@ -265,7 +269,7 @@ function TransferListListItem({ item, side, onCheck }: TransferListListItemProps
     <>
       <input className="peer cursor-pointer" type="checkbox" name={side} id={item.key} onChange={onChange} />
       <label className="peer-checked:font-semibold cursor-pointer pl-2 w-full" htmlFor={item.key}>
-        <Typography.Body>{item.content}</Typography.Body>
+        <Typography.Text>{item.content}</Typography.Text>
       </label>
     </>
   )

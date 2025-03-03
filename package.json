@@ -8,11 +8,14 @@
     "packages/uikit-website"
   ],
   "scripts": {
+    "chromatic": "npx chromatic --project-token=chpt_7aad75dfee8285c",
+    "build-storybook": "storybook build",
     "lerna:build": "npx lerna run build --scope=@thavixt/uikit",
     "lerna:publish": "npx lerna publish --no-private --force-publish",
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
     "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
     "storybook:deploy": "npm run storybook:clear && storybook build && cp -r .vercel storybook-static/.vercel && vercel --prod storybook-static",
+    "storybook:test": "npm run chromatic",
     "publish-deploy": "npm run lerna:build && npm run lerna:publish && npm run storybook:deploy"
   },
   "dependencies": {
@@ -37,6 +40,7 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "chromatic": "^11.26.1",
     "eslint": "^9.19.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
