@@ -3,8 +3,10 @@ import { CommonProps } from "../common/commonProps";
 import { Button } from "./Button";
 import { Divider } from "./Divider";
 import classNames from "classnames";
+import { Icon } from "./Icon";
 
 export interface FormProps extends PropsWithChildren<CommonProps<HTMLFormElement>> {
+  border?: boolean;
   cancelText?: string,
   resetText?: string,
   submitText?: string,
@@ -16,9 +18,10 @@ export interface FormProps extends PropsWithChildren<CommonProps<HTMLFormElement
 }
 
 export function Form({
-  cancelText,
-  resetText,
-  submitText,
+  border,
+  cancelText = 'Cancel',
+  resetText = 'Reset',
+  submitText = 'Submit',
   children,
   className,
   ref,
@@ -30,17 +33,22 @@ export function Form({
   const formName = useRef(`dialogForm_${crypto.randomUUID().slice(0, 8)}`);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const formElement = document.forms.namedItem(formName.current)!;
     const formData = Object.fromEntries(new FormData(formElement).entries());
     try {
+      setError(null);
       setLoading(true);
+      setSuccess(false);
       await providedOnSubmit?.(formData);
       setLoading(false);
+      setSuccess(true);
       await onSubmitSuccess?.(formData);
     } catch (e) {
+      setSuccess(false);
       const error = e as Error;
       console.warn(e);
       const name = error.name ?? 'Error'
@@ -55,6 +63,7 @@ export function Form({
 
   const onCancel = () => {
     setError(null);
+    setSuccess(false);
     onFormCancel?.();
   };
 
@@ -64,11 +73,14 @@ export function Form({
       return;
     }
     setError(null);
+    setSuccess(false);
   }
 
+  const disabled = loading || success;
+
   return (
-    <form ref={ref} className={classNames(className, 'group')} id={formName.current} method="dialog" onSubmit={onSubmit} onReset={onReset}>
-      <fieldset disabled={loading}>
+    <form ref={ref} className={classNames(className, 'group rounded-md', { 'p-4 border border-slate-300 dark:border-slate-600': border })} id={formName.current} method="dialog" onSubmit={onSubmit} onReset={onReset}>
+      <fieldset disabled={disabled}>
         <div className="flex flex-col space-y-4">
           <div className="flex flex-col space-y-2">
             {children}
@@ -82,17 +94,19 @@ export function Form({
           <div className="flex space-x-2 justify-between">
             <div className="flex space-x-2">
               {onFormCancel ? (
-                <Button variant="default" onClick={onCancel} disabled={loading}>
-                  {typeof cancelText === 'string' ? cancelText : 'Cancel'}
+                <Button variant="default" onClick={onCancel} disabled={disabled}>
+                  {cancelText}
                 </Button>
               ) : null}
-              <Button variant="default" type="reset" disabled={loading}>
-                {resetText ?? 'Reset'}
+              <Button variant="default" type="reset" disabled={disabled}>
+                {resetText}
               </Button>
             </div>
-            <Button type="submit" variant="primary" loading={loading}>
-              {submitText ?? 'Submit'}
-            </Button>
+            <div className="flex items-center space-x-2">
+              <Button type="submit" variant="primary" loading={loading} disabled={disabled}>
+                {success ? <Icon icon="Check" /> : submitText}
+              </Button>
+            </div>
           </div>
         </div>
       </fieldset>

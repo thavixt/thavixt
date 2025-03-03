@@ -4,13 +4,14 @@ import { WithLabel } from "../common/WithLabel";
 import { ReactElement, useEffect, useState } from "react";
 import { themedInputClasses } from "../common/theme";
 
-export interface RangeInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 'children'> {
+export interface RangeInputProps extends Omit<CommonProps<HTMLInputElement>, 'children'> {
   defaultValue?: number;
   label?: string;
   max: number;
   min: number;
   step?: number;
   disabled?: boolean;
+  required?: boolean;
   /**
    * also a `name` to associate with a `<form>`
    */
@@ -34,7 +35,7 @@ export interface RangeInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 
   showValue?: boolean;
 }
 
-export function RangeInput({ showValue = true, ...props }: RangeInputProps) {
+export function RangeInput({ required, showValue = true, ref, ...props }: RangeInputProps) {
   const classes = classNames(
     'flex space-x-2 bg-slate-400 rounded-md h-2 disabled:opacity-50',
     themedInputClasses,
@@ -63,11 +64,12 @@ export function RangeInput({ showValue = true, ...props }: RangeInputProps) {
 
   return (
     <div className="flex space-x-2">
-      <WithLabel label={props.label} id={props.name}>
+      <WithLabel label={props.label} id={props.name} required={required}>
         <div className="flex space-x-1 items-center">
           {props.before?.(getValue(currentValue), props.min, props.max)}
           <input
-            // required
+            ref={ref}
+            required={required}
             className={classes}
             defaultValue={typeof props.value === 'undefined' ? props.defaultValue : undefined}
             disabled={props.disabled}

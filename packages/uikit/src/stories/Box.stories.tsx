@@ -1,39 +1,46 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Box as B, BoxStyles, BoxType } from '../components/Box';
-import { createElement } from 'react';
+import { Box } from '../components/Box';
 import { Typography as T } from '../components/Typography';
-import { Link } from '../components/Link';
-
-const lorem = 'Lorem ipsum dolor sit amet';
-const lorem1 = 'Consectetur adipisicing elit. Ameci vero?';
-const lorem2 = 'Voluptate, similique ab nemo, voluptas perferendis nihil tempore libero et molestias iusto aperiam! Minus eligendi error cum amet natus';
-
-const boxContent = <>
-  <T.Title>{lorem}</T.Title>
-  <T.Caption>{lorem1}</T.Caption>
-  <T.Body>{lorem2}</T.Body>
-  <Link href="javascript:;">Click here for more</Link>
-</>
+import { ComponentProps } from 'react';
+import { Form } from '../components/Form';
+import { TextInput } from '../components/TextInput';
+import { RadioInput } from '../components/RadioInput';
+import { NumberInput } from '../components/NumberInput';
+import { SwitchInput } from '../components/SwitchInput';
+import { onSubmit } from './utils';
 
 const meta = {
   title: 'Layout/Box',
-  // component: Typography,
+  component: Box,
   tags: ['autodocs'],
-  render: function StoryComponent() {
+  render: function StoryComponent(args: ComponentProps<typeof Box>) {
     return (
-      <div className="flex flex-col space-y-8">
-        {Object.keys(BoxStyles).map(key => (
-          <div key={key} className='grid grid-cols-[100px_auto] gap-4 items-center'>
-            <T.Body>Box.{key}</T.Body>
-            <div>
-              {createElement(B[key as BoxType], { children: boxContent })}
-            </div>
-          </div>
-        ))}
-      </div>
+      <Box {...args}>
+        <Box.Header>
+          <T.Title>Registering your pet</T.Title>
+        </Box.Header>
+        <Box.Content>
+          <T.Caption>
+            Required by the government in your state.
+          </T.Caption>
+          <T.Body>
+            Please provide the needed information about your pet. This assumes you currently keep the aformentioned animal in your place of residence.
+          </T.Body>
+          <Form border onSubmit={onSubmit}>
+            <TextInput required label="Name" name='other' placeholder="Your pet's name" />
+            <NumberInput required defaultValue={2} label='Age' name='age' placeholder='#' />
+            <RadioInput required defaultValue='Cat' label='Species' name='species' values={['Cat', 'Dog']} />
+            <SwitchInput required defaultChecked={true} label='Chipped' name='chipped' />
+          </Form>
+        </Box.Content>
+      </Box>
     )
+  },
+  args: {
+    type: 'card',
+    size: 'sm',
   }
-} satisfies Meta<typeof T>;
+} satisfies Meta<typeof Box>;
 
 export default meta;
 

@@ -8,10 +8,10 @@ export interface LinkProps extends PropsWithChildren<CommonProps<HTMLAnchorEleme
   /** Render an icon on the right */
   icon?: ReactNode;
   /** Open link in new window (target="_blank") - default `true` */
-  blank?: boolean,
+  self?: boolean,
 };
 
-export function Link({ blank = true, ...props}: LinkProps) {
+export function Link({ self, ...props}: LinkProps) {
   const classes = classNames(
     'inline-flex items-center',
     'font-semibold underline underline-offset-4',
@@ -20,7 +20,7 @@ export function Link({ blank = true, ...props}: LinkProps) {
   );
 
   return (
-    <a ref={props.ref} className={classes} href={props.href} target={blank ? '_blank' : undefined}>
+    <a ref={props.ref} className={classes} href={props.href} target={self ? '_self' : '_blank'}>
       {props.children}
       {props.icon}
     </a>

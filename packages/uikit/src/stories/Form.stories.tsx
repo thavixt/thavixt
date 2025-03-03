@@ -4,6 +4,7 @@ import { ComponentProps } from 'react';
 import { Form } from '../components/Form';
 import { TextInput } from '../components/TextInput';
 import { NumberInput } from '../components/NumberInput';
+import { onSubmit } from './utils';
 
 const meta = {
   title: 'Input/Form',
@@ -12,9 +13,9 @@ const meta = {
   render: function StoryComponent(args: ComponentProps<typeof Form>) {
     return (
       <Form {...args}>
-        <TextInput label="Name" placeholder="Your name" name='name'/>
-        <TextInput label="Occupation" placeholder="Job title" name='job'/>
-        <NumberInput label='Age' defaultValue={18} name='experience'/>
+        <TextInput required label="Name" placeholder="Your name" name='name' />
+        <TextInput required defaultValue='software engineer' label="Occupation" placeholder="Job title" name='job' />
+        <NumberInput min={18} defaultValue={25} label='Age' name='age' />
       </Form>
     )
   },
@@ -32,17 +33,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    onSubmit: fn(async () => {
-      await new Promise(resolve => setTimeout(resolve, 2_000));
-    }),
-  },
-};
-
-export const ErrorOnSubmit: Story = {
-  args: {
-    onSubmit: fn(async () => {
-      await new Promise(resolve => setTimeout(resolve, 2_000));
-      throw new Error('uhmmm, are you really called that?');
-    }),
+    onSubmit,
   },
 };

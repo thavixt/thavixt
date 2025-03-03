@@ -7,7 +7,7 @@ const meta = {
   component: Button,
   tags: ['autodocs'],
   args: {
-    children: 'Click here',
+    children: 'Click',
     onClick: fn(),
   },
 } satisfies Meta<typeof Button>;
@@ -39,9 +39,9 @@ export const Danger: Story = {
   },
 };
 
-export const Round: Story = {
+export const Icon: Story = {
   args: {
-    round: true,
+    icon: 'Check',
   },
 };
 

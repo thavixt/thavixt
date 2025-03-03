@@ -10,11 +10,12 @@ export interface SwitchInputProps extends CommonProps<HTMLInputElement> {
   /** also `value` */
   name: string;
   disabled?: boolean;
+  required?: boolean;
 
   onChange?: (value: boolean) => void;
 }
 
-export function SwitchInput({ label, onChange: providedOnChange, name, ...props }: SwitchInputProps) {
+export function SwitchInput({ ref, label, onChange: providedOnChange, name, required, ...props }: SwitchInputProps) {
   const containerClasses = classNames(
     themedTextClasses,
     props.className,
@@ -43,9 +44,10 @@ export function SwitchInput({ label, onChange: providedOnChange, name, ...props 
 
   return (
     <div className={containerClasses}>
-      <WithLabel id={id} label={label}>
+      <WithLabel id={id} label={label} required={required}>
         <div className={switchContainerClasses}>
           <input
+            ref={ref}
             className={switchClasses}
             disabled={props.disabled}
             id={id}

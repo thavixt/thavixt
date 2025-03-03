@@ -5,6 +5,7 @@ import { FormDialog, FormDialogRef } from '../components/FormDialog';
 import { TextInput } from '../components/TextInput';
 import { Button } from '../components/Button';
 import { NumberInput } from '../components/NumberInput';
+import { onSubmit } from './utils';
 
 const meta = {
   title: 'Input/Form dialog',
@@ -27,16 +28,15 @@ const meta = {
           Open dialog
         </Button>
         <FormDialog {...args} ref={ref}>
-          <TextInput placeholder="Your name" name='name' label="Name"/>
-          <TextInput label="Occupation" placeholder="Job title" name='job'/>
-          <NumberInput label='Age' defaultValue={18} name='experience'/>
+          <TextInput required placeholder="Your name" name='name' label="Name"/>
+          <TextInput required label="Occupation" placeholder="Job title" name='job'/>
+          <NumberInput min={18} label='Age' defaultValue={25} name='experience'/>
         </FormDialog>
       </>
     )
   },
   args: {
     className: 'border-red-500 text-sm',
-    // onCancel: fn(),
     onSubmitError: fn(),
     onSubmitSuccess: fn(),
     title: 'Dialog example title',
@@ -49,17 +49,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    onSubmit: fn(async () => {
-      await new Promise(resolve => setTimeout(resolve, 2_000));
-    }),
+    onSubmit,
   },
 };
 
-export const ErrorOnSubmit: Story = {
-  args: {
-    onSubmit: fn(async () => {
-      await new Promise(resolve => setTimeout(resolve, 2_000));
-      throw new Error('uhmmm, are you really called that?');
-    }),
-  },
-};

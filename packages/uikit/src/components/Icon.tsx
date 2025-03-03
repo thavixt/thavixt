@@ -11,7 +11,7 @@ export interface IconProps {
   onClick?: () => void;
 }
 
-export function Icon({ icon, height = 4, className, onClick }: IconProps) {
+export function Icon({ icon, height = 2, className, onClick }: IconProps) {
   const iconFn = IconList[icon];
 
   return (

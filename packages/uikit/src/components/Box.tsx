@@ -1,43 +1,73 @@
 import classNames from "classnames";
-import { HTMLAttributes, PropsWithChildren, ReactNode } from "react";
+import { Children, HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 
-type BoxProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
+type Size = 'sm' | 'md' | 'lg' | 'full';
+
+export type BoxType = 'card' | 'paper';
+export type BoxProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
   className?: string;
   size?: Size;
+  type?: 'card' | 'paper';
 };
 
-export type BoxType = 'Card' | 'Paper';
+export function Box({ type = 'card', className, children, size = 'sm' }: BoxProps) {
+  const slots = Children.toArray(children) as ReactElement[];
+  const header = slots.filter((child) => child.type === Header);
+  const content = slots.filter((child) => child.type === Content);
+  const footer = slots.filter((child) => child.type === Footer);
 
-const commonStyles = 'flex flex-col w-fit rounded-lg p-4 border border-slate-200 dark:border-slate-600';
-
-export const BoxStyles: Record<BoxType, string> = {
-  Card: classNames(commonStyles, 'shadow-xl bg-white dark:bg-gray-900'),
-  Paper: classNames(commonStyles, 'bg-slate-100 dark:bg-slate-800'),
+  return (
+    <div className={classNames(className, BoxStyles[type], getSizeClasses(size))}>
+      {header}
+      {content}
+      {footer}
+    </div>
+  )
 }
 
-export const Box: Record<BoxType, ({ children, className, ...props }: BoxProps) => ReactNode> = {
-  Card: function ({ children, className, size, ...props }: BoxProps) {
-    return <h1 {...props} className={classNames(className, BoxStyles.Card, getSizeClasses(size))}>{children}</h1>
-  },
-  Paper: function ({ children, className, size, ...props }: BoxProps) {
-    return <h1 {...props} className={classNames(className, BoxStyles.Paper, getSizeClasses(size))}>{children}</h1>
-  },
+const commonStyles = 'flex flex-col w-fit rounded-lg';
+const BoxStyles: Record<BoxType, string> = {
+  card: classNames(commonStyles, 'shadow-xl bg-white dark:bg-gray-900'),
+  paper: classNames(commonStyles, 'bg-slate-100 dark:bg-gray-800 dark:border-gray-600'),
 }
 
-type Size = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+function Header({ children, className }: PropsWithChildren<{ className?: string }>) {
+  return (
+    <div className={classNames('px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-t-md', className)}>
+      {children}
+    </div>
+  );
+}
 
-function getSizeClasses(size?: Size) {
+function Content({ children, className }: PropsWithChildren<{ className?: string }>) {
+  return (
+    <div className={classNames('px-4 pt-2 pb-4', className)}>
+      {children}
+    </div>
+  );
+}
+
+function Footer({ children, className }: PropsWithChildren<{ className?: string }>) {
+  return (
+    <div className={classNames('flex justify-end px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-b-md', className)}>
+      {children}
+    </div>
+  );
+}
+
+Box.Header = Header;
+Box.Content = Content;
+Box.Footer = Footer;
+
+function getSizeClasses(size: Size = 'full') {
   switch (size) {
     case 'sm':
-      return 'w-fit max-w-md';
+      return 'w-fit max-w-sm';
     case 'md':
-      return 'w-fit max-w-md';
-    case 'lg':
       return 'w-fit max-w-lg';
-    case 'xl':
-      return 'w-fit max-w-xl';
-    case '2xl':
+    case 'lg':
       return 'w-fit max-w-2xl';
+    case 'full':
     default:
       return 'w-full';
   }

@@ -36,7 +36,7 @@ const meta = {
       { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$999', year: 2020 },
       { key: 'unknown', name: `Unidentifiable tech thing ${crypto.randomUUID()}`, price: '$299' },
       { key: 'lenovoFx205', name: 'Lenovo FX 205', category: 'Laptop', price: '$649', year: 2019 },
-      ...getMockData(100)
+      ...getMockData(10)
     ],
     dataKeys: {
       name: 'Name',

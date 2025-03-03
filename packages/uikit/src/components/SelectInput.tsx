@@ -3,8 +3,7 @@ import { CommonProps } from "../common/commonProps";
 import { WithLabel } from "../common/WithLabel";
 import { themedInputClasses } from "../common/theme";
 
-export interface SelectProps<T extends Record<string, string>>
-  extends Omit<CommonProps<HTMLSelectElement>, 'children'> {
+export interface SelectProps<T extends Record<string, string>> extends Omit<CommonProps<HTMLSelectElement>, 'children'> {
   defaultValue?: keyof T;
   disabled?: boolean;
   label?: string;
@@ -13,6 +12,7 @@ export interface SelectProps<T extends Record<string, string>>
   placeholder?: string;
   value?: keyof T;
   options: T;
+  required?: boolean;
 }
 
 export function Select<T extends Record<string, string>>({
@@ -25,6 +25,7 @@ export function Select<T extends Record<string, string>>({
   placeholder,
   ref,
   value,
+  required,
   ...props
 }: SelectProps<T>) {
   const classes = classNames(
@@ -41,7 +42,7 @@ export function Select<T extends Record<string, string>>({
   const id = `${name}-select`;
 
   return (
-    <WithLabel label={label} id={id}>
+    <WithLabel label={label} id={id} required={required}>
       <select
         ref={ref}
         className={classes}

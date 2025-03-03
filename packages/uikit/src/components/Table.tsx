@@ -3,8 +3,8 @@ import { ReactElement, RefObject, useImperativeHandle, useRef, useState } from "
 import { TextInput } from "./TextInput";
 import useScrollbar from "thavixt-scrollbar-react";
 import { omitKey } from "../common/utils";
-import { Icon } from "./Icon";
 import { DEFAULT_SCROLLBAR_STYLES } from "./Scrollbar";
+import { Button } from "./Button";
 
 const CHECK_ALL_KEY = 'table_check_all';
 const PADDING_CLASSES = 'px-4 py-2';
@@ -120,7 +120,7 @@ export function Table<T extends Record<string, string | number>>({
   const containerClasses = classNames(
     CONTAINER_CLASSES,
     {
-      'h-full': full,
+      'h-fit': full,
       'max-h-100': !full,
       'h-100 max-h-full': search
     },
@@ -256,7 +256,7 @@ export function Table<T extends Record<string, string | number>>({
                       onClick={prevPage}
                       disabled={!hasPrevPage}
                     >
-                      <Icon icon="Arrow" height={3} className="rotate-180" />
+                      <Button icon="Arrow" className="rotate-180" />
                     </button>
                     <span
                       title="Current page"
@@ -269,7 +269,7 @@ export function Table<T extends Record<string, string | number>>({
                       onClick={nextPage}
                       disabled={!hasNextPage}
                     >
-                      <Icon icon="Arrow" height={3} />
+                      <Button icon="Arrow" />
                     </button>
                   </div>
                 ) : null}

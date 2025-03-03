@@ -4,6 +4,8 @@ export type IconType =
   | 'Arrow'
   | 'ArrowDouble'
   | 'ArrowsBidirectional'
+  | 'Caret'
+  | 'Check'
   | 'Cross'
   | 'CrossCircled'
   | 'Pause'
@@ -15,14 +17,14 @@ export type IconType =
 
 // Icons from: https://www.svgrepo.com
 export const IconList: Record<IconType, ({ height }: { height?: number, className?: string }) => JSX.Element> = {
-  Arrow: function GearsSpinner({ height = 4, className = 'currentColor' }) {
+  Arrow: function Arrow({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path d="M4 12H20M20 12L14 6M20 12L14 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     )
   },
-  ArrowDouble: function GearsSpinner({ height = 4, className = 'currentColor' }) {
+  ArrowDouble: function ArrowDouble({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path d="M5.5 5L11.7929 11.2929C12.1834 11.6834 12.1834 12.3166 11.7929 12.7071L5.5 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -30,21 +32,35 @@ export const IconList: Record<IconType, ({ height }: { height?: number, classNam
       </svg>
     )
   },
-  ArrowsBidirectional: function GearsSpinner({ height = 4, className = 'currentColor' }) {
+  ArrowsBidirectional: function ArrowsBidirectional({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path d="M8.49388 9.56443C8.80561 9.29167 8.83719 8.81785 8.56443 8.50612C8.29167 8.19439 7.81785 8.16281 7.50612 8.43557L8.49388 9.56443ZM3.50612 11.9356C3.19439 12.2083 3.16281 12.6822 3.43557 12.9939C3.70833 13.3056 4.18215 13.3372 4.49388 13.0644L3.50612 11.9356ZM4 11.75C3.58579 11.75 3.25 12.0858 3.25 12.5C3.25 12.9142 3.58579 13.25 4 13.25V11.75ZM20 13.25C20.4142 13.25 20.75 12.9142 20.75 12.5C20.75 12.0858 20.4142 11.75 20 11.75V13.25ZM4.49388 11.9356C4.18215 11.6628 3.70833 11.6944 3.43557 12.0061C3.16281 12.3178 3.19439 12.7917 3.50612 13.0644L4.49388 11.9356ZM7.50612 16.5644C7.81785 16.8372 8.29167 16.8056 8.56443 16.4939C8.83719 16.1822 8.80561 15.7083 8.49388 15.4356L7.50612 16.5644ZM20.4939 13.0644C20.8056 12.7917 20.8372 12.3178 20.5644 12.0061C20.2917 11.6944 19.8178 11.6628 19.5061 11.9356L20.4939 13.0644ZM15.5061 15.4356C15.1944 15.7083 15.1628 16.1822 15.4356 16.4939C15.7083 16.8056 16.1822 16.8372 16.4939 16.5644L15.5061 15.4356ZM19.5061 13.0644C19.8178 13.3372 20.2917 13.3056 20.5644 12.9939C20.8372 12.6822 20.8056 12.2083 20.4939 11.9356L19.5061 13.0644ZM16.4939 8.43557C16.1822 8.16281 15.7083 8.19439 15.4356 8.50612C15.1628 8.81785 15.1944 9.29167 15.5061 9.56443L16.4939 8.43557ZM7.50612 8.43557L3.50612 11.9356L4.49388 13.0644L8.49388 9.56443L7.50612 8.43557ZM4 13.25H20V11.75H4V13.25ZM3.50612 13.0644L7.50612 16.5644L8.49388 15.4356L4.49388 11.9356L3.50612 13.0644ZM19.5061 11.9356L15.5061 15.4356L16.4939 16.5644L20.4939 13.0644L19.5061 11.9356ZM20.4939 11.9356L16.4939 8.43557L15.5061 9.56443L19.5061 13.0644L20.4939 11.9356Z" fill="currentColor" />
       </svg>
     )
   },
-  Cross: function GearsSpinner({ height = 4, className = 'currentColor' }) {
+  Caret: function Caret({ height = 4, className }) {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.79289 6.29289C9.18342 5.90237 9.81658 5.90237 10.2071 6.29289L15.2071 11.2929C15.5976 11.6834 15.5976 12.3166 15.2071 12.7071L10.2071 17.7071C9.81658 18.0976 9.18342 18.0976 8.79289 17.7071C8.40237 17.3166 8.40237 16.6834 8.79289 16.2929L13.0858 12L8.79289 7.70711C8.40237 7.31658 8.40237 6.68342 8.79289 6.29289Z" fill="currentColor" />
+      </svg>
+    )
+  },
+  Check: function Check({ height = 4, className }) {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
+        <path d="M4 12.6111L8.92308 17.5L20 6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    )
+  },
+  Cross: function Cross({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path d="M13.06 12L17.48 7.57996C17.5537 7.5113 17.6128 7.4285 17.6538 7.3365C17.6948 7.2445 17.7168 7.14518 17.7186 7.04448C17.7204 6.94378 17.7018 6.84375 17.6641 6.75036C17.6264 6.65697 17.5703 6.57214 17.499 6.50092C17.4278 6.4297 17.343 6.37356 17.2496 6.33584C17.1562 6.29811 17.0562 6.27959 16.9555 6.28137C16.8548 6.28314 16.7555 6.30519 16.6635 6.34618C16.5715 6.38717 16.4887 6.44627 16.42 6.51996L12 10.94L7.58 6.51996C7.43782 6.38748 7.24978 6.31535 7.05548 6.31878C6.86118 6.32221 6.67579 6.40092 6.53838 6.53834C6.40096 6.67575 6.32225 6.86113 6.31882 7.05544C6.3154 7.24974 6.38752 7.43778 6.52 7.57996L10.94 12L6.52 16.42C6.37955 16.5606 6.30066 16.7512 6.30066 16.95C6.30066 17.1487 6.37955 17.3393 6.52 17.48C6.66062 17.6204 6.85125 17.6993 7.05 17.6993C7.24875 17.6993 7.43937 17.6204 7.58 17.48L12 13.06L16.42 17.48C16.5606 17.6204 16.7512 17.6993 16.95 17.6993C17.1488 17.6993 17.3394 17.6204 17.48 17.48C17.6204 17.3393 17.6993 17.1487 17.6993 16.95C17.6993 16.7512 17.6204 16.5606 17.48 16.42L13.06 12Z" fill="currentColor" />
       </svg>
     )
   },
-  CrossCircled: function GearsSpinner({ height = 4, className = 'currentColor' }) {
+  CrossCircled: function CrossCircled({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path d="M12 21C10.22 21 8.47991 20.4722 6.99987 19.4832C5.51983 18.4943 4.36628 17.0887 3.68509 15.4442C3.0039 13.7996 2.82567 11.99 3.17294 10.2442C3.5202 8.49836 4.37737 6.89472 5.63604 5.63604C6.89472 4.37737 8.49836 3.5202 10.2442 3.17294C11.99 2.82567 13.7996 3.0039 15.4442 3.68509C17.0887 4.36628 18.4943 5.51983 19.4832 6.99987C20.4722 8.47991 21 10.22 21 12C21 14.387 20.0518 16.6761 18.364 18.364C16.6761 20.0518 14.387 21 12 21ZM12 4.5C10.5166 4.5 9.0666 4.93987 7.83323 5.76398C6.59986 6.58809 5.63856 7.75943 5.07091 9.12988C4.50325 10.5003 4.35473 12.0083 4.64411 13.4632C4.9335 14.918 5.64781 16.2544 6.6967 17.3033C7.7456 18.3522 9.08197 19.0665 10.5368 19.3559C11.9917 19.6453 13.4997 19.4968 14.8701 18.9291C16.2406 18.3614 17.4119 17.4001 18.236 16.1668C19.0601 14.9334 19.5 13.4834 19.5 12C19.5 10.0109 18.7098 8.10323 17.3033 6.6967C15.8968 5.29018 13.9891 4.5 12 4.5Z" fill="currentColor" />
@@ -53,7 +69,7 @@ export const IconList: Record<IconType, ({ height }: { height?: number, classNam
       </svg>
     )
   },
-  Pause: function Pause({ height = 4, className = 'currentColor' }) {
+  Pause: function Pause({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path d="M9 19.75C8.80189 19.7474 8.61263 19.6676 8.47253 19.5275C8.33244 19.3874 8.25259 19.1981 8.25 19V5C8.25 4.80109 8.32902 4.61032 8.46967 4.46967C8.61032 4.32902 8.80109 4.25 9 4.25C9.19891 4.25 9.38968 4.32902 9.53033 4.46967C9.67098 4.61032 9.75 4.80109 9.75 5V19C9.74741 19.1981 9.66756 19.3874 9.52747 19.5275C9.38737 19.6676 9.19811 19.7474 9 19.75Z" fill="currentColor" />
@@ -61,21 +77,21 @@ export const IconList: Record<IconType, ({ height }: { height?: number, classNam
       </svg>
     )
   },
-  Play: function Play({ height = 4, className = 'currentColor' }) {
+  Play: function Play({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path d="M8.50002 19.75C8.40032 19.7495 8.30174 19.7291 8.21002 19.69C8.0732 19.6341 7.95627 19.5385 7.87428 19.4155C7.7923 19.2925 7.74902 19.1478 7.75002 19V5.00003C7.75543 4.85772 7.80126 4.71989 7.88213 4.60266C7.96301 4.48544 8.07559 4.39366 8.2067 4.33807C8.33782 4.28247 8.48206 4.26536 8.62254 4.28873C8.76303 4.3121 8.89396 4.37499 9.00002 4.47003L16 11.47C16.1405 11.6107 16.2194 11.8013 16.2194 12C16.2194 12.1988 16.1405 12.3894 16 12.53L9.00002 19.53C8.86584 19.662 8.68797 19.7403 8.50002 19.75ZM9.25002 6.81003V17.19L14.44 12L9.25002 6.81003Z" fill="currentColor" />
       </svg>
     )
   },
-  Volume0: function Volume0({ height = 4, className = 'currentColor' }) {
+  Volume0: function Volume0({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path d="M17 19.75C16.8304 19.7472 16.6661 19.6912 16.53 19.59L11.74 15.75H7C6.80189 15.7474 6.61263 15.6676 6.47253 15.5275C6.33244 15.3874 6.25259 15.1981 6.25 15V9C6.25259 8.80189 6.33244 8.61263 6.47253 8.47253C6.61263 8.33244 6.80189 8.25259 7 8.25H11.74L16.53 4.41C16.6406 4.32106 16.7741 4.26533 16.9151 4.24927C17.0561 4.2332 17.1988 4.25747 17.3265 4.31926C17.4543 4.38104 17.5619 4.4778 17.6369 4.5983C17.7118 4.7188 17.751 4.85809 17.75 5V19C17.7489 19.1409 17.7092 19.2789 17.6351 19.3988C17.5611 19.5187 17.4555 19.6159 17.33 19.68C17.2264 19.7271 17.1138 19.751 17 19.75ZM7.75 14.25H12C12.1699 14.2507 12.3349 14.3069 12.47 14.41L16.25 17.41V6.56L12.47 9.56C12.3349 9.6631 12.1699 9.71928 12 9.72H7.75V14.25Z" fill="currentColor" />
       </svg>
     )
   },
-  Volume1: function Volume1({ height = 4, className = 'currentColor' }) {
+  Volume1: function Volume1({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path xmlns="http://www.w3.org/2000/svg" d="M15 19.75C14.8304 19.7472 14.6661 19.6912 14.53 19.59L9.74 15.75H5C4.80189 15.7474 4.61263 15.6676 4.47253 15.5275C4.33244 15.3874 4.25259 15.1981 4.25 15V9C4.25259 8.80189 4.33244 8.61263 4.47253 8.47253C4.61263 8.33244 4.80189 8.25259 5 8.25H9.74L14.53 4.41C14.6406 4.32106 14.7741 4.26533 14.9151 4.24927C15.0561 4.2332 15.1988 4.25747 15.3265 4.31926C15.4543 4.38104 15.5619 4.4778 15.6369 4.5983C15.7118 4.7188 15.751 4.85809 15.75 5V19C15.7491 19.1422 15.7084 19.2814 15.6324 19.4016C15.5563 19.5218 15.4481 19.6182 15.32 19.68C15.2202 19.728 15.1107 19.7519 15 19.75ZM5.75 14.25H10C10.1699 14.2507 10.3349 14.3069 10.47 14.41L14.25 17.41V6.56L10.47 9.56C10.3349 9.6631 10.1699 9.71928 10 9.72H5.75V14.25Z" fill="currentColor" />
@@ -83,7 +99,7 @@ export const IconList: Record<IconType, ({ height }: { height?: number, classNam
       </svg>
     )
   },
-  Volume2: function Volume2({ height = 4, className = 'currentColor' }) {
+  Volume2: function Volume2({ height = 4, className }) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" height={height * 8} className={className} viewBox="0 0 24 24" fill="none">
         <path xmlns="http://www.w3.org/2000/svg" d="M13 19.75C12.8304 19.7472 12.6661 19.6912 12.53 19.59L7.74 15.75H3C2.80189 15.7474 2.61263 15.6676 2.47253 15.5275C2.33244 15.3874 2.25259 15.1981 2.25 15V9C2.25259 8.80189 2.33244 8.61263 2.47253 8.47253C2.61263 8.33244 2.80189 8.25259 3 8.25H7.74L12.53 4.41C12.6406 4.32106 12.7741 4.26533 12.9151 4.24927C13.0561 4.2332 13.1988 4.25747 13.3265 4.31926C13.4543 4.38104 13.5619 4.4778 13.6369 4.5983C13.7118 4.7188 13.751 4.85809 13.75 5V19C13.7491 19.1422 13.7084 19.2814 13.6324 19.4016C13.5563 19.5218 13.4481 19.6182 13.32 19.68C13.2202 19.728 13.1107 19.7519 13 19.75ZM3.75 14.25H8C8.16991 14.2507 8.33494 14.3069 8.47 14.41L12.25 17.41V6.56L8.47 9.56C8.33886 9.6739 8.17345 9.74076 8 9.75H3.75V14.25Z" fill="currentColor" />

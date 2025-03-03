@@ -3,6 +3,8 @@ import { HTMLAttributes, MouseEvent, PropsWithChildren } from "react";
 import { CommonProps } from "../common/commonProps";
 import { Spinner } from "./Spinner";
 import { Typography } from "./Typography";
+import { IconType } from "./IconList";
+import { Icon } from "./Icon";
 
 export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>>, HTMLAttributes<HTMLButtonElement> {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -10,12 +12,12 @@ export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonEle
   type?: HTMLButtonElement['type'],
   loading?: boolean;
   disabled?: boolean;
-  round?: boolean;
+  icon?: IconType;
   title?: string;
 }
 
 export function Button({
-  disabled, loading, ref, onClick, type = 'button', className, children, variant = 'default', round, title, ...props
+  disabled, loading, ref, onClick, type = 'button', className, children, variant = 'default', icon, title, ...props
 }: ButtonProps) {
   return (
     <button
@@ -26,7 +28,7 @@ export function Button({
       title={title}
       className={
         classNames(
-          'min-w-10 px-2 py-1 transition-colors duration-150',
+          'min-w-8 h-fit px-2 py-1 transition-colors duration-150',
           {
             'cursor-pointer': !(disabled || loading),
             'cursor-default opacity-30 select-none': disabled || loading,
@@ -50,8 +52,8 @@ export function Button({
             'hover:bg-gray-100 active:bg-gray-200 hover:dark:bg-gray-700 active:dark:bg-gray-600': !(disabled || loading) && variant === 'silent',
           },
           {
-            'rounded-sm': !round,
-            'h-[48px] w-[48px] border-[50%] rounded-[50%]': round,
+            'rounded-sm': !icon,
+            '!h-[32px] !w-[32px] border-[50%] rounded-[50%]': icon,
           },
           className,
         )
@@ -59,7 +61,15 @@ export function Button({
       {...props}
     >
       <div className="flex items-center justify-center">
-        {loading ? <Spinner type="TubeSpinner" /> : <Typography.Button>{children}</Typography.Button>}
+        {loading ? (
+          <Spinner type="TubeSpinner" />
+        ) : (
+          icon ? (
+            <Icon icon={icon} height={2} />
+          ) : (
+            <Typography.Button>{children}</Typography.Button>
+          )
+        )}
       </div>
     </button>
   )
