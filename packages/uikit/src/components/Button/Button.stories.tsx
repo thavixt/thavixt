@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Button } from './Button';
+import { Button, ButtonVariant } from './Button';
 
 const meta = {
   title: 'Basic/Button',
@@ -41,7 +41,9 @@ export const Danger: Story = {
 
 export const Icon: Story = {
   args: {
-    icon: 'Check',
+    icon: {
+      type: 'Check',
+    },
   },
 };
 
@@ -49,4 +51,18 @@ export const Silent: Story = {
   args: {
     variant: 'silent',
   },
+};
+
+export const All: Story = {
+  render: () => {
+    const variants: ButtonVariant[] = ['default', 'primary', 'secondary', 'danger', 'silent'];
+    return (
+      <div className="flex flex-col space-y-2">
+        {variants.map(variant => (
+          <Button variant={variant}>{variant}</Button>
+        ))}
+        <Button icon={{ type: 'Volume1' }}>Icon</Button>
+      </div>
+    )
+  }
 };

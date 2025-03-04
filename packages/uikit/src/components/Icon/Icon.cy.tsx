@@ -1,12 +1,11 @@
-import {composeStories} from '@storybook/react';
-import {mount} from '@cypress/react';
+import { composeStories } from '@storybook/react';
+import { mount } from '@cypress/react';
 import * as stories from './Icon.stories';
 
-const { Default } = composeStories(stories);
+const { All } = composeStories(stories);
 
 describe('Icon component', () => {
-   it('should render', () => {
-       // and mount the story using @cypress/react library
-       mount(<Default />);
+   it('should render - all', () => {
+      mount(<All />);
    });
 });

@@ -256,7 +256,7 @@ export function Table<T extends Record<string, string | number>>({
                       onClick={prevPage}
                       disabled={!hasPrevPage}
                     >
-                      <Button icon="Arrow" className="rotate-180" />
+                      <Button icon={{ type: 'Arrow' }} className="rotate-180" />
                     </button>
                     <span
                       title="Current page"
@@ -269,7 +269,7 @@ export function Table<T extends Record<string, string | number>>({
                       onClick={nextPage}
                       disabled={!hasNextPage}
                     >
-                      <Button icon="Arrow" />
+                      <Button icon={{ type: 'Arrow' }} />
                     </button>
                   </div>
                 ) : null}
@@ -282,7 +282,7 @@ export function Table<T extends Record<string, string | number>>({
   );
 }
 
-function PlaceholderTR({checkable}: { checkable?: boolean }) {
+function PlaceholderTR({ checkable }: { checkable?: boolean }) {
   return (
     <tr className={PLACEHOLDER_TR_CLASSES}>
       {checkable ? <td /> : null}

@@ -102,7 +102,7 @@ export const CustomMusicPlayer: Story = {
           ref={ref}
           src="https://cdn.freesound.org/previews/12/12691_32572-lq.mp3"
         />
-        <div className="flex space-x-2 max-w-[300px]">
+        <div className="flex space-x-2 max-w-[300px] items-center">
           <Button
             disabled={loading}
             className='bg-slate-100 dark:bg-slate-500 hover:bg-slate-200 hover:dark:bg-slate-600 text-slate-800 dark:text-slate-200'
@@ -111,7 +111,7 @@ export const CustomMusicPlayer: Story = {
           >
             <Icon height={3} icon={paused ? 'Play' : 'Pause'} />
           </Button>
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-1">
             <small title={title} className='truncate w-[160px] text-slate-600 dark:text-slate-400'>{title}</small>
             <RangeInput
               disabled={loading}

@@ -5,9 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   component: {
-    screenshotsFolder: 'cypress/screenshots',
-    // trashAssetsBeforeRuns: false,
     specPattern: 'packages/uikit/src/components/**/*.cy.tsx',
+    watchForFileChanges: true,
+    // screenshotsFolder: 'cypress/screenshots',
+    // trashAssetsBeforeRuns: true,
     devServer: {
       framework: "react",
       bundler: "vite",

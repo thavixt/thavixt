@@ -1,0 +1,12 @@
+/* @config './tailwind.config.js'; */
+
+/* @import 'tailwindcss'; */
+/* @import 'tailwindcss' source("./src/components"); */
+@import 'tailwindcss' source(none);
+
+@source "./src/components/**/*.tsx";
+@source "!./*.html";
+@source "!./src/components/**/*.cy.tsx";
+@source "!./src/components/**/*.stories.tsx";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

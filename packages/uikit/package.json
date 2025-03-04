@@ -39,9 +39,14 @@
   ],
   "scripts": {
     "build": "tsc --project tsconfig.lib.json",
+    "clean": "rm -rf ./dist",
+    "css-build": "npx @tailwindcss/cli --input ./input.css --output ./dist/index.css --minify",
+    "css-watch": "npx @tailwindcss/cli --input ./input.css --output ./dist/index.css --watch",
     "dev": "tsc --watch --project tsconfig.lib.json",
-    "prebuild": "rm -rf ./dist && eslint ./",
-    "prepack": "npm run build"
+    "lint": "eslint ./src",
+    "prebuild": "npm run clean && npm run css-build && npm run tsc && npm run lint",
+    "prepack": "npm run build",
+    "tsc": "tsc --noEmit --project tsconfig.lib.json"
   },
   "peerDependencies": {
     "classnames": "^2.5.1",

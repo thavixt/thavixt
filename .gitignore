@@ -28,3 +28,6 @@ dist-ssr
 storybook-static
 
 .vercel
+
+# cypress
+# cypress/screenshots/*.png

@@ -2,11 +2,11 @@ import classNames from "classnames";
 import { PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
 
-export interface BreadcrumbProps extends PropsWithChildren<CommonProps<HTMLDivElement>> {
+export interface BadgeProps extends PropsWithChildren<CommonProps<HTMLDivElement>> {
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 };
 
-export function Badge({children, className, onClick, ref}: BreadcrumbProps) {
+export function Badge({children, className, onClick, ref}: BadgeProps) {
   const classes = classNames(
     'inline rounded-xl shadow-md transition-colors',
     'px-2 py-0.5 text-sm leading-3',

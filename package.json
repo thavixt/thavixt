@@ -10,14 +10,18 @@
   ],
   "scripts": {
     "build-storybook": "storybook build",
-    "cyct:run": "npx cypress run --component --spec \"packages/uikit/src/components/**/*.cy.tsx\"",
-    "cyct:open": "npx cypress open --component",
+    "cyct:run": "npx cypress run --browser chrome --component --config-file cypress.config.js",
+    "cyct:run-headed": "npx cypress run --headed --browser chrome --component --config-file cypress.config.js",
+    "cyct:open": "npx cypress open --component --config-file cypress.config.js",
+    "lerna:check": "npx lerna run check --scope=@thavixt/uikit",
     "lerna:build": "npx lerna run build --scope=@thavixt/uikit",
+    "lerna:build-css": "npx lerna run build-css --scope=@thavixt/uikit",
     "lerna:publish": "npx lerna publish --no-private --force-publish",
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
     "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
     "storybook:deploy": "npm run storybook:clear && storybook build && cp -r .vercel storybook-static/.vercel && vercel --prod storybook-static",
-    "publish-deploy": "cyct:run && npm run lerna:build && npm run lerna:publish && npm run storybook:deploy"
+    "publish-predeploy": "npm run tailwind-build && npm run lerna:check && npm run cyct:run",
+    "publish-deploy": "npm run publish-predeploy && npm run lerna:publish && npm run storybook:deploy"
   },
   "dependencies": {
     "classnames": "^2.5.1",
@@ -38,6 +42,7 @@
     "@storybook/react": "^8.6.0",
     "@storybook/react-vite": "^8.6.0",
     "@storybook/test": "^8.6.0",
+    "@tailwindcss/cli": "^4.0.9",
     "@tailwindcss/vite": "4.0.7",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",

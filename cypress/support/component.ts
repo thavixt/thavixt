@@ -68,4 +68,4 @@ declare global {
 }
 
 // Cypress.Commands.add('getByTestId', getByTestId)
-Cypress.Commands.add('mount', mount)
+Cypress.Commands.add('mount', mount);

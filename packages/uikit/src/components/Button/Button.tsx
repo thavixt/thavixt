@@ -6,9 +6,11 @@ import { Typography } from "../Typography/Typography";
 import { IconType } from "../Icon/IconList";
 import { Icon } from "../Icon/Icon";
 
+export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'danger' | 'silent';
+
 export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>>, HTMLAttributes<HTMLButtonElement> {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'silent',
+  variant?: ButtonVariant,
   type?: HTMLButtonElement['type'],
   loading?: boolean;
   disabled?: boolean;
