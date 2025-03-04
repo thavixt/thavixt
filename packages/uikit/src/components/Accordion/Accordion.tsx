@@ -48,11 +48,11 @@ export function Accordion({ className, children, defaultOpen, title, openedTitle
           <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
         </svg>
         <div>
-          <span className={classNames('hidden', { 'inline': !open })}>{title}</span>
-          <span className={classNames('hidden', { 'inline': open })}>{openedTitle}</span>
+          <span className={classNames('hidden', { 'inline': !open })} data-testid="title">{title}</span>
+          <span className={classNames('hidden', { 'inline': open })} data-testid="title-open">{openedTitle}</span>
         </div>
       </div>
-      <div className={contentClasses}>
+      <div className={contentClasses} data-testid="content">
         <Divider />
         {children}
       </div>

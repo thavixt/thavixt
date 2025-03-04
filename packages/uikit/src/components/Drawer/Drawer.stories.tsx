@@ -20,10 +20,10 @@ const meta = {
   args: {
     side: 'right',
     children: (isOpen, toggle, side) => (
-      <Button onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
+      <Button data-testid="toggleDrawer" onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
     ),
     content: (isOpen, toggle, side) => (
-      <div>
+      <div data-testid="drawer">
         <Typography.Subtitle>
           List of things {['top', 'bottom'].includes(side) ? 'in a horizontal drawer' : 'here'}
         </Typography.Subtitle>
@@ -38,7 +38,7 @@ const meta = {
           </ul>
         </Scrollbar>
         <Divider/>
-        <Button onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
+        <Button data-testid="toggleDrawerInside" onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
       </div>
     )
   },
