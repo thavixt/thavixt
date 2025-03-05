@@ -88,7 +88,7 @@ export function Drawer({ children, content, defaultVisible, className, ref, side
         <div className={backdropClasses} />
       ) : null}
       <ClickTarget onClickOutside={onClickOutside}>
-        <div ref={ref} className={drawerContainerClasses}>
+        <div data-testid="Drawer" ref={ref} className={drawerContainerClasses}>
           <Scrollbar className={drawerClasses}>
             {typeof content === 'function' ? content(isOpen, toggleOpen, side) : content}
           </Scrollbar>

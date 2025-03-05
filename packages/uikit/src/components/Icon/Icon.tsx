@@ -13,7 +13,7 @@ export interface IconProps {
 
 export function Icon({ height = 2, ...props }: IconProps) {
   return (
-    <div onClick={props.onClick} className={props.className}>
+    <div data-testid="Icon" onClick={props.onClick} className={props.className}>
       {createElement(IconList[props.icon], { height })}
     </div>
   );

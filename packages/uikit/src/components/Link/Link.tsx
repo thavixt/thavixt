@@ -20,7 +20,7 @@ export function Link({ self, ...props}: LinkProps) {
   );
 
   return (
-    <a ref={props.ref} className={classes} href={props.href} target={self ? '_self' : '_blank'}>
+    <a data-testid="Link" ref={props.ref} className={classes} href={props.href} target={self ? '_self' : '_blank'}>
       {props.children}
       {props.icon}
     </a>

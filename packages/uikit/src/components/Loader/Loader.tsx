@@ -12,8 +12,8 @@ export interface LoaderProps {
 
 export function Loader({ type = 'TubeSpinner', ...props }: LoaderProps) {
   return (
-    <span className={props.className}>
+    <div data-testid="Loader" className={props.className}>
       {createElement(LoaderList[type], { height: props.height })}
-    </span>
+    </div>
   );
 }

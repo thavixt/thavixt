@@ -20,7 +20,7 @@ export function Badge({children, className, onClick, ref}: BadgeProps) {
   );
 
   return (
-    <div ref={ref} className={classNames(classes)} onClick={onClick}>
+    <div data-testid="Badge" ref={ref} className={classNames(classes)} onClick={onClick}>
       {children}
     </div>
   )

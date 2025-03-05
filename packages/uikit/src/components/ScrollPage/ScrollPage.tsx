@@ -33,8 +33,9 @@ export function ScrollPage({ to = 'top', ...props }: ScrollPageProps) {
 
   return (
     <Button
+      data-testid="ScrollPage"
       ref={props.ref}
-      icon={{type: 'Arrow', className: iconClasses}}
+      icon={{ type: 'Arrow', className: iconClasses }}
       variant="default"
       className={classes}
       onClick={onClick}

@@ -42,7 +42,7 @@ export function Select<T extends Record<string, string>>({
   const id = `${name}-select`;
 
   return (
-    <WithLabel label={label} id={id} required={required}>
+    <WithLabel data-testid="SelectInput" label={label} id={id} required={required}>
       <select
         ref={ref}
         className={classes}

@@ -79,7 +79,7 @@ export function Form({
   const disabled = loading || success;
 
   return (
-    <form ref={ref} className={classNames(className, 'group rounded-md', { 'p-4 border border-slate-300 dark:border-slate-600': border })} id={formName.current} method="dialog" onSubmit={onSubmit} onReset={onReset}>
+    <form data-testid="Form" ref={ref} className={classNames(className, 'group rounded-md', { 'p-4 border border-slate-300 dark:border-slate-600': border })} id={formName.current} method="dialog" onSubmit={onSubmit} onReset={onReset}>
       <fieldset disabled={disabled}>
         <div className="flex flex-col space-y-4">
           <div className="flex flex-col space-y-2">

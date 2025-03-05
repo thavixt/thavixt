@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { RefObject } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { themedTextClasses } from "../../common/theme";
-import { Label } from "../../common/WithLabel";
+import { WithLabel } from "../../common/WithLabel";
 
 export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 'children'> {
   defaultValue?: string;
@@ -17,7 +17,7 @@ export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 
   onChange?: (chekedId: string) => void;
 }
 
-export function RadioInput({required, ref, ...props}: RadioInputProps) {
+export function RadioInput({ required, ref, ...props }: RadioInputProps) {
   const classes = classNames(
     'w-fit grid grid-cols-[minmax(106px,auto)_auto]',
     themedTextClasses,
@@ -29,20 +29,21 @@ export function RadioInput({required, ref, ...props}: RadioInputProps) {
   }
 
   return (
-    <fieldset onChange={onChange} ref={ref}>
+    <fieldset data-testid="RadioInput" onChange={onChange} ref={ref}>
       <div className={classes}>
-        {props.label ? <Label id="name" required={required}>{props.label}</Label> : null}
+        <WithLabel required={required} label={props.label}>
         <div className="flex flex-col">
           {props.values.map(value => (
             <Radio
-              checked={props.value === value ? true : undefined}
-              defaultChecked={props.defaultValue === value}
-              key={value}
-              name={props.name}
-              value={value}
+            checked={props.value === value ? true : undefined}
+            defaultChecked={props.defaultValue === value}
+            key={value}
+            name={props.name}
+            value={value}
             />
           ))}
         </div>
+          </WithLabel>
       </div>
     </fieldset>
   )
@@ -68,6 +69,7 @@ function Radio(props: RadioProps) {
   return (
     <div className={classes}>
       <input
+        data-testid={`RadioInput_${props.value}`}
         checked={props.checked}
         defaultChecked={props.defaultChecked}
         id={id}

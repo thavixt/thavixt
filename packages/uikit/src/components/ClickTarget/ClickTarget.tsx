@@ -11,7 +11,7 @@ export function ClickTarget({ onClickOutside, onClickInside, children }: ClickOu
   useClickOutside(ref, onClickOutside, onClickInside);
 
   return (
-    <div ref={ref}>{children}</div>
+    <div data-testid="ClickTarget" ref={ref}>{children}</div>
   )
 }
 

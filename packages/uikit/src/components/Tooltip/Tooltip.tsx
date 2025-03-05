@@ -33,7 +33,7 @@ export function Tooltip({ ref, className, children, tooltip, position = 'bottom'
   )
 
   return (
-    <div ref={ref} className="group size-fit relative">
+    <div data-testid="Tooltip" ref={ref} className="group size-fit relative">
       <div className={textClasses}>{children}</div>
       <div className={tooltipClasses}>
         {tooltip}

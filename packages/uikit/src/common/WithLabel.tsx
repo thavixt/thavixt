@@ -1,30 +1,32 @@
 import classNames from "classnames";
 import { PropsWithChildren } from "react";
+import { Typography } from "../components/Typography/Typography";
 
 interface LabelProps {
-  id: string;
+  id?: string;
   label?: string;
   className?: string;
   required?: boolean;
 }
 
-export function WithLabel({ children, label, ...props }: PropsWithChildren<LabelProps>) {
+export function WithLabel({ children, label, className, id, required }: PropsWithChildren<LabelProps>) {
   return (
-    <div className={classNames('flex space-x-2 items-center dark:text-slate-100 w-full', classNames)}>
-      <Label {...props}>{label}</Label>
+    <div data-testid="WithLabel" className={classNames('flex space-x-2 items-start dark:text-slate-100 w-full', className)}>
+      <Label id={id} required={required}>{label}</Label>
       {children}
     </div>
   )
 }
 
-export function Label({ children, id: name, required }: PropsWithChildren<Omit<LabelProps, 'label'>>) {
+export function Label({ children, id, required }: PropsWithChildren<Omit<LabelProps, 'label'>>) {
   if (!children) {
     return null;
   };
 
   return (
-    <label className="min-w-24" htmlFor={name}>
-      {required ? <span className="text-red-500">*</span> : ''}{children}:
+    <label className="min-w-24" htmlFor={id}>
+      {required ? <span className="text-red-500">{'* '}</span> : ''}
+      <Typography.Label>{children}:</Typography.Label>
     </label>
   )
 }

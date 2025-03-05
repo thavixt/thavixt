@@ -28,6 +28,6 @@ export function Divider({ className, ref, small, unicorn, vertical }: DividerPro
     className,
   )
   return (
-    <hr ref={ref} className={classes} />
+    <hr data-testid="Divider" ref={ref} className={classes} />
   )
 }

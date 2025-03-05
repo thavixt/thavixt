@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { ComponentProps, useRef } from 'react';
-import { FormDialog, FormDialogRef } from '../FormDialog/FormDialog';
+import { FormDialog, FormDialogHandle } from '../FormDialog/FormDialog';
 import { TextInput } from '../TextInput/TextInput';
 import { Button } from '../Button/Button';
 import { NumberInput } from '../NumberInput/NumberInput';
@@ -19,7 +19,7 @@ const meta = {
   },
   tags: ['autodocs'],
   render: function StoryComponent(args: ComponentProps<typeof FormDialog>) {
-    const ref = useRef<FormDialogRef>(null);
+    const ref = useRef<FormDialogHandle>(null);
     const onClick = () => ref.current?.dialog?.showModal();
 
     return (

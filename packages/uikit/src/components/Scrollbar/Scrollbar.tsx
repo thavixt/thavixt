@@ -21,7 +21,7 @@ export function Scrollbar({ ref: providedRef, styles = {}, onScroll, onScrollToE
 
   return (
     /* style={{scrollbarGutter: 'stable'}} */
-    <div ref={ref} className={className}>
+    <div data-testid="Scrollbar" ref={ref} className={className}>
       {children}
     </div>
   )

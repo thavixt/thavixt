@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { ReactNode, RefObject, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { themedTextClasses } from "../../common/theme";
 
-export interface TreeHandle {
+export type TreeHandle = RefObject<HTMLDivElement | null> & {
   open: () => void;
   collapse: () => void;
 }
@@ -28,10 +28,10 @@ export function Tree({
     setOpen(defaultOpen);
   }, [defaultOpen])
 
-  useImperativeHandle(
+  useImperativeHandle<RefObject<HTMLDivElement | null>, TreeHandle>(
     ref,
     () => ({
-      tree: divRef.current,
+      current: divRef.current,
       open: () => {
         setCount(prev => prev + 1);
         setOpen(true);
@@ -101,7 +101,7 @@ function TreeItem({ item, onClick, defaultOpen }: TreeItemProps) {
   );
 
   return (
-    <div className="flex flex-col space-y-1">
+    <div data-testid="Tree" className="flex flex-col space-y-1">
       <div className={containerClasses} onClickCapture={onClickItem}>
         <svg className={svgClasses} viewBox="0 0 24 24">
           <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>

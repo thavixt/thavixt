@@ -1,11 +1,11 @@
-import { useRef, useState } from "react";
 import classNames from "classnames";
+import { useRef, useState } from "react";
 import { Box } from "../Box/Box";
-import { CommonProps } from "../../common/commonProps";
 import { Button } from "../Button/Button";
 import { Icon } from "../Icon/Icon";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Typography } from "../Typography/Typography";
+import { CommonProps } from "../../common/commonProps";
 
 const DRAG_IMAGE_ID = 'off_canvas_drag_image_id';
 
@@ -38,12 +38,12 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
   const selectedItems = sortedAllItems.filter(item => selected.includes(item.key));
 
   const classes = classNames(
-    'grid grid-cols-[1fr_auto_1fr] gap-2',
+    'grid grid-cols-[1fr_auto_1fr] gap-2 isolate',
     className,
   );
   const itemClasses = classNames(
     'cursor-pointer w-full flex items-center px-2',
-    'flex bg-transparent hover:bg-slate-200 hover:dark:bg-slate-700 rounded-sm',
+    'flex bg-transparent hover:bg-slate-200 hover:dark:bg-slate-600 rounded-sm',
     className,
   );
   const scrollbarClasses = 'max-h-80 flex flex-col space-y-0.5';
@@ -84,10 +84,10 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
   }
   const onDragOver: React.DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
   }
   const onDrop: (from: 'available' | 'selected') => React.DragEventHandler<HTMLDivElement> = (from) => (e) => {
     e.preventDefault();
-
     clearDragImage();
     const transferData = JSON.parse(e.dataTransfer.getData('application/json'));
     if (from === 'selected') {
@@ -173,13 +173,13 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
   }
 
   return (
-    <div ref={ref} className="w-full">
+    <div data-testid="TransferList" ref={ref} className="w-full">
       <form ref={formRef} className={classes}>
         <Box type="paper" className="flex flex-col space-y-2" onDrop={onDrop('available')} onDragOver={onDragOver}>
           <Box.Content>
             <div className="flex justify-between items-center pb-1">
               <Button variant="silent" onClick={selectAll('available')}>Select all</Button>
-              <small>({items.length - selected.length})</small>
+              <Typography.Label>({items.length - selected.length})</Typography.Label>
               <Button variant="silent" onClick={selectAll('available', false)}>Deselect all</Button>
             </div>
             <Scrollbar className={scrollbarClasses}>
@@ -231,12 +231,12 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
           <Box.Content>
             <div className="flex justify-between items-center pb-1">
               <Button className="text-xs" variant="silent" onClick={selectAll('selected')}>Select all</Button>
-              <small>({selected.length})</small>
+              <Typography.Label>({selected.length})</Typography.Label>
               <Button className="text-xs" variant="silent" onClick={selectAll('selected', false)}>Deselect all</Button>
             </div>
             <Scrollbar className={scrollbarClasses}>
               {selectedItems.map(item => (
-                <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('selected')}>
+                <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('selected')} onDragEnd={onDragEnd}>
                   <TransferListListItem item={item} side="selected" onCheck={onCheck('selected')} />
                 </div>
               ))}

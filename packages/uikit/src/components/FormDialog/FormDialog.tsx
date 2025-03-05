@@ -2,16 +2,15 @@ import classNames from "classnames";
 import { RefObject, useEffect, useImperativeHandle, useRef } from "react";
 import { Form, FormProps } from "../Form/Form";
 
-export type FormDialogRef = {
+export type FormDialogHandle = RefObject<HTMLDialogElement | null> & {
   form: HTMLFormElement | null,
-  dialog: HTMLDialogElement | null,
 }
 
 export interface FormDialogProps extends Omit<FormProps, 'onCancel' | 'ref'> {
   defaultOpen?: boolean,
   title: string;
 
-  ref?: RefObject<FormDialogRef | null>,
+  ref?: RefObject<FormDialogHandle | null>,
 }
 
 export function FormDialog({
@@ -25,13 +24,15 @@ export function FormDialog({
   title,
   onSubmit,
 }: FormDialogProps) {
-  const formRef = useRef<HTMLFormElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  useImperativeHandle<FormDialogRef, FormDialogRef>(ref, () => ({
-    form: formRef.current,
-    dialog: dialogRef.current,
-  }));
+  useImperativeHandle<RefObject<HTMLDialogElement | null>, FormDialogHandle>(
+    ref,
+    () => ({
+      current: dialogRef?.current,
+      form: formRef?.current,
+    }), []);
 
   const onCancel = () => {
     if (dialogRef.current) {
@@ -58,7 +59,7 @@ export function FormDialog({
   );
 
   return (
-    <dialog ref={dialogRef} className={classes} >
+    <dialog data-testid="FormDialog" ref={dialogRef} className={classes} >
       <Form
         ref={formRef}
         onSubmit={onSubmit}

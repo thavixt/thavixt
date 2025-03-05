@@ -3,6 +3,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
 import { themedInputClasses } from "../../common/theme";
+import { Typography } from "../Typography/Typography";
 
 export interface RangeInputProps extends Omit<CommonProps<HTMLInputElement>, 'children'> {
   defaultValue?: number;
@@ -63,29 +64,27 @@ export function RangeInput({ required, showValue = true, ref, ...props }: RangeI
   }, [props.value])
 
   return (
-    <div className="flex space-x-2">
-      <WithLabel label={props.label} id={props.name} required={required}>
-        <div className="flex space-x-1 items-center">
-          {props.before?.(getValue(currentValue), props.min, props.max)}
-          <input
-            ref={ref}
-            required={required}
-            className={classes}
-            defaultValue={typeof props.value === 'undefined' ? props.defaultValue : undefined}
-            disabled={props.disabled}
-            max={props.max}
-            min={props.min}
-            name={props.name}
-            id={`${props.name}-range`}
-            onChange={onChange}
-            step={props.step}
-            type="range"
-            value={props.value}
-          />
-          {props.after?.(getValue(currentValue), props.min, props.max)}
-        </div>
-        {showValue ? <small className="">{getValue(currentValue)}</small> : null}
-      </WithLabel>
-    </div>
+    <WithLabel data-testid="RangeInput" label={props.label} id={props.name} required={required}>
+      <div className="flex space-x-1 items-center">
+        {props.before?.(getValue(currentValue), props.min, props.max)}
+        <input
+          ref={ref}
+          required={required}
+          className={classes}
+          defaultValue={typeof props.value === 'undefined' ? props.defaultValue : undefined}
+          disabled={props.disabled}
+          max={props.max}
+          min={props.min}
+          name={props.name}
+          id={`${props.name}-range`}
+          onChange={onChange}
+          step={props.step}
+          type="range"
+          value={props.value}
+        />
+        {showValue ? <Typography.Label className="">{getValue(currentValue)}</Typography.Label> : null}
+        {props.after?.(getValue(currentValue), props.min, props.max)}
+      </div>
+    </WithLabel>
   )
 }

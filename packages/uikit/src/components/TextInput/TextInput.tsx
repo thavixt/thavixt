@@ -18,11 +18,11 @@ export interface TextInputProps extends CommonProps<HTMLInputElement | HTMLTextA
 
 export function TextInput({ required, label, ref, type = 'input', onChange: providedOnChange, name, ...props }: TextInputProps) {
   const classes = classNames(
-    'px-1 w-full',
+    'px-2 w-full',
     'border rounded-sm',
     themedInputClasses,
     {
-      'h-20 py-1': type === 'textarea',
+      'py-1 resize-none': type === 'textarea',
     },
     props.className,
   );
@@ -34,7 +34,7 @@ export function TextInput({ required, label, ref, type = 'input', onChange: prov
   const id = `${name}-text`;
 
   return (
-    <WithLabel label={label} id={id} required={required}>
+    <WithLabel data-testid="TextInput" label={label} id={id} required={required}>
       {type === 'input' ? (
         <input
           ref={ref as RefObject<HTMLInputElement>}
@@ -54,6 +54,7 @@ export function TextInput({ required, label, ref, type = 'input', onChange: prov
           name={name}
           onChange={onChange}
           required={required}
+          rows={3}
           {...props}
         />
       )}

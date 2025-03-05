@@ -65,7 +65,7 @@ export function Button({
       }
       {...props}
     >
-      <div className="flex items-center justify-center">
+      <div data-testid="Button" className="flex items-center justify-center">
         {loading ? (
           <Loader type="TubeSpinner" />
         ) : (

@@ -214,7 +214,7 @@ export function Table<T extends Record<string, string | number>>({
   }
 
   return (
-    <Scrollbar ref={containerRef} className={containerClasses}>
+    <Scrollbar data-testid="Table" ref={containerRef} className={containerClasses}>
       <div className={TABLE_CONTAINER_CLASSES}>
         <table ref={tableRef} className={TABLE_CLASSES}>
           <thead className={theadClasses}>

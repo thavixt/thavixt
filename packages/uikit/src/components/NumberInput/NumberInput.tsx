@@ -47,7 +47,7 @@ export function NumberInput({ ref, required, name, label, min, max, onChange: pr
   }
 
   return (
-    <WithLabel label={label} id={id} required={required}>
+    <WithLabel data-testid="NumberInput" label={label} id={id} required={required}>
       <input
         ref={ref}
         required={required}

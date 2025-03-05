@@ -43,7 +43,7 @@ export function SwitchInput({ ref, label, onChange: providedOnChange, name, requ
   }
 
   return (
-    <div className={containerClasses}>
+    <div data-testid="SwitchInput" className={containerClasses}>
       <WithLabel id={id} label={label} required={required}>
         <div className={switchContainerClasses}>
           <input

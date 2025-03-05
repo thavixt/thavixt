@@ -42,7 +42,7 @@ export function Accordion({ className, children, defaultOpen, title, openedTitle
   }
 
   return (
-    <div ref={ref} className={classes}>
+    <div data-testid="Accordion" ref={ref} className={classes}>
       <div className="cursor-pointer flex items-center" onClick={onClick}>
         <svg className={svgClasses} viewBox="0 0 24 24">
           <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>

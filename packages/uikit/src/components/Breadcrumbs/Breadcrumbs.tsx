@@ -16,7 +16,7 @@ export function Breadcrumbs(props: BreadcrumbProps) {
   const children = Children.toArray(props.children);
 
   return (
-    <div ref={props.ref} className={classNames(classes)}>
+    <div data-testid="Breadcrumbs" ref={props.ref} className={classNames(classes)}>
       {children.map((child, i) => (
         <Fragment key={i}>
           <span className="font-semibold">{child}</span>

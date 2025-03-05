@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { ReactNode, RefObject, useImperativeHandle, useState } from "react";
+import { ReactNode, RefObject, useImperativeHandle, useRef, useState } from "react";
 import { Icon } from "../Icon/Icon";
 import { themedBackgroundClasses } from "../../common/theme";
 
@@ -13,7 +13,7 @@ const Snackbar_COLORS: Record<SnackbarType, string> = {
 
 export type SnackbarPosition = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
 
-export type SnackbarHandle = {
+export type SnackbarHandle = RefObject<HTMLDivElement | null> & {
   show: () => void,
   hide: () => void,
 }
@@ -31,10 +31,12 @@ export function Snackbar({
   position = 'bottom-right', className, children, type = 'info', open = false, ref
 }: SnackbarProps) {
   const [hidden, setHidden] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  useImperativeHandle(
+  useImperativeHandle<RefObject<HTMLDivElement | null>, SnackbarHandle>(
     ref,
     () => ({
+      current: containerRef?.current,
       show: () => setHidden(false),
       hide: () => setHidden(true),
     }),
@@ -62,7 +64,7 @@ export function Snackbar({
   );
 
   return (
-    <div className={classes}>
+    <div data-testid="Snackbar" ref={containerRef} className={classes}>
       <div>{children}</div>
       <Icon icon="Cross" height={4} className="cursor-pointer" onClick={() => setHidden(true)}/>
     </div>

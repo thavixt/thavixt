@@ -16,14 +16,14 @@ export type BoxProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
   type?: 'card' | 'paper';
 };
 
-export function Box({ type = 'card', className, children, size = 'full' }: BoxProps) {
+export function Box({ type = 'card', className, children, size = 'full', ...props }: BoxProps) {
   const slots = Children.toArray(children) as ReactElement[];
   const header = slots.filter((child) => child.type === Header);
   const content = slots.filter((child) => child.type === Content);
   const footer = slots.filter((child) => child.type === Footer);
 
   return (
-    <div className={classNames(className, BoxStyles[type], getSizeClasses(size))}>
+    <div data-testid="Box" className={classNames(className, BoxStyles[type], getSizeClasses(size))} {...props}>
       {header}
       {content}
       {footer}
