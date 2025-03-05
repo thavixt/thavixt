@@ -6,7 +6,7 @@ import { Box } from '../Box/Box';
 const lorem = 'Lorem ipsum dolor sit amet';
 
 const meta = {
-  title: 'Data display/Typography',
+  title: 'Basic/Typography',
   // component: Typography,
   tags: ['autodocs'],
   render: function StoryComponent() {

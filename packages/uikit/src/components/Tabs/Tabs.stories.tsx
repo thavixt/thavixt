@@ -4,7 +4,7 @@ import { TextInput } from '../TextInput/TextInput';
 import { Form } from '../Form/Form';
 
 const meta = {
-  title: 'Navigation/Tabs',
+  title: 'Layout/Tabs',
   component: Tabs,
   tags: ['autodocs'],
 } satisfies Meta<typeof Tabs>;

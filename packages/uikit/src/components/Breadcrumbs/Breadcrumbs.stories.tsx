@@ -3,7 +3,7 @@ import { Breadcrumbs } from './Breadcrumbs';
 import { Link } from '../Link/Link';
 
 const meta = {
-  title: 'Navigation/Breadcrumbs',
+  title: 'Basic/Breadcrumbs',
   component: Breadcrumbs,
   tags: ['autodocs'],
 } satisfies Meta<typeof Breadcrumbs>;

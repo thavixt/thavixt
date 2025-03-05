@@ -8,7 +8,7 @@ interface ScrollbarProps extends PropsWithChildren<CommonProps<HTMLDivElement>> 
   onScrollToEnd?: (direction: ScrollDirection[]) => void;
 }
 
-export const DEFAULT_SCROLLBAR_STYLES: ScrollbarStyles = {
+const DEFAULT_SCROLLBAR_STYLES: ScrollbarStyles = {
   thumbColor: '#888',
   thumbColorDark: '#FFF',
   trackColor: '#DDD',
@@ -20,6 +20,7 @@ export function Scrollbar({ ref: providedRef, styles = {}, onScroll, onScrollToE
   useImperativeHandle(providedRef, () => ref.current);
 
   return (
+    /* style={{scrollbarGutter: 'stable'}} */
     <div ref={ref} className={className}>
       {children}
     </div>

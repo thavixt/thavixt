@@ -1,11 +1,10 @@
 import { useRef, useState } from "react";
 import classNames from "classnames";
 import { Box } from "../Box/Box";
-import useScrollbar from "thavixt-scrollbar-react";
 import { CommonProps } from "../../common/commonProps";
 import { Button } from "../Button/Button";
 import { Icon } from "../Icon/Icon";
-import { DEFAULT_SCROLLBAR_STYLES, Scrollbar } from "../Scrollbar/Scrollbar";
+import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Typography } from "../Typography/Typography";
 
 const DRAG_IMAGE_ID = 'off_canvas_drag_image_id';
@@ -31,12 +30,7 @@ export interface TransferListProps extends CommonProps {
 }
 
 export function TransferList({ ref, className, items, defaultSelected }: TransferListProps) {
-  const sourceScrollRef = useScrollbar<HTMLDivElement>({ styles: DEFAULT_SCROLLBAR_STYLES });
-  const selectedScrollRef = useScrollbar<HTMLDivElement>({ styles: DEFAULT_SCROLLBAR_STYLES });
   const formRef = useRef<HTMLFormElement>(null);
-
-  // const [availableChecked, setAvailableChecked] = useState<string[]>([]);
-  // const [selectedChecked, setSelectedChecked] = useState<string[]>([]);
   const [selected, setSelected] = useState<TransferListItemKey[]>(defaultSelected);
 
   const sortedAllItems = items.sort((a, b) => a.content.localeCompare(b.content));
@@ -49,11 +43,10 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
   );
   const itemClasses = classNames(
     'cursor-pointer w-full flex items-center px-2',
-    'bg-transparent hover:bg-slate-200 hover:dark:bg-slate-700 rounded-sm',
-    'flex min-h-0 overflow-auto',
+    'flex bg-transparent hover:bg-slate-200 hover:dark:bg-slate-700 rounded-sm',
     className,
   );
-  const scrollbarClasses = 'max-h-80';
+  const scrollbarClasses = 'max-h-80 flex flex-col space-y-0.5';
 
   const onDragStart: (from: 'available' | 'selected') => React.DragEventHandler<HTMLDivElement> = (from) => (e) => {
     clearDragImage();
@@ -191,7 +184,7 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
             </div>
             <Scrollbar className={scrollbarClasses}>
               {availableItems.map(item => (
-                <div ref={sourceScrollRef} key={item.key} className={itemClasses} draggable onDragStart={onDragStart('available')} onDragEnd={onDragEnd}>
+                <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('available')} onDragEnd={onDragEnd}>
                   <TransferListListItem item={item} side="available" onCheck={onCheck('available')} />
                 </div>
               ))}
@@ -243,7 +236,7 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
             </div>
             <Scrollbar className={scrollbarClasses}>
               {selectedItems.map(item => (
-                <div ref={selectedScrollRef} key={item.key} className={itemClasses} draggable onDragStart={onDragStart('selected')}>
+                <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('selected')}>
                   <TransferListListItem item={item} side="selected" onCheck={onCheck('selected')} />
                 </div>
               ))}
