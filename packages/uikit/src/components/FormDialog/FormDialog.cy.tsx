@@ -6,8 +6,16 @@ const { Default } = composeStories(stories);
 
 describe('FormDialog component', () => {
    it('should render', () => {
-      mount(<Default />);
+      const onSubmit = cy.spy().as('onSubmit');
+      
+      mount(<Default defaultOpen onSubmit={onSubmit}/>);
 
-      // @todo
+      cy.get('button[type=submit').click();
+      cy.get('input[name=name').type('Jane Doe');
+      cy.get('@onSubmit').should('not.be.called');
+
+      cy.get('input[name=job]').type('HR assistant');
+      cy.get('button[type=submit').click();
+      cy.get('@onSubmit').should('be.calledOnce');
    });
 });

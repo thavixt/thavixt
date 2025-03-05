@@ -30,7 +30,7 @@ export interface SnackbarProps {
 export function Snackbar({
   position = 'bottom-right', className, children, type = 'info', open = false, ref
 }: SnackbarProps) {
-  const [hidden, setHidden] = useState(false);
+  const [hidden, setHidden] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useImperativeHandle<RefObject<HTMLDivElement | null>, SnackbarHandle>(
@@ -66,7 +66,7 @@ export function Snackbar({
   return (
     <div data-testid="Snackbar" ref={containerRef} className={classes}>
       <div>{children}</div>
-      <Icon icon="Cross" height={4} className="cursor-pointer" onClick={() => setHidden(true)}/>
+      <Icon data-testid="close" icon="Cross" height={4} className="cursor-pointer" onClick={() => setHidden(true)}/>
     </div>
   );
 }

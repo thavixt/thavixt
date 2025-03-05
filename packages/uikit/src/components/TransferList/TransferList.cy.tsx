@@ -7,5 +7,6 @@ const { Default } = composeStories(stories);
 describe('TransferList component', () => {
    it('should render', () => {
       mount(<Default />);
+      // @todo
    });
 });

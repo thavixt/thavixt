@@ -5,7 +5,7 @@ const createItems = (count: number) => (
   new Array(count).fill(0).map((_v, i) => {
     return {
       key: `item-${i}`,
-      content: crypto.randomUUID().slice(0, 18),
+      content: `List item #${i}`,
     }
   })
 )

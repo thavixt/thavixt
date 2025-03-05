@@ -19,6 +19,7 @@
 // Import styles
 import './component.css'
 
+import "cypress-real-events";
 import { mount } from 'cypress/react'
 
 // Example use:

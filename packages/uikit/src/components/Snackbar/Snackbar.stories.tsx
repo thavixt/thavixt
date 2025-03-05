@@ -17,8 +17,8 @@ const meta = {
     const ref = useRef<SnackbarHandle>(null);
     return (
       <div className='flex items-start space-x-2 h-[150px]'>
-        <Button onClick={() => { ref.current?.show() }}>Show</Button>
-        <Button onClick={() => { ref.current?.hide() }}>Hide</Button>
+        <Button data-testid="show" onClick={() => { ref.current?.show() }}>Show</Button>
+        <Button data-testid="hide" onClick={() => { ref.current?.hide() }}>Hide</Button>
         <Snackbar {...args} ref={ref} />
       </div>
     )

@@ -26,13 +26,13 @@ const meta = {
       <>
         <div className='text-slate-400'>
           <p>
-            <b>Welcome to the top of the page</b>
+            <b data-testid="top">Welcome to the top of the page</b>
           </p>
           {getLorem(100).map((text, i) => <p key={i}>{text}</p>)}
           <ScrollPage {...args}/>
           {getLorem(100).map((text, i) => <p key={`${i}-2`}>{text}</p>)}
           <p>
-            <b>Welcome to the bottom of the page</b>
+            <b data-testid="bottom">Welcome to the bottom of the page</b>
           </p>
         </div>
       </>

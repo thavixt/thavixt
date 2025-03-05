@@ -8,6 +8,14 @@ describe('Snackbar component', () => {
    it('should render', () => {
       mount(<Default />);
 
-      // @todo
+      cy.get('[data-testid=Snackbar').should('not.be.visible');
+      cy.get('[data-testid=show]').click();
+      cy.get('[data-testid=Snackbar').should('be.visible');
+      cy.get('[data-testid=hide]').click();
+      cy.get('[data-testid=Snackbar').should('not.be.visible');
+      cy.get('[data-testid=show]').click();
+      cy.get('[data-testid=Snackbar').should('be.visible');
+      cy.get('[data-testid=close]').click();
+      cy.get('[data-testid=Snackbar').should('not.be.visible');
    });
 });

@@ -20,7 +20,7 @@ const meta = {
   tags: ['autodocs'],
   render: function StoryComponent(args: ComponentProps<typeof FormDialog>) {
     const ref = useRef<FormDialogHandle>(null);
-    const onClick = () => ref.current?.dialog?.showModal();
+    const onClick = () => ref.current?.current?.showModal();
 
     return (
       <>
@@ -28,7 +28,7 @@ const meta = {
           Open dialog
         </Button>
         <FormDialog {...args} ref={ref}>
-          <TextInput required placeholder="Your name" name='name' label="Name"/>
+          <TextInput required placeholder="Your name" name='name' label="name"/>
           <TextInput required label="Occupation" placeholder="Job title" name='job'/>
           <NumberInput min={18} label='Age' defaultValue={25} name='experience'/>
         </FormDialog>

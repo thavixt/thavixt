@@ -4,7 +4,7 @@ import { Form, FormProps } from "../Form/Form";
 
 export type FormDialogHandle = RefObject<HTMLDialogElement | null> & {
   form: HTMLFormElement | null,
-}
+};
 
 export interface FormDialogProps extends Omit<FormProps, 'onCancel' | 'ref'> {
   defaultOpen?: boolean,

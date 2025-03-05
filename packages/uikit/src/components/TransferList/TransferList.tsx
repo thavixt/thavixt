@@ -33,7 +33,7 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
   const formRef = useRef<HTMLFormElement>(null);
   const [selected, setSelected] = useState<TransferListItemKey[]>(defaultSelected);
 
-  const sortedAllItems = items.sort((a, b) => a.content.localeCompare(b.content));
+  const sortedAllItems = items.sort((a, b) => a.content.localeCompare(b.content, undefined, { numeric: true }));
   const availableItems = sortedAllItems.filter(item => !selected.includes(item.key));
   const selectedItems = sortedAllItems.filter(item => selected.includes(item.key));
 
@@ -175,7 +175,13 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
   return (
     <div data-testid="TransferList" ref={ref} className="w-full">
       <form ref={formRef} className={classes}>
-        <Box type="paper" className="flex flex-col space-y-2" onDrop={onDrop('available')} onDragOver={onDragOver}>
+        <Box
+          data-testid="TransferListAvailable"
+          type="paper"
+          className="flex flex-col space-y-2"
+          onDrop={onDrop('available')}
+          onDragOver={onDragOver}
+        >
           <Box.Content>
             <div className="flex justify-between items-center pb-1">
               <Button variant="silent" onClick={selectAll('available')}>Select all</Button>
@@ -227,7 +233,14 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
           </Button>
         </div>
 
-        <Box type="paper" className="flex flex-col space-y-2" onDrop={onDrop('selected')} onDragOver={onDragOver}>
+        <Box
+          data-testid="TransferListSelected"
+          type="paper"
+          className="flex flex-col space-y-2"
+          onDrop={onDrop('selected')}
+          onDragOver={onDragOver
+
+          }>
           <Box.Content>
             <div className="flex justify-between items-center pb-1">
               <Button className="text-xs" variant="silent" onClick={selectAll('selected')}>Select all</Button>
