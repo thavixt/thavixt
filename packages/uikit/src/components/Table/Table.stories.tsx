@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Table } from './Table';
 import { Button } from '../Button/Button';
 import { fn } from '@storybook/test';
+import { ComponentProps } from 'react';
 
 const mockData = { key: 'msi', name: 'Radium ROG XTHE v2', category: 'Desktop PC', price: '$1999' };
 const getMockData = (count: number) => new Array(count).fill(mockData).map((row, i) => ({
@@ -36,7 +37,7 @@ const meta = {
       { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$999', year: 2020 },
       { key: 'unknown', name: `Unidentifiable tech thing ${crypto.randomUUID()}`, price: '$299' },
       { key: 'lenovoFx205', name: 'Lenovo FX 205', category: 'Laptop', price: '$649', year: 2019 },
-      ...getMockData(10)
+      ...getMockData(50)
     ],
     dataKeys: {
       name: 'Name',
@@ -45,11 +46,18 @@ const meta = {
       price: 'Price',
     },
     full: false,
-    pageSize: undefined,
+    page: false,
     placeholder: '-',
     primaryKey: 'name',
     search: false,
     onSelect: fn(),
+  },
+  render: function StoryComponent(args: ComponentProps<typeof Table>) {
+    return (
+      <div className="w-full h-[500px]">
+        <Table {...args} />
+      </div>
+    )
   }
 } satisfies Meta<typeof Table>;
 
@@ -67,7 +75,13 @@ export const Searchable: Story = {
 
 export const Paginated: Story = {
   args: {
-    pageSize: 10,
+    page: true,
+  }
+};
+
+export const PaginatedWithFixedPageSize: Story = {
+  args: {
+    page: 20,
   }
 };
 
@@ -80,23 +94,7 @@ export const Checkable: Story = {
 export const FullFeatured: Story = {
   args: {
     search: true,
-    pageSize: 10,
+    page: true,
     checkable: true,
   }
 };
-
-// @todo
-// export const FullFeaturedInContainer: Story = {
-//   args: {
-//     search: true,
-//     pageSize: 10,
-//     checkable: true,
-//   },
-//   render: function StoryComponent(args: ComponentProps<typeof Table>) {
-//     return (
-//       <div className="size-1/2 border-2 border-red-500">
-//         <Table {...args} />
-//       </div>
-//     )
-//   }
-// };

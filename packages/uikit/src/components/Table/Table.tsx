@@ -1,19 +1,18 @@
 import classNames from "classnames";
-import { ReactElement, RefObject, useImperativeHandle, useRef, useState } from "react";
-import useScrollbar from "thavixt-scrollbar-react";
+import { PropsWithChildren, ReactElement, RefObject, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
 import { omitKey } from "../../common/utils";
 import { Button } from "../Button/Button";
-import { DEFAULT_SCROLLBAR_STYLES } from "../Scrollbar/Scrollbar";
+import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { TextInput } from "../TextInput/TextInput";
 
 const CHECK_ALL_KEY = 'table_check_all';
 const PADDING_CLASSES = 'px-4 py-2';
 
-const CONTAINER_CLASSES = 'flex-grow shadow-lg max-h-full overflow-auto rounded-lg text-normal text-slate-500 dark:text-slate-300';
-const TABLE_CONTAINER_CLASSES = 'w-full min-h-0';
-const TABLE_CLASSES = 'relative table-auto w-full text-sm bg-slate-100 dark:bg-slate-700';
+const CONTAINER_CLASSES = 'relative size-full min-h-[400px] overflow-x-auto rounded-lg text-normal text-slate-500 dark:text-slate-300 shadow-lg';
+const TABLE_CONTAINER_CLASSES = 'w-full h-full min-h-0';
+const TABLE_CLASSES = 'table-auto w-full border-collapse text-sm bg-slate-100 dark:bg-slate-700';
 
-const THEAD_CLASSES = 'text-xs bg-slate-200 dark:bg-slate-800';
+const THEAD_CLASSES = 'sticky top-0 text-xs bg-slate-200 dark:bg-slate-800';
 const TH_CLASSES = classNames(PADDING_CLASSES, 'text-left truncate');
 
 const TBODY_CLASSES = '';
@@ -24,12 +23,12 @@ const TR_CLASSES = classNames(
 
 const TD_CLASSES = classNames(PADDING_CLASSES, 'whitespace-nowrap truncate max-w-[200px]');
 
-const TFOOT_CLASSES = 'text-xs bg-slate-200 dark:bg-slate-800'
+const TFOOT_CLASSES = 'sticky bottom-0 bg-slate-200 dark:bg-slate-800'
 const TFOOTTD_CLASSES = classNames(PADDING_CLASSES);
 
-const BUTTON_CLASSES = 'w-fit text-xs bg-transparent cursor-pointer disabled:cursor-default disabled:text-transparent';
+const BUTTON_CLASSES = 'w-fit text-xs bg-transparent';
 
-const CHECK_COL_CLASSES = 'w-10 text-center'
+const CHECK_COL_CLASSES = 'pl-3 pr-1 text-center'
 
 function getPagedData<T>(items: T[], pageSize: number, pageCount: number): T[] {
   const index = pageCount * pageSize;
@@ -56,9 +55,24 @@ export interface TableProps<T extends Record<string, string | number>> {
   /** Full size table - not scrollable overflowing body */
   full?: boolean;
   /** Pagination - number of rows a single page displays */
-  pageSize?: number;
+  // pageSize?: number;
+  /** Pagination
+   * - `false | undefined` (default) has no pagination - all rows rendered, maybe scroll
+   * - `true` determines the page size automatically depending on the current height
+   * - `number` sets a specific page size
+   * */
+  page?: number | boolean;
+
+  /** @todo paging with remote data fetch? callbacks for load, etc */
+  /** @todo also will need a loading state */
+
   /** Selectable - render a checkbox column at the start */
   checkable?: boolean;
+  emptyPlaceholder?: string;
+
+  // @todo implement action in footer
+  // should have selected keys array as onclick args
+
   /** Tighter spacing */
   // @todo
   // compact?: boolean;
@@ -73,20 +87,24 @@ export function Table<T extends Record<string, string | number>>({
   className,
   data,
   dataKeys,
+  emptyPlaceholder = 'No rows to display',
   full: providedFull,
-  pageSize,
+  onSelect,
+  // pageSize,
+  page,
   placeholder = '-',
   primaryKey,
   ref,
   search,
-  onSelect,
 }: TableProps<T>) {
-  const containerRef = useScrollbar<HTMLDivElement>({ styles: DEFAULT_SCROLLBAR_STYLES });
+  const containerRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [checked, setChecked] = useState<Set<DataKey>>(new Set());
+  const [placeholderRowHeight, setPlaceholderRowHeight] = useState(0);
+  const [pageSize, setPageSize] = useState(typeof page === 'number' ? page : 0);
 
   const filteredData = data.filter(row => {
     if (!searchTerm) {
@@ -120,9 +138,9 @@ export function Table<T extends Record<string, string | number>>({
   const containerClasses = classNames(
     CONTAINER_CLASSES,
     {
-      'h-fit': full,
-      'max-h-100': !full,
-      'h-100 max-h-full': search
+      // 'h-fit': full,
+      // 'max-h-100': !full,
+      // 'h-100 max-h-full': search
     },
     className,
   );
@@ -159,13 +177,44 @@ export function Table<T extends Record<string, string | number>>({
     });
   }
 
+  useLayoutEffect(() => {
+    if (containerRef.current) {
+      // container height
+      const containerHeight = containerRef.current.parentElement?.clientHeight;
+      if (!containerHeight) {
+        return;
+      }
+
+      const rowHeight = 4 * 11;
+      // minus header and footer height
+      const tfootHeight = containerRef.current.getElementsByTagName('tfoot')[0].clientHeight;
+      const theadHeight = containerRef.current.getElementsByTagName('thead')[0].clientHeight;
+      const heightToFill = containerHeight - theadHeight - tfootHeight;
+      if (typeof page === 'boolean' && page) {
+        setPageSize(Math.floor(heightToFill / rowHeight));
+      }
+      // placeholder row height should fill the empty space
+      const renderedRowHeights = (pageCount ? pagedData.length : filteredData.length) * rowHeight;
+      if (renderedRowHeights < heightToFill) {
+        setPlaceholderRowHeight(heightToFill - renderedRowHeights);
+        return;
+      }
+      setPlaceholderRowHeight(0);
+    }
+  }, [filteredData.length, page, pageCount, pageSize, pagedData.length]);
+
   const placeholderRows = [];
-  if (!filteredData.length) {
-    placeholderRows.push(<PlaceholderTR key="notfound_placeholder" checkable={checkable} />);
+  const showEmptyText = pageCount ? !pagedData.length : !filteredData.length;
+  if (placeholderRowHeight) {
+    placeholderRows.push(
+      <PlaceholderTR key="placeholder_emptytext" height={placeholderRowHeight} checkable={checkable}>
+        {showEmptyText ? emptyPlaceholder : ''}
+      </PlaceholderTR>
+    );
   }
 
   return (
-    <div ref={containerRef} className={containerClasses}>
+    <Scrollbar ref={containerRef} className={containerClasses}>
       <div className={TABLE_CONTAINER_CLASSES}>
         <table ref={tableRef} className={TABLE_CLASSES}>
           <thead className={theadClasses}>
@@ -250,27 +299,25 @@ export function Table<T extends Record<string, string | number>>({
               <td className={classNames(TFOOTTD_CLASSES, 'text-right')} colSpan={Object.keys(dataKeys).length + (search ? 0 : 1)}>
                 {pageSize ? (
                   <div className="flex justify-end items-center">
-                    <button
+                    <Button
                       title="Previous page"
                       className={BUTTON_CLASSES}
                       onClick={prevPage}
                       disabled={!hasPrevPage}
-                    >
-                      <Button icon={{ type: 'Arrow' }} className="rotate-180" />
-                    </button>
+                      icon={{ type: 'Arrow', className: 'rotate-180' }}
+                    />
                     <span
                       title="Current page"
                       className="text-sm min-w-16 text-center">
                       {currentPage + 1} / {pageCount}
                     </span>
-                    <button
+                    <Button
                       title="Next page"
                       className={BUTTON_CLASSES}
                       onClick={nextPage}
                       disabled={!hasNextPage}
-                    >
-                      <Button icon={{ type: 'Arrow' }} />
-                    </button>
+                      icon={{ type: 'Arrow' }}
+                    />
                   </div>
                 ) : null}
               </td>
@@ -278,15 +325,18 @@ export function Table<T extends Record<string, string | number>>({
           </tfoot>
         </table>
       </div>
-    </div>
+    </Scrollbar>
   );
 }
 
-function PlaceholderTR({ checkable }: { checkable?: boolean }) {
+function PlaceholderTR({ checkable, children, height }: PropsWithChildren<{ checkable?: boolean; height: number }>) {
   return (
-    <tr className={PLACEHOLDER_TR_CLASSES}>
+    <tr
+      className={PLACEHOLDER_TR_CLASSES}
+      style={{ height }}
+    >
       {checkable ? <td /> : null}
-      <td className={TD_CLASSES}>No rows found</td>
+      {children ? (<td className={TD_CLASSES}><em>{children}</em></td>) : null}
     </tr>
   );
 }
