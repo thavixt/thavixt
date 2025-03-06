@@ -5,15 +5,18 @@ import { fn } from '@storybook/test';
 import { ComponentProps } from 'react';
 import { sleep } from '../../common/utils';
 
-const mockData = { key: 'msi', name: 'Radium', category: 'Desktop PC', price: '$1999' };
-const getMockData = (count: number) => new Array(count).fill(mockData).map((row) => {
-  const uuid = crypto.randomUUID();
+const mockData = { key: 'msi', name: 'Radium Power Office PC', category: 'Desktop PC', price: '$1999' };
+const uuid = crypto.randomUUID().slice(0, 3).toUpperCase();
+const getMockData = (count: number, from = 0) => new Array(count).fill(mockData).map((row, index) => {
+  const i = index + from;
   return {
     ...row,
-    key: uuid,
-    name: `${row.name} ${uuid}`,
-    price: `$${Math.round(Math.random() * 10_000)}`,
-    year: Math.round(Math.random() * 10) + 2015
+    key: `${i}`,
+    name: `Radium ${i % 2 ? (i % 4 ? 'Business Laptop' : 'Joy Tablet') : 'Power PC'} (${uuid}${index + from})`,
+    // name: `${row.name} #${index + from}`,
+    category: i % 2 ? (i % 4 ? 'Laptop' : 'Tablet') : 'PC',
+    price: `$${(i % 10) * 100 + 99}`,
+    year: 2020 + i % 5
   }
 });
 
@@ -41,7 +44,7 @@ const meta = {
       { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$999', year: 2020 },
       { key: 'unknown', name: `Unidentifiable tech thing ${crypto.randomUUID()}`, price: '$299' },
       { key: 'lenovoFx205', name: 'Lenovo FX 205', category: 'Laptop', price: '$649', year: 2019 },
-      ...getMockData(10)
+      ...getMockData(50)
     ],
     columns: {
       name: 'Name',
@@ -123,10 +126,10 @@ export const PaginatedWithDataLoading: Story = {
     search: true,
     page: true,
     checkable: true,
-    onPage: fn(async (pageSize) => {
+    onPage: fn(async (rowsToLoad, _, nextPage) => {
       await sleep(500);
       return {
-        nextData: getMockData(pageSize),
+        nextData: getMockData(rowsToLoad, (nextPage * rowsToLoad)),
         pageCount: 1000,
       };
     }),
