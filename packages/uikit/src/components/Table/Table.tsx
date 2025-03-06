@@ -1,9 +1,10 @@
 import classNames from "classnames";
-import { PropsWithChildren, ReactElement, RefObject, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
+import { PropsWithChildren, ReactElement, RefObject, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { omitKey } from "../../common/utils";
 import { Button } from "../Button/Button";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { TextInput } from "../TextInput/TextInput";
+import { Loader } from "../Loader/Loader";
 
 const CHECK_ALL_KEY = 'table_check_all';
 const PADDING_CLASSES = 'px-4 py-2';
@@ -45,52 +46,49 @@ export type TableHandle = {
 export type DataKey = string | number;
 
 export interface TableProps<T extends Record<string, string | number>> {
+  /** Selectable - render a checkbox column at the start */
+  checkable?: boolean;
   className?: string;
+  columns: Record<DataKey, string>;
   data: Array<T>;
-  dataKeys: Record<DataKey, string>;
+  emptyText?: string;
+  /** Full size table - not scrollable overflowing body */
+  full?: boolean;
+  loading?: boolean;
+  loadingText?: string;
+  /** Pagination
+   * - `false | undefined` (default) has no pagination - all rows rendered, maybe scroll
+   * - `true` determines the page size automatically depending on the current `<table>` height
+   * - `number` sets a specific page size
+   * */
+  page?: number | boolean;
   placeholder?: string;
   primaryKey: DataKey;
   ref?: RefObject<TableHandle | null>,
   search?: boolean;
-  /** Full size table - not scrollable overflowing body */
-  full?: boolean;
-  /** Pagination - number of rows a single page displays */
-  // pageSize?: number;
-  /** Pagination
-   * - `false | undefined` (default) has no pagination - all rows rendered, maybe scroll
-   * - `true` determines the page size automatically depending on the current height
-   * - `number` sets a specific page size
-   * */
-  page?: number | boolean;
 
-  /** @todo paging with remote data fetch? callbacks for load, etc */
-  /** @todo also will need a loading state */
-
-  /** Selectable - render a checkbox column at the start */
-  checkable?: boolean;
-  emptyPlaceholder?: string;
+  actions?: (dataKey: DataKey, row: T) => ReactElement;
+  onPage?: (rowsToLoad: number, prevData: T[], nextPage: number, prevPage: number) => Promise<
+    { nextData: T[], pageCount: number }
+  >;
+  onSelect?: (selectedDataKeys: DataKey[], data: T[]) => void;
 
   // @todo implement action in footer
   // should have selected keys array as onclick args
-
-  /** Tighter spacing */
-  // @todo
-  // compact?: boolean;
-
-  actions?: (dataKey: DataKey, row: T) => ReactElement;
-  onSelect?: (selectedDataKeys: DataKey[], data: T[]) => void;
 };
 
 export function Table<T extends Record<string, string | number>>({
   actions,
   checkable,
   className,
-  data,
-  dataKeys,
-  emptyPlaceholder = 'No rows to display',
+  data = [],
+  columns: dataKeys,
+  emptyText = 'No rows to display',
   full: providedFull,
+  loading = false,
+  loadingText = 'Loading',
+  onPage,
   onSelect,
-  // pageSize,
   page,
   placeholder = '-',
   primaryKey,
@@ -100,40 +98,62 @@ export function Table<T extends Record<string, string | number>>({
   const containerRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const [searchTerm, setSearchTerm] = useState('');
   const [checked, setChecked] = useState<Set<DataKey>>(new Set());
-  const [placeholderRowHeight, setPlaceholderRowHeight] = useState(0);
-  const [pageSize, setPageSize] = useState(typeof page === 'number' ? page : 0);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [initialLoad, setInitialLoad] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(loading);
+  const [loaderRowHeight, setLoaderRowHeight] = useState<number>(0);
+  const [pageCount, setPageCount] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(typeof page === 'number' ? page : 0);
+  const [placeholderRowHeight, setPlaceholderRowHeight] = useState<number>(0);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [tableData, setTableData] = useState<T[]>(data);
 
-  const filteredData = data.filter(row => {
+  const filteredData = useMemo(() => tableData.filter(row => {
     if (!searchTerm) {
       return true;
     }
     const values = Object.values(omitKey(row, 'key'));
     const searchStr = values.join(' ').toLowerCase();
     return searchStr.includes(searchTerm);
-  });
+  }), [searchTerm, tableData]);
+  const pagedData = useMemo(() => {
+    if (onPage) {
+      return filteredData;
+    }
+    return pageSize ? getPagedData(filteredData, pageSize, currentPage) : filteredData
+  }, [currentPage, filteredData, onPage, pageSize]);
 
-  const pageCount = pageSize ? Math.ceil(data.length / pageSize) : 0;
-  const pagedData = pageSize ? getPagedData(filteredData, pageSize, currentPage) : filteredData;
-  const prevPage = () => setCurrentPage(prev => Math.max(0, prev - 1))
-  const nextPage = () => setCurrentPage(prev => Math.min(pageCount, prev + 1))
-  const hasPrevPage = currentPage > 0
-  const hasNextPage = currentPage < pageCount - 1;
+  const hasPrevPage = useMemo(() => currentPage > 0, [currentPage]);
+  const hasNextPage = useMemo(() => currentPage < pageCount - 1, [currentPage, pageCount]);
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      container: containerRef?.current,
-      table: tableRef?.current,
-      getSelectedKeys: () => Array.from(checked.values()),
-      getSelectedRows: () => data.filter(row => checked.has(row.key)),
-    }),
-    [checked, containerRef, data],
-  );
+  const prevPage = useCallback(async () => {
+    if (currentPage > 0) {
+      setCurrentPage(prev => Math.max(0, prev - 1));
+      if (!onPage) {
+        return;
+      }
+      setIsLoading(true);
+      const result = await onPage(pageSize, pagedData, currentPage - 1, currentPage);
+      setTableData(result.nextData);
+      setPageCount(result.pageCount);
+      setIsLoading(false);
+    }
+  }, [currentPage, onPage, pageSize, pagedData]);
+  const nextPage = useCallback(async () => {
+    if (currentPage < pageCount) {
+      setCurrentPage(prev => Math.min(pageCount, prev + 1));
+      if (!onPage) {
+        return;
+      }
+      setIsLoading(true);
+      const result = await onPage(pageSize, pagedData, currentPage + 1, currentPage);
+      setTableData(result.nextData);
+      setPageCount(result.pageCount);
+      setIsLoading(false);
+    }
+  }, [currentPage, onPage, pageCount, pageSize, pagedData]);
 
-  // @todo fix layout / should fit in container, viewport etc..
   const full = pageSize ? true : providedFull;
   const containerClasses = classNames(
     CONTAINER_CLASSES,
@@ -153,7 +173,7 @@ export function Table<T extends Record<string, string | number>>({
     { 'bottom-0 sticky': !full },
   );
 
-  const onCheck: React.ChangeEventHandler<HTMLInputElement> = ({ target: { name, checked } }) => {
+  const onCheck: React.ChangeEventHandler<HTMLInputElement> = useCallback(({ target: { name, checked } }) => {
     setChecked(prev => {
       const next = new Set(prev);
       if (checked) {
@@ -161,21 +181,47 @@ export function Table<T extends Record<string, string | number>>({
       } else {
         next.delete(name);
       }
-      onSelect?.(Array.from(next.keys()), data.filter(d => next.has(d.key)));
+      onSelect?.(Array.from(next.keys()), tableData.filter(d => next.has(d.key)));
       return next;
     });
-  }
-  const onCheckAll: React.ChangeEventHandler<HTMLInputElement> = ({ target: { checked } }) => {
+  }, [onSelect, tableData]);
+
+  const onCheckAll: React.ChangeEventHandler<HTMLInputElement> = useCallback(({ target: { checked } }) => {
     setChecked(() => {
       if (checked) {
-        const allKeys = data.map(row => row.key);
+        const allKeys = tableData.map(row => row.key);
         onSelect?.(allKeys, data);
         return new Set(allKeys);
       }
       onSelect?.([], []);
       return new Set();
     });
-  }
+  }, [data, onSelect, tableData]);
+
+  const placeholderRows = useMemo(() => {
+    const rows = [];
+    const showEmptyText = pageCount ? !pagedData.length : !filteredData.length;
+    if (placeholderRowHeight) {
+      rows.push(
+        <PlaceholderTR key="placeholder_emptytext" height={placeholderRowHeight} checkable={checkable}>
+          <div className="flex space-x-2 items-center justify-center">
+            <span>{showEmptyText ? emptyText : ''}</span>
+          </div>
+        </PlaceholderTR>
+      );
+    }
+    return rows;
+  }, [checkable, emptyText, filteredData.length, pageCount, pagedData.length, placeholderRowHeight]);
+
+  const loaderRow = useMemo(
+    () => <PlaceholderTR key="placeholder_loadingtext" height={loaderRowHeight} checkable={checkable}>
+      <div className="flex space-x-2 items-center justify-center">
+        <span>{loadingText}</span>
+        <Loader type="SpinningDots" height={8} />
+      </div>
+    </PlaceholderTR>,
+    [checkable, loaderRowHeight, loadingText],
+  );
 
   useLayoutEffect(() => {
     if (containerRef.current) {
@@ -195,6 +241,7 @@ export function Table<T extends Record<string, string | number>>({
       }
       // placeholder row height should fill the empty space
       const renderedRowHeights = (pageCount ? pagedData.length : filteredData.length) * rowHeight;
+      setLoaderRowHeight(heightToFill);
       if (renderedRowHeights < heightToFill) {
         setPlaceholderRowHeight(heightToFill - renderedRowHeights);
         return;
@@ -203,15 +250,40 @@ export function Table<T extends Record<string, string | number>>({
     }
   }, [filteredData.length, page, pageCount, pageSize, pagedData.length]);
 
-  const placeholderRows = [];
-  const showEmptyText = pageCount ? !pagedData.length : !filteredData.length;
-  if (placeholderRowHeight) {
-    placeholderRows.push(
-      <PlaceholderTR key="placeholder_emptytext" height={placeholderRowHeight} checkable={checkable}>
-        {showEmptyText ? emptyPlaceholder : ''}
-      </PlaceholderTR>
-    );
-  }
+  useEffect(() => {
+    if (onPage) {
+      return;
+    }
+    setPageCount(pageSize ? Math.ceil(tableData.length / pageSize) : 0);
+  }, [onPage, pageSize, tableData.length]);
+
+  useEffect(() => {
+    if (!initialLoad) {
+      return;
+    }
+    (async function InitialPageLoad() {
+      if (page && currentPage === 0 && onPage && pageSize) {
+        setIsLoading(true);
+        const result = await onPage(pageSize, [], 0, -1);
+        setTableData(result.nextData);
+        setPageCount(result.pageCount);
+        setIsLoading(false);
+        setInitialLoad(false);
+      }
+    })();
+  }, [currentPage, initialLoad, onPage, page, pageSize]);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      container: containerRef?.current,
+      table: tableRef?.current,
+      getSelectedKeys: () => Array.from(checked.values()),
+      getSelectedRows: () => tableData.filter(row => checked.has(row.key)),
+      getVisibleData: () => pagedData,
+    }),
+    [checked, pagedData, tableData],
+  );
 
   return (
     <Scrollbar data-testid="Table" ref={containerRef} className={containerClasses}>
@@ -222,10 +294,11 @@ export function Table<T extends Record<string, string | number>>({
               {checkable ? (
                 <th className={CHECK_COL_CLASSES}>
                   <input
-                    checked={checked.size === data.length}
+                    disabled={!tableData.length}
+                    checked={tableData.length ? checked.size === tableData.length : false}
                     name={CHECK_ALL_KEY}
                     onChange={onCheckAll}
-                    title={checked.size === data.length ? 'Deselect all' : 'Select all'}
+                    title={checked.size === tableData.length ? 'Deselect all' : 'Select all'}
                     type="checkbox"
                   />
                 </th>
@@ -247,47 +320,50 @@ export function Table<T extends Record<string, string | number>>({
             </tr>
           </thead>
           <tbody className={TBODY_CLASSES}>
-            {pagedData.map(row => {
-              return (
-                <tr key={row.key} className={TR_CLASSES}>
-                  {checkable ? (
-                    <td className={CHECK_COL_CLASSES}>
-                      <input className="cursor-pointer" type="checkbox" name={row.key.toString()} id={row.key.toString()} onChange={onCheck} checked={checked.has(row.key)} />
-                    </td>
-                  ) : null}
-                  {Object.keys(dataKeys).map((key) => {
-                    const cellContent = row[key] ?? placeholder;
-                    if (key === primaryKey) {
-                      return (
-                        <td
-                          title={cellContent.toString()}
-                          key={`td-${key}`}
-                          className={classNames(TD_CLASSES, 'font-bold', 'text-left')}
-                        >
-                          <label className="cursor-pointer" htmlFor={row.key.toString()}>{cellContent}</label>
-                        </td>
-                      )
-                    } else {
-                      return (
-                        <td
-                          title={cellContent.toString()}
-                          key={`td-${key}`}
-                          className={classNames(TD_CLASSES, 'text-right')}
-                        >
-                          {cellContent}
-                        </td>
-                      )
-                    }
-                  })}
-                  {actions ? (
-                    <td className={classNames(TD_CLASSES, "flex items-center")}>
-                      {actions(row.key, row)}
-                    </td>
-                  ) : null}
-                </tr>
-              )
-            })}
-            {placeholderRows}
+            {isLoading ? loaderRow : null}
+            {isLoading ? null : (
+              pagedData.map(row => {
+                return (
+                  <tr key={row.key} className={TR_CLASSES}>
+                    {checkable ? (
+                      <td className={CHECK_COL_CLASSES}>
+                        <input className="cursor-pointer" type="checkbox" name={row.key.toString()} id={row.key.toString()} onChange={onCheck} checked={checked.has(row.key)} />
+                      </td>
+                    ) : null}
+                    {Object.keys(dataKeys).map((key) => {
+                      const cellContent = row[key] ?? placeholder;
+                      if (key === primaryKey) {
+                        return (
+                          <td
+                            title={cellContent.toString()}
+                            key={`td-${key}`}
+                            className={classNames(TD_CLASSES, 'font-bold', 'text-left')}
+                          >
+                            <label className="cursor-pointer" htmlFor={row.key.toString()}>{cellContent}</label>
+                          </td>
+                        )
+                      } else {
+                        return (
+                          <td
+                            title={cellContent.toString()}
+                            key={`td-${key}`}
+                            className={classNames(TD_CLASSES, 'text-right')}
+                          >
+                            {cellContent}
+                          </td>
+                        )
+                      }
+                    })}
+                    {actions ? (
+                      <td className={classNames(TD_CLASSES, "flex items-center")}>
+                        {actions(row.key, row)}
+                      </td>
+                    ) : null}
+                  </tr>
+                )
+              })
+            )}
+            {isLoading ? null : placeholderRows}
           </tbody>
           <tfoot className={tfootClasses} hidden={!search && !pageSize}>
             <tr>
@@ -308,8 +384,8 @@ export function Table<T extends Record<string, string | number>>({
                     />
                     <span
                       title="Current page"
-                      className="text-sm min-w-16 text-center">
-                      {currentPage + 1} / {pageCount}
+                      className="text-xs text-center min-w-24">
+                      <span>{(currentPage) * pageSize} - {(currentPage + 1) * pageSize} of {pageCount * pageSize}</span>
                     </span>
                     <Button
                       title="Next page"
@@ -336,7 +412,7 @@ function PlaceholderTR({ checkable, children, height }: PropsWithChildren<{ chec
       style={{ height }}
     >
       {checkable ? <td /> : null}
-      {children ? (<td className={TD_CLASSES}><em>{children}</em></td>) : null}
+      {children ? (<td colSpan={99999}><em>{children}</em></td>) : null}
     </tr>
   );
 }

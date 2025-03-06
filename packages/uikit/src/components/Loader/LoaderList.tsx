@@ -46,7 +46,7 @@ export const LoaderList: Record<LoaderType, ({ height }: { height?: number, colo
     return (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" height={height * 4}>
         <linearGradient id="a11">
-          <stop offset="0" stopColor={color} stop-opacity="0"></stop>
+          <stop offset="0" stopColor={color} stopOpacity="0"></stop>
           <stop offset="1" stopColor={color}></stop>
         </linearGradient>
         <circle style={{ transformOrigin: "center" }} fill="none" stroke={color} strokeWidth="24" strokeLinecap="round" strokeDasharray="0 44 0 44 0 44 0 44 0 360" cx="100" cy="100" r="70">

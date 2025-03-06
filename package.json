@@ -21,7 +21,7 @@
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
     "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
     "storybook:deploy": "npm run storybook:clear && storybook build && cp -r .vercel storybook-static/.vercel && vercel --prod storybook-static",
-    "publish-predeploy": "npm run tailwind-build && npm run lerna:check && npm run cyct:run",
+    "publish-predeploy": "npm run lerna:build-css && npm run lerna:check && npm run cyct:run",
     "publish-deploy": "npm run publish-predeploy && npm run lerna:publish && npm run storybook:deploy"
   },
   "dependencies": {

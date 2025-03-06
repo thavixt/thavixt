@@ -27,7 +27,7 @@ export const All: Story = {
         <table className="table-auto border-collapse text-slate-800 dark:text-slate-100">
           <tbody>
             {Object.keys(IconList).sort().map((key) => (
-              <tr>
+              <tr key={key}>
                 <td className='p-2 border border-slate-200 dark:border-slate-500'>
                   <code>{key}</code>
                 </td>
