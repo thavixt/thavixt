@@ -7,7 +7,6 @@ const { Default } = composeStories(stories);
 describe('Accordion component', () => {
     it('should render', () => {
         mount(<Default />);
-
         cy.get('[data-testid="content"]').should('not.be.visible');
 
         cy.get('[data-testid="title"]').should('be.visible');

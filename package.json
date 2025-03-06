@@ -12,6 +12,7 @@
     "build-storybook": "storybook build",
     "cyct:run": "npx cypress run --browser chrome --component --config-file cypress.config.js",
     "cyct:run-headed": "npx cypress run --headed --browser chrome --component --config-file cypress.config.js",
+    "cyct:spec": "npx cypress run --browser chrome --component --config-file cypress.config.js --spec=**/%npm_config_spec%.cy.tsx",
     "cyct:open": "npx cypress open --component --config-file cypress.config.js",
     "lerna:check": "npx lerna run check --scope=@thavixt/uikit",
     "lerna:build": "npx lerna run build --scope=@thavixt/uikit",

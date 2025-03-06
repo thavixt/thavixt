@@ -7,7 +7,8 @@ export default defineConfig({
   component: {
     specPattern: 'packages/uikit/src/components/**/*.cy.tsx',
     watchForFileChanges: true,
-    // screenshotsFolder: 'cypress/screenshots',
+    screenshotsFolder: 'cypress/screenshots',
+    // experimentalInteractiveRunEvents: true,
     // trashAssetsBeforeRuns: true,
     devServer: {
       framework: "react",
@@ -20,6 +21,15 @@ export default defineConfig({
         ],
         // root: './storybook-static',
       }),
+    },
+    setupNodeEvents(on, config) {
+      on('after:spec', (spec) => {
+        console.log('spec ran', spec)
+      });
+      on('after:run', (spec) => {
+        console.log('run finished', spec)
+      });
+      return config;
     },
   },
 });

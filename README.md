@@ -33,3 +33,10 @@ export function ExampleComponent() {
   )
 }
 ```
+
+## Notes
+
+- run one specific Cypress spec with
+```bash
+npm run cyct:spec --spec=SomeComponent
+```
