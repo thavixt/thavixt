@@ -30,4 +30,5 @@ storybook-static
 .vercel
 
 # cypress
+!cypress/support
 # cypress/screenshots/*.png
