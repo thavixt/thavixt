@@ -28,8 +28,6 @@ export function ScrollPage({ to = 'top', ...props }: ScrollPageProps) {
     '-rotate-90': to === 'top',
     'rotate-90': to === 'bottom',
   });
-  console.log('to', to)
-  console.log('to', iconClasses)
 
   return (
     <Button

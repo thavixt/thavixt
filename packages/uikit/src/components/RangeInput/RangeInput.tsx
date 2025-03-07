@@ -38,7 +38,7 @@ export interface RangeInputProps extends Omit<CommonProps<HTMLInputElement>, 'ch
 
 export function RangeInput({ required, showValue = true, ref, ...props }: RangeInputProps) {
   const classes = classNames(
-    'flex space-x-2 bg-slate-400 rounded-md h-2 disabled:opacity-50',
+    'flex space-x-2 bg-slate-400 rounded-md h-2',
     themedInputClasses,
     props.className,
   );

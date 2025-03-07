@@ -66,7 +66,7 @@ export function Snackbar({
   return (
     <div data-testid="Snackbar" ref={containerRef} className={classes}>
       <div>{children}</div>
-      <Icon data-testid="close" icon="Cross" height={4} className="cursor-pointer" onClick={() => setHidden(true)}/>
+      <Icon data-testid="close" icon="Cross" height={3} className="cursor-pointer" onClick={() => setHidden(true)}/>
     </div>
   );
 }

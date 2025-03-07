@@ -2,10 +2,17 @@ import classNames from "classnames";
 
 export type DataKey = string | number;
 export type SortDirection = 'asc' | 'desc';
+export type OnPageHandler<T> = (rowsToLoad: number, prevData: T[], nextPage: number, prevPage: number) => Promise<
+  {
+    nextData: T[]
+    pageCount: number,
+    dataLength: number,
+  }
+>;
 
 export const BUTTON_CLASSES = 'w-fit text-xs bg-transparent';
 export const CHECK_ALL_KEY = 'table_check_all';
-export const CHECK_COL_CLASSES = 'pl-3 pr-1 text-center'
+export const CHECK_COL_CLASSES = 'pl-3 pr-1 text-center w-12'
 export const CONTAINER_CLASSES = 'size-full min-h-[200px] overflow-x-auto rounded-lg text-normal text-slate-500 dark:text-slate-300 shadow-lg';
 const PADDING_CLASSES = 'px-4 py-2';
 export const PLACEHOLDER_TR_CLASSES = 'h-11';

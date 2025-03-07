@@ -117,7 +117,7 @@ function StoryComponent({ name, story }: Story) {
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            console.log(name, 'is visible now');
+            // console.log(name, 'is visible now');
             setVisible(true);
           }
         }

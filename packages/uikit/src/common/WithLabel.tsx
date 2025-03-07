@@ -11,7 +11,7 @@ interface LabelProps {
 
 export function WithLabel({ children, label, className, id, required }: PropsWithChildren<LabelProps>) {
   return (
-    <div data-testid="WithLabel" className={classNames('flex space-x-2 items-start dark:text-slate-100 w-full', className)}>
+    <div data-testid="WithLabel" className={classNames('flex space-x-2 items-start dark:text-slate-100', className)}>
       <Label id={id} required={required}>{label}</Label>
       {children}
     </div>

@@ -6,17 +6,29 @@ import { WithLabel } from "../../common/WithLabel";
 
 export interface TextInputProps extends CommonProps<HTMLInputElement | HTMLTextAreaElement> {
   defaultValue?: string;
+  disabled?: boolean;
   label?: string;
   name: string;
   placeholder?: string;
+  readonly?: boolean;
+  required?: boolean;
   type?: 'input' | 'textarea',
   value?: string;
-  required?: boolean;
 
   onChange?: (value: string) => void;
 }
 
-export function TextInput({ required, label, ref, type = 'input', onChange: providedOnChange, name, ...props }: TextInputProps) {
+export function TextInput({
+  disabled,
+  label,
+  name,
+  onChange: providedOnChange,
+  readonly,
+  ref,
+  required,
+  type = 'input',
+  ...props
+}: TextInputProps) {
   const classes = classNames(
     'px-2 w-full',
     'border rounded-sm',
@@ -44,6 +56,8 @@ export function TextInput({ required, label, ref, type = 'input', onChange: prov
           type="text"
           onChange={onChange}
           required={required}
+          disabled={disabled}
+          readOnly={readonly}
           {...props}
         />
       ) : (
@@ -55,6 +69,8 @@ export function TextInput({ required, label, ref, type = 'input', onChange: prov
           onChange={onChange}
           required={required}
           rows={3}
+          disabled={disabled}
+          readOnly={readonly}
           {...props}
         />
       )}

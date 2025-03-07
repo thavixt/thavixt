@@ -1,14 +1,15 @@
 import classNames from "classnames";
-import { PropsWithChildren, ReactElement, RefObject, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { PropsWithChildren, ReactElement, RefObject, useCallback, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { omitKey } from "../../common/utils";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Loader } from "../Loader/Loader";
-import { DataKey, CONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES, SortDirection } from "./common";
+import { DataKey, CONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES, SortDirection, OnPageHandler } from "./common";
 import { TableBody } from "./TableBody";
 import { TableFooter } from "./TableFooter";
 import { TableHeader } from "./TableHeader";
 import { getPagedData, hasNextPage, hasPrevPage } from "./utils";
 import { TableContext } from "./TableContext";
+import { usePagination } from "./usePagination";
 
 /**
  * TODO:
@@ -17,8 +18,8 @@ import { TableContext } from "./TableContext";
  * - all row count in pagination is wrong with loader
  */
 
-export type TableHandle = {
-  container: HTMLDivElement | null;
+export type TableHandle = RefObject<HTMLDivElement | null> & {
+  // container: HTMLDivElement | null;
   table: HTMLTableElement | null;
   getSelectedKeys: () => DataKey[];
   getSelectedRows: () => Record<string, string | number>[];
@@ -46,11 +47,11 @@ export interface TableProps<T extends Record<string, string | number>> {
   primaryKey: DataKey;
   ref?: RefObject<TableHandle | null>;
   search?: boolean;
+  searchPlaceholder?: string;
 
   actions?: (dataKey: DataKey, row: T) => ReactElement;
-  onPage?: (rowsToLoad: number, prevData: T[], nextPage: number, prevPage: number) => Promise<
-    { nextData: T[], pageCount: number }
-  >;
+  /** If provided, the content of next page and the currently known max page size should be returned */
+  onPage?: OnPageHandler<T>;
   onSelect?: (selectedDataKeys: DataKey[], data: T[]) => void;
 };
 
@@ -72,6 +73,7 @@ export function Table<T extends Record<string, string | number>>({
   primaryKey,
   ref,
   search = false,
+  searchPlaceholder = 'Search',
 }: TableProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
@@ -79,24 +81,32 @@ export function Table<T extends Record<string, string | number>>({
   const [sortBy, setSortBy] = useState<DataKey>(defaultSortBy ?? primaryKey);
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [checkedKeys, setCheckedKeys] = useState<Set<DataKey>>(new Set());
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [initialLoad, setInitialLoad] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(loading);
   const [loaderRowHeight, setLoaderRowHeight] = useState<number>(0);
-  const [pageCount, setPageCount] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(typeof page === 'number' ? page : 0);
   const [placeholderRowHeight, setPlaceholderRowHeight] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [tableData, setTableData] = useState<T[]>(data);
+
+  const { 
+    currentPage, 
+    dataLength,
+    isLoading: paginationLoading,
+    nextPage, 
+    pageCount, 
+    prevPage, 
+    tableData, 
+  } = usePagination(data, pageSize, onPage);
+
+  const isLoading = loading || paginationLoading; 
 
   const filteredData = useMemo(() => {
     const filtered = tableData.filter(row => {
       if (!searchTerm) {
         return true;
       }
+      const searchTerms = searchTerm.split(' ');
       const values = Object.values(omitKey(row, 'key'));
       const searchStr = values.join(' ').toLowerCase();
-      return searchStr.includes(searchTerm.toLowerCase());
+      return searchTerms.every(term => searchStr.includes(term.toLowerCase()));
     });
 
     if (sortBy) {
@@ -120,42 +130,6 @@ export function Table<T extends Record<string, string | number>>({
     }
     return pageSize ? getPagedData(filteredData, pageSize, currentPage) : filteredData
   }, [currentPage, filteredData, onPage, pageSize]);
-
-  const prevPage = useCallback(async () => {
-    if (currentPage > 0) {
-      setCurrentPage(prev => Math.max(0, prev - 1));
-      if (!onPage) {
-        return;
-      }
-      setIsLoading(true);
-      try {
-        const result = await onPage(pageSize, currentPageData, currentPage - 1, currentPage);
-        setTableData(result.nextData);
-        setPageCount(result.pageCount);
-        setIsLoading(false);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  }, [currentPage, onPage, pageSize, currentPageData]);
-
-  const nextPage = useCallback(async () => {
-    if (currentPage < pageCount) {
-      setCurrentPage(prev => Math.min(pageCount, prev + 1));
-      if (!onPage) {
-        return;
-      }
-      setIsLoading(true);
-      try {
-        const result = await onPage(pageSize, currentPageData, currentPage + 1, currentPage);
-        setTableData(result.nextData);
-        setPageCount(result.pageCount);
-        setIsLoading(false);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  }, [currentPage, onPage, pageCount, pageSize, currentPageData]);
 
   const handleRowCheck: React.ChangeEventHandler<HTMLInputElement> = useCallback(({ target: { name, checked } }) => {
     setCheckedKeys(prev => {
@@ -184,7 +158,7 @@ export function Table<T extends Record<string, string | number>>({
 
   const placeholderRows = useMemo(() => {
     const rows = [];
-    const showEmptyText = pageCount ? !currentPageData.length : !filteredData.length;
+    const showEmptyText = !currentPageData.length;
     if (placeholderRowHeight) {
       rows.push(
         <PlaceholderTR key="placeholder_emptytext" height={placeholderRowHeight} checkable={checkable}>
@@ -195,7 +169,7 @@ export function Table<T extends Record<string, string | number>>({
       );
     }
     return rows;
-  }, [checkable, emptyText, filteredData.length, pageCount, currentPageData.length, placeholderRowHeight]);
+  }, [checkable, currentPageData.length, emptyText, placeholderRowHeight]);
 
   const loaderRow = useMemo(
     () => <PlaceholderTR key="placeholder_loadingtext" height={loaderRowHeight} checkable={checkable}>
@@ -229,36 +203,13 @@ export function Table<T extends Record<string, string | number>>({
       }
       setPlaceholderRowHeight(0);
     }
-  }, [filteredData.length, page, pageCount, pageSize, currentPageData.length]);
+  }, [currentPageData.length, page]);
 
-  useEffect(() => {
-    if (onPage) {
-      return;
-    }
-    setPageCount(pageSize ? Math.ceil(tableData.length / pageSize) : 0);
-  }, [onPage, pageSize, tableData.length]);
-
-  useEffect(() => {
-    if (!initialLoad) {
-      return;
-    }
-    (async function InitialPageLoad() {
-      if (page && currentPage === 0 && onPage && pageSize) {
-        setIsLoading(true);
-        const result = await onPage(pageSize, [], 0, -1);
-        setTableData(result.nextData);
-        setPageCount(result.pageCount);
-        setIsLoading(false);
-        setInitialLoad(false);
-      }
-    })();
-  }, [currentPage, initialLoad, onPage, page, pageSize]);
-
-  useImperativeHandle(
+  useImperativeHandle<RefObject<HTMLDivElement | null>, TableHandle>(
     ref,
     () => ({
-      container: containerRef?.current,
-      table: tableRef?.current,
+      current: containerRef?.current,
+      table: tableRef.current,
       getSelectedKeys: () => Array.from(checkedKeys.values()),
       getSelectedRows: () => tableData.filter(row => checkedKeys.has(row.key)),
       getVisibleData: () => currentPageData,
@@ -293,6 +244,7 @@ export function Table<T extends Record<string, string | number>>({
             search,
             sortBy,
             sortDirection,
+            searchPlaceholder,
           }}>
             <TableHeader
               checkedSize={checkedKeys.size}
@@ -312,9 +264,10 @@ export function Table<T extends Record<string, string | number>>({
             />
             <TableFooter
               currentPage={currentPage}
-              dataLength={tableData.length}
+              dataLength={dataLength}
               hasNextPage={hasNextPage(currentPage, pageCount)}
               hasPrevPage={hasPrevPage(currentPage)}
+              loading={isLoading}
               onNextPage={nextPage}
               onPrevPage={prevPage}
               pageSize={pageSize}

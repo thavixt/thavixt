@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Table } from './Table';
+import { Table, TableHandle } from './Table';
 import { Button } from '../Button/Button';
 import { fn } from '@storybook/test';
-import { ComponentProps } from 'react';
+import { ComponentProps, useRef } from 'react';
 import { sleep } from '../../common/utils';
 
 const mockData = { key: 'msi', name: 'Radium Power Office PC', category: 'Desktop PC', price: '$1999' };
@@ -31,7 +31,7 @@ const meta = {
           className='text-xs'
           onClick={() => {
             alert(`Buying the ${row.name} for ${row.price} ...`);
-            console.log('Buying', key, row)
+            console.log('Buying', key, row);
           }}
         >
           Buy
@@ -43,7 +43,7 @@ const meta = {
       { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$999', year: 2020 },
       { key: 'unknown', name: `Unidentifiable tech thing ${crypto.randomUUID()}`, price: '$299' },
       { key: 'lenovoFx205', name: 'Lenovo FX 205', category: 'Laptop', price: '$649', year: 2019 },
-      ...getMockData(96)
+      ...getMockData(82)
     ],
     columns: {
       name: 'Name',
@@ -71,13 +71,59 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    data: [
+      { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$999', year: 2020 },
+      { key: 'unknown', name: `Unidentifiable tech thing ${crypto.randomUUID()}`, price: '$299' },
+      { key: 'lenovoFx205', name: 'Lenovo FX 205', category: 'Laptop', price: '$649', year: 2019 },
+      ...getMockData(10)
+    ],
+  }
+};
 
 export const Searchable: Story = {
   args: {
     data: getMockData(1000),
     defaultSortBy: 'price',
     search: true,
+    searchPlaceholder: 'Search (ex: "399 laptop")'
+  }
+};
+
+export const Checkable: Story = {
+  args: {
+    checkable: true,
+  },
+  render: function StoryComponent(args: ComponentProps<typeof Table>) {
+    const ref = useRef<TableHandle>(null);
+    return (
+      <div className="w-full h-[400px] flex flex-col space-y-4">
+        <Table {...args} ref={ref} />
+        <div className="flex space-x-2">
+          <Button onClick={() => console.log(ref.current?.getSelectedKeys())}>
+            Print selected keys to console
+          </Button>
+          <Button onClick={() => console.log(ref.current?.getSelectedRows())}>
+            Print selected rows to console
+          </Button>
+        </div>
+      </div>
+    )
+  }
+};
+
+export const Loading: Story = {
+  args: {
+    loading: true,
+    loadingText: "Alright, I'll admit it - this will never finish loading"
+  }
+};
+
+export const Empty: Story = {
+  args: {
+    data: [],
+    emptyText: "There's nothing to show at the moment"
   }
 };
 
@@ -99,57 +145,20 @@ export const PaginatedWithDataLoading: Story = {
     search: true,
     page: true,
     checkable: true,
-    onPage: fn(async (rowsToLoad, prevData, nextPage, prevPage) => {
-      console.log(rowsToLoad, prevData, nextPage, prevPage);
-      await sleep(500);
+    onPage: fn(async (rowsToLoad, _prevData, nextPage) => {
+      await sleep(500 + Math.random() * 1000);
       // if (nextPage > 0) {
       //   throw new Error('oops');
       // }
+      const pageCount = 12;
       return {
-        nextData: getMockData(rowsToLoad, (nextPage * rowsToLoad)),
-        pageCount: 10,
+        nextData: getMockData(
+          nextPage === 11 ? rowsToLoad - 4 : rowsToLoad,
+          (nextPage * rowsToLoad),
+        ),
+        pageCount,
+        dataLength: (pageCount * rowsToLoad) - 4,
       };
     }),
-  }
-};
-
-export const Checkable: Story = {
-  args: {
-    checkable: true,
-  }
-};
-
-export const FullFeatured: Story = {
-  args: {
-    search: true,
-    page: true,
-    checkable: true,
-  }
-};
-
-export const Loading: Story = {
-  args: {
-    loading: true,
-    loadingText: "Alright, I'll admit it - this will never finish loading :("
-  }
-};
-
-export const Empty: Story = {
-  args: {
-    data: [],
-    emptyText: "There's nothing to show at the moment"
-  }
-};
-
-export const Stress: Story = {
-  render: function StoryComponent(args: ComponentProps<typeof Table>) {
-    return (
-      <div className="w-full h-[800px] grid grid-cols-2 gap-8">
-        <Table {...args} checkable />
-        <Table {...args} page />
-        <Table {...args} search />
-        <Table {...args} checkable page search/>
-      </div>
-    )
   }
 };
