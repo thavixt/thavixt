@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { DataKey } from "./common";
+import { DataKey, SortDirection } from "./common";
 
 interface TableContextType {
   checkable: boolean;
@@ -9,6 +9,8 @@ interface TableContextType {
   placeholder: string;
   primaryKey: DataKey;
   search: boolean;
+  sortBy: DataKey;
+  sortDirection: SortDirection;
 }
 
 export const TableContext = createContext<TableContextType>({
@@ -19,6 +21,8 @@ export const TableContext = createContext<TableContextType>({
   placeholder: '',
   primaryKey: '',
   search: false,
+  sortBy: '',
+  sortDirection: 'asc',
 });
 
 export function useTableContext() {
@@ -30,6 +34,8 @@ export function useTableContext() {
     placeholder,
     primaryKey,
     search,
+    sortBy,
+    sortDirection,
   } = useContext(TableContext);
 
   return {
@@ -40,5 +46,7 @@ export function useTableContext() {
     placeholder,
     primaryKey,
     search,
+    sortBy,
+    sortDirection,
   };
 }

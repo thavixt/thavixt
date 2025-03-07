@@ -3,12 +3,19 @@ import { PropsWithChildren, ReactElement, RefObject, useCallback, useEffect, use
 import { omitKey } from "../../common/utils";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Loader } from "../Loader/Loader";
-import { DataKey, CONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES } from "./common";
+import { DataKey, CONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES, SortDirection } from "./common";
 import { TableBody } from "./TableBody";
 import { TableFooter } from "./TableFooter";
 import { TableHeader } from "./TableHeader";
 import { getPagedData, hasNextPage, hasPrevPage } from "./utils";
 import { TableContext } from "./TableContext";
+
+/**
+ * TODO:
+ * 
+ * - check all state with loader pagination is wrong
+ * - all row count in pagination is wrong with loader
+ */
 
 export type TableHandle = {
   container: HTMLDivElement | null;
@@ -23,6 +30,7 @@ export interface TableProps<T extends Record<string, string | number>> {
   className?: string;
   columns: Record<DataKey, string>;
   data: Array<T>;
+  defaultSortBy?: DataKey;
   emptyText?: string;
   /** Full size table - not scrollable overflowing body */
   full?: boolean;
@@ -50,8 +58,9 @@ export function Table<T extends Record<string, string | number>>({
   actions,
   checkable = false,
   className,
-  data = [],
   columns,
+  data = [],
+  defaultSortBy,
   emptyText = 'No rows to display',
   full: providedFull = false,
   loading = false,
@@ -67,6 +76,8 @@ export function Table<T extends Record<string, string | number>>({
   const containerRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
 
+  const [sortBy, setSortBy] = useState<DataKey>(defaultSortBy ?? primaryKey);
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [checkedKeys, setCheckedKeys] = useState<Set<DataKey>>(new Set());
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [initialLoad, setInitialLoad] = useState<boolean>(true);
@@ -78,14 +89,30 @@ export function Table<T extends Record<string, string | number>>({
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [tableData, setTableData] = useState<T[]>(data);
 
-  const filteredData = useMemo(() => tableData.filter(row => {
-    if (!searchTerm) {
-      return true;
+  const filteredData = useMemo(() => {
+    const filtered = tableData.filter(row => {
+      if (!searchTerm) {
+        return true;
+      }
+      const values = Object.values(omitKey(row, 'key'));
+      const searchStr = values.join(' ').toLowerCase();
+      return searchStr.includes(searchTerm.toLowerCase());
+    });
+
+    if (sortBy) {
+      filtered.sort((a, b) => {
+        const aValue = a[sortBy]?.toString() ?? '';
+        const bValue = b[sortBy]?.toString() ?? '';
+        if (sortDirection === 'desc') {
+          return aValue.localeCompare(bValue, navigator.language, { numeric: true });
+        } else {
+          return bValue.localeCompare(aValue, navigator.language, { numeric: true });
+        }
+      });
     }
-    const values = Object.values(omitKey(row, 'key'));
-    const searchStr = values.join(' ').toLowerCase();
-    return searchStr.includes(searchTerm);
-  }), [searchTerm, tableData]);
+
+    return filtered;
+  }, [searchTerm, sortBy, sortDirection, tableData]);
 
   const currentPageData = useMemo(() => {
     if (onPage) {
@@ -101,10 +128,14 @@ export function Table<T extends Record<string, string | number>>({
         return;
       }
       setIsLoading(true);
-      const result = await onPage(pageSize, currentPageData, currentPage - 1, currentPage);
-      setTableData(result.nextData);
-      setPageCount(result.pageCount);
-      setIsLoading(false);
+      try {
+        const result = await onPage(pageSize, currentPageData, currentPage - 1, currentPage);
+        setTableData(result.nextData);
+        setPageCount(result.pageCount);
+        setIsLoading(false);
+      } catch (e) {
+        console.error(e);
+      }
     }
   }, [currentPage, onPage, pageSize, currentPageData]);
 
@@ -115,10 +146,14 @@ export function Table<T extends Record<string, string | number>>({
         return;
       }
       setIsLoading(true);
-      const result = await onPage(pageSize, currentPageData, currentPage + 1, currentPage);
-      setTableData(result.nextData);
-      setPageCount(result.pageCount);
-      setIsLoading(false);
+      try {
+        const result = await onPage(pageSize, currentPageData, currentPage + 1, currentPage);
+        setTableData(result.nextData);
+        setPageCount(result.pageCount);
+        setIsLoading(false);
+      } catch (e) {
+        console.error(e);
+      }
     }
   }, [currentPage, onPage, pageCount, pageSize, currentPageData]);
 
@@ -174,12 +209,10 @@ export function Table<T extends Record<string, string | number>>({
 
   useLayoutEffect(() => {
     if (containerRef.current) {
-      // container height
       const containerHeight = containerRef.current.parentElement?.clientHeight;
       if (!containerHeight) {
         return;
       }
-
       // minus header and footer height
       const tfootHeight = containerRef.current.getElementsByTagName('tfoot')[0].clientHeight;
       const theadHeight = containerRef.current.getElementsByTagName('thead')[0].clientHeight;
@@ -235,6 +268,17 @@ export function Table<T extends Record<string, string | number>>({
 
   const full = pageSize ? true : providedFull;
 
+  const setSort = (column: DataKey) => {
+    setSortBy(prev => {
+      if (prev === column) {
+        setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+        return prev;
+      }
+      setSortDirection('desc');
+      return column;
+    });
+  }
+
   return (
     <Scrollbar data-testid="Table" className={classNames(CONTAINER_CLASSES, className)}>
       <div ref={containerRef} className={TABLE_CONTAINER_CLASSES}>
@@ -247,12 +291,15 @@ export function Table<T extends Record<string, string | number>>({
             placeholder,
             primaryKey,
             search,
+            sortBy,
+            sortDirection,
           }}>
             <TableHeader
               checkedSize={checkedKeys.size}
               dataLength={tableData.length}
               hasActions={!!actions}
               onCheckAll={handleCheckAll}
+              setSortBy={setSort}
             />
             <TableBody
               checked={checkedKeys}

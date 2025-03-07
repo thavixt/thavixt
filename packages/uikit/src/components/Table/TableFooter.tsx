@@ -40,9 +40,10 @@ export function TableFooter({
             <div className="flex justify-end items-center">
               <Button
                 title="Previous page"
-                className={BUTTON_CLASSES}
+                className={classNames(BUTTON_CLASSES)}
                 onClick={onPrevPage}
                 disabled={!hasPrevPage}
+                variant="silent"
                 icon={{ type: 'Arrow', className: 'rotate-180' }}
               />
               <span
@@ -55,10 +56,20 @@ export function TableFooter({
                 className={BUTTON_CLASSES}
                 onClick={onNextPage}
                 disabled={!hasNextPage}
+                variant="silent"
                 icon={{ type: 'Arrow' }}
               />
             </div>
-          ) : null}
+          ) : (
+            // <div className="flex justify-end items-center">
+            //   <span
+            //     title="Row count"
+            //     className="text-xs text-right">
+            //     <span>{dataLength} rows</span>
+            //   </span>
+            // </div>
+            null
+          )}
         </td>
       </tr>
     </tfoot>

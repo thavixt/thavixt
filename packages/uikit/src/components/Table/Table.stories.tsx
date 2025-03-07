@@ -13,7 +13,6 @@ const getMockData = (count: number, from = 0) => new Array(count).fill(mockData)
     ...row,
     key: `${i}`,
     name: `Radium ${i % 2 ? (i % 4 ? 'Business Laptop' : 'Joy Tablet') : 'Power PC'} (${uuid}${index + from})`,
-    // name: `${row.name} #${index + from}`,
     category: i % 2 ? (i % 4 ? 'Laptop' : 'Tablet') : 'PC',
     price: `$${(i % 10) * 100 + 99}`,
     year: 2020 + i % 5
@@ -44,7 +43,7 @@ const meta = {
       { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$999', year: 2020 },
       { key: 'unknown', name: `Unidentifiable tech thing ${crypto.randomUUID()}`, price: '$299' },
       { key: 'lenovoFx205', name: 'Lenovo FX 205', category: 'Laptop', price: '$649', year: 2019 },
-      ...getMockData(50)
+      ...getMockData(96)
     ],
     columns: {
       name: 'Name',
@@ -76,6 +75,8 @@ export const Default: Story = {};
 
 export const Searchable: Story = {
   args: {
+    data: getMockData(1000),
+    defaultSortBy: 'price',
     search: true,
   }
 };
@@ -89,6 +90,26 @@ export const Paginated: Story = {
 export const PaginatedWithFixedPageSize: Story = {
   args: {
     page: 20,
+  }
+};
+
+export const PaginatedWithDataLoading: Story = {
+  args: {
+    data: undefined,
+    search: true,
+    page: true,
+    checkable: true,
+    onPage: fn(async (rowsToLoad, prevData, nextPage, prevPage) => {
+      console.log(rowsToLoad, prevData, nextPage, prevPage);
+      await sleep(500);
+      // if (nextPage > 0) {
+      //   throw new Error('oops');
+      // }
+      return {
+        nextData: getMockData(rowsToLoad, (nextPage * rowsToLoad)),
+        pageCount: 10,
+      };
+    }),
   }
 };
 
@@ -120,18 +141,15 @@ export const Empty: Story = {
   }
 };
 
-export const PaginatedWithDataLoading: Story = {
-  args: {
-    data: undefined,
-    search: true,
-    page: true,
-    checkable: true,
-    onPage: fn(async (rowsToLoad, _, nextPage) => {
-      await sleep(500);
-      return {
-        nextData: getMockData(rowsToLoad, (nextPage * rowsToLoad)),
-        pageCount: 1000,
-      };
-    }),
+export const Stress: Story = {
+  render: function StoryComponent(args: ComponentProps<typeof Table>) {
+    return (
+      <div className="w-full h-[800px] grid grid-cols-2 gap-8">
+        <Table {...args} checkable />
+        <Table {...args} page />
+        <Table {...args} search />
+        <Table {...args} checkable page search/>
+      </div>
+    )
   }
 };
