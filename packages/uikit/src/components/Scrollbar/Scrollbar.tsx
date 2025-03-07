@@ -10,8 +10,10 @@ interface ScrollbarProps extends PropsWithChildren<CommonProps<HTMLDivElement>> 
 
 const DEFAULT_SCROLLBAR_STYLES: ScrollbarStyles = {
   thumbColor: '#888',
-  thumbColorDark: '#FFF',
+  thumbHoverColor: '#AAA',
   trackColor: '#DDD',
+  thumbColorDark: '#AAA',
+  thumbHoverColorDark: '#888',
   trackColorDark: '#555',
 }
 
