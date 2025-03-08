@@ -59,6 +59,8 @@
   },
   "gitHead": "b7a323c9a02dd07a64fe36d125e15aa6ead65ad3",
   "devDependencies": {
-    "typescript": "^5.8.2"
+    "@testing-library/react": "^16.2.0",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
   }
 }

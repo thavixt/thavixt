@@ -6,6 +6,7 @@ import { useTableContext } from "./TableContext";
 export interface TableBodyProps<T extends Record<string, string | number>> {
   checked: Set<DataKey>;
   data: T[];
+  errorRow: (errorMessage: string) => ReactElement;
   loaderRow: ReactElement;
   loading: boolean;
   placeholderRows: ReactElement[];
@@ -16,13 +17,22 @@ export interface TableBodyProps<T extends Record<string, string | number>> {
 export function TableBody<T extends Record<string, string | number>>({
   checked,
   data,
+  errorRow,
   loaderRow,
   loading,
   placeholderRows,
   onCheck,
   rowActions,
 }: TableBodyProps<T>) {
-  const { checkable, columns, placeholder, primaryKey } = useTableContext();
+  const { checkable, columns, error, errorText, placeholder, primaryKey } = useTableContext();
+
+  if (error) {
+    return (
+      <tbody className={TBODY_CLASSES}>
+        {error ? errorRow(errorText || error.message) : null}
+      </tbody>
+    )
+  }
 
   return (
     <tbody className={TBODY_CLASSES}>

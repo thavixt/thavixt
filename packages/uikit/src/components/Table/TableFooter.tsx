@@ -28,6 +28,7 @@ export function TableFooter({
   setSearchTerm,
 }: TableFooterProps) {
   const { checkable, columns, full, search, searchPlaceholder } = useTableContext();
+  console.log(searchPlaceholder);
 
   return (
     <tfoot className={classNames(TFOOT_CLASSES, { 'bottom-0 sticky': !full })} hidden={!search && !pageSize}>

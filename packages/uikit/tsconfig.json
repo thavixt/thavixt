@@ -22,7 +22,7 @@
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
 
-    "types": ["cypress", "cypress-real-events"]
+    "types": ["cypress", "cypress-real-events", "@testing-library/jest-dom"]
 	},
 	"include": ["./src/**/*"],
 }

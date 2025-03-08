@@ -14,10 +14,16 @@ const getMockData = (count: number, from = 0) => new Array(count).fill(mockData)
     key: `${i}`,
     name: `Radium ${i % 2 ? (i % 4 ? 'Business Laptop' : 'Joy Tablet') : 'Power PC'} (${uuid}${index + from})`,
     category: i % 2 ? (i % 4 ? 'Laptop' : 'Tablet') : 'PC',
-    price: `$${(i % 10) * 100 + 99}`,
+    price: `$${(i % 10) * 100 + 199}`,
     year: 2020 + i % 5
   }
 });
+
+const storyRows = [
+  { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$1999', year: 2020 },
+  { key: 'unknown', name: `AE-I Alien tech ${crypto.randomUUID().slice(0, 18)}`, price: '$299' },
+  { key: 'lenovoFx205', name: 'Lenovo FX-205', category: 'Laptop', price: '$649', year: 2019 },
+];
 
 const meta = {
   title: 'Data display/Table',
@@ -26,7 +32,9 @@ const meta = {
   args: {
     actions: (key, row) => (
       <div className='flex space-x-2 items-center'>
-        <Button
+        <Button>Save</Button>
+        {Math.random() > 0.5 ? (
+          <Button
           variant='primary'
           className='text-xs'
           onClick={() => {
@@ -36,13 +44,11 @@ const meta = {
         >
           Buy
         </Button>
+        ) : null}
       </div>
     ),
-    className: '',
     data: [
-      { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$999', year: 2020 },
-      { key: 'unknown', name: `Unidentifiable tech thing ${crypto.randomUUID()}`, price: '$299' },
-      { key: 'lenovoFx205', name: 'Lenovo FX 205', category: 'Laptop', price: '$649', year: 2019 },
+      ...storyRows,
       ...getMockData(82)
     ],
     columns: {
@@ -51,12 +57,8 @@ const meta = {
       year: 'Year',
       price: 'Price',
     },
-    full: false,
-    onSelect: fn(),
-    page: false,
-    placeholder: '-',
     primaryKey: 'name',
-    search: false,
+    onSelect: fn(),
   },
   render: function StoryComponent(args: ComponentProps<typeof Table>) {
     return (
@@ -74,9 +76,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     data: [
-      { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$999', year: 2020 },
-      { key: 'unknown', name: `Unidentifiable tech thing ${crypto.randomUUID()}`, price: '$299' },
-      { key: 'lenovoFx205', name: 'Lenovo FX 205', category: 'Laptop', price: '$649', year: 2019 },
+      ...storyRows,
       ...getMockData(10)
     ],
   }
@@ -113,17 +113,33 @@ export const Checkable: Story = {
   }
 };
 
-export const Loading: Story = {
+export const LoadingState: Story = {
   args: {
+    page: true,
     loading: true,
-    loadingText: "Alright, I'll admit it - this will never finish loading"
+    loadingText: "Alright, I'll admit it - this will never finish loading",
   }
 };
 
-export const Empty: Story = {
+export const EmptyState: Story = {
   args: {
+    page: true,
     data: [],
-    emptyText: "There's nothing to show at the moment"
+    emptyText: "There's nothing to show at the moment. Perhaps having a backend to fetch data from would be cool!",
+  }
+};
+
+export const ErrorState: Story = {
+  args: {
+    page: true,
+    // errorText: 'This fetch error is intentional, just to simulate an error state',
+    onPage: fn(async () => {
+      await sleep();
+      throw new Error([
+        "This is the content of the 'message' property of the Error thrown in the Table:onPage() method.",
+        "You might want to provide a default with the errorText prop of the <Table>."
+      ].join("\n"));
+    }),
   }
 };
 
@@ -141,23 +157,24 @@ export const PaginatedWithFixedPageSize: Story = {
 
 export const PaginatedWithDataLoading: Story = {
   args: {
-    data: undefined,
-    search: true,
-    page: true,
     checkable: true,
-    onPage: fn(async (rowsToLoad, _prevData, nextPage) => {
+    data: undefined,
+    errorText: 'This fetch error is intentional, just to simulate an error state with a 10% chance of occurring',
+    page: true,
+    search: true,
+    onPage: fn(async ({page, pageSize}) => {
       await sleep(500 + Math.random() * 1000);
-      // if (nextPage > 0) {
-      //   throw new Error('oops');
-      // }
+      if (Math.random() <= 0.1) {
+        throw new Error(`[uikit#Table] Simulated fetch to page ${page.next} failed with a 10% chance`);
+      }
       const pageCount = 12;
       return {
         nextData: getMockData(
-          nextPage === 11 ? rowsToLoad - 4 : rowsToLoad,
-          (nextPage * rowsToLoad),
+          page.next === 11 ? pageSize - 4 : pageSize,
+          (page.next * pageSize),
         ),
         pageCount,
-        dataLength: (pageCount * rowsToLoad) - 4,
+        dataLength: (pageCount * pageSize) - 4,
       };
     }),
   }

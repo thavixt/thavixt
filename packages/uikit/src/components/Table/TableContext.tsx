@@ -8,6 +8,8 @@ interface TableContextType {
   checkable: boolean;
   columns: Record<DataKey, string>;
   emptyText: string;
+  errorText: string;
+  error: Error | null;
   full: boolean;
   placeholder: string;
   primaryKey: DataKey;
@@ -21,6 +23,8 @@ export const TableContext = createContext<TableContextType>({
   checkable: false,
   columns: {},
   emptyText: '',
+  errorText: '',
+  error: null,
   full: false,
   placeholder: '',
   primaryKey: '',
@@ -35,6 +39,8 @@ export function useTableContext() {
     checkable,
     columns,
     emptyText,
+    errorText,
+    error,
     full,
     placeholder,
     primaryKey,
@@ -48,6 +54,8 @@ export function useTableContext() {
     checkable,
     columns,
     emptyText,
+    errorText,
+    error,
     full,
     placeholder,
     primaryKey,

@@ -3,7 +3,7 @@ import { PropsWithChildren, ReactElement, RefObject, useCallback, useImperativeH
 import { omitKey } from "../../common/utils";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Loader } from "../Loader/Loader";
-import { DataKey, CONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES, SortDirection, OnPageHandler } from "./common";
+import { DataKey, CONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES, SortDirection, OnPageHandler, PLACEHOLDER_TD_CLASSES } from "./common";
 import { TableBody } from "./TableBody";
 import { TableFooter } from "./TableFooter";
 import { TableHeader } from "./TableHeader";
@@ -33,6 +33,7 @@ export interface TableProps<T extends Record<string, string | number>> {
   data: Array<T>;
   defaultSortBy?: DataKey;
   emptyText?: string;
+  errorText?: string;
   /** Full size table - not scrollable overflowing body */
   full?: boolean;
   loading?: boolean;
@@ -56,24 +57,28 @@ export interface TableProps<T extends Record<string, string | number>> {
 };
 
 export function Table<T extends Record<string, string | number>>({
-  actions,
+  ref,
+
   checkable = false,
   className,
   columns,
   data = [],
   defaultSortBy,
-  emptyText = 'No rows to display',
   full: providedFull = false,
   loading = false,
-  loadingText = 'Loading',
-  onPage,
-  onSelect,
   page,
   placeholder = '-',
   primaryKey,
-  ref,
   search = false,
-  searchPlaceholder = 'Search',
+  
+  emptyText = 'No rows to display',
+  errorText = '',
+  loadingText = 'Loading ...',
+  searchPlaceholder = 'Search rows',
+  
+  actions,
+  onPage,
+  onSelect,
 }: TableProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
@@ -86,17 +91,34 @@ export function Table<T extends Record<string, string | number>>({
   const [placeholderRowHeight, setPlaceholderRowHeight] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const { 
-    currentPage, 
+  const {
+    currentPage,
     dataLength,
+    error,
     isLoading: paginationLoading,
-    nextPage, 
-    pageCount, 
-    prevPage, 
-    tableData, 
-  } = usePagination(data, pageSize, onPage);
+    nextPage,
+    pageCount,
+    prevPage,
+    tableData,
+  } = usePagination(
+    data,
+    pageSize,
+    { dir: sortDirection, column: sortBy },
+    onPage
+  );
 
-  const isLoading = loading || paginationLoading; 
+  const isLoading = loading || paginationLoading;
+
+  const setSort = useCallback((column: DataKey) => {
+    setSortBy(prev => {
+      if (prev === column) {
+        setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+        return prev;
+      }
+      setSortDirection('desc');
+      return column;
+    });
+  }, []);
 
   const filteredData = useMemo(() => {
     const filtered = tableData.filter(row => {
@@ -161,8 +183,8 @@ export function Table<T extends Record<string, string | number>>({
     const showEmptyText = !currentPageData.length;
     if (placeholderRowHeight) {
       rows.push(
-        <PlaceholderTR key="placeholder_emptytext" height={placeholderRowHeight} checkable={checkable}>
-          <div className="flex space-x-2 items-center justify-center">
+        <PlaceholderTR key="tabler_emptytext" height={placeholderRowHeight} checkable={checkable}>
+          <div className={PLACEHOLDER_TD_CLASSES}>
             <span>{showEmptyText ? emptyText : ''}</span>
           </div>
         </PlaceholderTR>
@@ -172,13 +194,22 @@ export function Table<T extends Record<string, string | number>>({
   }, [checkable, currentPageData.length, emptyText, placeholderRowHeight]);
 
   const loaderRow = useMemo(
-    () => <PlaceholderTR key="placeholder_loadingtext" height={loaderRowHeight} checkable={checkable}>
-      <div className="flex space-x-2 items-center justify-center">
+    () => <PlaceholderTR key="table_loadingtext" height={loaderRowHeight} checkable={checkable}>
+      <div className={PLACEHOLDER_TD_CLASSES}>
         <span>{loadingText}</span>
         <Loader type="SpinningDots" height={8} />
       </div>
     </PlaceholderTR>,
     [checkable, loaderRowHeight, loadingText],
+  );
+
+  const errorRow = useCallback(
+    (errorMessage: string) => <PlaceholderTR key="table_errortext" height={loaderRowHeight} checkable={checkable}>
+      <div className={PLACEHOLDER_TD_CLASSES}>
+        <span>{errorMessage}</span>
+      </div>
+    </PlaceholderTR>,
+    [checkable, loaderRowHeight],
   );
 
   useLayoutEffect(() => {
@@ -203,7 +234,7 @@ export function Table<T extends Record<string, string | number>>({
       }
       setPlaceholderRowHeight(0);
     }
-  }, [currentPageData.length, page]);
+  }, [currentPageData.length, page, pageSize]);
 
   useImperativeHandle<RefObject<HTMLDivElement | null>, TableHandle>(
     ref,
@@ -219,17 +250,6 @@ export function Table<T extends Record<string, string | number>>({
 
   const full = pageSize ? true : providedFull;
 
-  const setSort = (column: DataKey) => {
-    setSortBy(prev => {
-      if (prev === column) {
-        setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
-        return prev;
-      }
-      setSortDirection('desc');
-      return column;
-    });
-  }
-
   return (
     <Scrollbar data-testid="Table" className={classNames(CONTAINER_CLASSES, className)}>
       <div ref={containerRef} className={TABLE_CONTAINER_CLASSES}>
@@ -238,6 +258,8 @@ export function Table<T extends Record<string, string | number>>({
             checkable,
             columns,
             emptyText,
+            error,
+            errorText,
             full,
             placeholder,
             primaryKey,
@@ -256,6 +278,7 @@ export function Table<T extends Record<string, string | number>>({
             <TableBody
               checked={checkedKeys}
               data={currentPageData}
+              errorRow={errorRow}
               loaderRow={loaderRow}
               loading={isLoading}
               onCheck={handleRowCheck}

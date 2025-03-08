@@ -2,7 +2,14 @@ import classNames from "classnames";
 
 export type DataKey = string | number;
 export type SortDirection = 'asc' | 'desc';
-export type OnPageHandler<T> = (rowsToLoad: number, prevData: T[], nextPage: number, prevPage: number) => Promise<
+
+interface OnPageHandlerPayload<T> {
+  current: T[];
+  page: { current: number, next: number };
+  pageSize: number;
+  sort: { dir: SortDirection; column: DataKey };
+}
+export type OnPageHandler<T> = (params: OnPageHandlerPayload<T>) => Promise<
   {
     nextData: T[]
     pageCount: number,
@@ -16,6 +23,7 @@ export const CHECK_COL_CLASSES = 'pl-3 pr-1 text-center w-12'
 export const CONTAINER_CLASSES = 'size-full min-h-[200px] overflow-x-auto rounded-lg text-normal text-slate-500 dark:text-slate-300 shadow-lg';
 const PADDING_CLASSES = 'px-4 py-2';
 export const PLACEHOLDER_TR_CLASSES = 'h-11';
+export const PLACEHOLDER_TD_CLASSES = 'flex space-x-2 items-center justify-center text-center max-w-md m-auto';
 export const TABLE_CLASSES = 'table-auto w-full border-collapse text-sm bg-slate-100 dark:bg-slate-700';
 export const TABLE_CONTAINER_CLASSES = 'w-full h-full min-h-0';
 export const TABLE_ROW_HEIGHT = 44; // 4 * 11
