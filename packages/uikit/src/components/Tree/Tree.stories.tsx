@@ -69,7 +69,7 @@ export const CollapseAll: Story = {
     const ref = useRef<TreeHandle>(null);
     const [lastClicked, setLastClicked] = useState('-');
     const onClick = (key: string) => {
-      args.onClick(key);
+      args.onClick?.(key);
       setLastClicked(key);
     }
     return (

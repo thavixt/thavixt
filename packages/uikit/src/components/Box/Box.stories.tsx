@@ -30,6 +30,8 @@ export const Default: Story = {
         <Box.Content>
           <T.Text>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
           </T.Text>
         </Box.Content>
       </Box>

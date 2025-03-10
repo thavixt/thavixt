@@ -49,18 +49,16 @@
     "prebuild": "npm run clean && npm run css-build && npm run lint:fix && npm run check",
     "prepack": "npm run build"
   },
-  "peerDependencies": {
-    "classnames": "^2.5.1",
+  "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.8"
-  },
-  "dependencies": {
     "thavixt-scrollbar-react": "1.6.4"
   },
   "gitHead": "b7a323c9a02dd07a64fe36d125e15aa6ead65ad3",
   "devDependencies": {
     "@testing-library/react": "^16.2.0",
+    "classnames": "^2.5.1",
+    "tailwindcss": "^4.0.8",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
   }

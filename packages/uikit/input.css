@@ -1,12 +1,12 @@
-/* @config './tailwind.config.js'; */
+/* https://tailwindcss.com/blog/standalone-cli */
 
-/* @import 'tailwindcss'; */
-/* @import 'tailwindcss' source("./src/components"); */
 @import 'tailwindcss' source(none);
 
-@source "./src/components/**/*.tsx";
-@source "!./*.html";
-@source "!./src/components/**/*.cy.tsx";
-@source "!./src/components/**/*.stories.tsx";
+@source "./src/common/theme.ts";
+@source "./src/**/*.ts";
+@source "./src/**/*.tsx";
+@source "!./**/*.html";
+@source "!./**/*.cy.tsx";
+@source "!./**/*.stories.tsx";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

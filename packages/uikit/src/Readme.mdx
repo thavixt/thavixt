@@ -6,7 +6,7 @@
 
 ![last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
  
-[Storybook](https://thavixt-uikit.komlosidev.net/)
+[Storybook](https://master--67cf40d1309edccd81c8a1fe.chromatic.com/)
  
 ## Installation
 

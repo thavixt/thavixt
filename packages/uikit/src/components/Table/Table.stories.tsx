@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Table, TableHandle } from './Table';
 import { Button } from '../Button/Button';
 import { fn } from '@storybook/test';
-import { ComponentProps, useRef } from 'react';
+import { ComponentProps, StrictMode, useRef } from 'react';
 import { sleep } from '../../common/utils';
 
 const mockData = { key: 'msi', name: 'Radium Power Office PC', category: 'Desktop PC', price: '$1999' };
@@ -32,9 +32,7 @@ const meta = {
   args: {
     actions: (key, row) => (
       <div className='flex space-x-2 items-center'>
-        <Button>Save</Button>
-        {Math.random() > 0.5 ? (
-          <Button
+        <Button
           variant='primary'
           className='text-xs'
           onClick={() => {
@@ -44,7 +42,6 @@ const meta = {
         >
           Buy
         </Button>
-        ) : null}
       </div>
     ),
     data: [
@@ -62,9 +59,11 @@ const meta = {
   },
   render: function StoryComponent(args: ComponentProps<typeof Table>) {
     return (
-      <div className="w-full h-[400px]">
-        <Table {...args} />
-      </div>
+      <StrictMode>
+        <div className="w-full h-[400px]">
+          <Table {...args} />
+        </div>
+      </StrictMode>
     )
   }
 } satisfies Meta<typeof Table>;
@@ -115,7 +114,7 @@ export const Checkable: Story = {
 
 export const LoadingState: Story = {
   args: {
-    page: true,
+    paginated: true,
     loading: true,
     loadingText: "Alright, I'll admit it - this will never finish loading",
   }
@@ -123,7 +122,7 @@ export const LoadingState: Story = {
 
 export const EmptyState: Story = {
   args: {
-    page: true,
+    paginated: true,
     data: [],
     emptyText: "There's nothing to show at the moment. Perhaps having a backend to fetch data from would be cool!",
   }
@@ -131,7 +130,7 @@ export const EmptyState: Story = {
 
 export const ErrorState: Story = {
   args: {
-    page: true,
+    paginated: true,
     // errorText: 'This fetch error is intentional, just to simulate an error state',
     onPage: fn(async () => {
       await sleep();
@@ -145,13 +144,13 @@ export const ErrorState: Story = {
 
 export const Paginated: Story = {
   args: {
-    page: true,
+    paginated: true,
   }
 };
 
 export const PaginatedWithFixedPageSize: Story = {
   args: {
-    page: 20,
+    paginated: 20,
   }
 };
 
@@ -160,9 +159,9 @@ export const PaginatedWithDataLoading: Story = {
     checkable: true,
     data: undefined,
     errorText: 'This fetch error is intentional, just to simulate an error state with a 10% chance of occurring',
-    page: true,
+    paginated: true,
     search: true,
-    onPage: fn(async ({page, pageSize}) => {
+    onPage: fn(async ({ page, pageSize }) => {
       await sleep(500 + Math.random() * 1000);
       if (Math.random() <= 0.1) {
         throw new Error(`[uikit#Table] Simulated fetch to page ${page.next} failed with a 10% chance`);

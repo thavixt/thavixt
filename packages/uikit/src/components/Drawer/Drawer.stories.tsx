@@ -19,33 +19,36 @@ const meta = {
   },
   args: {
     side: 'right',
-    children: (isOpen, toggle, side) => (
-      <Button data-testid="toggleDrawer" onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
-    ),
-    content: (isOpen, toggle, side) => (
-      <div data-testid="drawer">
-        <Typography.Subtitle>
-          List of things {['top', 'bottom'].includes(side) ? 'in a horizontal drawer' : 'here'}
-        </Typography.Subtitle>
-        <Scrollbar className='max-h-52'>
-          <ul>
-            <li>stuff</li>
-            <li>thing</li>
-            <li>element</li>
-            {...new Array(100).fill(null).map((_, i) => (
-              <li>item#{i + 1}</li>
-            ))}
-          </ul>
-        </Scrollbar>
-        <Divider/>
-        <Button data-testid="toggleDrawerInside" onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
-      </div>
-    )
   },
   render: function StoryComponent(args: ComponentProps<typeof Drawer>) {
     return (
       <div className='h-[400px]'>
-        <Drawer {...args} />
+        <Drawer
+          side={args.side}
+          content={(isOpen, toggle, side) => (
+            <div data-testid="drawer">
+              <Typography.Subtitle>
+                List of things {['top', 'bottom'].includes(side) ? 'in a horizontal drawer' : 'here'}
+              </Typography.Subtitle>
+              <Scrollbar className='max-h-52'>
+                <ul>
+                  <li>stuff</li>
+                  <li>thing</li>
+                  <li>element</li>
+                  {...new Array(100).fill(null).map((_, i) => (
+                    <li>item#{i + 1}</li>
+                  ))}
+                </ul>
+              </Scrollbar>
+              <Divider />
+              <Button data-testid="toggleDrawerInside" onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
+            </div>
+          )}
+        >
+          {(isOpen, toggle, side) => (
+            <Button data-testid="toggleDrawer" onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
+          )}
+        </Drawer>
       </div>
     )
   },

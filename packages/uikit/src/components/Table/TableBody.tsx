@@ -1,10 +1,9 @@
 import classNames from "classnames";
-import { ReactElement } from "react";
+import { ReactElement, useContext } from "react";
 import { DataKey, TBODY_CLASSES, TR_CLASSES, CHECK_COL_CLASSES, TD_CLASSES } from "./common";
-import { useTableContext } from "./TableContext";
+import { TableContext } from "./TableContext";
 
 export interface TableBodyProps<T extends Record<string, string | number>> {
-  checked: Set<DataKey>;
   data: T[];
   errorRow: (errorMessage: string) => ReactElement;
   loaderRow: ReactElement;
@@ -15,7 +14,6 @@ export interface TableBodyProps<T extends Record<string, string | number>> {
 }
 
 export function TableBody<T extends Record<string, string | number>>({
-  checked,
   data,
   errorRow,
   loaderRow,
@@ -24,7 +22,7 @@ export function TableBody<T extends Record<string, string | number>>({
   onCheck,
   rowActions,
 }: TableBodyProps<T>) {
-  const { checkable, columns, error, errorText, placeholder, primaryKey } = useTableContext();
+  const { checkable, checked, columns, error, errorText, placeholder, primaryKey } = useContext(TableContext);
 
   if (error) {
     return (
@@ -54,7 +52,7 @@ export function TableBody<T extends Record<string, string | number>>({
                       key={`td-${key}`}
                       className={classNames(TD_CLASSES, 'font-bold', 'text-left')}
                     >
-                      <label className="cursor-pointer" htmlFor={row.key.toString()}>{cellContent}</label>
+                      <label className={classNames({'cursor-pointer': checkable})} htmlFor={row.key.toString()}>{cellContent}</label>
                     </td>
                   )
                 } else {

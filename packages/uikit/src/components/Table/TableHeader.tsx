@@ -1,15 +1,14 @@
 import classNames from "classnames";
 import { THEAD_CLASSES, CHECK_COL_CLASSES, CHECK_ALL_KEY, TH_CLASSES, DataKey, TH_CLASSES_SORTABLE_PRIMARY, TH_CLASSES_SORTABLE_REST } from "./common";
-import { useTableContext } from "./TableContext";
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 import { Icon } from "../Icon/Icon";
+import { TableContext } from "./TableContext";
 
 interface TableHeaderProps {
   checkedSize: number,
   dataLength: number;
   hasActions: boolean;
   onCheckAll: React.ChangeEventHandler<HTMLInputElement>,
-  setSortBy: (column: DataKey) => void;
 }
 
 export function TableHeader({
@@ -17,13 +16,20 @@ export function TableHeader({
   dataLength,
   hasActions,
   onCheckAll,
-  setSortBy,
 }: TableHeaderProps) {
-  const { checkable, columns, full, primaryKey, sortBy, sortDirection } = useTableContext();
+  const {
+    checkable, columns, full, primaryKey, setSortBy, setSortDirection, sortBy, sortDirection,
+  } = useContext(TableContext);
 
   const onColumnClick: React.MouseEventHandler<HTMLTableCellElement> = useCallback((e) => {
-    setSortBy(e.currentTarget.dataset.column as DataKey)
-  }, [setSortBy]);
+    const column = e.currentTarget.dataset.column as DataKey;
+    if (sortBy === column) {
+      setSortDirection(prevDir => prevDir === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortDirection('desc');
+      setSortBy(column);
+    }
+  }, [setSortBy, setSortDirection, sortBy]);
 
   return (
     <thead className={classNames(THEAD_CLASSES, { 'top-0 sticky': !full })}>
@@ -31,6 +37,7 @@ export function TableHeader({
         {checkable ? (
           <th className={CHECK_COL_CLASSES}>
             <input
+              className="cursor-pointer"
               disabled={!dataLength}
               checked={dataLength ? checkedSize === dataLength : false}
               name={CHECK_ALL_KEY}

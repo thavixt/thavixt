@@ -62,11 +62,11 @@ Box.Footer = Footer;
 function getSizeClasses(size: Size = 'full') {
   switch (size) {
     case 'sm':
-      return 'w-fit max-w-sm';
+      return 'max-w-sm';
     case 'md':
-      return 'w-fit max-w-lg';
+      return 'max-w-xl';
     case 'lg':
-      return 'w-fit max-w-2xl';
+      return 'max-w-2xl';
     case 'full':
     default:
       return 'w-full';

@@ -1,5 +1,8 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useContext } from "react";
 import { DataKey, OnPageHandler, SortDirection } from "./common";
+import { TableContext } from "./TableContext";
+
+const INITIAL_REQUESTED_PAGE = -1;
 
 export interface usePaginationResult<T> {
   currentPage: number;
@@ -19,13 +22,14 @@ export function usePagination<T>(
   onPage?: OnPageHandler<T>,
 ): usePaginationResult<T> {
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageCount, setPageCount] = useState(0);
   const [dataLength, setDataLength] = useState(initialData.length);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [tableData, setTableData] = useState<T[]>(initialData);
   const [initialLoad, setInitialLoad] = useState<boolean>(true);
-  const pageRequested = useRef(-1);
-  const [error, setError] = useState<null | Error>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [pageCount, setPageCount] = useState(0);
+  const [tableData, setTableData] = useState<T[]>(initialData);
+  const pageRequested = useRef(INITIAL_REQUESTED_PAGE);
+  
+  const { error, setError } = useContext(TableContext);
 
   const prevPage = useCallback(async () => {
     if (currentPage <= 0) {
@@ -40,14 +44,15 @@ export function usePagination<T>(
 
     setIsLoading(true);
     try {
-      pageRequested.current = currentPage - 1;
+      const prevPage = currentPage - 1;
+      pageRequested.current = prevPage;
       const result = await onPage({
         current: tableData,
-        page: { current: currentPage, next: currentPage - 1 },
+        page: { current: currentPage, next: prevPage },
         pageSize,
         sort,
       });
-      if (pageRequested.current !== currentPage - 1) {
+      if (pageRequested.current !== prevPage) {
         return;
       }
       setTableData(result.nextData);
@@ -59,7 +64,7 @@ export function usePagination<T>(
       setIsLoading(false);
       console.error('Loading previous page failed.', error);
     }
-  }, [currentPage, onPage, pageSize, sort, tableData]);
+  }, [currentPage, onPage, pageSize, setError, sort, tableData]);
 
   const nextPage = useCallback(async () => {
     if (currentPage >= pageCount - 1) {
@@ -74,14 +79,15 @@ export function usePagination<T>(
 
     setIsLoading(true);
     try {
-      pageRequested.current = currentPage + 1;
+      const nextPage = currentPage + 1;
+      pageRequested.current = nextPage;
       const result = await onPage({
         current: tableData,
-        page: { current: currentPage, next: currentPage + 1 },
+        page: { current: currentPage, next: nextPage },
         pageSize,
         sort,
       });
-      if (pageRequested.current !== currentPage + 1) {
+      if (pageRequested.current !== nextPage) {
         return;
       }
       setTableData(result.nextData);
@@ -93,7 +99,7 @@ export function usePagination<T>(
       setIsLoading(false);
       console.error('Loading loading next page failed.', error);
     }
-  }, [currentPage, onPage, pageCount, pageSize, sort, tableData]);
+  }, [currentPage, onPage, pageCount, pageSize, setError, sort, tableData]);
 
   useEffect(() => {
     if (onPage) {
@@ -129,7 +135,7 @@ export function usePagination<T>(
         }
       }
     })();
-  }, [currentPage, initialLoad, onPage, pageSize, sort]);
+  }, [currentPage, initialLoad, onPage, pageSize, setError, sort]);
 
   return {
     currentPage,

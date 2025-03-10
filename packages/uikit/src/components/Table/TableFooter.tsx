@@ -2,7 +2,8 @@ import classNames from "classnames";
 import { BUTTON_CLASSES, TFOOT_CLASSES, TFOOTTD_CLASSES } from "./common";
 import { Button } from "../Button/Button";
 import { TextInput } from "../TextInput/TextInput";
-import { useTableContext } from "./TableContext";
+import { useContext, useEffect } from "react";
+import { TableContext } from "./TableContext";
 
 interface TableFooterProps {
   currentPage: number;
@@ -14,6 +15,7 @@ interface TableFooterProps {
   onNextPage: () => void;
   onPrevPage: () => void;
   setSearchTerm: (value: string) => void;
+  onRender: () => void;
 }
 
 export function TableFooter({
@@ -26,9 +28,11 @@ export function TableFooter({
   onNextPage,
   onPrevPage,
   setSearchTerm,
+  onRender,
 }: TableFooterProps) {
-  const { checkable, columns, full, search, searchPlaceholder } = useTableContext();
-  console.log(searchPlaceholder);
+  const { checkable, columns, full, search, searchPlaceholder } = useContext(TableContext);
+
+  useEffect(() => onRender(), [pageSize]);
 
   return (
     <tfoot className={classNames(TFOOT_CLASSES, { 'bottom-0 sticky': !full })} hidden={!search && !pageSize}>

@@ -21,7 +21,8 @@
     "publish-deploy": "npm run publish-predeploy && npm run lerna:publish && npm run storybook:deploy",
     "publish-predeploy": "npm run lerna:check && npm run test && npm run cyct:run",
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
-    "storybook:deploy": "npm run storybook:clear && storybook build && cp -r .vercel storybook-static/.vercel && vercel --prod storybook-static",
+    "storybook:deploy": "npx chromatic --project-token=chpt_ba8799fb0cdc96d",
+    "storybook:deploy_old": "npm run storybook:clear && storybook build && cp -r .vercel storybook-static/.vercel && vercel --prod storybook-static",
     "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
     "tdd": "npx vitest",
     "test": "npx vitest run"
@@ -50,6 +51,7 @@
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-v8": "^3.0.8",
+    "chromatic": "^11.27.0",
     "classnames": "^2.5.1",
     "cypress": "^14.1.0",
     "cypress-real-events": "^1.14.0",

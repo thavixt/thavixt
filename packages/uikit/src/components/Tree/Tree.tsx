@@ -13,7 +13,7 @@ export interface TreeProps {
   items: TreeItem[];
   ref?: RefObject<TreeHandle | null>;
 
-  onClick: (key: string) => void;
+  onClick?: (key: string) => void;
 };
 
 export function Tree({
@@ -47,7 +47,7 @@ export function Tree({
   return (
     <div ref={divRef} className={classNames('w-fit', className)} key={`tree-${counter}`}>
       {items.map(item => (
-        <TreeItem item={item} onClick={onClick} defaultOpen={open} />
+        <TreeItem key={item.key} item={item} onClick={onClick} defaultOpen={open} />
       ))}
     </div>
   )
@@ -61,7 +61,7 @@ export type TreeItem = {
 
 interface TreeItemProps {
   item: TreeItem;
-  onClick: (key: string) => void;
+  onClick?: (key: string) => void;
   defaultOpen?: boolean;
 }
 
@@ -74,7 +74,7 @@ function TreeItem({ item, onClick, defaultOpen }: TreeItemProps) {
     if (hasChildren) {
       setOpen(prev => prev ? undefined : true);
     }
-    onClick(item.key);
+    onClick?.(item.key);
   };
 
   const containerClasses = classNames(
