@@ -265,6 +265,8 @@ function TableContent<T extends Record<string, string | number>>({
 
   const isLoading = loading || paginationLoading;
 
+  const onRender = useCallback(() => setRenderCount(prev => prev + 1), []);
+
   return (
     <Scrollbar data-testid="Table" className={classNames(CONTAINER_CLASSES, className)}>
       <div ref={containerRef} className={TABLE_CONTAINER_CLASSES} role="rowgroup">
@@ -285,7 +287,7 @@ function TableContent<T extends Record<string, string | number>>({
             rowActions={actions}
           />
           <TableFooter
-            onRender={() => setRenderCount(prev => prev + 1)}
+            onRender={onRender}
             currentPage={currentPage}
             dataLength={dataLength}
             hasNextPage={hasNextPage(currentPage, pageCount)}

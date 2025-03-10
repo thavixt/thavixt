@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_ba8799fb0cdc96d",
     "coverage": "npx vitest run --coverage ./packages/uikit/src",
     "cyct:open": "npx cypress open --component --config-file cypress.config.js",
     "cyct:run": "npx cypress run --browser chrome --component --config-file cypress.config.js",
@@ -21,7 +22,7 @@
     "publish-deploy": "npm run publish-predeploy && npm run lerna:publish && npm run storybook:deploy",
     "publish-predeploy": "npm run lerna:check && npm run test && npm run cyct:run",
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
-    "storybook:deploy": "npx chromatic --project-token=chpt_ba8799fb0cdc96d",
+    "storybook:deploy": "npm run chromatic",
     "storybook:deploy_old": "npm run storybook:clear && storybook build && cp -r .vercel storybook-static/.vercel && vercel --prod storybook-static",
     "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
     "tdd": "npx vitest",

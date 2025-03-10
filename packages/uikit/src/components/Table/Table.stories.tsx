@@ -97,8 +97,10 @@ export const Checkable: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Table>) {
     const ref = useRef<TableHandle>(null);
     return (
-      <div className="w-full h-[400px] flex flex-col space-y-4">
-        <Table {...args} ref={ref} />
+      <div className="flex flex-col space-y-4">
+        <div className="w-full h-[400px] ">
+          <Table {...args} ref={ref} />
+        </div>
         <div className="flex space-x-2">
           <Button onClick={() => console.log(ref.current?.getSelectedKeys())}>
             Print selected keys to console
