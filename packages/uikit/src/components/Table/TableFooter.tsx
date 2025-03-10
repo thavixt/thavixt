@@ -32,7 +32,7 @@ export function TableFooter({
 }: TableFooterProps) {
   const { checkable, columns, full, search, searchPlaceholder } = useContext(TableContext);
 
-  useEffect(() => onRender(), [pageSize]);
+  useEffect(() => onRender(), [onRender, pageSize]);
 
   return (
     <tfoot className={classNames(TFOOT_CLASSES, { 'bottom-0 sticky': !full })} hidden={!search && !pageSize}>
