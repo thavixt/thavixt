@@ -1,20 +1,33 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Accordion } from './Accordion';
+import { Accordion, AccordionBody, AccordionOpenTitle, AccordionTitle } from './Accordion';
 import { fn } from '@storybook/test';
 import { Typography } from '../Typography/Typography';
+import { ComponentProps } from 'react';
 
 const meta = {
   title: 'Layout/Accordion',
   component: Accordion,
   tags: ['autodocs'],
   args: {
-    children: (
-      <Typography.Body>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus omnis in, et unde fugiat quae cumque assumenda. Commodi beatae dolor, nisi magnam labore corrupti recusandae est assumenda ipsum eum saepe, blanditiis non maxime delectus quibusdam, tenetur minus quas! Soluta, omnis placeat in a voluptas eos labore at eveniet. Inventore, rem.</Typography.Body>
-    ),
     defaultOpen: false,
     onOpen: fn(),
-    openedTitle: <Typography.Text>How xyz actually works</Typography.Text>,
-    title: <Typography.Text>An important note about xyz</Typography.Text>,
+  },
+  render: function StoryComponent(args: ComponentProps<typeof Accordion>) {
+    return (
+      <Accordion {...args}>
+        <AccordionTitle>
+          <Typography.Text>Additional details</Typography.Text>
+        </AccordionTitle>
+        <AccordionOpenTitle>
+          <Typography.Text>Details about the implementation of xyz</Typography.Text>
+        </AccordionOpenTitle>
+        <AccordionBody>
+          <Typography.Body>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum iste quo voluptates minima non aliquam corporis accusantium veritatis ad enim quisquam repudiandae facilis laboriosam mollitia error dolore, beatae cumque ut possimus vitae laborum labore at? Odit temporibus perspiciatis quos, optio libero magnam ut debitis minus ipsam reprehenderit dignissimos consequuntur necessitatibus magni cumque molestiae. Quam sit voluptatibus voluptas corrupti consequatur laborum, eius, debitis eligendi, labore consequuntur perspiciatis reiciendis. Magnam illum incidunt autem quo similique cum nostrum sunt, nihil pariatur, repudiandae, minima culpa. Voluptatibus minus saepe ea est, vero itaque cumque ut, necessitatibus inventore totam placeat odit maiores unde dolore natus nostrum.
+          </Typography.Body>
+        </AccordionBody>
+      </Accordion>
+    )
   },
 } satisfies Meta<typeof Accordion>;
 
