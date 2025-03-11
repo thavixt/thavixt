@@ -45,8 +45,6 @@ export interface TableProps<T extends Record<string, string | number>> extends S
   defaultSortBy?: DataKey;
   emptyText?: string;
   errorText?: string;
-  /** Full size table - not scrollable overflowing body */
-  full?: boolean;
   loadingText?: string;
   placeholder?: string;
   primaryKey: DataKey;
@@ -62,7 +60,6 @@ export function Table<T extends Record<string, string | number>>({
   defaultSortBy,
   emptyText = 'No rows to display',
   errorText = '',
-  full: providedFull = false,
   loadingText = 'Loading ...',
   placeholder = '-',
   primaryKey,
@@ -72,15 +69,12 @@ export function Table<T extends Record<string, string | number>>({
   ...staticTableProps
 }: TableProps<T>) {
 
-  const full = (typeof staticTableProps.paginated === 'boolean' && staticTableProps.paginated) ? true : providedFull;
-
   return (
     <TableContextProvider value={{
       checkable: checkable,
       columns: columns,
       emptyText: emptyText,
       errorText: errorText,
-      full: full,
       loadingText: loadingText,
       placeholder: placeholder,
       primaryKey: primaryKey,

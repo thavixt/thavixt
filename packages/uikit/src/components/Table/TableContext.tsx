@@ -6,7 +6,6 @@ interface TableContextProps {
   columns: Record<DataKey, string>;
   emptyText: string;
   errorText: string;
-  full: boolean;
   loadingText: string;
   placeholder: string;
   primaryKey: DataKey;
@@ -31,7 +30,6 @@ export const TableContext = createContext<TableContextType>({
   columns: {},
   emptyText: '',
   errorText: '',
-  full: false,
   loadingText: '',
   placeholder: '',
   primaryKey: '',
@@ -60,7 +58,6 @@ export function TableContextProvider({
     columns = {},
     emptyText = 'No data to display',
     errorText = "An error happened",
-    full = false,
     loadingText = "Loading ...",
     placeholder = "-",
     primaryKey = 'key',
@@ -83,7 +80,6 @@ export function TableContextProvider({
       emptyText,
       error,
       errorText,
-      full,
       loadingText,
       placeholder,
       primaryKey,

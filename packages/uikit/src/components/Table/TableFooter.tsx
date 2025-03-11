@@ -30,12 +30,12 @@ export function TableFooter({
   setSearchTerm,
   onRender,
 }: TableFooterProps) {
-  const { checkable, columns, full, search, searchPlaceholder } = useContext(TableContext);
+  const { checkable, columns, search, searchPlaceholder } = useContext(TableContext);
 
   useEffect(() => onRender(), [onRender, pageSize]);
 
   return (
-    <tfoot className={classNames(TFOOT_CLASSES, { 'bottom-0 sticky': !full })} hidden={!search && !pageSize}>
+    <tfoot className={TFOOT_CLASSES} hidden={!search && !pageSize}>
       <tr>
         {search ? (
           <td className={TFOOTTD_CLASSES} colSpan={checkable ? 2 : 1}>
