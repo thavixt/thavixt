@@ -5,12 +5,13 @@ import { TableContext } from "./TableContext";
 
 export interface TableBodyProps<T extends Record<string, string | number>> {
   data: T[];
-  errorRow: (errorMessage: string) => ReactElement;
-  loaderRow: ReactElement;
-  loading: boolean;
-  placeholderRows: ReactElement[];
-  onCheck: React.ChangeEventHandler<HTMLInputElement>;
+  errorRow?: (errorMessage: string) => ReactElement;
+  loaderRow?: ReactElement;
+  loading?: boolean;
+  placeholderRows?: ReactElement[];
+  onCheck?: React.ChangeEventHandler<HTMLInputElement>;
   rowActions?: (dataKey: DataKey, row: T) => ReactElement;
+  sortable?: boolean;
 }
 
 export function TableBody<T extends Record<string, string | number>>({
@@ -21,13 +22,14 @@ export function TableBody<T extends Record<string, string | number>>({
   placeholderRows,
   onCheck,
   rowActions,
+  sortable = true,
 }: TableBodyProps<T>) {
   const { checkable, checked, columns, error, errorText, placeholder, primaryKey } = useContext(TableContext);
 
   if (error) {
     return (
       <tbody className={TBODY_CLASSES}>
-        {error ? errorRow(errorText || error.message) : null}
+        {(error && errorRow) ? errorRow(errorText || error.message) : null}
       </tbody>
     )
   }
@@ -50,7 +52,7 @@ export function TableBody<T extends Record<string, string | number>>({
                     <td
                       title={cellContent.toString()}
                       key={`td-${key}`}
-                      className={classNames(TD_CLASSES, 'font-bold', 'text-left')}
+                      className={classNames(TD_CLASSES, {'font-bold text-left': sortable})}
                     >
                       <label className={classNames({'cursor-pointer': checkable})} htmlFor={row.key.toString()}>{cellContent}</label>
                     </td>

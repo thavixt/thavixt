@@ -1,24 +1,26 @@
 import classNames from "classnames";
-import { THEAD_CLASSES, CHECK_COL_CLASSES, CHECK_ALL_KEY, TH_CLASSES, DataKey, TH_CLASSES_SORTABLE_PRIMARY, TH_CLASSES_SORTABLE_REST } from "./common";
+import { THEAD_CLASSES, CHECK_COL_CLASSES, CHECK_ALL_KEY, TH_CLASSES, DataKey, TH_CLASSES_SORTABLE_PRIMARY, TH_CLASSES_SORTABLE_REST, THEAD_CLASSES_DATATABLE } from "./common";
 import { useCallback, useContext } from "react";
 import { Icon } from "../Icon/Icon";
 import { TableContext } from "./TableContext";
 
 interface TableHeaderProps {
-  checkedSize: number,
-  dataLength: number;
-  hasActions: boolean;
-  onCheckAll: React.ChangeEventHandler<HTMLInputElement>,
+  checkedSize?: number,
+  dataLength?: number;
+  hasActions?: boolean;
+  sortable?: boolean;
+  onCheckAll?: React.ChangeEventHandler<HTMLInputElement>,
 }
 
 export function TableHeader({
   checkedSize,
   dataLength,
   hasActions,
+  sortable = true,
   onCheckAll,
 }: TableHeaderProps) {
   const {
-    checkable, columns, full, primaryKey, setSortBy, setSortDirection, sortBy, sortDirection,
+    checkable, columns, primaryKey, setSortBy, setSortDirection, sortBy, sortDirection,
   } = useContext(TableContext);
 
   const onColumnClick: React.MouseEventHandler<HTMLTableCellElement> = useCallback((e) => {
@@ -32,7 +34,7 @@ export function TableHeader({
   }, [setSortBy, setSortDirection, sortBy]);
 
   return (
-    <thead className={classNames(THEAD_CLASSES, { 'top-0 sticky': !full })}>
+    <thead className={classNames({ [THEAD_CLASSES]: sortable, [THEAD_CLASSES_DATATABLE]: !sortable })}>
       <tr>
         {checkable ? (
           <th className={CHECK_COL_CLASSES}>
@@ -55,11 +57,14 @@ export function TableHeader({
               onClick={onColumnClick}
             >
               <div
-                className={
-                  key === primaryKey ? classNames(TH_CLASSES_SORTABLE_PRIMARY, 'font-bold', 'text-left') : classNames(TH_CLASSES_SORTABLE_REST, 'text-right')
-                }
+                className={classNames({
+                  [classNames(TH_CLASSES_SORTABLE_PRIMARY, 'font-bold', 'text-left')]: sortable && key === primaryKey,
+                  [classNames(TH_CLASSES_SORTABLE_REST, 'text-right')]: sortable && key !== primaryKey,
+                  [classNames(TH_CLASSES, 'text-left')]: !sortable && key == primaryKey,
+                  [classNames(TH_CLASSES, 'text-right')]: !sortable && key !== primaryKey,
+                })}
               >
-                {sortBy === key ? <Icon icon="Caret" className={classNames({
+                {(sortable && sortBy === key) ? <Icon icon="Caret" className={classNames({
                   "rotate-90": sortDirection === 'desc',
                   "-rotate-90": sortDirection === 'asc',
                 })} /> : null}

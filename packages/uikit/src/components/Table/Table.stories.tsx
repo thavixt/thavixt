@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Table, TableHandle } from './Table';
 import { Button } from '../Button/Button';
 import { fn } from '@storybook/test';
-import { ComponentProps, StrictMode, useRef } from 'react';
+import { ComponentProps, useRef } from 'react';
 import { sleep } from '../../common/utils';
 
 const mockData = { key: 'msi', name: 'Radium Power Office PC', category: 'Desktop PC', price: '$1999' };
@@ -12,8 +12,8 @@ const getMockData = (count: number, from = 0) => new Array(count).fill(mockData)
   return {
     ...row,
     key: `${i}`,
-    name: `Radium ${i % 2 ? (i % 4 ? 'Business Laptop' : 'Joy Tablet') : 'Power PC'} (${uuid}${index + from})`,
-    category: i % 2 ? (i % 4 ? 'Laptop' : 'Tablet') : 'PC',
+    name: `Radium ${i % 2 ? 'Business Laptop' : 'Power PC'} (${uuid}${index + from})`,
+    category: i % 2 ? 'Laptop' : 'PC',
     price: `$${(i % 10) * 100 + 199}`,
     year: 2020 + i % 5
   }
@@ -59,11 +59,9 @@ const meta = {
   },
   render: function StoryComponent(args: ComponentProps<typeof Table>) {
     return (
-      <StrictMode>
-        <div className="w-full h-[400px]">
-          <Table {...args} />
-        </div>
-      </StrictMode>
+      <div className="w-full h-[400px]">
+        <Table {...args} />
+      </div>
     )
   }
 } satisfies Meta<typeof Table>;
@@ -83,7 +81,7 @@ export const Default: Story = {
 
 export const Searchable: Story = {
   args: {
-    data: getMockData(1000),
+    data: getMockData(10),
     defaultSortBy: 'price',
     search: true,
     searchPlaceholder: 'Search (ex: "399 laptop")'

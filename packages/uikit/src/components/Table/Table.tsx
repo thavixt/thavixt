@@ -20,22 +20,6 @@ export type TableHandle = RefObject<HTMLDivElement | null> & {
   getSelectedRows: () => Record<string, string | number>[];
 }
 
-export interface TableProps<T extends Record<string, string | number>> extends StaticTableProps<T> {
-  /** Selectable - render a checkbox column at the start */
-  checkable?: boolean;
-  columns: Record<DataKey, string>;
-  defaultSortBy?: DataKey;
-  emptyText?: string;
-  errorText?: string;
-  /** Full size table - not scrollable overflowing body */
-  full?: boolean;
-  loadingText?: string;
-  placeholder?: string;
-  primaryKey: DataKey;
-  searchPlaceholder?: string;
-  search?: boolean;
-};
-
 interface StaticTableProps<T> {
   className?: string;
   data: Array<T>;
@@ -53,6 +37,22 @@ interface StaticTableProps<T> {
   onPage?: OnPageHandler<T>;
   onSelect?: (selectedDataKeys: DataKey[], data: T[]) => void;
 }
+
+export interface TableProps<T extends Record<string, string | number>> extends StaticTableProps<T> {
+  /** Selectable - render a checkbox column at the start */
+  checkable?: boolean;
+  columns: Record<DataKey, string>;
+  defaultSortBy?: DataKey;
+  emptyText?: string;
+  errorText?: string;
+  /** Full size table - not scrollable overflowing body */
+  full?: boolean;
+  loadingText?: string;
+  placeholder?: string;
+  primaryKey: DataKey;
+  searchPlaceholder?: string;
+  search?: boolean;
+};
 
 export function Table<T extends Record<string, string | number>>({
   ref,

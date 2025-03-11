@@ -71,7 +71,7 @@ export function TableContextProvider({
   }
 }: PropsWithChildren<{ value: Partial<TableContextProps> }>) {
   const [sortBy, setSortBy] = useState<DataKey>(defaultSortBy ?? primaryKey);
-  const [sortDirection, setSortDirection] = useState<SortDirection>(defaultSortDirection ?? 'asc');
+  const [sortDirection, setSortDirection] = useState<SortDirection>(defaultSortDirection ?? 'desc');
   const [checked, setChecked] = useState<Set<DataKey>>(new Set<DataKey>());
   const [error, setError] = useState<Error | null>(null);
 
