@@ -5,7 +5,7 @@ import { Button } from "../Button/Button";
 import { Divider } from "../Divider/Divider";
 import { Icon } from "../Icon/Icon";
 
-export interface FormProps extends PropsWithChildren<CommonProps<HTMLFormElement>> {
+export interface FormProps extends PropsWithChildren<Omit<CommonProps<HTMLFormElement>, 'onSubmit'>> {
   border?: boolean;
   cancelText?: string,
   resetText?: string,

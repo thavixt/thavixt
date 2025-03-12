@@ -263,7 +263,7 @@ function TableContent<T extends Record<string, string | number>>({
 
   return (
     <Scrollbar data-testid="Table" className={classNames(CONTAINER_CLASSES, className)}>
-      <div ref={containerRef} className={TABLE_CONTAINER_CLASSES} role="rowgroup">
+      <div ref={containerRef} className={classNames(TABLE_CONTAINER_CLASSES, { 'overflow-hidden': placeholderRowHeight > 0 })} role="rowgroup">
         <table ref={tableRef} className={TABLE_CLASSES} role="grid">
           <TableHeader
             checkedSize={checked.size}

@@ -4,7 +4,7 @@ import { CommonProps } from "../../common/commonProps";
 import { themedInputClasses } from "../../common/theme";
 import { WithLabel } from "../../common/WithLabel";
 
-export interface TextInputProps extends CommonProps<HTMLInputElement | HTMLTextAreaElement> {
+export interface TextInputProps extends Omit<CommonProps<HTMLInputElement | HTMLTextAreaElement>, 'children' | 'onChange'> {
   defaultValue?: string;
   disabled?: boolean;
   label?: string;

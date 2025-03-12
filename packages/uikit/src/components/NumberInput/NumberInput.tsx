@@ -3,7 +3,7 @@ import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
 import { themedInputClasses } from "../../common/theme";
 
-export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'children'> {
+export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'children' | 'onChange'> {
   value?: number;
   defaultValue?: number;
   name: string;

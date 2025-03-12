@@ -95,8 +95,6 @@ export function AccordionBody({ children, className, open = false, ...props }: A
     }
     if (open) {
       ref.current.scrollTo({top: 0, behavior: 'smooth'});
-    } else {
-      ref.current.scrollTo({top: ref.current.scrollHeight, behavior: 'smooth'});
     }
   }, [ref, open]);
 

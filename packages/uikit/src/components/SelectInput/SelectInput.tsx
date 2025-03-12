@@ -3,7 +3,7 @@ import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
 import { themedInputClasses } from "../../common/theme";
 
-export interface SelectProps<T extends Record<string, string>> extends Omit<CommonProps<HTMLSelectElement>, 'children'> {
+export interface SelectProps<T extends Record<string, string>> extends Omit<CommonProps<HTMLSelectElement>, 'children' | 'onChange' | 'defaultValue'> {
   defaultValue?: keyof T;
   disabled?: boolean;
   label?: string;

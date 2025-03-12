@@ -4,7 +4,7 @@ import { CommonProps } from "../../common/commonProps";
 import { themedTextClasses } from "../../common/theme";
 import { WithLabel } from "../../common/WithLabel";
 
-export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 'children'> {
+export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 'children' | 'onChange'> {
   defaultValue?: string;
   label?: string;
   /**

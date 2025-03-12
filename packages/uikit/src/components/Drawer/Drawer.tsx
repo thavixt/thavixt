@@ -5,7 +5,7 @@ import { themedBackgroundClasses } from "../../common/theme";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { ClickTarget } from "../ClickTarget/ClickTarget";
 
-export interface DrawerProps extends CommonProps<HTMLDivElement> {
+export interface DrawerProps extends Omit<CommonProps<HTMLDivElement>, 'content' | 'children'> {
   defaultVisible?: boolean;
   /** Contents of the drawer */
   content?: (isOpen: boolean, toggle: () => void, side: Side) => ReactElement;

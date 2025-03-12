@@ -38,7 +38,7 @@ export const TFOOT_CLASSES = 'sticky bottom-0 bg-slate-200 dark:bg-slate-800'
 export const THEAD_CLASSES_DATATABLE = 'text-sm';
 export const THEAD_CLASSES = classNames(THEAD_CLASSES_DATATABLE, 'sticky top-0 bg-slate-200 dark:bg-slate-800');
 
-export const TH_CLASSES = classNames(PADDING_CLASSES, 'text-left truncate');
+export const TH_CLASSES = classNames(PADDING_CLASSES, 'flex text-left truncate');
 const TH_CLASSES_SORTABLE = classNames(TH_CLASSES, 'cursor-pointer flex space-x-1 items-center');
 export const TH_CLASSES_SORTABLE_PRIMARY = classNames(TH_CLASSES_SORTABLE, 'justify-start');
 export const TH_CLASSES_SORTABLE_REST = classNames(TH_CLASSES_SORTABLE, 'justify-end');

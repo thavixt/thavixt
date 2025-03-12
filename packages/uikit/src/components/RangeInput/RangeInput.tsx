@@ -5,7 +5,7 @@ import { WithLabel } from "../../common/WithLabel";
 import { themedInputClasses } from "../../common/theme";
 import { Typography } from "../Typography/Typography";
 
-export interface RangeInputProps extends Omit<CommonProps<HTMLInputElement>, 'children'> {
+export interface RangeInputProps extends Omit<CommonProps<HTMLInputElement>, 'children' | 'onChange'> {
   defaultValue?: number;
   label?: string;
   max: number;

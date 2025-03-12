@@ -45,7 +45,7 @@ const meta = {
     ),
     data: [
       ...storyRows,
-      ...getMockData(82)
+      ...getMockData(27)
     ],
     columns: {
       name: 'Name',
@@ -89,6 +89,7 @@ export const Searchable: Story = {
 
 export const Checkable: Story = {
   args: {
+    defaultSortBy: 'price',
     checkable: true,
   },
   render: function StoryComponent(args: ComponentProps<typeof Table>) {
@@ -153,7 +154,7 @@ export const PaginatedWithFixedPageSize: Story = {
   }
 };
 
-export const PaginatedWithDataLoading: Story = {
+export const FullFeaturedWithDataLoading: Story = {
   args: {
     checkable: true,
     data: undefined,

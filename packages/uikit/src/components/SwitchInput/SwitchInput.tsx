@@ -3,7 +3,7 @@ import { CommonProps } from "../../common/commonProps";
 import { themedTextClasses } from "../../common/theme";
 import { WithLabel } from "../../common/WithLabel";
 
-export interface SwitchInputProps extends CommonProps<HTMLInputElement> {
+export interface SwitchInputProps extends Omit<CommonProps<HTMLInputElement>, 'children' | 'onChange'> {
   checked?: boolean;
   defaultChecked?: boolean;
   label: string;

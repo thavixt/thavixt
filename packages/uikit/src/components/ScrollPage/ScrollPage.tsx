@@ -5,7 +5,7 @@ import { MouseEvent } from 'react';
 
 type ScrollTo = 'top' | 'bottom';
 
-interface ScrollPageProps extends CommonProps<HTMLButtonElement> {
+interface ScrollPageProps extends Omit<CommonProps<HTMLButtonElement>, 'onClick'> {
   onClick?: (to: ScrollTo, e: MouseEvent<HTMLButtonElement>) => void;
   to?: ScrollTo;
 }
