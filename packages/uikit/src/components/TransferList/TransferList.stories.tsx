@@ -10,8 +10,8 @@ const createItems = (count: number) => (
   })
 )
 
-const items = createItems(50);
-const defaultSelected = items.filter(() => Math.random() < 0.4).map(item => item.key);
+const items = createItems(30);
+const defaultSelected = items.filter((_, i) => !(i % 3)).map(item => item.key);
 
 const meta = {
   title: 'Input/TransferList',

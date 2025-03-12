@@ -10,10 +10,10 @@ export interface LoaderProps {
   className?: string;
 }
 
-export function Loader({ type = 'TubeSpinner', ...props }: LoaderProps) {
+export function Loader({ type = 'TubeSpinner', height = 8, ...props }: LoaderProps) {
   return (
-    <div data-testid="Loader" className={props.className}>
-      {createElement(LoaderList[type], { height: props.height })}
+    <div data-testid="Loader" {...props}>
+      {createElement(LoaderList[type], { height })}
     </div>
   );
 }

@@ -15,9 +15,9 @@ const meta = {
     },
   },
   args: {
-    className: 'text-indigo-500 dark:text-green-400',
-    height: 10,
-    type: 'FadeStaggerCircles',
+    className: 'text-slate-500 dark:text-slate-300',
+    height: 8,
+    type: 'TubeSpinner',
   }
 } satisfies Meta<typeof Loader>;
 

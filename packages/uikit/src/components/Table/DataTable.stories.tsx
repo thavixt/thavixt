@@ -3,13 +3,12 @@ import { DataTable } from './DataTable';
 import { ComponentProps } from 'react';
 
 const mockData = { key: 'msi', name: 'Radium Power Office PC', category: 'Desktop PC', price: '$1999' };
-const uuid = crypto.randomUUID().slice(0, 3).toUpperCase();
 const getMockData = (count: number, from = 0) => new Array(count).fill(mockData).map((row, index) => {
   const i = index + from;
   return {
     ...row,
     key: `${i}`,
-    name: `IBM ${i % 2 ? 'Base Laptop' : 'Office PC'} (${uuid}${index + from})`,
+    name: `IBM ${i % 2 ? 'Base Laptop' : 'Office PC'} ${i}`,
     price: `$${(i % 10) * 100 + 199}`,
     year: i % 4 ? 2020 + i % 5 : undefined,
   }

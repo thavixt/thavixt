@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 
-interface DividerProps extends CommonProps<HTMLHRElement> {
+interface DividerProps extends CommonProps<HTMLDivElement> {
   unicorn?: boolean;
   small?: boolean;
   vertical?: boolean;
 }
 
-export function Divider({ className, ref, small, unicorn, vertical }: DividerProps) {
+export function Divider({ className, ref, small, unicorn, vertical, ...props }: DividerProps) {
   const classes = classNames(
     'self-center text-transparent',
     {
@@ -28,6 +28,8 @@ export function Divider({ className, ref, small, unicorn, vertical }: DividerPro
     className,
   )
   return (
-    <hr data-testid="Divider" ref={ref} className={classes} />
+    // <div className={classNames({ "px-1": vertical, "py-1": !vertical })}>
+    <div data-testid="Divider" role="separator" ref={ref} className={classes} {...props} />
+    // </div>
   )
 }

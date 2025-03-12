@@ -9,7 +9,6 @@ import {
   useRef,
   useState
 } from "react";
-import { themedBackgroundClasses } from "../../common/theme";
 import { Divider } from "../Divider/Divider";
 
 export type TabsHandle = RefObject<HTMLDivElement | null> & {
@@ -45,7 +44,6 @@ export function Tabs({ defaultTabIndex = 0, ref, ...props }: TabsProps) {
 
   const tabsClasses = classNames(
     'p-4 isolate',
-    themedBackgroundClasses,
     props.className,
   );
 
@@ -78,17 +76,9 @@ export function Tabs({ defaultTabIndex = 0, ref, ...props }: TabsProps) {
   );
 }
 
-// Slot components
-
 export interface TabProps {
   title: string;
   active?: boolean;
-  // children?: ReactElement[] | ((
-  //   next: () => void,
-  //   prev: () => void,
-  //   hasNext: boolean,
-  //   hasPrev: boolean,
-  // ) => ReactElement[]);
 }
 function Tab({ children, active }: PropsWithChildren<TabProps>) {
   const classes = classNames(

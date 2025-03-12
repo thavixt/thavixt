@@ -10,13 +10,6 @@ const meta = {
   title: 'Layout/Tabs',
   component: Tabs,
   tags: ['autodocs'],
-} satisfies Meta<typeof Tabs>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
   args: {
     defaultTabIndex: 2,
     children: [
@@ -34,21 +27,24 @@ export const Default: Story = {
           <TextInput name="input4" label='Thoughts' />
         </Form>
       </Tabs.Tab>,
-      <Tabs.Tab title="Tab 4">
-        <Typography.Body>Content of Tab 4.</Typography.Body>
-      </Tabs.Tab>,
-      <Tabs.Tab title="Tab 5">
-        <Typography.Body>Content of Tab 5.</Typography.Body>
-      </Tabs.Tab>,
     ]
   },
+} satisfies Meta<typeof Tabs>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const Controlled: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Tabs>) {
     const ref = useRef<TabsHandle>(null);
     return (
       <div className="flex flex-col space-y-2">
         <div className="flex space-x-2">
-          <Button data-testid="prevTab" onClick={() => ref.current?.prevTab()}>prev tab</Button>
-          <Button data-testid="nextTab" onClick={() => ref.current?.nextTab()}>next tab</Button>
+          <Button data-testid="prevTab" onClick={() => ref.current?.prevTab()}>Previous tab</Button>
+          <Button data-testid="nextTab" onClick={() => ref.current?.nextTab()}>Next tab</Button>
         </div>
         <Tabs {...args} ref={ref} />
       </div>

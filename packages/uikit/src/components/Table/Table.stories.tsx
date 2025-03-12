@@ -6,13 +6,12 @@ import { ComponentProps, useRef } from 'react';
 import { sleep } from '../../common/utils';
 
 const mockData = { key: 'msi', name: 'Radium Power Office PC', category: 'Desktop PC', price: '$1999' };
-const uuid = crypto.randomUUID().slice(0, 3).toUpperCase();
 const getMockData = (count: number, from = 0) => new Array(count).fill(mockData).map((row, index) => {
   const i = index + from;
   return {
     ...row,
     key: `${i}`,
-    name: `Radium ${i % 2 ? 'Business Laptop' : 'Power PC'} (${uuid}${index + from})`,
+    name: `Radium ${i % 2 ? 'Business Laptop' : 'Power PC'} ${i}`,
     category: i % 2 ? 'Laptop' : 'PC',
     price: `$${(i % 10) * 100 + 199}`,
     year: 2020 + i % 5
@@ -36,8 +35,8 @@ const meta = {
           variant='primary'
           className='text-xs'
           onClick={() => {
-            alert(`Buying the ${row.name} for ${row.price} ...`);
-            console.log('Buying', key, row);
+            console.log('Table:actions', key, row);
+            alert(`Buying "${row.name}" for ${row.price} ...`);
           }}
         >
           Buy

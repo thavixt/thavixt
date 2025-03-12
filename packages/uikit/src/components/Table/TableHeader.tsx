@@ -64,10 +64,16 @@ export function TableHeader({
                   [classNames(TH_CLASSES, 'text-right')]: !sortable && key !== primaryKey,
                 })}
               >
-                {(sortable && sortBy === key) ? <Icon icon="Caret" className={classNames({
-                  "rotate-90": sortDirection === 'desc',
-                  "-rotate-90": sortDirection === 'asc',
-                })} /> : null}
+                {(sortable && sortBy === key) ? (
+                  <Icon
+                    className={classNames({
+                      "rotate-90": sortDirection === 'desc',
+                      "-rotate-90": sortDirection === 'asc',
+                    })}
+                    icon="Caret"
+                    height={2}
+                  />
+                ) : null}
                 <span>{value}</span>
               </div>
             </th>
