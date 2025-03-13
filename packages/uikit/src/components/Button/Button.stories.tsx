@@ -61,7 +61,7 @@ export const All: Story = {
         {variants.map(variant => (
           <Button variant={variant}>{variant}</Button>
         ))}
-        <Button icon={{ type: 'Volume1' }}>Icon</Button>
+        <Button icon={{ icon: 'Volume1' }}>Icon</Button>
       </div>
     )
   }

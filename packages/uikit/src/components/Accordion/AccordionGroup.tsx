@@ -1,6 +1,6 @@
-import { Children, cloneElement, PropsWithChildren, ReactElement, useState } from "react";
-import { Accordion, AccordionProps } from "./Accordion";
-import { sleep } from "../../common/utils";
+import { cloneElement, PropsWithChildren, useState } from "react";
+import { Accordion } from "./Accordion";
+import { getSlotElements, sleep } from "../../common/utils";
 
 interface AccordionGroupProps {
   /**
@@ -13,8 +13,7 @@ interface AccordionGroupProps {
 
 export function AccordionGroup({ children, defaultOpen = -1, onOpen: onOpened }: PropsWithChildren<AccordionGroupProps>) {
   const [openIndex, setOpenIndex] = useState<number>(defaultOpen);
-  const slots = Children.toArray(children) as ReactElement[];
-  const accordions = slots.filter((child) => child.type === Accordion) as ReactElement<AccordionProps>[];
+  const accordions = getSlotElements(children, Accordion);
 
   const onOpen = (index: number) => async (open: boolean) => {
     setOpenIndex(-1);

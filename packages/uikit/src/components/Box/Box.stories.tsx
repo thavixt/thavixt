@@ -17,13 +17,6 @@ const meta = {
     type: 'card',
     size: 'sm',
   },
-} satisfies Meta<typeof Box>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Box>) {
     return (
       <Box {...args}>
@@ -37,7 +30,50 @@ export const Default: Story = {
       </Box>
     )
   },
+} satisfies Meta<typeof Box>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Card: Story = {
+  args: {
+    type: 'card',
+  },
 };
+
+export const Paper: Story = {
+  args: {
+    type: 'paper',
+  },
+};
+
+export const Segmented: Story = {
+  args: {
+    type: 'paper',
+  },
+  render: function StoryComponent(args: ComponentProps<typeof Box>) {
+    return (
+      <Box {...args}>
+        <Box.Header>
+          <T.Title>Header</T.Title>
+        </Box.Header>
+        <Box.Content>
+          <T.Text>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
+          </T.Text>
+        </Box.Content>
+        <Box.Footer>
+          <T.Text>Footer1</T.Text>
+          <T.Text>Footer2</T.Text>
+        </Box.Footer>
+      </Box>
+    )
+  },
+};
+
 
 export const Example: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Box>) {

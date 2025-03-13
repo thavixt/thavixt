@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import {
-  Children,
   PropsWithChildren,
   ReactElement,
   RefObject,
@@ -10,6 +9,7 @@ import {
   useState
 } from "react";
 import { Divider } from "../Divider/Divider";
+import { getSlotElements } from "../../common/utils";
 
 export type TabsHandle = RefObject<HTMLDivElement | null> & {
   nextTab: () => void;
@@ -23,12 +23,12 @@ export interface TabsProps extends PropsWithChildren {
   ref?: RefObject<TabsHandle | null>,
 };
 
-export function Tabs({ defaultTabIndex = 0, ref, ...props }: TabsProps) {
+export function Tabs({ defaultTabIndex = 0, ref, children, ...props }: TabsProps) {
   const [activeTab, setActiveTab] = useState<number>(defaultTabIndex);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const tabs = Children.toArray(props.children) as ReactElement<TabProps>[];
-  const tabTitles = tabs.filter((child) => child.type === Tab).map(tab => (tab.props as TabProps).title);
+  
+  const tabs = getSlotElements(children, Tab);
+  const tabTitles = tabs.map(tab => (tab.props as TabProps).title);
 
   useImperativeHandle<RefObject<HTMLDivElement | null>, TabsHandle>(
     ref,
@@ -43,7 +43,7 @@ export function Tabs({ defaultTabIndex = 0, ref, ...props }: TabsProps) {
     }), [tabs.length]);
 
   const tabsClasses = classNames(
-    'p-4 isolate',
+    'p-4 isolate overflow-hidden',
     props.className,
   );
 

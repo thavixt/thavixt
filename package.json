@@ -24,7 +24,7 @@
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
     "storybook:deploy": "npm run chromatic",
     "storybook:deploy_old": "npm run storybook:clear && storybook build && cp -r .vercel storybook-static/.vercel && vercel --prod storybook-static",
-    "storybook:dev": "npm run storybook:clear && storybook dev -p 6006",
+    "storybook:dev": "npm run storybook:clear && storybook dev -p 6066",
     "tdd": "npx vitest",
     "test": "npx vitest run"
   },

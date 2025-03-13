@@ -12,10 +12,11 @@ export interface TextInputProps extends Omit<CommonProps<HTMLInputElement | HTML
   placeholder?: string;
   readonly?: boolean;
   required?: boolean;
-  type?: 'input' | 'textarea',
+  type?: 'text' | 'search' | 'textarea',
   value?: string;
-
+  
   onChange?: (value: string) => void;
+  onEnter?: (value: string) => void;
 }
 
 export function TextInput({
@@ -26,7 +27,9 @@ export function TextInput({
   readonly,
   ref,
   required,
-  type = 'input',
+  type = 'text',
+  onKeyDown: providedOnKeyDown,
+  onEnter,
   ...props
 }: TextInputProps) {
   const classes = classNames(
@@ -42,26 +45,33 @@ export function TextInput({
   const onChange: React.FormEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
     providedOnChange?.(e.currentTarget.value);
   }
+  const onKeyDown: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
+    if (e.key === 'Enter') {
+      providedOnKeyDown?.(e);
+      onEnter?.(e.currentTarget.value);
+    }
+  }
 
   const id = `${name}-text`;
 
   return (
     <WithLabel data-testid="TextInput" label={label} id={id} required={required}>
-      {type === 'input' ? (
+      {['text', 'search'].includes(type) ? (
         <input
           ref={ref as RefObject<HTMLInputElement>}
           id={id}
           className={classes}
           name={name}
-          type="text"
+          type={type}
           onChange={onChange}
           required={required}
           disabled={disabled}
           readOnly={readonly}
+          onKeyDown={onKeyDown}
           {...props}
-        />
-      ) : (
-        <textarea
+          />
+        ) : (
+          <textarea
           ref={ref as RefObject<HTMLTextAreaElement>}
           id={id}
           className={classes}
@@ -71,6 +81,7 @@ export function TextInput({
           rows={3}
           disabled={disabled}
           readOnly={readonly}
+          onKeyDown={onKeyDown}
           {...props}
         />
       )}

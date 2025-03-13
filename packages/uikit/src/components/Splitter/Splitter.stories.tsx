@@ -44,7 +44,7 @@ export const Vertical: Story = {
 export const Nested: Story = {
   args: {
     className: 'border-none bg-transparent',
-    collapse: 20,
+    collapse: 10,
     split: 35,
   },
   render: function StoryComponent({className, split, collapse, vertical}: ComponentProps<typeof Splitter>) {

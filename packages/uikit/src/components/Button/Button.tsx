@@ -3,8 +3,7 @@ import { HTMLAttributes, MouseEvent, PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { Loader } from "../Loader/Loader";
 import { Typography } from "../Typography/Typography";
-import { IconType } from "../Icon/IconList";
-import { Icon } from "../Icon/Icon";
+import { Icon, IconProps } from "../Icon/Icon";
 
 export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'danger' | 'silent';
 
@@ -14,10 +13,7 @@ export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonEle
   type?: HTMLButtonElement['type'],
   loading?: boolean;
   disabled?: boolean;
-  icon?: {
-    type: IconType;
-    className?: string;
-  };
+  icon?: IconProps;
   title?: string;
 }
 
@@ -58,7 +54,7 @@ export function Button({
           },
           {
             'rounded-sm': !icon,
-            '!h-[32px] !w-[32px] border-[50%] rounded-[50%]': icon,
+            '!h-[32px] !w-[32px] rounded-[50%]': icon,
           },
           className,
         )
@@ -70,7 +66,7 @@ export function Button({
           <Loader type="TubeSpinner" />
         ) : (
           icon ? (
-            <Icon icon={icon.type} className={icon.className} height={2} />
+            <Icon {...icon} />
           ) : (
             <Typography.Button>{children}</Typography.Button>
           )

@@ -1,8 +1,9 @@
 import classNames from "classnames";
-import { Children, cloneElement, HTMLAttributes, PropsWithChildren, ReactElement, useEffect, useRef, useState } from "react";
+import { cloneElement, HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { themedTextClasses } from "../../common/theme";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
+import { getSlotElements } from "../../common/utils";
 
 export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean;
@@ -18,10 +19,9 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, inert
   const [open, setOpen] = useState(defaultOpen);
   const id = useRef(props.id ?? crypto.randomUUID().slice(0, 4));
 
-  const slots = Children.toArray(children) as ReactElement[];
-  const bodySlot = slots.filter((child) => child.type === AccordionBody)[0] as ReactElement<AccordionBodySlotProps>;
-  const titleSlot = slots.filter((child) => child.type === AccordionTitle)[0] as ReactElement<AccordionSlotProps>;
-  const openTitleSlot = slots.filter((child) => child.type === AccordionOpenTitle)[0] as ReactElement<AccordionSlotProps>;
+  const bodySlot = getSlotElements(children, AccordionBody)[0];
+  const titleSlot = getSlotElements(children, AccordionTitle)[0];
+  const openTitleSlot = getSlotElements(children, AccordionOpenTitle)[0];
 
   useEffect(() => {
     if (inert) {

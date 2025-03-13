@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import { Children, HTMLAttributes, PropsWithChildren, ReactElement } from "react";
+import { HTMLAttributes, PropsWithChildren } from "react";
+import { getSlotElements } from "../../common/utils";
 
 const commonStyles = 'flex flex-col w-fit rounded-lg';
 const BoxStyles: Record<BoxType, string> = {
@@ -16,11 +17,10 @@ export type BoxProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
   type?: 'card' | 'paper';
 };
 
-export function Box({ type = 'card', className, children, size = 'full', ...props }: BoxProps) {
-  const slots = Children.toArray(children) as ReactElement[];
-  const header = slots.filter((child) => child.type === Header);
-  const content = slots.filter((child) => child.type === Content);
-  const footer = slots.filter((child) => child.type === Footer);
+export function Box({ type = 'card', className, children, size = 'md', ...props }: BoxProps) {
+  const header = getSlotElements(children, Header)[0];
+  const content = getSlotElements(children, Content)[0];
+  const footer = getSlotElements(children, Footer)[0];
 
   return (
     <div data-testid="Box" className={classNames(className, BoxStyles[type], getSizeClasses(size))} {...props}>
@@ -49,7 +49,7 @@ function Content({ children, className }: PropsWithChildren<{ className?: string
 
 function Footer({ children, className }: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className={classNames('flex justify-end px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-b-md', className)}>
+    <div className={classNames('flex justify-between px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-b-md', className)}>
       {children}
     </div>
   );
@@ -64,7 +64,7 @@ function getSizeClasses(size: Size = 'full') {
     case 'sm':
       return 'max-w-sm';
     case 'md':
-      return 'max-w-xl';
+      return 'max-w-lg';
     case 'lg':
       return 'max-w-2xl';
     case 'full':

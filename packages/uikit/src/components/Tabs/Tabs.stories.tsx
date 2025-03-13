@@ -21,10 +21,8 @@ const meta = {
       </Tabs.Tab>,
       <Tabs.Tab title='Tab with Form'>
         <Form>
-          <TextInput name="input1" label='Title' />
           <TextInput name="input2" label='Subject' placeholder="Type something here and go back to the previous tab" />
           <TextInput name="input3" label='Description' placeholder="It'll still be here when you come back" />
-          <TextInput name="input4" label='Thoughts' />
         </Form>
       </Tabs.Tab>,
     ]
