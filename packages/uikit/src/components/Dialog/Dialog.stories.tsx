@@ -6,6 +6,7 @@ import { Button } from '../Button/Button';
 import { Typography } from '../Typography/Typography';
 import { ButtonBar } from '../Button/ButtonBar';
 import { TextInput } from '../TextInput/TextInput';
+import { RadioInput } from '../RadioInput/RadioInput';
 
 const meta = {
   title: 'Layout/Dialog',
@@ -29,8 +30,9 @@ const meta = {
       <>
         <Typography.Body>Lorem ipsum, dolor sit amet consectetur adipisicing elit. In, maxime?</Typography.Body>
         <TextInput name='something' label='Something' placeholder='Something about that'/>
+        <RadioInput name='radio' values={['first', 'second']} defaultValue='second' label='Radio input'/>
         <ButtonBar full>
-          <Button onClick={close} variant='silent'>Close</Button>
+          <Button onClick={close}>Close</Button>
         </ButtonBar>
       </>
     ),

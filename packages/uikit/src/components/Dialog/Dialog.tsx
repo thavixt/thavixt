@@ -88,9 +88,13 @@ export function Dialog({
   }, [closeModal, dialogOpen, openModal]);
 
   const classes = classNames(
-    'relative m-auto min-w-[400px] w-fit max-w-[900px] select-none',
+    'transition-all relative m-auto min-w-[400px] w-fit max-w-[900px] select-none',
     'rounded-xl shadow-2xl backdrop:bg-black/25 backdrop:backdrop-blur-xs',
     themedBackgroundClasses,
+    {
+      'scale-75 opacity-0': !dialogOpen,
+      'scale-100 opacity-100': dialogOpen,
+    },
     className,
   );
 

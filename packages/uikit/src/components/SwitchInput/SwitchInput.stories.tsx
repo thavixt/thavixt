@@ -9,7 +9,7 @@ const meta = {
   args: {
     defaultChecked: true,
     disabled: false,
-    label: 'Light switch',
+    label: 'Toggle the central power',
     name: 'lightSwitch',
     onChange: fn(),
   }

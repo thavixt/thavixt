@@ -1,11 +1,11 @@
 import classNames from "classnames";
-import { useRef, useState } from "react";
-import { Box } from "../Box/Box";
+import { useCallback, useRef, useState } from "react";
 import { Button } from "../Button/Button";
 import { Icon } from "../Icon/Icon";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Typography } from "../Typography/Typography";
 import { CommonProps } from "../../common/commonProps";
+import { themedBackgroundClasses } from "../../common/theme";
 
 const DRAG_IMAGE_ID = 'off_canvas_drag_image_id';
 
@@ -23,30 +23,31 @@ export interface TransferListItem {
   content: string;
 }
 
-export interface TransferListProps extends CommonProps {
+export interface TransferListProps extends Omit<CommonProps<HTMLDivElement>, 'onChange'> {
   className?: string;
   items: TransferListItem[];
   defaultSelected: TransferListItemKey[];
+  onChange: (selectedKeys: TransferListItemKey[]) => void;
 }
 
-export function TransferList({ ref, className, items, defaultSelected }: TransferListProps) {
+export function TransferList({ ref, className, items, defaultSelected, onChange }: TransferListProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [selected, setSelected] = useState<TransferListItemKey[]>(defaultSelected);
+
+  const setSelectedKeys = useCallback((keys: TransferListItemKey[]) => {
+    setSelected(keys);
+    onChange?.(keys.sort((a, b) => a.localeCompare(b, navigator.language, { numeric: true })));
+  }, [onChange]);
 
   const sortedAllItems = items.sort((a, b) => a.content.localeCompare(b.content, navigator.language, { numeric: true }));
   const availableItems = sortedAllItems.filter(item => !selected.includes(item.key));
   const selectedItems = sortedAllItems.filter(item => selected.includes(item.key));
 
-  const classes = classNames(
-    'grid grid-cols-[1fr_auto_1fr] gap-2 isolate',
-    className,
-  );
-  const itemClasses = classNames(
-    'cursor-pointer w-full flex items-center px-2',
-    'flex bg-transparent hover:bg-slate-200 hover:dark:bg-slate-600 rounded-sm',
-    className,
-  );
-  const scrollbarClasses = 'max-h-80 flex flex-col space-y-0.5';
+  const containerClasses = 'h-full w-full grid grid-cols-[1fr_auto_1fr] gap-2 isolate max-h-100';
+  const formClasses = classNames('h-full w-full', className);
+  const boxClasses = classNames(themedBackgroundClasses, "p-2 flex flex-col space-y-2 h-full w-full max-h-100");
+  const scrollbarClasses = 'h-full w-full max-h-100 flex flex-col space-y-0.5';
+  const itemClasses = 'cursor-pointer flex items-center px-2 flex bg-transparent hover:bg-slate-200 hover:dark:bg-slate-600 rounded-sm';
 
   const onDragStart: (from: 'available' | 'selected') => React.DragEventHandler<HTMLDivElement> = (from) => (e) => {
     clearDragImage();
@@ -91,9 +92,9 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
     clearDragImage();
     const transferData = JSON.parse(e.dataTransfer.getData('application/json'));
     if (from === 'selected') {
-      setSelected(prev => Array.from(new Set([...prev, ...transferData])));
+      setSelectedKeys(Array.from(new Set([...selected, ...transferData])));
     } else {
-      setSelected(prev => prev.filter(key => !transferData.includes(key)));
+      setSelectedKeys(selected.filter(key => !transferData.includes(key)));
     }
   }
   const onTransferClick: (from: 'available' | 'selected', all?: 'all') => (e: React.MouseEvent<HTMLButtonElement>) => void = (from, all) => (e) => {
@@ -101,18 +102,18 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
 
     if (all) {
       if (from === 'available') {
-        setSelected(items.map(item => item.key));
+        setSelectedKeys(items.map(item => item.key));
       } else {
-        setSelected([]);
+        setSelectedKeys([]);
       }
       return;
     }
 
     const selectedInpuNames = getItems(from);
     if (from === 'available') {
-      setSelected(prev => Array.from(new Set([...prev, ...selectedInpuNames])));
+      setSelectedKeys(Array.from(new Set([...selected, ...selectedInpuNames])));
     } else {
-      setSelected(prev => prev.filter(key => !selectedInpuNames.includes(key)));
+      setSelectedKeys(selected.filter(key => !selectedInpuNames.includes(key)));
     }
 
     // if (from === 'available') {
@@ -173,30 +174,27 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
   }
 
   return (
-    <div data-testid="TransferList" ref={ref} className="w-full">
-      <form ref={formRef} className={classes}>
-        <Box
+    <form ref={formRef} className={formClasses}>
+        <div data-testid="TransferList" ref={ref} className={containerClasses}>
+        <div
           data-testid="TransferListAvailable"
-          type="paper"
-          className="flex flex-col space-y-2"
-          onDrop={onDrop('available')}
+          className={boxClasses}
           onDragOver={onDragOver}
+          onDrop={onDrop('available')}
         >
-          <Box.Content>
-            <div className="flex justify-between items-center pb-1">
-              <Button variant="silent" onClick={selectAll('available')}>Select all</Button>
-              <Typography.Label>({items.length - selected.length})</Typography.Label>
-              <Button variant="silent" onClick={selectAll('available', false)}>Deselect all</Button>
-            </div>
-            <Scrollbar className={scrollbarClasses}>
-              {availableItems.map(item => (
-                <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('available')} onDragEnd={onDragEnd}>
-                  <TransferListListItem item={item} side="available" onCheck={onCheck('available')} />
-                </div>
-              ))}
-            </Scrollbar>
-          </Box.Content>
-        </Box>
+          <div className="flex justify-between items-center">
+            <Button variant="silent" onClick={selectAll('available')}>Select all</Button>
+            <Typography.Label>({items.length - selected.length})</Typography.Label>
+            <Button variant="silent" onClick={selectAll('available', false)}>Deselect all</Button>
+          </div>
+          <Scrollbar className={scrollbarClasses}>
+            {availableItems.map(item => (
+              <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('available')} onDragEnd={onDragEnd}>
+                <TransferListListItem item={item} side="available" onCheck={onCheck('available')} />
+              </div>
+            ))}
+          </Scrollbar>
+        </div>
 
         <div className="flex flex-col justify-center space-y-1">
           <Button
@@ -233,31 +231,27 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
           </Button>
         </div>
 
-        <Box
+        <div
           data-testid="TransferListSelected"
-          type="paper"
-          className="flex flex-col space-y-2"
+          className={boxClasses}
+          onDragOver={onDragOver}
           onDrop={onDrop('selected')}
-          onDragOver={onDragOver
-
-          }>
-          <Box.Content>
-            <div className="flex justify-between items-center pb-1">
-              <Button className="text-xs" variant="silent" onClick={selectAll('selected')}>Select all</Button>
-              <Typography.Label>({selected.length})</Typography.Label>
-              <Button className="text-xs" variant="silent" onClick={selectAll('selected', false)}>Deselect all</Button>
-            </div>
-            <Scrollbar className={scrollbarClasses}>
-              {selectedItems.map(item => (
-                <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('selected')} onDragEnd={onDragEnd}>
-                  <TransferListListItem item={item} side="selected" onCheck={onCheck('selected')} />
-                </div>
-              ))}
-            </Scrollbar>
-          </Box.Content>
-        </Box>
-      </form>
+        >
+          <div className="flex justify-between items-center pb-1">
+            <Button className="text-xs" variant="silent" onClick={selectAll('selected')}>Select all</Button>
+            <Typography.Label>({selected.length})</Typography.Label>
+            <Button className="text-xs" variant="silent" onClick={selectAll('selected', false)}>Deselect all</Button>
+          </div>
+          <Scrollbar className={scrollbarClasses}>
+            {selectedItems.map(item => (
+              <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('selected')} onDragEnd={onDragEnd}>
+                <TransferListListItem item={item} side="selected" onCheck={onCheck('selected')} />
+              </div>
+            ))}
+          </Scrollbar>
+        </div>
     </div>
+      </form>
   )
 }
 

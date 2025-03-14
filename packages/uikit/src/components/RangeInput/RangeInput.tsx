@@ -15,7 +15,6 @@ export interface RangeInputProps extends Omit<CommonProps<HTMLInputElement>, 'ch
   required?: boolean;
   value?: number;
   onChange?: (value: number, transformedValue: string | number) => void;
-  /** also a `name` to associate with a `<form>` */
   name: string;
   /** Display the current input value */
   showValue?: boolean;

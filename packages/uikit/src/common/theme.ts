@@ -19,5 +19,5 @@ export const themedBackgroundClasses = classNames(
 
 export const themedInputClasses = classNames(
   themedBorderClasses,
-  'bg-slate-200 dark:bg-slate-600 disabled:opacity-40 readonly:opacity-60',
+  'bg-slate-100 dark:bg-slate-600 disabled:opacity-40 readonly:opacity-60',
 );
