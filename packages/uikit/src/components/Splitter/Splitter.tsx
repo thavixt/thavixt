@@ -57,7 +57,7 @@ export function Splitter({ children, className, vertical, split = 50, collapse }
           newTopHeight = 100;
         }
       }
-      setTopHeight(Math.max(0, Math.min(100, newTopHeight)));
+      setTopHeight(+Math.max(0, Math.min(100, newTopHeight)).toFixed(2));
       return;
     }
 
@@ -73,7 +73,7 @@ export function Splitter({ children, className, vertical, split = 50, collapse }
           newLeftWidth = 100;
         }
       }
-      setLeftWidth(Math.max(0, Math.min(100, newLeftWidth)));
+      setLeftWidth(+Math.max(0, Math.min(100, newLeftWidth)).toFixed(2));
     }
   };
 
@@ -91,10 +91,6 @@ export function Splitter({ children, className, vertical, split = 50, collapse }
       'w-1 cursor-col-resize': !vertical,
     },
     className,
-  )
-  const panelClasses = classNames(
-    'size-fit overflow-hidden',
-    // 'min-w-[100px]',
   );
 
   if (children.length < 2) {
@@ -104,29 +100,32 @@ export function Splitter({ children, className, vertical, split = 50, collapse }
     console.warn('Not enough children for <Splitter>');
   }
 
+  const renderFirst = leftWidth > 0 && topHeight > 0;
+  const renderSecond = 100 - leftWidth > 0 && 100 - topHeight > 0;
+
   return (
     <div
       ref={splitterRef}
       className={containerClasses}
     >
       <div
-        className={panelClasses}
+        className="size-fit overflow-hidden"
         style={{
           height: vertical ? `${topHeight}%` : 'initial',
           width: vertical ? 'initial' : `${leftWidth}%`,
         }}
       >
-        {children[0] ?? <div/>}
+        {renderFirst ? (children[0] ?? <div />) : null}
       </div>
       <div className={dividerClasses} onMouseDown={handleMouseDown} />
       <div
-        className={panelClasses}
+        className="size-fit overflow-hidden"
         style={{
           height: vertical ? `${100 - topHeight}%` : 'initial',
           width: vertical ? 'initial' : `${100 - leftWidth}%`,
         }}
       >
-        {children[1] ?? <div/>}
+        {renderSecond ? (children[1] ?? <div />) : null}
       </div>
     </div>
   );

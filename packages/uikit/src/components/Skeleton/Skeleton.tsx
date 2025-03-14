@@ -1,17 +1,34 @@
 import classNames from "classnames";
-import { PropsWithChildren, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { sleep } from "../../common/utils";
 
-export interface SkeletonProps extends PropsWithChildren<CommonProps<HTMLDivElement>> {
-  onLoad?: () => void;
+export interface SkeletonProps extends CommonProps<HTMLDivElement> {
+  onLoad: () => Promise<ReactElement>;
   placeholder?: ReactElement,
   delay?: number,
 };
 
-export function Skeleton({ children, delay = 300, placeholder, onLoad }: SkeletonProps) {
+export function Skeleton({ delay = 300, placeholder, onLoad }: SkeletonProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [contentLoaded, setContentLoaded] = useState(false);
+  const contentRef = useRef<ReactElement>(null);
+
+  useEffect(() => {
+    if (!visible) {
+      return;
+    }
+    (async function SkeletonOnLoad() {
+      try {
+        contentRef.current = await onLoad();
+      } catch (e) {
+        console.error('Error while loading Skeleton content.');
+        throw e as Error;
+      }
+      setContentLoaded(true);
+    }());
+  }, [onLoad, visible]);
 
   const options: IntersectionObserverInit = useMemo(() => ({
     root: null,
@@ -43,8 +60,8 @@ export function Skeleton({ children, delay = 300, placeholder, onLoad }: Skeleto
     }
   }, [callbackFn, options]);
 
-  if (visible) {
-    return children;
+  if (contentLoaded) {
+    return contentRef.current;
   }
 
   return (

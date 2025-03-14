@@ -13,14 +13,14 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'To programmatically show or hide the modal, provide a `ref` for the `<Dialog>`, and call `ref.current.showModal()` or `ref.current.close()`',
+        component: 'To programmatically show or hide the modal, provide a `ref` for the `<Dialog>`, and call `ref.current.open()` or `ref.current.close()`',
       },
     },
   },
   tags: ['autodocs'],
   render: function StoryComponent(args: ComponentProps<typeof FormDialog>) {
     const ref = useRef<FormDialogHandle>(null);
-    const onClick = () => ref.current?.current?.showModal();
+    const onClick = () => ref.current?.current?.open();
 
     return (
       <>
@@ -28,17 +28,26 @@ const meta = {
           Open dialog
         </Button>
         <FormDialog {...args} ref={ref}>
-          <TextInput required placeholder="Your name" name='name' label="name"/>
+          <TextInput required label="Name" placeholder="Your name" name='name'/>
           <TextInput required label="Occupation" placeholder="Job title" name='job'/>
-          <NumberInput min={18} label='Age' defaultValue={25} name='experience'/>
+          <NumberInput min={18} label='Age' name='experience'/>
         </FormDialog>
       </>
     )
   },
   args: {
-    className: 'border-red-500 text-sm',
+    cancelText: 'Cancel',
+    className: '',
+    closeOnClickOutside: false,
+    defaultOpen: false,
+    onClose: fn(),
+    onOpen: fn(),
+    onSubmit,
     onSubmitError: fn(),
     onSubmitSuccess: fn(),
+    open: false,
+    resetText: 'Reset',
+    submitText: 'Submit',
     title: 'Dialog example title',
   }
 } satisfies Meta<typeof FormDialog>;
@@ -47,9 +56,5 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    onSubmit,
-  },
-};
+export const Default: Story = {};
 

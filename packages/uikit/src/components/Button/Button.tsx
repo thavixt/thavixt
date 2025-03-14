@@ -29,7 +29,7 @@ export function Button({
       title={title}
       className={
         classNames(
-          'min-w-8 h-fit w-fit px-2 py-1 transition-colors duration-150',
+          'min-w-8 h-fit w-fit px-2 py-1 transition-colors duration-150 select-none',
           {
             'cursor-pointer': !(disabled || loading),
             'cursor-default opacity-30 select-none': disabled || loading,
@@ -40,17 +40,30 @@ export function Button({
             'text-slate-700 dark:text-slate-100': variant === 'silent',
           },
           {
-            'bg-gray-200': variant === 'default',
-            'bg-green-500': variant === 'primary',
-            'bg-indigo-500': variant === 'secondary',
-            'bg-red-500': variant === 'danger',
+            'bg-gray-200 dark:bg-gray-300': variant === 'default',
+            'bg-green-500 dark:bg-green-600': variant === 'primary',
+            'bg-indigo-500 dark:bg-indigo-600': variant === 'secondary',
+            'bg-red-500 dark:bg-red-600': variant === 'danger',
           },
           {
-            'hover:bg-gray-300 active:bg-gray-400': !(disabled || loading) && variant === 'default',
-            'hover:bg-green-600 active:bg-green-700': !(disabled || loading) && variant === 'primary',
-            'hover:bg-indigo-600 active:bg-indigo-700': !(disabled || loading) && variant === 'secondary',
-            'hover:bg-red-600 active:bg-red-700': !(disabled || loading) && variant === 'danger',
-            'hover:bg-gray-100 active:bg-gray-200 hover:dark:bg-gray-700 active:dark:bg-gray-600': !(disabled || loading) && variant === 'silent',
+            'hover:bg-gray-300 active:bg-gray-400': variant === 'default' &&  !(disabled || loading),
+            'dark:hover:bg-gray-400 dark:active:bg-gray-500': variant === 'default' &&  !(disabled || loading),
+          },
+          {
+            'hover:bg-green-600 active:bg-green-700': variant === 'primary' &&  !(disabled || loading),
+            'dark:hover:bg-green-700 dark:active:bg-green-800': variant === 'primary' &&  !(disabled || loading),
+          },
+          {
+            'hover:bg-indigo-600 active:bg-indigo-700': variant === 'secondary' &&  !(disabled || loading),
+            'dark:hover:bg-indigo-700 dark:active:bg-indigo-800': variant === 'secondary' &&  !(disabled || loading),
+          },
+          {
+            'hover:bg-red-600 active:bg-red-700': variant === 'danger' &&  !(disabled || loading),
+            'dark:hover:bg-red-700 dark:active:bg-red-800': variant === 'danger' &&  !(disabled || loading),
+          },
+          {
+            'hover:bg-gray-200 active:bg-gray-300': !(disabled || loading) && variant === 'silent',
+            'hover:dark:bg-gray-700 active:dark:bg-gray-600': !(disabled || loading) && variant === 'silent',
           },
           {
             'rounded-sm': !icon,

@@ -2,6 +2,8 @@ import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
 import { themedInputClasses } from "../../common/theme";
+import { sortObjectByKeys } from "../../common/utils";
+import { useMemo } from "react";
 
 export interface SelectProps<T extends Record<string, string>> extends Omit<CommonProps<HTMLSelectElement>, 'children' | 'onChange' | 'defaultValue'> {
   defaultValue?: keyof T;
@@ -28,33 +30,32 @@ export function Select<T extends Record<string, string>>({
   required,
   ...props
 }: SelectProps<T>) {
+  const id = `${name}-select`;
   const classes = classNames(
-    'w-fit text-left',
-    'border rounded-sm',
+    'w-fit text-left border rounded-sm',
     themedInputClasses,
     props.className,
   );
 
+  const sortedOptions = useMemo(() => sortObjectByKeys(options), [options]);
   const onChange: React.FormEventHandler<HTMLSelectElement> = (e) => {
     providedOnChange?.(e.currentTarget.value as keyof T);
   }
-
-  const id = `${name}-select`;
 
   return (
     <WithLabel data-testid="SelectInput" label={label} id={id} required={required}>
       <select
         ref={ref}
         className={classes}
-        disabled={disabled}
-        name={name}
-        id={id}
-        onChange={onChange}
         defaultValue={defaultValue as string}
+        disabled={disabled}
+        id={id}
+        name={name}
+        onChange={onChange}
         value={value as string}
       >
-        <option value="">{placeholder ?? '-- Choose an option --'}</option>
-        {Object.entries(options).map(([key, value]) => (
+        <option value="" disabled>{placeholder ?? 'Choose an option'}</option>
+        {Object.entries(sortedOptions).map(([key, value]) => (
           <option key={key} value={key}>{value}</option>
         ))}
       </select>

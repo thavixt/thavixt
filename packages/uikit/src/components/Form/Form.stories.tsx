@@ -14,8 +14,8 @@ const meta = {
     return (
       <Form {...args}>
         <TextInput required label="Name" placeholder="Your name" name='name' />
-        <TextInput required defaultValue='software engineer' label="Occupation" placeholder="Job title" name='job' />
-        <NumberInput min={18} defaultValue={25} label='Age' name='age' />
+        <TextInput required label="Occupation" placeholder="Job title" name='job' defaultValue='software engineer' />
+        <NumberInput min={18} label='Age' name='age' />
       </Form>
     )
   },

@@ -23,13 +23,13 @@ export function TextInput({
   disabled,
   label,
   name,
-  onChange: providedOnChange,
   readonly,
   ref,
   required,
   type = 'text',
-  onKeyDown: providedOnKeyDown,
+  onChange: providedOnChange,
   onEnter,
+  onKeyDown: providedOnKeyDown,
   ...props
 }: TextInputProps) {
   const classes = classNames(

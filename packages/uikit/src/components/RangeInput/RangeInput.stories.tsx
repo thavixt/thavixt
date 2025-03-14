@@ -18,7 +18,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     defaultValue: 3,
-    min: 0,
     max: 10,
     name: 'number',
     label: 'Set a number',
@@ -31,12 +30,10 @@ export const ExampleVolumeKnob: Story = {
     className: 'accent-orange-600',
     defaultValue: 50,
     step: 5,
-    min: 0,
-    max: 100,
     name: 'volume',
     onChange: fn(),
     transformValue: (v, _, max) => getPercentageBetween(v, max),
-    after: (transformedValue) => getAfterIcon(transformedValue),
+    before: (transformedValue) => getAfterIcon(transformedValue),
   },
 };
 
@@ -111,7 +108,7 @@ export const CustomMusicPlayer: Story = {
           >
             <Icon height={3} icon={paused ? 'Play' : 'Pause'} />
           </Button>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col">
             <small title={title} className='truncate w-[160px] text-slate-600 dark:text-slate-400'>{title}</small>
             <RangeInput
               disabled={loading}
@@ -135,7 +132,6 @@ export const CustomMusicPlayer: Story = {
                 onChange={setVolume}
                 showValue={false}
                 value={currentVolume}
-                vertical
               />
             </div>
           </div>

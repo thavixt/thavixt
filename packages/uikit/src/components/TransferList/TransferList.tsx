@@ -33,7 +33,7 @@ export function TransferList({ ref, className, items, defaultSelected }: Transfe
   const formRef = useRef<HTMLFormElement>(null);
   const [selected, setSelected] = useState<TransferListItemKey[]>(defaultSelected);
 
-  const sortedAllItems = items.sort((a, b) => a.content.localeCompare(b.content, undefined, { numeric: true }));
+  const sortedAllItems = items.sort((a, b) => a.content.localeCompare(b.content, navigator.language, { numeric: true }));
   const availableItems = sortedAllItems.filter(item => !selected.includes(item.key));
   const selectedItems = sortedAllItems.filter(item => selected.includes(item.key));
 

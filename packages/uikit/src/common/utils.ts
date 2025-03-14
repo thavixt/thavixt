@@ -14,3 +14,10 @@ export function getSlotElements<T>(children: ReactNode, type: React.FC<T>) {
   const slots = Children.toArray(children) as ReactElement<T | unknown>[];
   return slots.filter((child) => child.type === type) as ReactElement<T>[];
 }
+
+export function sortObjectByKeys<T extends Record<string, unknown>>(obj: T): T {
+  return Object.keys(obj).sort((a, b) => a.localeCompare(b, navigator.language, { numeric: true})).reduce((acc, cur) => ({
+    ...acc,
+    [cur]: obj[cur],
+  }), {} as T);
+}

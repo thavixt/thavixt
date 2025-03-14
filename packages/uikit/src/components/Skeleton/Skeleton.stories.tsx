@@ -11,14 +11,17 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Skeleton is a placeholder to display instead of the actual content.',
+        component: 'Skeleton is a placeholder to display while the actual content is being fetched.',
       },
     },
   },
   args: {
     children: undefined,
     delay: 300,
-    onLoad: fn(),
+    onLoad: fn(async () => {
+      // throw new Error('asd');
+      return <div>Fetched result example</div>
+    }),
   },
 } satisfies Meta<typeof Skeleton>;
 
@@ -26,7 +29,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const ListItem: Story = {
+export const ListItem = {
   render: function StoryComponent() {
     return (
       <div>
@@ -36,7 +39,7 @@ export const ListItem: Story = {
   },
 };
 
-export const Circle: Story = {
+export const Circle = {
   render: function StoryComponent() {
     return (
       <div>
@@ -78,28 +81,40 @@ export const Square: Story = {
 };
 
 export const Example: Story = {
-  args: {
-    children: <div>Actual final child element</div>,
-  },
-  render: function StoryComponent({onLoad, ...args}: ComponentProps<typeof Skeleton>) {
+  render: function StoryComponent({ onLoad, ...args }: ComponentProps<typeof Skeleton>) {
     const [loaded, setLoaded] = useState(false);
     const [key, setKey] = useState(0);
     return (
-      <div className='flex flex-col justify-between h-[1200px]'>
+      <div className='flex flex-col justify-between h-[2000px]'>
         <div>
-          <div>{loaded ? 'Already loaded' : 'Scroll to the bottom to reveal'}</div>
+          <div>{loaded ? 'Already loaded' : 'Scroll to the bottom'}</div>
           <Button onClick={() => {
             setLoaded(false);
             setKey(prev => prev + 1);
           }}>Reset</Button>
         </div>
-        <div>
+        <div key={key}>
           <Skeleton
-            key={key}
             {...args}
+            placeholder={(
+              <div className='flex space-x-2'>
+                <div className="flex flex-col space-y-2 w-full justify-between">
+                  <SkeletonListItem />
+                  <div className="flex flex-col space-y-2 w-full justify-center mt-2">
+                    <SkeletonRow />
+                    <SkeletonRow />
+                    <SkeletonRow className='h-3 mt-2' />
+                    <SkeletonRow />
+                  </div>
+                </div>
+                <div className="size-fit flex flex-col self-end">
+                  <SkeletonSquare />
+                </div>
+              </div>
+            )}
             onLoad={() => {
               setLoaded(true);
-              onLoad?.();
+              return onLoad()
             }}
           />
         </div>
