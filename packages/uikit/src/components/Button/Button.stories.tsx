@@ -42,7 +42,7 @@ export const Danger: Story = {
 export const Icon: Story = {
   args: {
     icon: {
-      type: 'Check',
+      icon: 'Check',
     },
   },
 };
