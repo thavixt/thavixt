@@ -8,7 +8,7 @@ interface AccordionGroupProps {
    * - @todo: should be a key/string
    */
   defaultOpen?: number;
-  onOpen: (tabIndex: number) => void;
+  onOpen?: (tabIndex: number) => void;
 }
 
 export function AccordionGroup({ children, defaultOpen = -1, onOpen: onOpened }: PropsWithChildren<AccordionGroupProps>) {
