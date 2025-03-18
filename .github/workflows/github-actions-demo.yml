@@ -1,13 +1,34 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+run-name: push - master
+on:
+  push:
+    branches:
+      - master
 jobs:
   thavixt-uikit:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Use Node.js v22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Set environment variables
+        run: |
+          export VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
+          export VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}
+          export VERCEL_PROJECT_ID=${{ secrets.VERCEL_UIKIT_PROJECT_ID }}
+      - name: Pre-deploy checks
+        run: |
+          npm run publish-predeploy
+      - name: Deployment
+        run: |
+          npm run publish-deploy
       - name: List directories in the repository
         run: |
           ls -d ${{ github.workspace }}/*/
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: echo "jub status < ${{ job.status }} >"
