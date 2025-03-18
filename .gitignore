@@ -33,3 +33,5 @@ storybook-static
 cypress/screenshots
 
 coverage
+
+.env
