@@ -70,8 +70,8 @@ function TableContent<T extends Record<string, string | number>>({
     <Scrollbar data-testid="DataTable" className={classNames(CONTAINER_CLASSES_DATATABLE, className)}>
       <div className={TABLE_CONTAINER_CLASSES} role="rowgroup">
         <table ref={ref} className={TABLE_CLASSES_DATATABLE} role="grid">
-          <TableHeader sortable={false} />
-          <TableBody sortable={false} data={sortedData} />
+          <TableHeader />
+          <TableBody data={sortedData} />
         </table>
       </div>
     </Scrollbar >
