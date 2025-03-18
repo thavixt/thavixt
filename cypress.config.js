@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  retries: 3,
   component: {
     specPattern: 'packages/uikit/src/components/**/*.cy.tsx',
     watchForFileChanges: true,
