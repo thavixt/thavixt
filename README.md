@@ -16,7 +16,7 @@ npm install @thavixt/uikit
 
 ## Usage
 
-Visit the [Storybook](https://master--67cf40d1309edccd81c8a1fe.chromatic.com/) to view all available components with examples.
+Visit the [Storybook](https://thavixt-uikit-storybook.komlosidev.net/) to view all available components with examples.
 
 An example of using the `<Button/>` component would look something like this:
 
