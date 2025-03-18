@@ -3,7 +3,7 @@ run-name: push - master
 on:
   push:
     branches:
-      - master
+      - actions_test
 jobs:
   thavixt-uikit:
     runs-on: ubuntu-latest
