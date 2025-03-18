@@ -3,7 +3,7 @@ import { PropsWithChildren, ReactElement, RefObject, useCallback, useContext, us
 import { omitKey } from "../../common/utils";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Loader } from "../Loader/Loader";
-import { DataKey, CONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES, OnPageHandler, PLACEHOLDER_TD_CLASSES } from "./common";
+import { DataKey, CONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES, OnPageHandler, PLACEHOLDER_TD_CLASSES, TableDataRow } from "./common";
 import { TableBody } from "./TableBody";
 import { TableFooter } from "./TableFooter";
 import { TableHeader } from "./TableHeader";
@@ -17,7 +17,7 @@ export type TableHandle = RefObject<HTMLDivElement | null> & {
   // container: HTMLDivElement | null;
   table: HTMLTableElement | null;
   getSelectedKeys: () => DataKey[];
-  getSelectedRows: () => Record<string, string | number>[];
+  getSelectedRows: () => TableDataRow[];
 }
 
 interface StaticTableProps<T> {
@@ -38,7 +38,7 @@ interface StaticTableProps<T> {
   onSelect?: (selectedDataKeys: DataKey[], data: T[]) => void;
 }
 
-export interface TableProps<T extends Record<string, string | number>> extends StaticTableProps<T> {
+export interface TableProps<T extends TableDataRow> extends StaticTableProps<T> {
   /** Selectable - render a checkbox column at the start */
   checkable?: boolean;
   columns: Record<DataKey, string>;
@@ -52,7 +52,7 @@ export interface TableProps<T extends Record<string, string | number>> extends S
   search?: boolean;
 };
 
-export function Table<T extends Record<string, string | number>>({
+export function Table<T extends TableDataRow>({
   ref,
 
   checkable = false,
@@ -88,7 +88,7 @@ export function Table<T extends Record<string, string | number>>({
   );
 }
 
-function TableContent<T extends Record<string, string | number>>({
+function TableContent<T extends TableDataRow>({
   className,
   data = [],
   loading = false,

@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { ReactElement, useContext, useMemo } from "react";
-import { DataKey, TBODY_CLASSES, TR_CLASSES, CHECK_COL_CLASSES, TD_CLASSES } from "./common";
+import { DataKey, TBODY_CLASSES, TR_CLASSES, CHECK_COL_CLASSES, TD_CLASSES, TableDataRow } from "./common";
 import { TableContext } from "./TableContext";
 
-export interface TableBodyProps<T extends Record<string, string | number>> {
+export interface TableBodyProps<T extends TableDataRow> {
   data: T[];
   errorRow?: (errorMessage: string) => ReactElement;
   loaderRow?: ReactElement;
@@ -14,7 +14,7 @@ export interface TableBodyProps<T extends Record<string, string | number>> {
   sortable?: boolean;
 }
 
-export function TableBody<T extends Record<string, string | number>>({
+export function TableBody<T extends TableDataRow>({
   data,
   errorRow,
   loaderRow,

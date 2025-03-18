@@ -17,12 +17,15 @@ export type OnPageHandler<T> = (params: OnPageHandlerPayload<T>) => Promise<
   }
 >;
 
+export type TableDataRow = Record<DataKey, CellValue> & {key: string}
+export type CellValue = string | number | null;
+
 export const BUTTON_CLASSES = 'w-fit text-xs bg-transparent';
 export const CHECK_ALL_KEY = 'table_check_all';
 export const CHECK_COL_CLASSES = 'pl-3 pr-1 text-center w-12'
 
-export const CONTAINER_CLASSES_DATATABLE = 'size-full text-normal text-slate-500 dark:text-slate-300';
-export const CONTAINER_CLASSES = classNames(CONTAINER_CLASSES_DATATABLE, 'min-h-[200px] overflow-x-auto rounded-lg shadow-lg');
+export const CONTAINER_CLASSES_DATATABLE = 'size-full text-normal text-slate-500 dark:text-slate-300 rounded-lg';
+export const CONTAINER_CLASSES = classNames(CONTAINER_CLASSES_DATATABLE, 'min-h-[200px] overflow-x-auto shadow-lg');
 const PADDING_CLASSES = 'px-4 py-2';
 
 export const TABLE_CLASSES_DATATABLE = 'table-auto w-full border-collapse text-sm';

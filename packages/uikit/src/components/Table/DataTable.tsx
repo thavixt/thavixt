@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { RefObject, useContext, useMemo } from "react";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
-import { DataKey, TABLE_CONTAINER_CLASSES, CONTAINER_CLASSES_DATATABLE, TABLE_CLASSES_DATATABLE } from "./common";
+import { DataKey, TABLE_CONTAINER_CLASSES, CONTAINER_CLASSES_DATATABLE, TABLE_CLASSES_DATATABLE, TableDataRow } from "./common";
 import { TableBody } from "./TableBody";
 import { TableHeader } from "./TableHeader";
 import { TableContext, TableContextProvider } from "./TableContext";
@@ -12,14 +12,14 @@ interface StaticDataTableProps<T> {
   ref?: RefObject<HTMLTableElement | null>;
 }
 
-export interface DataTableProps<T extends Record<string, string | number>> extends StaticDataTableProps<T> {
+export interface DataTableProps<T extends TableDataRow> extends StaticDataTableProps<T> {
   columns: Record<DataKey, string>;
   defaultSortBy?: DataKey;
   placeholder?: string;
   primaryKey: DataKey;
 };
 
-export function DataTable<T extends Record<string, string | number>>({
+export function DataTable<T extends TableDataRow>({
   ref,
   columns,
   defaultSortBy,
@@ -42,7 +42,7 @@ export function DataTable<T extends Record<string, string | number>>({
   );
 }
 
-function TableContent<T extends Record<string, string | number>>({
+function TableContent<T extends TableDataRow>({
   className,
   data = [],
   ref,
