@@ -8,7 +8,7 @@ import { NumberInput } from '../NumberInput/NumberInput';
 import { onSubmit } from '../utils';
 
 const meta = {
-  title: 'Input/Form dialog',
+  title: 'Input/Form/Form dialog',
   component: FormDialog,
   parameters: {
     docs: {

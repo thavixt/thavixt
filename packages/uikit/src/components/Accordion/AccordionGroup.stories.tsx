@@ -6,7 +6,7 @@ import { Accordion, AccordionBody, AccordionOpenTitle, AccordionTitle } from './
 import { fn } from '@storybook/test';
 
 const meta = {
-  title: 'Layout/AccordionGroup',
+  title: 'Layout/Accordion/Accordion group',
   component: AccordionGroup,
   tags: ['autodocs'],
   args: {

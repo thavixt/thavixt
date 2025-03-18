@@ -2,18 +2,16 @@ import classNames from "classnames";
 import { cloneElement, HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { themedTextClasses } from "../../common/theme";
-import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { getSlotElements } from "../../common/utils";
 
 export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean;
-  // title: ReactNode;
-  // openedTitle?: ReactNode;
-  onOpen?: (open: boolean) => void;
-  /* controllable / AccordionGroup child */
-  inert?: boolean;
   open?: boolean;
+  /* controllable / AccordionGroup child */
+  onOpen?: (open: boolean) => void;
+  inert?: boolean;
 }
+
 
 export function Accordion({ className, children, defaultOpen, ref, onOpen, inert, open: inertOpen, ...props }: AccordionProps) {
   const [open, setOpen] = useState(defaultOpen);
@@ -27,7 +25,7 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, inert
     if (inert) {
       setOpen(inertOpen);
     }
-  }, [inert, inertOpen])
+  }, [inert, inertOpen]);
 
   const classes = classNames(
     'px-4 py-2 flex flex-col align-center',
@@ -41,13 +39,13 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, inert
     }
   );
   const contentClasses = classNames(
+    'pl-6 transition-all duration-250 overflow-hidden',
     themedTextClasses,
-    'transition-all duration-250 overflow-hidden',
     {
+      'max-h-screen': open,
       'max-h-0': !open,
-      'max-h-64': open,
     }
-  )
+  );
 
   const onClick: React.MouseEventHandler<HTMLDivElement> = () => {
     setOpen(prev => {
@@ -64,19 +62,19 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, inert
         </svg>
         <div>
           {cloneElement(titleSlot, {
-            className: classNames('hidden', { 'inline': !open }),
             key: `AccordionTitle`,
+            className: classNames('hidden', { 'inline': !open }),
           })}
           {cloneElement(openTitleSlot ?? titleSlot, {
-            className: classNames('hidden', { 'inline font-semibold': open }),
             key: `AccordionOpenTitle`,
+            className: classNames('hidden', { 'inline font-semibold': open }),
           })}
         </div>
       </div>
       <div className={contentClasses} data-testid="content">
         {cloneElement(bodySlot, {
-          open,
           key: `AccordionBody`,
+          open,
         })}
       </div>
     </div>
@@ -84,7 +82,7 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, inert
 }
 
 type AccordionSlotProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
-type AccordionBodySlotProps = AccordionSlotProps & {open?: boolean};
+type AccordionBodySlotProps = AccordionSlotProps & { open?: boolean };
 
 export function AccordionBody({ children, className, open = false, ...props }: AccordionBodySlotProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -94,15 +92,13 @@ export function AccordionBody({ children, className, open = false, ...props }: A
       return;
     }
     if (open) {
-      ref.current.scrollTo({top: 0, behavior: 'smooth'});
+      ref.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [ref, open]);
 
   return (
-    <div data-testid="accordion-body" className={classNames(className, 'flex flex-col h-fit max-h-64 pt-1')} {...props}>
-      <Scrollbar ref={ref} className="h-fit max-h-64 overflow-auto min-h-0">
-          {children}
-      </Scrollbar>
+    <div data-testid="accordion-body" className={classNames(className, 'flex flex-col pt-1')} {...props}>
+      {children}
     </div>
   )
 }

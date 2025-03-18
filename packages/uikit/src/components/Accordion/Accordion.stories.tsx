@@ -22,8 +22,13 @@ const meta = {
           <Typography.Text>Details about the implementation of xyz</Typography.Text>
         </AccordionOpenTitle>
         <AccordionBody>
+          <Typography.Subtitle>Subtitle of this block of text</Typography.Subtitle>
           <Typography.Body>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum iste quo voluptates minima non aliquam corporis accusantium veritatis ad enim quisquam repudiandae facilis laboriosam mollitia error dolore, beatae cumque ut possimus vitae laborum labore at? Odit temporibus perspiciatis quos, optio libero magnam ut debitis minus ipsam reprehenderit dignissimos consequuntur necessitatibus magni cumque molestiae. Quam sit voluptatibus voluptas corrupti consequatur laborum, eius, debitis eligendi, labore consequuntur perspiciatis reiciendis. Magnam illum incidunt autem quo similique cum nostrum sunt, nihil pariatur, repudiandae, minima culpa. Voluptatibus minus saepe ea est, vero itaque cumque ut, necessitatibus inventore totam placeat odit maiores unde dolore natus nostrum.
+          </Typography.Body>
+          <Typography.Caption>Caption about the next block of text</Typography.Caption>
+          <Typography.Body>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum iste quo voluptates minima non aliquam corporis accusantium veritatis ad enim quisquam repudiandae facilis laboriosam mollitia error dolore, beatae cumque ut possimus vitae laborum labore at? Odit temporibus perspiciatis quos, optio libero magnam ut debitis minus ipsam reprehenderit dignissimos consequuntur necessitatibus magni cumque molestiae.
           </Typography.Body>
         </AccordionBody>
       </Accordion>

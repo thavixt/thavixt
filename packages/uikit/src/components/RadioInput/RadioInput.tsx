@@ -32,18 +32,18 @@ export function RadioInput({ required, ref, ...props }: RadioInputProps) {
     <fieldset data-testid="RadioInput" onChange={onChange} ref={ref}>
       <div className={classes}>
         <WithLabel required={required} label={props.label} className="items-start">
-        <div className="flex flex-col space-y-1">
-          {props.values.map(value => (
-            <Radio
-            checked={props.value === value ? true : undefined}
-            defaultChecked={props.defaultValue === value}
-            key={value}
-            name={props.name}
-            value={value}
-            />
-          ))}
-        </div>
-          </WithLabel>
+          <div className="flex flex-col space-y-1">
+            {props.values.map(value => (
+              <Radio
+                checked={props.value === value ? true : undefined}
+                defaultChecked={props.defaultValue === value}
+                key={value}
+                name={props.name}
+                value={value}
+              />
+            ))}
+          </div>
+        </WithLabel>
       </div>
     </fieldset>
   )

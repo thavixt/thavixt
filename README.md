@@ -6,8 +6,6 @@
 
 ![last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
  
-[Storybook](https://master--67cf40d1309edccd81c8a1fe.chromatic.com/)
- 
 ## Installation
 
 ```shell
@@ -18,7 +16,7 @@ npm install @thavixt/uikit
 
 ## Usage
 
-Visit the [Storybook](https://thavixt-uikit.komlosidev.net/) to view all available components with examples.
+Visit the [Storybook](https://master--67cf40d1309edccd81c8a1fe.chromatic.com/) to view all available components with examples.
 
 An example of using the `<Button/>` component would look something like this:
 
@@ -34,7 +32,7 @@ export function MyComponent() {
 }
 ```
 
-In case you do not use TailwindCSS for your app, you can import the prebuilt styles used by the library directly:
+If you are not using TailwindCSS in your app, you can import the prebuilt styles used by the library directly:
 
 ```ts
 /* main.tsx */
