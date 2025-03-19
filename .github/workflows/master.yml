@@ -1,10 +1,8 @@
 name: GitHub Actions Demo
 run-name: push - master
-on:
-  push:
-    branches:
-      - actions_test
+on: [push]
 jobs:
+  # checks
   test:
     runs-on: ubuntu-latest
     steps:
@@ -13,9 +11,13 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm ci
-      - run: npm run publish-predeploy
+      - run: npm run publish-checks
       - run: echo "job status <${{ job.status }}>"
+
+  # deploy storybook
   deploy:
+    if: github.ref == 'refs/heads/master'
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,3 +35,4 @@ jobs:
         run: |
           ls -d ${{ github.workspace }}/*/
       - run: echo "job status <${{ job.status }}>"
+
