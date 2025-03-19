@@ -36,6 +36,6 @@ jobs:
         
       - run: cd packages/scrollbar-website
       - name: Link Vercel project
-        run: vercel link --cwd dist --yes --project thavixt-scrollbar-demo --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel link --yes --project thavixt-scrollbar-demo --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy with Vercel
         run: vercel deploy --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
