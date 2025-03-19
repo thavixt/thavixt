@@ -11,7 +11,8 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm ci
-      - run: npm run publish-checks
+      - run: npm run lerna:test
+      - run: npm run coverage
 
   # run chromatic
   chromatic:
@@ -46,7 +47,7 @@ jobs:
           export VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
           export VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}
           export VERCEL_PROJECT_ID=${{ secrets.VERCEL_UIKIT_PROJECT_ID }}
-      - run: npm run publish-deploy
+      - run: npm run storybook:deploy
       - name: List directories in the repository
         run: |
           ls -d ${{ github.workspace }}/*/
