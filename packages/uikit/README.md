@@ -1,10 +1,12 @@
 # @thavixt/uikit
 
-![npm package](https://img.shields.io/npm/v/@thavixt/uikit)
+[![npm package](https://img.shields.io/npm/v/@thavixt/uikit)](https://www.npmjs.com/package/@thavixt/uikit)
 
 ![downloads](https://img.shields.io/npm/dm/@thavixt/uikit)
 
 ![last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
+
+[![CI](https://github.com/thavixt/uikit/actions/workflows/uikit.yml/badge.svg)](https://github.com/thavixt/uikit/actions/workflows/uikit.yml)
  
 ## Installation
 
