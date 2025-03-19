@@ -34,8 +34,7 @@ jobs:
       - name: Build Project Artifacts
         run: npm run scrollbar:website:build
         
-      - run: cd packages/scrollbar-website
       - name: Link Vercel project
         run: vercel link --yes --project thavixt-scrollbar-demo --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy with Vercel
-        run: vercel deploy --cwd dist --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --cwd packages/scrollbar-website/dist --yes --prod --token=${{ secrets.VERCEL_TOKEN }}

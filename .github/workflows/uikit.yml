@@ -50,7 +50,7 @@ jobs:
         run: npm install --global vercel@latest
       
       - name: Build Project Artifacts
-        run: npm run storybook:build
+        run: npm run uikit:storybook:build
 
       - name: Link Vercel project
         run: vercel link --cwd storybook-static --yes --project thavixt-uikit-storybook --token=${{ secrets.VERCEL_TOKEN }}
