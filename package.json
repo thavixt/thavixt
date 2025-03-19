@@ -9,21 +9,20 @@
     "packages/uikit-website"
   ],
   "scripts": {
-    "chromatic": "npx chromatic --project-token=chpt_ba8799fb0cdc96d --auto-accept-changes --ci",
-    "coverage": "npx vitest run --coverage ./packages/uikit/src",
+    "chromatic": "npx chromatic --project-token=chpt_ba8799fb0cdc96d",
     "cyct:open": "npx cypress open --component --config-file cypress.config.js",
     "cyct:run": "npx cypress run --browser chrome --component --config-file cypress.config.js",
     "cyct:run-headed": "npx cypress run --headed --browser chrome --component --config-file cypress.config.js",
     "cyct:spec": "npx cypress run --browser chrome --component --config-file cypress.config.js --spec=**/%npm_config_spec%.cy.tsx",
     "lerna:build": "npx lerna run build",
     "lerna:check": "npx lerna run check",
-    "lerna:test": "npm run lerna:check && npm run test",
+    "lerna:test": "npx vitest run",
+    "lerna:test-coverage": "npx vitest run --coverage ./packages/uikit/src",
     "lerna:version": "npx lerna publish --no-private --force-publish",
     "storybook:build": "storybook build",
     "storybook:clear": "rm -rf node_modules/.cache/storybook",
     "storybook:dev": "npm run storybook:clear && storybook dev -p 6066",
-    "tdd": "npx vitest",
-    "test": "npx vitest run"
+    "tdd": "npx vitest"
   },
   "dependencies": {
     "react": "^19.0.0",

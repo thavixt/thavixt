@@ -9,10 +9,9 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm ci
-      - run: npm run lerna:tsc
-      - run: npm run lerna:lint
+      - run: npm run lerna:check
       - run: npm run lerna:test
-      - run: npm run coverage
+      - run: npm run lerna:test-coverage
 
   chromatic:
     needs: test
