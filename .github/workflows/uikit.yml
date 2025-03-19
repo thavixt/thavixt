@@ -50,5 +50,5 @@ jobs:
       - name: Link Vercel project
         run: vercel link --yes --project thavixt-uikit-storybook --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prod storybook-static --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --yes --prod storybook-static --token=${{ secrets.VERCEL_TOKEN }}
 
