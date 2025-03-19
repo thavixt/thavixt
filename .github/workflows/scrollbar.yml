@@ -21,7 +21,7 @@ jobs:
     # on master branch, if a new tag was pushed
     if: |
       github.ref == 'refs/heads/master' ||
-      (github.event_name == 'push' && contains(github.ref, 'refs/tags/'))
+      (github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/@thavixt/scrollbar'))
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
