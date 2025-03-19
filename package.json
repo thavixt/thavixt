@@ -9,7 +9,7 @@
     "packages/uikit-website"
   ],
   "scripts": {
-    "chromatic": "npx chromatic --project-token=chpt_ba8799fb0cdc96d",
+    "chromatic": "npx chromatic --project-token=chpt_ba8799fb0cdc96d --build-script-name=storybook:build",
     "cyct:open": "npx cypress open --component --config-file cypress.config.js",
     "cyct:run": "npx cypress run --browser chrome --component --config-file cypress.config.js",
     "cyct:run-headed": "npx cypress run --headed --browser chrome --component --config-file cypress.config.js",
