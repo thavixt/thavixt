@@ -13,9 +13,27 @@ jobs:
       - run: npm ci
       - run: npm run publish-checks
 
+  # run chromatic
+  chromatic:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - run: npm ci
+      # https://www.chromatic.com/docs/cli/#continuous-integration
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
   # deploy storybook
   deploy:
-    needs: test
+    needs: chromatic
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
