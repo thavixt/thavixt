@@ -36,5 +36,3 @@ Library for customizing scrollbars in websites.
 Library for customizing scrollbars in websites.
 
 [Readme](packages/scrollbar-react/README.md)
-
-[Website / Demo](https://thavixt-scrollbar.vercel.app/)
