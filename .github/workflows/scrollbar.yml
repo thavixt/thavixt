@@ -32,10 +32,9 @@ jobs:
         run: npm install --global vercel@latest
       
       - name: Build Project Artifacts
-        run: |
-          npm run scrollbar:website:build \
-          cd packages/scrollbar-website
-
+        run: npm run scrollbar:website:build
+        
+      - run: cd packages/scrollbar-website
       - name: Link Vercel project
         run: vercel link --cwd dist --yes --project thavixt-scrollbar-demo --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy with Vercel
