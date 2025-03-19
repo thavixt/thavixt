@@ -40,15 +40,16 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm ci
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
       
       - name: Build Project Artifacts
         run: npm run storybook:build
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      # - name: Pull Vercel Environment Information
-      #   run: vercel pull --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Link Vercel project
-        run: vercel link --yes --project thavixt-uikit-storybook --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel link storybook-static --project thavixt-uikit-storybook --token=${{ secrets.VERCEL_TOKEN }} --yes
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --yes --prod --cwd storybook-static --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --cwd storybook-static --token=${{ secrets.VERCEL_TOKEN }} --prod --yes
 
