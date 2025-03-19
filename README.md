@@ -1,55 +1,40 @@
-# @thavixt/uikit
+# @thavixt monorepo
+
+## uikit
 
 [![npm package](https://img.shields.io/npm/v/@thavixt/uikit)](https://www.npmjs.com/package/@thavixt/uikit)
-
 ![downloads](https://img.shields.io/npm/dm/@thavixt/uikit)
-
 ![last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
+[![CI](https://github.com/thavixt/@thavixt/actions/workflows/uikit.yml/badge.svg)](https://github.com/thavixt/@thavixt/actions/workflows/uikit.yml)
 
-[![CI](https://github.com/thavixt/uikit/actions/workflows/uikit.yml/badge.svg)](https://github.com/thavixt/uikit/actions/workflows/uikit.yml)
- 
-## Installation
+UI component library for React with Tailwind
 
-```shell
-npm install @thavixt/uikit
-```
+[Readme](packages/uikit/README.md)
 
-> **Important:** this library uses the default classnames and utilities provided by [TailwindCSS](https://tailwindcss.com/).
+[Storybook](https://thavixt-uikit-storybook.komlosidev.net/)
 
-## Usage
+## scrollbar-core
 
-Visit the [Storybook](https://thavixt-uikit-storybook.komlosidev.net/) to view all available components with examples.
+![npm package](https://img.shields.io/npm/v/@thavixt/uikitscrollbar-core)
+![NPM Downloads](https://img.shields.io/npm/dm/@thavixt/uikitscrollbar-core)
+![last update](https://img.shields.io/npm/last-update/@thavixt/uikitscrollbar-core)
+[![CI](https://github.com/thavixt/@thavixt/actions/workflows/scrollbar.yml/badge.svg)](https://github.com/thavixt/@thavixt/actions/workflows/scrollbar.yml)
 
-An example of using the `<Button/>` component would look something like this:
+Library for customizing scrollbars in websites.
 
-```tsx
-import {Button} from '@thavixt/uikit';
+[Readme](packages/scrollbar-core/README.md)
 
-export function MyComponent() {
-  return (
-    <Button variant="secondary" onClick={() => console.log('you clicked the button!')}>
-      Perform important task
-    </Button>
-  )
-}
-```
+[Website / Demo](https://thavixt-scrollbar.vercel.app/)
 
-If you are not using TailwindCSS in your app, you can import the prebuilt styles used by the library directly:
+## scrollbar-react
 
-```ts
-/* main.tsx */
+![npm package](https://img.shields.io/npm/v/@thavixt/uikitscrollbar-react)
+![NPM Downloads](https://img.shields.io/npm/dm/@thavixt/uikitscrollbar-react)
+![last update](https://img.shields.io/npm/last-update/@thavixt/uikitscrollbar)
+[![CI](https://github.com/thavixt/@thavixt/actions/workflows/scrollbar.yml/badge.svg)](https://github.com/thavixt/@thavixt/actions/workflows/scrollbar-react.yml)
 
-// in your root React component
-import '@thavixt/uikit/dist/index.css';
-```
+Library for customizing scrollbars in websites.
 
-or
+[Readme](packages/scrollbar-react/README.md)
 
-```css
-/* index.css */
-
-/* in your root stylesheet */
-@import "~@thavixt/uikit/dist/index.css";
-/* or */
-@import "node_modules/@thavixt/uikit/dist/index.css";
-```
+[Website / Demo](https://thavixt-scrollbar.vercel.app/)

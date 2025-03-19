@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* data-theme="dark" */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+/* or class="dark" */
+/* @custom-variant dark (&:where(.dark, .dark *)); */
+
+body {
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+
+	color-scheme: light dark;
+	@apply bg-slate-100 dark:bg-gray-800;
+	@apply text-slate-900 dark:text-slate-300;
+	@apply min-w-full;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	@apply font-bold text-blue-600 hover:text-indigo-600 visited:text-purple-600 underline underline-offset-2;
+}
+
+h1 {
+	@apply text-6xl font-serif;
+}
+h2 {
+	@apply text-4xl font-sans;
+}
+
+button {
+	@apply bg-slate-300 dark:bg-slate-600;
+	@apply text-slate-800 dark:text-slate-200;
+	@apply rounded-sm px-2 py-1 cursor-pointer;
+	@apply hover:bg-slate-400 dark:hover:bg-slate-700;
+	@apply border-2 border-transparent hover:border-slate-500;
+	/* animate scale on click */
+	@apply transition-all active:transform-[scale(0.95)];
+}
+button > code {
+	@apply bg-inherit;
+}
+
+code {
+	@apply text-slate-800 dark:text-white;
+	@apply bg-slate-300 dark:bg-slate-600;
+	@apply rounded-xs px-1;
+	@apply inline-block;
+}
+
+summary {
+	@apply cursor-pointer;
+}
+
+ul>li>* {
+	@apply min-h-8;
+}
+ul {
+	@apply list-disc list-inside;
+}
+
+input {
+	@apply cursor-pointer;
+}
+input[type="color"] {
+	@apply w-12 h-8 border-0;
+}
+input[type="number"] {
+	@apply w-12 h-6;
+	@apply bg-slate-300 dark:bg-slate-600;
+	@apply text-slate-800 dark:text-slate-300;
+	@apply rounded-md w-24 text-center pr-1;
+}
+input[type="checkbox"] {
+	/* @apply size-6 border rounded-md; */
+	@apply w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm dark:bg-gray-700 dark:border-gray-600;
+}
+input {
+	@apply focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2;
+}
+
+label {
+	@apply !mb-0;
+}
+
+/* table styles */
+table {
+	@apply divide-y-2 divide-gray-300 dark:divide-slate-500 text-xs;
+}
+table tbody {
+	@apply divide-y divide-gray-300 dark:divide-slate-500;
+}
+table tr {
+	@apply h-8 md:h-10;
+}
+table tbody tr {
+	@apply hover:bg-slate-200 dark:hover:bg-slate-900;
+}
+table td {
+	@apply p-1;
+}
+
+.highlight {
+	@apply rounded-lg bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-white p-8;
+}

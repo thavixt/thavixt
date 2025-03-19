@@ -10,13 +10,12 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm ci
-      - run: npm run lerna:check
-      - run: npm run lerna:test
-      - run: npm run lerna:test-coverage
+      - run: npx lerna run check --scope @thavixt/uikit
+      - run: npx lerna run test --scope @thavixt/uikit
+      - run: npx lerna run build --scope @thavixt/uikit
 
   # run chromatic
   chromatic:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -54,7 +53,7 @@ jobs:
         run: npm run storybook:build
 
       - name: Link Vercel project
-        run: vercel link storybook-static --project thavixt-uikit-storybook --token=${{ secrets.VERCEL_TOKEN }} --yes
+        run: vercel link --cwd storybook-static --yes --project thavixt-uikit-storybook --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --cwd storybook-static --token=${{ secrets.VERCEL_TOKEN }} --prod --yes
+        run: vercel deploy --cwd storybook-static --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
 

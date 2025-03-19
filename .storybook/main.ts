@@ -11,7 +11,11 @@ const config: StorybookConfig = {
     getAbsolutePath("@chromatic-com/storybook"),
     getAbsolutePath("@storybook/addon-essentials"),
     getAbsolutePath("@storybook/addon-interactions"),
-    getAbsolutePath("@storybook/addon-themes")
+    getAbsolutePath("@storybook/addon-themes"),
+    // {
+    //   name: getAbsolutePath("@storybook/addon-docs"),
+    //   options: { transcludeMarkdown: true }
+    // },
   ],
   framework: getAbsolutePath("@storybook/react-vite"),
   core: {

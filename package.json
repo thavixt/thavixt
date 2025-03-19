@@ -5,24 +5,27 @@
   "version": "0.1.0",
   "type": "module",
   "workspaces": [
-    "packages/uikit",
-    "packages/uikit-website"
+    "packages/scrollbar-core",
+    "packages/scrollbar-react",
+    "packages/scrollbar-website",
+    "packages/uikit"
   ],
   "scripts": {
+    "tdd": "npx vitest",
+    "test": "npx vitest run",
+    "test:coverage": "npx vitest run --coverage",
+    "check": "npx lerna run check",
+    "build": "npx lerna run build",
+    "version": "npx lerna publish --no-private --force-publish",
     "chromatic": "npx chromatic --project-token=chpt_ba8799fb0cdc96d --build-script-name=storybook:build",
     "cyct:open": "npx cypress open --component --config-file cypress.config.js",
     "cyct:run": "npx cypress run --browser chrome --component --config-file cypress.config.js",
     "cyct:run-headed": "npx cypress run --headed --browser chrome --component --config-file cypress.config.js",
     "cyct:spec": "npx cypress run --browser chrome --component --config-file cypress.config.js --spec=**/%npm_config_spec%.cy.tsx",
-    "lerna:build": "npx lerna run build",
-    "lerna:check": "npx lerna run check",
-    "lerna:test": "npx vitest run",
-    "lerna:test-coverage": "npx vitest run --coverage ./packages/uikit/src",
-    "lerna:version": "npx lerna publish --no-private --force-publish",
-    "storybook:build": "storybook build",
-    "storybook:clear": "rm -rf node_modules/.cache/storybook",
-    "storybook:dev": "npm run storybook:clear && storybook dev -p 6066",
-    "tdd": "npx vitest"
+    "uikit:storybook:build": "storybook build",
+    "uikit:storybook:clear": "rm -rf node_modules/.cache/storybook",
+    "uikit:storybook:dev": "npm run uikit:storybook:clear && storybook dev -p 6066",
+    "scrollbar:website:build": "npx lerna run build --scope @thavixt/scrollbar-website"
   },
   "dependencies": {
     "react": "^19.0.0",
