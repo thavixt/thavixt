@@ -1,39 +1,40 @@
-name: GitHub Actions Demo
-run-name: push - master
+name: thavixt-uikit
 on: [push]
 jobs:
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '22.x'
-  #     - run: npm ci
-  #     - run: npm run lerna:test
-  #     - run: npm run coverage
-
-  # chromatic:
-  #   needs: test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '22.x'
-  #     - run: npm ci
-  #     # https://www.chromatic.com/docs/cli/#continuous-integration
-  #     - name: Run Chromatic
-  #       uses: chromaui/action@latest
-  #       with:
-  #         projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-
-  # deploy storybook
-  deploy:
-    # needs: chromatic
+  test:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - run: npm ci
+      - run: npm run lerna:tsc
+      - run: npm run lerna:lint
+      - run: npm run lerna:test
+      - run: npm run coverage
+
+  chromatic:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - run: npm ci
+      # https://www.chromatic.com/docs/cli/#continuous-integration
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+  deploy:
+    needs: chromatic
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -46,8 +47,6 @@ jobs:
       - name: Build Project Artifacts
         run: npm run storybook:build
 
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Link Vercel project
         run: vercel link storybook-static --project thavixt-uikit-storybook --token=${{ secrets.VERCEL_TOKEN }} --yes
       - name: Deploy Project Artifacts to Vercel
