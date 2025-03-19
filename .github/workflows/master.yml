@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm ci
-      - run: storybook build
+      - run: npm run storybook:build
       - run: cd storybook-static
       - run: vercel link --project thavixt-uikit-storybook
       - run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
