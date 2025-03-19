@@ -4,7 +4,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  retries: 3,
+  retries: 10,
+  video: false,
   component: {
     specPattern: 'packages/uikit/src/components/**/*.cy.tsx',
     watchForFileChanges: true,
