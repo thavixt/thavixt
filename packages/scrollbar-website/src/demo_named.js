@@ -1,4 +1,4 @@
-const modulePath = 'https://unpkg.com/thavixt-scrollbar-core/dist/index.js'
+const modulePath = 'https://unpkg.com/@thavixt/scrollbar-core/dist/index.js'
 
 class ImportError extends Error { }
 

@@ -1,4 +1,4 @@
-import { Scrollbar, ScrollbarOptions as CoreScrollbarOptions, } from "thavixt-scrollbar-core";
+import { Scrollbar, ScrollbarOptions as CoreScrollbarOptions, } from "@thavixt/scrollbar-core";
 import { RefObject, useEffect, useRef } from "react";
 
 interface ScrollbarOptions extends CoreScrollbarOptions {
@@ -39,11 +39,11 @@ export type {
 	ScrollDirection,
 	ScrollbarOptions,
 	ScrollbarScrollDetails,
-} from 'thavixt-scrollbar-core'
+} from '@thavixt/scrollbar-core'
 
 export {
 	DEFAULT_CSS_STYLESHEET,
 	DEFAULT_STYLES,
-} from 'thavixt-scrollbar-core';
+} from '@thavixt/scrollbar-core';
 
 export default useScrollbar;

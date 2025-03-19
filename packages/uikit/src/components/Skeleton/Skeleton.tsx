@@ -26,6 +26,7 @@ export function Skeleton({ delay = 300, placeholder, onLoad }: SkeletonProps) {
         console.error('Error while loading Skeleton content.');
         throw e as Error;
       }
+      await sleep(250);
       setContentLoaded(true);
     }());
   }, [onLoad, visible]);
@@ -76,31 +77,30 @@ export function Skeleton({ delay = 300, placeholder, onLoad }: SkeletonProps) {
   )
 }
 
-export function SkeletonRow({ className }: { className?: string }) {
+export function SkeletonRow({ className = 'w-full' }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
-      className={classNames('h-2 rounded-lg py-1 bg-slate-500 transition animate-pulse', className)}
-      style={{ animationDelay: '500ms', width: `${Math.round(Math.max(Math.random(), 0.25) * 1000) / 10}%` }}
+      className={classNames('h-2 rounded-lg py-1 bg-slate-400 transition animate-pulse', className)}
     />
   )
 }
 
 export function SkeletonRectangle({ className = 'h-24 w-48' }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={classNames('rounded-lg p-1 bg-slate-500 transition animate-pulse', className)} />
+    <div aria-hidden="true" className={classNames('rounded-lg p-1 bg-slate-400 transition animate-pulse', className)} />
   )
 }
 
 export function SkeletonSquare({ className = 'h-24 w-24' }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={classNames('rounded-lg p-1 bg-slate-500 transition animate-pulse', className)} />
+    <div aria-hidden="true" className={classNames('rounded-lg p-1 bg-slate-400 transition animate-pulse', className)} />
   )
 }
 
 export function SkeletonCircle({ className = 'size-12' }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={classNames('rounded-[50%] bg-slate-500 transition animate-pulse', className)} />
+    <div aria-hidden="true" className={classNames('rounded-[50%] bg-slate-400 transition animate-pulse', className)} />
   )
 }
 
@@ -111,9 +111,9 @@ export function SkeletonListItem({ className = 'size-12' }: { className?: string
         <SkeletonCircle />
       </div>
       <div className="flex flex-col space-y-2 w-full justify-center">
-        <SkeletonRow className="h-3" />
-        <SkeletonRow />
-        <SkeletonRow />
+        <SkeletonRow className="w-3/4 h-3" />
+        <SkeletonRow className="w-1/2" />
+        <SkeletonRow className="w-1/3" />
       </div>
     </div>
   )

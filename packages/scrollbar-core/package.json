@@ -10,7 +10,7 @@
   "license": "MIT",
   "author": {
     "name": "Péter Komlósi",
-    "email": "komlosi.peti@gmail.com",
+    "email": "komlosi.peti+thavixt@gmail.com",
     "url": "https://github.com/thavixt"
   },
   "keywords": [
@@ -20,13 +20,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thavixt/thavixt-scrollbar.git",
-    "directory": "packages/core"
+    "url": "git+https://github.com/thavixt/thavixt.git",
+    "directory": "packages/scrollbar-core"
   },
   "bugs": {
-    "url": "https://github.com/thavixt/thavixt-scrollbar/issues"
+    "url": "https://github.com/thavixt/thavixt/issues"
   },
-  "homepage": "https://github.com/thavixt/thavixt-scrollbar#readme",
+  "homepage": "https://github.com/thavixt/thavixt#readme",
   "main": "./dist/index.js",
   "files": [
     "dist/**/*"

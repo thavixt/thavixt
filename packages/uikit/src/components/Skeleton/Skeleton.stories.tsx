@@ -101,10 +101,10 @@ export const Example: Story = {
                 <div className="flex flex-col space-y-2 w-full justify-between">
                   <SkeletonListItem />
                   <div className="flex flex-col space-y-2 w-full justify-center mt-2">
-                    <SkeletonRow />
-                    <SkeletonRow />
-                    <SkeletonRow className='h-3 mt-2' />
-                    <SkeletonRow />
+                    <SkeletonRow className='w-2/3' />
+                    <SkeletonRow className='w-1/3' />
+                    <SkeletonRow className='w-2/3 h-3 mt-2' />
+                    <SkeletonRow className='w-1/3' />
                   </div>
                 </div>
                 <div className="size-fit flex flex-col self-end">

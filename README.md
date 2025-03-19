@@ -33,6 +33,6 @@ Library for customizing scrollbars in websites.
 ![last update](https://img.shields.io/npm/last-update/@thavixt/uikitscrollbar)
 [![CI](https://github.com/thavixt/@thavixt/actions/workflows/scrollbar.yml/badge.svg)](https://github.com/thavixt/@thavixt/actions/workflows/scrollbar-react.yml)
 
-Library for customizing scrollbars in websites.
+React package for customizing scrollbars in websites.
 
 [Readme](packages/scrollbar-react/README.md)

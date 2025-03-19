@@ -1,5 +1,5 @@
 import { PropsWithChildren, useImperativeHandle } from "react";
-import { ScrollbarStyles, ScrollDirection, useScrollbar } from 'thavixt-scrollbar-react';
+import { ScrollbarStyles, ScrollDirection, useScrollbar } from '@thavixt/scrollbar-react';
 import { CommonProps } from "../../common/commonProps";
 
 interface ScrollbarProps extends PropsWithChildren<CommonProps<HTMLDivElement>> {

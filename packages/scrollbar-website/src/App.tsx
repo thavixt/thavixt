@@ -7,7 +7,7 @@ import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
 import darkTheme from 'react-syntax-highlighter/dist/esm/styles/prism/material-dark';
 import lightTheme from 'react-syntax-highlighter/dist/esm/styles/prism/material-light';
-import { DEFAULT_CSS_STYLESHEET, DEFAULT_STYLES, useScrollbar, ScrollbarStyles, ScrollDirection } from "thavixt-scrollbar-react";
+import { DEFAULT_CSS_STYLESHEET, DEFAULT_STYLES, useScrollbar, ScrollbarStyles, ScrollDirection } from "@thavixt/scrollbar-react";
 
 import {
 	codeCustomCSS,
@@ -35,7 +35,7 @@ function App() {
 	const [applyToBody, setApplyToBody] = useState(false);
 	const [styles, setStyles] = useState<ScrollbarStyles>(demoStyles);
 
-	const codeReactHook = useMemo(() => `import { useScrollbar } from "thavixt-scrollbar-react";
+	const codeReactHook = useMemo(() => `import { useScrollbar } from "@thavixt/scrollbar-react";
 
 function MyCompontent() {
 	const ref = useRef(null);
@@ -73,7 +73,7 @@ function MyCompontent() {
 	}, []);
 
 	const onScrollToEnd = useCallback((directions: ScrollDirection[]) => {
-		console.log(`[thavixt-scrollbar-demo] ${new Date().toJSON()} ${directions.join(',')}`);
+		console.log(`[@thavixt/scrollbar-demo] ${new Date().toJSON()} ${directions.join(',')}`);
 	}, []);
 
 	const ref = useScrollbar<HTMLDivElement>({ body: applyToBody, onScrollToEnd, styles });
@@ -94,21 +94,21 @@ function MyCompontent() {
 
 				<div className="flex flex-col gap-2">
 					<span><b>react</b> package</span>
-					<NPMBadge packageName="thavixt-scrollbar-react" />
+					<NPMBadge packageName="@thavixt/scrollbar-react" />
 					<div className="flex gap-2">
-						<code>$ npm i thavixt-scrollbar-react</code>
+						<code>$ npm i @thavixt/scrollbar-react</code>
 					</div>
 				</div>
 
 				<div className="flex flex-col gap-2">
 					<span><b>core</b> package - <em>for use without a framework</em></span>
-					<NPMBadge packageName="thavixt-scrollbar-core" />
+					<NPMBadge packageName="@thavixt/scrollbar-core" />
 					<div className="flex gap-2">
-						<code>$ npm i thavixt-scrollbar-core</code>
+						<code>$ npm i @thavixt/scrollbar-core</code>
 					</div>
 					<div>
 						or import in your <code>.js</code> file on your website from
-						{' '}<a target="_blank" href="https://unpkg.com/thavixt-scrollbar-core/dist/index.js">unpkg</a>:
+						{' '}<a target="_blank" href="https://unpkg.com/@thavixt/scrollbar-core/dist/index.js">unpkg</a>:
 					</div>
 					<SyntaxHighlighter
 						language="js"

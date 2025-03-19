@@ -1,4 +1,4 @@
-import { DEFAULT_STYLES, ScrollbarStyles } from "thavixt-scrollbar-core";
+import { DEFAULT_STYLES, ScrollbarStyles } from "@thavixt/scrollbar-core";
 
 export const styleDescriptions: Record<keyof ScrollbarStyles, string> = {
 	borderRadius: 'radius of the thumb and track (px)',
@@ -62,5 +62,5 @@ export const globalCode = `/**
 useScrollbar({ styles, onScrollToEnd }, true);
 `;
 
-export const importUnpkgCoreCode = `import Scrollbar from 'https://unpkg.com/thavixt-scrollbar-core/dist/index.js';
+export const importUnpkgCoreCode = `import Scrollbar from 'https://unpkg.com/@thavixt/scrollbar-core/dist/index.js';
 // see usage examples below`;

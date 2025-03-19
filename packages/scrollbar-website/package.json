@@ -23,8 +23,8 @@
 		"react-dom": "^19.0.0",
 		"react-outside-click-handler": "^1.3.0",
 		"react-syntax-highlighter": "^15.6.1",
-		"thavixt-scrollbar-core": "*",
-		"thavixt-scrollbar-react": "*",
+		"@thavixt/scrollbar-core": "*",
+		"@thavixt/scrollbar-react": "*",
 		"vite": "^6.1.0"
 	}
 }

@@ -20,7 +20,7 @@ const getMockData = (count: number, from = 0) => new Array(count).fill(mockData)
 
 const storyRows = [
   { key: 'macAir', name: 'Apple Macbook Air', category: 'Laptop', price: '$1999', year: 2020 },
-  { key: 'unknown', name: `AE-I Alien tech ${crypto.randomUUID().slice(0, 18)}`, price: '$299' },
+  { key: 'unknown', name: `AE-I AlienTech Unidentifiable Futuristic Object`, price: '$299', year: 3001 },
   { key: 'lenovoFx205', name: 'Lenovo FX-205', category: 'Laptop', price: '$649', year: 2019 },
 ];
 

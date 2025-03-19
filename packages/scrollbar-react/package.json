@@ -11,7 +11,7 @@
   "license": "MIT",
   "author": {
     "name": "Péter Komlósi",
-    "email": "komlosi.peti@gmail.com",
+    "email": "komlosi.peti+thavixt@gmail.com",
     "url": "https://github.com/thavixt"
   },
   "keywords": [
@@ -21,13 +21,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thavixt/thavixt-scrollbar.git",
-    "directory": "packages/react"
+    "url": "git+https://github.com/thavixt/thavixt.git",
+    "directory": "packages/scrollbar-react"
   },
   "bugs": {
-    "url": "https://github.com/thavixt/thavixt-scrollbar/issues"
+    "url": "https://github.com/thavixt/thavixt/issues"
   },
-  "homepage": "https://github.com/thavixt/thavixt-scrollbar#readme",
+  "homepage": "https://github.com/thavixt/thavixt#readme",
   "main": "./dist/index.js",
   "files": [
     "dist/**/*"
@@ -43,7 +43,7 @@
     "prepack": "npm run build"
   },
   "dependencies": {
-    "thavixt-scrollbar-core": "^1.6.4"
+    "@thavixt/scrollbar-core": "^1.6.4"
   },
   "peerDependencies": {
     "react": "^19.0.0",
