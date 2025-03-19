@@ -28,6 +28,8 @@
     "scrollbar:website:build": "npx lerna run build --scope @thavixt/scrollbar-website"
   },
   "dependencies": {
+    "@thavixt/scrollbar-core": "^2.0.1",
+    "@thavixt/scrollbar-react": "^2.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
