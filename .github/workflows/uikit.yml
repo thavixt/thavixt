@@ -1,6 +1,7 @@
 name: thavixt-uikit
 on: [push]
 jobs:
+  # vitest, lint, css, coverage
   test:
     runs-on: ubuntu-latest
     steps:
@@ -13,6 +14,7 @@ jobs:
       - run: npm run lerna:test
       - run: npm run lerna:test-coverage
 
+  # run chromatic
   chromatic:
     needs: test
     runs-on: ubuntu-latest
@@ -31,10 +33,14 @@ jobs:
           buildScriptName: storybook:build
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
+  # deploy storybook to vercel
   deploy:
     needs: chromatic
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    # on master branch, if a new tag was pushed
+    if: |
+      github.ref == 'refs/heads/master' ||
+      (github.event_name == 'push' && contains(github.ref, 'refs/tags/'))
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
