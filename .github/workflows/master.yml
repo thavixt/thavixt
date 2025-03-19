@@ -2,7 +2,6 @@ name: GitHub Actions Demo
 run-name: push - master
 on: [push]
 jobs:
-  # checks
   test:
     runs-on: ubuntu-latest
     steps:
@@ -14,41 +13,36 @@ jobs:
       - run: npm run lerna:test
       - run: npm run coverage
 
-  # run chromatic
-  chromatic:
+  # chromatic:
+  #   needs: test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '22.x'
+  #     - run: npm ci
+  #     # https://www.chromatic.com/docs/cli/#continuous-integration
+  #     - name: Run Chromatic
+  #       uses: chromaui/action@latest
+  #       with:
+  #         projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+  # deploy storybook
+  deploy:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
       - run: npm ci
-      # https://www.chromatic.com/docs/cli/#continuous-integration
-      - name: Run Chromatic
-        uses: chromaui/action@latest
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-
-  # deploy storybook
-  deploy:
-    needs: chromatic
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
-      - run: npm ci
-      - name: Set environment variables
-        run: |
-          export VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
-          export VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}
-          export VERCEL_PROJECT_ID=${{ secrets.VERCEL_UIKIT_PROJECT_ID }}
-      - run: npm run storybook:deploy
-      - name: List directories in the repository
-        run: |
-          ls -d ${{ github.workspace }}/*/
+      - run: storybook build
+      - run: cd storybook-static
+      - run: vercel link --project thavixt-uikit-storybook
+      - run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - run: vercel deploy --prod storybook-static --token=${{ secrets.VERCEL_TOKEN }}
 

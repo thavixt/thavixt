@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=chpt_ba8799fb0cdc96d",
+    "chromatic": "npx chromatic --project-token=chpt_ba8799fb0cdc96d --auto-accept-changes --ci",
     "coverage": "npx vitest run --coverage ./packages/uikit/src",
     "cyct:open": "npx cypress open --component --config-file cypress.config.js",
     "cyct:run": "npx cypress run --browser chrome --component --config-file cypress.config.js",
