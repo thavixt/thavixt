@@ -43,7 +43,7 @@
     "prepack": "npm run build"
   },
   "dependencies": {
-    "@thavixt/scrollbar-core": "^1.6.4"
+    "@thavixt/scrollbar-core": "^2.0.1"
   },
   "peerDependencies": {
     "react": "^19.0.0",
