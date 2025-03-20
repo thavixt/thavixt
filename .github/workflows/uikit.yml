@@ -1,5 +1,6 @@
 name: thavixt-uikit
-on: [workflow_dispatch, push]
+# on: [workflow_dispatch, push]
+on: [workflow_dispatch]
 jobs:
   # vitest, lint, css, coverage
   test:
