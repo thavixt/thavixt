@@ -28,7 +28,7 @@
     "url": "https://github.com/thavixt/thavixt/issues"
   },
   "homepage": "https://github.com/thavixt/thavixt#readme",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
   "files": [
     "dist/**/*"
   ],

@@ -27,14 +27,10 @@
     "url": "https://github.com/thavixt/thavixt/issues"
   },
   "homepage": "https://github.com/thavixt/thavixt#readme",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
   "files": [
     "dist/**/*"
   ],
-  "exports": {
-    ".": "./dist/index.js",
-    "./package.json": "./package.json"
-  },
   "scripts": {
     "build": "tsc --project tsconfig.lib.json",
     "check": "npm run lint && tsc --noEmit --project tsconfig.lib.json",
