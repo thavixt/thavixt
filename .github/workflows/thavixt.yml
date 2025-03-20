@@ -1,19 +1,7 @@
 name: thavixt
 on: [workflow_dispatch, push]
 jobs:
-  # vitest, lint, css, coverage
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'npm'
-      - run: npm ci
-      - run: npx lerna run check
-      - run: npm run test
-
+  # tsc
   build:
     runs-on: ubuntu-latest
     steps:
@@ -24,6 +12,20 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npx lerna run build
+      
+  # vitest, lint, css, coverage
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - run: npm ci
+      - run: npx lerna run check
+      - run: npm run test
       
   # deploy scrollbar demo website to vercel
   deploy-scrollbar-demo:
