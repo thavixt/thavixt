@@ -1,5 +1,5 @@
 name: thavixt-scrollbar
-on: [push]
+on: [workflow_dispatch, push]
 jobs:
   # vitest, lint, css, coverage
   test:
