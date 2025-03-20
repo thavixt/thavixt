@@ -1,8 +1,8 @@
 name: thavixt
 on: [workflow_dispatch, push]
 jobs:
-  # tsc
-  build:
+  # build, test, lint, tailwind build, coverage, etc
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -12,20 +12,9 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npx lerna run build
-      
-  # vitest, lint, css, coverage
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'npm'
-      - run: npm ci
-      - run: npx lerna run check
       - run: npm run test
+      # @todo flaky?
+      # - run: npm run cyct:run
       
   # deploy scrollbar demo website to vercel
   deploy-scrollbar-demo:
@@ -44,8 +33,8 @@ jobs:
       - run: npm ci
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
-      - name: Build Project Artifacts
-        run: echo 'Already built in job "build" with "npx lerna run build"'
+      - name: Build scrollbar demo site
+        run: npm run scrollbar:website:build
       - name: Link Vercel project
         run: vercel link --yes --project thavixt-scrollbar-demo --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy with Vercel
@@ -88,7 +77,7 @@ jobs:
       - run: npm ci
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
-      - name: Build Project Artifacts
+      - name: Build Storybook
         run: npm run uikit:storybook:build
       - name: Link Vercel project
         run: vercel link --cwd storybook-static --yes --project thavixt-uikit-storybook --token=${{ secrets.VERCEL_TOKEN }}
