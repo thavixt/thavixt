@@ -37,7 +37,7 @@ jobs:
       - name: Link Vercel project
         run: |
           vercel link --yes \
-          --token=${{ secrets.VERCEL_TOKEN }}
+          --token=${{ secrets.VERCEL_TOKEN }} \
           --project thavixt-uikit-storybook \
           --cwd storybook-static
       - name: Deploy Project Artifacts to Vercel
@@ -62,7 +62,7 @@ jobs:
       - name: Link Vercel project
         run: |
           vercel link --yes \
-          --token=${{ secrets.VERCEL_TOKEN }}
+          --token=${{ secrets.VERCEL_TOKEN }} \
           --project thavixt-scrollbar-demo \
           --cwd dist
       - name: Deploy with Vercel
