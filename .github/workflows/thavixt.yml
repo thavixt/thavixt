@@ -13,8 +13,15 @@ jobs:
       - run: npm ci
       - run: npx lerna run build
       - run: npm run test
-      # @todo flaky?
+      # @todo flaky
       # - run: npm run cyct:run
+      # upload build folders to use in subsequent jobs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: packages/*/dist # path of package outputs dirs (dist)
+      - name: Output artifact ID
+        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
       
   # deploy scrollbar demo website to vercel
   deploy-scrollbar-demo:
@@ -31,6 +38,10 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'npm'
       - run: npm ci
+      # download build folders
+      - uses: actions/download-artifact@v4
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Build scrollbar demo site
@@ -53,6 +64,10 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'npm'
       - run: npm ci
+      # download build folders
+      - uses: actions/download-artifact@v4
+      - name: Display structure of downloaded files
+        run: ls -R
       # https://www.chromatic.com/docs/cli/#continuous-integration
       - name: Run Chromatic
         uses: chromaui/action@latest
@@ -75,6 +90,10 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'npm'
       - run: npm ci
+      # download build folders
+      - uses: actions/download-artifact@v4
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Build Storybook
