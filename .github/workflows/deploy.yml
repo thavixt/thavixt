@@ -19,7 +19,7 @@ jobs:
           path: packages/*/dist # path to package outputs directories
 
   # deploy uikit storybook to vercel
-  storybook-deploy-uikit:
+  deploy-storybook-uikit:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -40,7 +40,7 @@ jobs:
           --token=${{ secrets.VERCEL_TOKEN }} \
           --project thavixt-uikit-storybook \
           --cwd storybook-static
-      - name: Deploy Project Artifacts to Vercel
+      - name: Deploy project artifacts to Vercel
         run: vercel deploy --cwd storybook-static --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
 
   # deploy scrollbar demo website to vercel
@@ -57,13 +57,11 @@ jobs:
       - run: npm ci
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
-      - name: Build scrollbar demo site
-        run: npm run scrollbar:website:build
       - name: Link Vercel project
         run: |
+          cd packages/scrollbar-website
           vercel link --yes \
           --token=${{ secrets.VERCEL_TOKEN }} \
-          --project thavixt-scrollbar-demo \
-          --cwd packages/scrollbar-website/dist
+          --project thavixt-scrollbar-demo
       - name: Deploy with Vercel
-        run: vercel deploy --cwd packages/scrollbar-website/dist --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
