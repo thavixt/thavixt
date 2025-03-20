@@ -3,7 +3,7 @@
 [![npm package](https://img.shields.io/npm/v/@thavixt/scrollbar-react)](https://www.npmjs.com/package/@thavixt/scrollbar-react)
 ![NPM Downloads](https://img.shields.io/npm/dm/@thavixt/scrollbar-react)
 ![last update](https://img.shields.io/npm/last-update/@thavixt/scrollbar-react)
-[![CI](https://github.com/thavixt/thavixt/actions/workflows/scrollbar.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/scrollbar.yml)
+[![CI](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml)
 
 A Typescript package for React to customize scrollbars on your website.
 

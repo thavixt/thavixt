@@ -1,11 +1,12 @@
 # @thavixt monorepo
 
+[![CI](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml)
+
 ## uikit
 
 [![npm package](https://img.shields.io/npm/v/@thavixt/uikit)](https://www.npmjs.com/package/@thavixt/uikit)
 ![downloads](https://img.shields.io/npm/dm/@thavixt/uikit)
 ![last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
-[![CI](https://github.com/thavixt/thavixt/actions/workflows/uikit.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/uikit.yml)
 
 UI component library for React with Tailwind
 
@@ -18,7 +19,6 @@ UI component library for React with Tailwind
 [![npm package](https://img.shields.io/npm/v/@thavixt/scrollbar-core)](https://www.npmjs.com/package/@thavixt/scrollbar-core)
 ![NPM Downloads](https://img.shields.io/npm/dm/@thavixt/scrollbar-core)
 ![last update](https://img.shields.io/npm/last-update/@thavixt/scrollbar-core)
-[![CI](https://github.com/thavixt/thavixt/actions/workflows/scrollbar.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/scrollbar.yml)
 
 Library for customizing scrollbars in websites.
 
@@ -31,7 +31,6 @@ Library for customizing scrollbars in websites.
 [![npm package](https://img.shields.io/npm/v/@thavixt/scrollbar-react)](https://www.npmjs.com/package/@thavixt/scrollbar-react)
 ![NPM Downloads](https://img.shields.io/npm/dm/@thavixt/scrollbar-react)
 ![last update](https://img.shields.io/npm/last-update/@thavixt/scrollbar-react)
-[![CI](https://github.com/thavixt/thavixt/actions/workflows/scrollbar.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/scrollbar.yml)
 
 React package for customizing scrollbars in websites.
 

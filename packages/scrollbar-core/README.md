@@ -4,7 +4,7 @@
 ![npm package](https://img.shields.io/npm/v/@thavixt/scrollbar-core)
 ![NPM Downloads](https://img.shields.io/npm/dm/@thavixt/scrollbar-core)
 ![last update](https://img.shields.io/npm/last-update/@thavixt/scrollbar-core)
-[![CI](https://github.com/thavixt/thavixt/actions/workflows/scrollbar.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/scrollbar.yml)
+[![CI](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml)
 
 A basic Javascript package to customize scrollbars on your website.
 
