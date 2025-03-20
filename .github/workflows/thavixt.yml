@@ -1,8 +1,8 @@
 name: thavixt
 on: [workflow_dispatch, push]
 jobs:
-  # build, test, lint, tailwind build, coverage, etc
-  test:
+  # build all packages
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -12,44 +12,43 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npx lerna run build
-      - run: npm run test
-      # @todo flaky
-      # - run: npm run cyct:run
       # upload build folders to use in subsequent jobs
       - uses: actions/upload-artifact@v4
         with:
           name: packages
-          path: packages/*/dist # path of package outputs dirs (dist)
-      - name: Output artifact ID
-        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
-      
-  # deploy scrollbar demo website to vercel
-  deploy-scrollbar-demo:
-    needs: test
+          path: packages/*/dist # path to package outputs directories
+
+  # run vitest
+  test:
+    needs: build
     runs-on: ubuntu-latest
-    # on master branch, if a new tag was pushed
-    if: |
-      github.ref == 'refs/heads/master' ||
-      (github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/@thavixt/scrollbar'))
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - run: npm ci
-      # download build folders
       - uses: actions/download-artifact@v4
-      - name: Display structure of downloaded files
-        run: ls -R
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Build scrollbar demo site
-        run: npm run scrollbar:website:build
-      - name: Link Vercel project
-        run: vercel link --yes --project thavixt-scrollbar-demo --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy with Vercel
-        run: vercel deploy --cwd packages/scrollbar-website/dist --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - run: npm ci
+      - run: npm run test
+      # @todo flaky
+      # - run: npm run cyct:run
+
+  # run uikit cypress component tests
+  cypress-uikit:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - uses: actions/download-artifact@v4
+      - name: Build Cypress
+        run: npm run cyct:run
 
   # run chromatic for uikit
   chromatic-uikit:
@@ -63,11 +62,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - run: npm ci
-      # download build folders
       - uses: actions/download-artifact@v4
-      - name: Display structure of downloaded files
-        run: ls -R
+      - run: npm ci
       # https://www.chromatic.com/docs/cli/#continuous-integration
       - name: Run Chromatic
         uses: chromaui/action@latest
@@ -81,7 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     # on master branch, if a new tag was pushed
     if: |
-      github.ref == 'refs/heads/master' ||
+      github.ref == 'refs/heads/master' &&
       (github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/@thavixt/uikit'))
     steps:
       - uses: actions/checkout@v4
@@ -89,28 +85,46 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - run: npm ci
-      # download build folders
       - uses: actions/download-artifact@v4
-      - name: Display structure of downloaded files
-        run: ls -R
+      - run: npm ci
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Build Storybook
         run: npm run uikit:storybook:build
       - name: Link Vercel project
-        run: vercel link --cwd storybook-static --yes --project thavixt-uikit-storybook --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          vercel link --yes \
+          --token=${{ secrets.VERCEL_TOKEN }}
+          --project thavixt-uikit-storybook \
+          --cwd storybook-static
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --cwd storybook-static --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
 
-  # cypress-uikit:
-  #   needs: test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version-file: '.nvmrc'
-  #         cache: 'npm'
+  # deploy scrollbar demo website to vercel
+  deploy-scrollbar-demo:
+    needs: test
+    runs-on: ubuntu-latest
+    # on master branch, if a new tag was pushed
+    if: |
+      github.ref == 'refs/heads/master' &&
+      (github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/@thavixt/scrollbar'))
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - uses: actions/download-artifact@v4
+      - run: npm ci
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Build scrollbar demo site
+        run: npm run scrollbar:website:build
+      - name: Link Vercel project
+        run: |
+          vercel link --yes \
+          --token=${{ secrets.VERCEL_TOKEN }}
+          --project thavixt-scrollbar-demo \
+          --cwd dist
+      - name: Deploy with Vercel
+        run: vercel deploy --cwd packages/scrollbar-website/dist --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
