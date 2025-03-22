@@ -24,7 +24,7 @@ export function Inplace({ children, className, replacement, onReplace, ref }: In
       {replaced ? (
         <div className="flex space-x-2">
           {replacement}
-          <Button icon={{ icon: 'Cross', height: 2, className: 'text-red-600' }} variant="silent" onClick={onClick}></Button>
+          <Button icon={{ icon: 'Cross', className: 'text-red-600' }} variant="silent" onClick={onClick}></Button>
         </div>
       ) : null}
     </div>

@@ -46,20 +46,20 @@ export function Button({
             'bg-red-500 dark:bg-red-600': variant === 'danger',
           },
           {
-            'hover:bg-gray-300 active:bg-gray-400': variant === 'default' &&  !(disabled || loading),
-            'dark:hover:bg-gray-400 dark:active:bg-gray-500': variant === 'default' &&  !(disabled || loading),
+            'hover:bg-gray-300 active:bg-gray-400': variant === 'default' && !(disabled || loading),
+            'dark:hover:bg-gray-400 dark:active:bg-gray-500': variant === 'default' && !(disabled || loading),
           },
           {
-            'hover:bg-green-600 active:bg-green-700': variant === 'primary' &&  !(disabled || loading),
-            'dark:hover:bg-green-700 dark:active:bg-green-800': variant === 'primary' &&  !(disabled || loading),
+            'hover:bg-green-600 active:bg-green-700': variant === 'primary' && !(disabled || loading),
+            'dark:hover:bg-green-700 dark:active:bg-green-800': variant === 'primary' && !(disabled || loading),
           },
           {
-            'hover:bg-indigo-600 active:bg-indigo-700': variant === 'secondary' &&  !(disabled || loading),
-            'dark:hover:bg-indigo-700 dark:active:bg-indigo-800': variant === 'secondary' &&  !(disabled || loading),
+            'hover:bg-indigo-600 active:bg-indigo-700': variant === 'secondary' && !(disabled || loading),
+            'dark:hover:bg-indigo-700 dark:active:bg-indigo-800': variant === 'secondary' && !(disabled || loading),
           },
           {
-            'hover:bg-red-600 active:bg-red-700': variant === 'danger' &&  !(disabled || loading),
-            'dark:hover:bg-red-700 dark:active:bg-red-800': variant === 'danger' &&  !(disabled || loading),
+            'hover:bg-red-600 active:bg-red-700': variant === 'danger' && !(disabled || loading),
+            'dark:hover:bg-red-700 dark:active:bg-red-800': variant === 'danger' && !(disabled || loading),
           },
           {
             'hover:bg-gray-200 active:bg-gray-300': !(disabled || loading) && variant === 'silent',
@@ -74,16 +74,15 @@ export function Button({
       }
       {...props}
     >
-      <div data-testid="Button" className="flex items-center justify-center">
+      <div data-testid="Button" className="flex space-x-2 items-center justify-center">
         {loading ? (
-          <Loader type="TubeSpinner" />
+          <Loader type="TubeSpinner" height={4} />
         ) : (
           icon ? (
             <Icon {...icon} />
-          ) : (
-            <Typography.Button>{children}</Typography.Button>
-          )
-        )}
+          ) : null)
+        }
+        <Typography.Button>{children}</Typography.Button>
       </div>
     </button>
   )

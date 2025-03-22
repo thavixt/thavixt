@@ -39,6 +39,9 @@ export function FormDialog({
 
   const onSubmitSuccess = (closeCallback: () => void) => () => {
     closeCallback();
+    if (formRef.current) {
+      formRef.current.reset();
+    }
   }
 
   useEffect(() => {

@@ -72,7 +72,6 @@ export function TableHeader({
                       "-rotate-90": sortDirection === 'asc',
                     })}
                     icon="Caret"
-                    height={2}
                   />
                 ) : null}
                 <span>{value}</span>
@@ -100,7 +99,6 @@ export function TableHeader({
                       "-rotate-90": sortDirection === 'asc',
                     })}
                     icon="Caret"
-                    height={2}
                   />
                 ) : null}
                 <span>{value}</span>

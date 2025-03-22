@@ -38,10 +38,7 @@ export function Dialog({
   const [dialogOpen, setDialogOpen] = useState(open);
 
   const closeModal = useCallback(() => {
-    setDialogOpen(prev => {
-      if (prev === false) {
-        return prev;
-      }
+    setDialogOpen(() => {
       onClose?.();
       if (dialogRef.current) {
         dialogRef.current.close();
@@ -49,11 +46,9 @@ export function Dialog({
       return false;
     });
   }, [onClose]);
+
   const openModal = useCallback(() => {
-    setDialogOpen(prev => {
-      if (prev === true) {
-        return prev;
-      }
+    setDialogOpen(() => {
       onOpen?.();
       if (dialogRef.current) {
         dialogRef.current.showModal();
@@ -79,6 +74,7 @@ export function Dialog({
       closeModal();
     }
   }, [closeModal, open, openModal]);
+
   useEffect(() => {
     if (dialogOpen) {
       openModal();
@@ -110,7 +106,7 @@ export function Dialog({
         <div className="px-6 py-4 select-text">
           {closeIcon ? (
             <div className="absolute right-0 -top-0.5 p-1">
-              <Button variant="silent" icon={{ icon: 'Cross', height: 2 }} onClick={closeModal} />
+              <Button variant="silent" icon={{ icon: 'Cross' }} onClick={closeModal} />
             </div>
           ) : null}
           {title ? <div className="text-xl text-center pb-4 px-4">{title}</div> : null}

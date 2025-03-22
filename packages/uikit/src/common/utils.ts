@@ -21,3 +21,5 @@ export function sortObjectByKeys<T extends Record<string, unknown>>(obj: T): T {
     [cur]: obj[cur],
   }), {} as T);
 }
+
+export const noop = () => {};
