@@ -5,9 +5,9 @@ interface ScrollbarOptions extends CoreScrollbarOptions {
 	body?: boolean;
 }
 
-export function useScrollbar<T extends HTMLElement = HTMLElement>(options?: ScrollbarOptions): RefObject<T> {
+export function useScrollbar<T extends HTMLElement = HTMLElement>(options: ScrollbarOptions = {}): RefObject<T> | undefined {
 	const ref = useRef<T | null>(null);
-	const bodyRef = useRef(document.body);
+	const documentElement = useRef(document.body);
 	const scrollbarRef = useRef<Scrollbar<T> | null>(null);
 
 	useEffect(() => {
@@ -15,8 +15,12 @@ export function useScrollbar<T extends HTMLElement = HTMLElement>(options?: Scro
 			return;
 		}
 
-		const subject = (options?.body ? bodyRef.current : ref.current) as T;
-		scrollbarRef.current = new Scrollbar<T>(subject, options);
+		const targetElement = (options.body ? documentElement.current : ref.current) as T;
+		scrollbarRef.current = new Scrollbar<T>(targetElement, {
+			onScroll: options.onScroll,
+			onScrollToEnd: options.onScrollToEnd,
+			styles: options.styles,
+		});
 
 		return () => {
 			if (scrollbarRef.current) {
@@ -27,7 +31,7 @@ export function useScrollbar<T extends HTMLElement = HTMLElement>(options?: Scro
 	}, [options]);
 
 	if (options?.body) {
-		return bodyRef as RefObject<T>;
+		return;
 	}
 
 	return ref as RefObject<T>;

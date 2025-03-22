@@ -15,51 +15,25 @@ export type ScrollbarOptions = {
 };
 
 export type ScrollbarStyles = {
-	// Border radius
-	borderRadius?: number;
-
-	// Dimensions
-	width?: number;
-	height?: number;
-
 	// Light theme colors
 	thumbColor?: string;
-	thumbHoverColor?: string;
 	trackColor?: string;
-	
 	// Dark theme colors
 	thumbColorDark?: string;
-	thumbHoverColorDark?: string;
 	trackColorDark?: string;
 };
 
-const DEFAULT_THUMB_COLOR = "#bbbbcc";
-const DEFAULT_THUMB_COLOR_DARK = "#9999aa";
-
-const DEFAULT_THUMB_HOVER_COLOR = "#888899";
-const DEFAULT_THUMB_HOVER_COLOR_DARK = "#ccccdd";
-
-const DEFAULT_TRACK_COLOR = "transparent";
-const DEFAULT_TRACK_COLOR_DARK = "transparent";
-
-const DEFAULT_TRACK_SIZE = 8;
-const DEFAULT_TRACK_BORDER_RADIUS = 8;
+const DEFAULT_THUMB_COLOR = "rgb(139, 139, 139)";
+const DEFAULT_THUMB_COLOR_DARK = "rgb(139, 139, 139)";
+const DEFAULT_TRACK_COLOR = "rgba(0, 0, 0, 0)";
+const DEFAULT_TRACK_COLOR_DARK = "rgba(0, 0, 0, 0)";
 
 export const DEFAULT_STYLES: Required<ScrollbarStyles> = {
-	// Border radius
-	borderRadius: DEFAULT_TRACK_BORDER_RADIUS,
-	
-	// Dimensions
-	width: DEFAULT_TRACK_SIZE,
-	height: DEFAULT_TRACK_SIZE,
-	
 	// Light theme colors
 	thumbColor: DEFAULT_THUMB_COLOR,
-	thumbHoverColor: DEFAULT_THUMB_HOVER_COLOR,
 	trackColor: DEFAULT_TRACK_COLOR,
 	// Dark theme colors
 	thumbColorDark: DEFAULT_THUMB_COLOR_DARK,
-	thumbHoverColorDark: DEFAULT_THUMB_HOVER_COLOR_DARK,
 	trackColorDark: DEFAULT_TRACK_COLOR_DARK,
 }
 
@@ -68,33 +42,17 @@ const createScrollbarStyles = (
 	styles: ScrollbarStyles = {},
 ): string => {
 	const elementSelector = id ? `[data-tsb-id="${id}"]` : `*`;
-
-	// border radius
-	const borderRadius = styles.borderRadius ?? DEFAULT_TRACK_BORDER_RADIUS;
-	// dimensions
-	const width = styles.width ?? DEFAULT_TRACK_SIZE;
-	const height = styles.height ?? DEFAULT_TRACK_SIZE;
-
 	// light colors
 	const thumbColor = styles.thumbColor ?? DEFAULT_THUMB_COLOR;
-	const thumbHoverColor = styles.thumbHoverColor ?? DEFAULT_THUMB_HOVER_COLOR;
 	const trackColor = styles.trackColor ?? DEFAULT_TRACK_COLOR;
 	// dark colors
 	const thumbColorDark = styles.thumbColorDark ?? DEFAULT_THUMB_COLOR_DARK;
-	const thumbHoverColorDark = styles.thumbHoverColorDark ?? DEFAULT_THUMB_HOVER_COLOR_DARK;
 	const trackColorDark = styles.trackColorDark ?? DEFAULT_TRACK_COLOR_DARK;
 
 	const variables = `/* Variables */
-${elementSelector} {
-	--tsb_width: ${width}px;
-	--tsb_height: ${height}px;
-	--tsb_borderRadius: ${borderRadius ? `${borderRadius}px` : `initial`};
-}
 /* default/light theme colors */
 ${elementSelector} {
-	--tsb_scrollCornerBackground: ${borderRadius ? `initial` : 'transparent'};
 	--tsb_thumbColor: ${thumbColor};
-	--tsb_thumbHoverColor: ${thumbHoverColor};
 	--tsb_trackColor: ${trackColor};
 }
 /* dark theme colors */
@@ -102,54 +60,22 @@ ${elementSelector} {
 @media (prefers-color-scheme: dark) {
 	/* data attribute switch, like Tailwind */
 	:root[data-theme="light"] ${elementSelector} {
-		--tsb_scrollCornerBackground: ${borderRadius ? `initial` : 'transparent'};
 		--tsb_thumbColor: ${thumbColor};
-		--tsb_thumbHoverColor: ${thumbHoverColor};
 		--tsb_trackColor: ${trackColor};
 	}
 	${elementSelector} {
 		--tsb_thumbColor: ${thumbColorDark};
-		--tsb_thumbHoverColor: ${thumbHoverColorDark};
 		--tsb_trackColor: ${trackColorDark};
-	}
-}
-`;
-
-	const scopedStyles = `/*
-  thavixt-scrollbar stylesheet for element ${elementSelector}
-*/
-${variables}
-/* dimensions */
-${elementSelector}::-webkit-scrollbar {
-	width: var(--tsb_width);
-	height: var(--tsb_height);
-}
-/* scrollbar track style */
-${elementSelector}::-webkit-scrollbar-track {
-	border-radius: var(--tsb_borderRadius);
-	background: var(--tsb_trackColor);
-}
-/* scrollbar track corner style */
-${elementSelector}::-webkit-scrollbar-corner {
-	background: var(--tsb_scrollCornerBackground);
-}
-/* scrollbar thumb styles */
-${elementSelector}::-webkit-scrollbar-thumb {
-	border-radius: var(--tsb_borderRadius);
-	background: var(--tsb_thumbColor);
-}
-/* scrollbar hovered thumb styles */
-${elementSelector}::-webkit-scrollbar-thumb:hover {
-	background: var(--tsb_thumbHoverColor);
-}
-/* fallback - Firefox doesn't support '::-webkit-scrollbar' selectors */
-@supports (-moz-appearance:none) {
-	${elementSelector} {
-		scrollbar-color: var(--tsb_thumbColor) var(--tsb_trackColor);
 	}
 }`;
 
-return `${scopedStyles}`
+	return `/* thavixt-scrollbar stylesheet for element "${elementSelector}" */
+/* variables */
+${variables}
+
+${elementSelector} {
+	scrollbar-color: var(--tsb_thumbColor) var(--tsb_trackColor);
+}`
 };
 
 export const DEFAULT_CSS_STYLESHEET = createScrollbarStyles("REPLACEME").replace(
@@ -160,6 +86,7 @@ export const DEFAULT_CSS_STYLESHEET = createScrollbarStyles("REPLACEME").replace
 export class Scrollbar<T extends HTMLElement = HTMLElement> {
 	public stylesheetId = ``;
 	public tsbId = ``;
+	public wrapperDiv: HTMLDivElement |null = null;
 	private scrollTop = 0;
 	private scrollLeft = 0;
 	private prevScrollDetails: null | Partial<ScrollbarScrollDetails> = null;
@@ -185,7 +112,6 @@ export class Scrollbar<T extends HTMLElement = HTMLElement> {
 	destroy = () => {
 		this.removeStyleSheet();
 		this.removeEventListeners();
-		// this.container.style.overflow = "initial";
 		delete this.container.dataset["tsbId"];
 	};
 
@@ -197,10 +123,16 @@ export class Scrollbar<T extends HTMLElement = HTMLElement> {
 		const css = document.createElement("style");
 		css.id = this.stylesheetId;
 		const applyToAll = this.container === document.body;
-		css.appendChild(document.createTextNode(createScrollbarStyles(applyToAll ? null : this.tsbId, {
-			...DEFAULT_STYLES,
-			...this.options.styles,
-		})));
+		css.appendChild(
+			document.createTextNode(
+				createScrollbarStyles(
+					applyToAll ? null : this.tsbId,
+					{
+						...DEFAULT_STYLES,
+						...this.options.styles,
+					})
+			)
+		);
 		document.head.prepend(css);
 	};
 
@@ -214,16 +146,22 @@ export class Scrollbar<T extends HTMLElement = HTMLElement> {
 
 	private addEventListeners = () => {
 		this.container.addEventListener("scroll", this.onScroll);
+		this.container.addEventListener("wheel", this.onWheel);
 	};
 
 	private removeEventListeners = () => {
 		this.container.removeEventListener("scroll", this.onScroll);
+		this.container.removeEventListener("wheel", this.onWheel);
 	};
 
-	// @todo
-	private onClick = () => {
-		console.log("Not yet implemented - Scrollbar::onClick()");
-	};
+	private onWheel = (e: WheelEvent) => {
+		if (e.deltaY < 0) {
+			this.container.dataset.scrolldirection = 'up';
+		}
+		if (e.deltaY > 0) {
+			this.container.dataset.scrolldirection = 'down';
+		}
+	}
 
 	private onScroll = (e: Event) => {
 		const target = e.target as T;
@@ -258,7 +196,7 @@ export class Scrollbar<T extends HTMLElement = HTMLElement> {
 				this.options.onScrollToEnd(directions);
 			}
 			this.prevThresholdsReached = thresholdsReached;
-			this.container.dataset.animating = (
+			this.container.dataset.end = (
 				Object.keys(thresholdsReached) as ScrollDirection[]
 			).join(",");
 		} else {

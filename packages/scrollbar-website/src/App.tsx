@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import ColorPicker from 'react-best-gradient-color-picker'
 import OutsideClickHandler from 'react-outside-click-handler';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -8,17 +8,15 @@ import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
 import darkTheme from 'react-syntax-highlighter/dist/esm/styles/prism/material-dark';
 import lightTheme from 'react-syntax-highlighter/dist/esm/styles/prism/material-light';
 import { DEFAULT_CSS_STYLESHEET, DEFAULT_STYLES, useScrollbar, ScrollbarStyles, ScrollDirection } from "@thavixt/scrollbar-react";
-
 import {
-	codeCustomCSS,
 	sytaxHighlighterStyle,
-	demoGradientStyles,
 	demoStyles,
 	getText,
 	globalCode,
 	numericScrollbarStyles,
 	styleDescriptions,
 	importUnpkgCoreCode,
+	getCodeReactHook,
 } from "./constants";
 import { CopyContentToClipboardButton } from "./components/CopyContentToClipboardButton";
 import { NPMBadge } from "./components/NPMBadge";
@@ -31,66 +29,28 @@ function App() {
 	const { colorScheme, toggleColorScheme } = useColorScheme();
 	const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
 
-	const [placeholderCount, setPlaceholderCount] = useState(10);
-	const [applyToBody, setApplyToBody] = useState(false);
+	const [placeholderCount, setPlaceholderCount] = useState(50);
+	const [body, setBody] = useState(false);
 	const [styles, setStyles] = useState<ScrollbarStyles>(demoStyles);
-
-	const codeReactHook = useMemo(() => `import { useScrollbar } from "@thavixt/scrollbar-react";
-
-function MyCompontent() {
-	const ref = useRef(null);
-
-	useScrollbar(ref, {
-		width: ${styles.width},
-		height: ${styles.height},
-		thumbColor: '${styles.thumbColor}',
-		thumbColorDark: '${styles.thumbColorDark}',
-		thumbHoverColor: '${styles.thumbHoverColor}',
-		thumbHoverColorDark: '${styles.thumbHoverColorDark}',
-		trackColor: '${styles.trackColor}',
-		trackColorDark: '${styles.trackColorDark}',
-	});
-
-	return (
-		<div ref={ref} className='h-[300px] overflow-auto whitespace-pre'>
-			Lorem ipsum dolor sit amet...x${placeholderCount}
-		</div>
-	)
-}`, [
-		placeholderCount,
-		styles.height,
-		styles.thumbColor,
-		styles.thumbColorDark,
-		styles.thumbHoverColor,
-		styles.thumbHoverColorDark,
-		styles.trackColor,
-		styles.trackColorDark,
-		styles.width,
-	]);
 
 	const setDemoStyles = useCallback((styles: ScrollbarStyles) => {
 		setStyles(styles);
 	}, []);
 
 	const onScrollToEnd = useCallback((directions: ScrollDirection[]) => {
-		console.log(`[@thavixt/scrollbar-demo] ${new Date().toJSON()} ${directions.join(',')}`);
+		console.log(`[@thavixt/scrollbar-demo] reached ${directions.join(',')}`);
 	}, []);
 
-	const ref = useScrollbar<HTMLDivElement>({ body: applyToBody, onScrollToEnd, styles });
+	const ref = useScrollbar<HTMLDivElement>({ body, onScrollToEnd, styles });
 
 	return (
 		<div className="mx-auto w-full min-w-lg max-w-2xl lg:max-w-7xl lg:grid lg:grid-cols-2 space-x-8 space-y-16 pt-8 pb-16 px-8">
 			<div className="col-span-2">
-				<h1>thavixt-scrollbar</h1>
+				<h1>@thavixt/scrollbar</h1>
 			</div>
 
-			<div className="flex flex-col gap-8 highlight col-span-2">
-				<div className="flex gap-2 col-span-2">
-					<span>Customize scrollbars on your websites!</span>
-					<a href="https://github.com/thavixt/thavixt-scrollbar" target="_blank">
-						Check out the project on Github here
-					</a>
-				</div>
+			<div className="flex flex-col gap-4 highlight col-span-2">
+				<p>Customize scrollbars on your websites!</p>
 
 				<div className="flex flex-col gap-2">
 					<span><b>react</b> package</span>
@@ -107,7 +67,7 @@ function MyCompontent() {
 						<code>$ npm i @thavixt/scrollbar-core</code>
 					</div>
 					<div>
-						or import in your <code>.js</code> file on your website from
+						or import in your <code>.js</code> file from
 						{' '}<a target="_blank" href="https://unpkg.com/@thavixt/scrollbar-core/dist/index.js">unpkg</a>:
 					</div>
 					<SyntaxHighlighter
@@ -123,7 +83,14 @@ function MyCompontent() {
 					<p>Notes:</p>
 					<ul>
 						<li>
-							<p className="inline">all packages include <code>.d.ts</code> files for seamless usage with TypeScript.</p>
+							<p className="inline">
+								all packages include <code>.d.ts</code> files for seamless usage with TypeScript
+							</p>
+						</li>
+						<li>
+							<p className="inline">
+								Check browser complatibility on <a href="https://caniuse.com/css-scrollbar">caniuse.com</a>
+							</p>
 						</li>
 					</ul>
 				</div>
@@ -154,12 +121,17 @@ function MyCompontent() {
 
 					<li>
 						Style customization: (change the values to play with the demo)
-						<div className="w-full overflow-x-auto">
+						<div className="w-full flex flex-col space-y-2 overflow-x-auto">
 							<div className="w-full flex justify-center items-center gap-2 pt-2">
 								<span>quick apply:</span>
 								<button type="button" onClick={() => setDemoStyles(DEFAULT_STYLES)}>library defaults</button>
 								<button type="button" onClick={() => setDemoStyles(demoStyles)}>demo colors</button>
-								<button type="button" onClick={() => setDemoStyles(demoGradientStyles)}>gradients example</button>
+								{/* <button type="button" onClick={() => setDemoStyles(demoGradientStyles)}>gradients example</button> */}
+							</div>
+							<div className="flex items-center justify-center">
+								<button onClick={toggleColorScheme}>
+									change page color scheme to <b>{colorScheme === 'dark' ? 'light' : 'dark'}</b>
+								</button>
 							</div>
 							<div className="pl-6">
 								<table className="table-auto w-full">
@@ -167,7 +139,7 @@ function MyCompontent() {
 										<tr>
 											<th>key</th>
 											{/* <th>default</th> */}
-											<th>current value <em>- click to copy</em></th>
+											<th>current value <em>(click to copy)</em></th>
 											<th>set value</th>
 										</tr>
 									</thead>
@@ -219,11 +191,6 @@ function MyCompontent() {
 							</div>
 						</div>
 					</li>
-					<div className="flex items-center justify-center">
-						<button onClick={toggleColorScheme}>
-							change page color scheme to <b>{colorScheme === 'dark' ? 'light' : 'dark'}</b>
-						</button>
-					</div>
 				</ul>
 			</div>
 
@@ -236,14 +203,14 @@ function MyCompontent() {
 						style={theme}
 						customStyle={sytaxHighlighterStyle}
 					>
-						{codeReactHook}
+						{getCodeReactHook(styles, placeholderCount)}
 					</SyntaxHighlighter>
 				</details>
 				<div
 					ref={ref}
 					className="h-[300px] w-full overflow-auto whitespace-pre"
 				>
-					{getText(placeholderCount * 3)}
+					{getText(placeholderCount)}
 				</div>
 
 				<p>Check the dev console <code>F12</code> to see logs.</p>
@@ -272,8 +239,8 @@ function MyCompontent() {
 						type="checkbox"
 						name="body"
 						id="body"
-						onChange={e => setApplyToBody(e.target.checked)}
-						defaultChecked={applyToBody}
+						onChange={e => setBody(e.target.checked)}
+						defaultChecked={body}
 					/>
 					<label htmlFor="body">customize every scrollbar on the page:</label>
 				</div>
@@ -290,26 +257,14 @@ function MyCompontent() {
 			</div>
 
 			<div className="flex flex-col gap-2">
-				<p className="inline">
-					Provide custom styles with CSS:
-				</p>
+				<p>Default styles:</p>
 				<SyntaxHighlighter
 					language="css"
 					style={theme}
 					customStyle={sytaxHighlighterStyle}
 				>
-					{codeCustomCSS}
+					{DEFAULT_CSS_STYLESHEET}
 				</SyntaxHighlighter>
-				<details>
-					<summary>All appended (default) styles:</summary>
-					<SyntaxHighlighter
-						language="css"
-						style={theme}
-						customStyle={sytaxHighlighterStyle}
-					>
-						{DEFAULT_CSS_STYLESHEET}
-					</SyntaxHighlighter>
-				</details>
 			</div>
 
 		</div>
