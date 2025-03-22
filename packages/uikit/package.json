@@ -1,7 +1,7 @@
 {
   "name": "@thavixt/uikit",
   "description": "React UI component library",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": false,
   "publishConfig": {
     "access": "public",
@@ -55,7 +55,7 @@
     "prepack": "npm run build"
   },
   "dependencies": {
-    "@thavixt/scrollbar-react": "^2.1.0",
+    "@thavixt/scrollbar-react": "^2.1.1",
     "classnames": "^2.5.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
