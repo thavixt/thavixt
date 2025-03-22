@@ -12,6 +12,7 @@
     "playgrounds/*"
   ],
   "scripts": {
+    "build-storybook": "storybook build",
     "tdd": "npx vitest",
     "test": "npx vitest run",
     "test:coverage": "npx vitest run --coverage",
