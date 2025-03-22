@@ -1,4 +1,4 @@
-# @thavixt/scrollbar-core
+# @thavixt/scrollbar-react
 
 [![npm package](https://img.shields.io/npm/v/@thavixt/scrollbar-react)](https://www.npmjs.com/package/@thavixt/scrollbar-react)
 ![NPM Downloads](https://img.shields.io/npm/dm/@thavixt/scrollbar-react)
@@ -9,7 +9,7 @@ A Typescript package for React to customize scrollbars on your website.
 
 ## Demo
 
-[demo page](https://demo-@thavixt/scrollbar-react.vercel.app/)
+[demo page](https://thavixt-scrollbar.komlosidev.net/)
 
 ## Install
 

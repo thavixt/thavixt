@@ -21,8 +21,8 @@
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"react-syntax-highlighter": "^15.6.1",
-		"@thavixt/scrollbar-core": "2.1.0",
-		"@thavixt/scrollbar-react": "2.1.0",
+		"@thavixt/scrollbar-core": "latest",
+		"@thavixt/scrollbar-react": "latest",
 		"vite": "^6.1.0"
 	}
 }

@@ -10,7 +10,7 @@ A basic Javascript package to customize scrollbars on your website.
 
 # Demo
 
-[demo page](https://demo-@thavixt/scrollbar-react-oen1yr2bx-thavixts-projects.vercel.app/)
+[demo page](https://thavixt-scrollbar.komlosidev.net/)
 
 ## Install
 
