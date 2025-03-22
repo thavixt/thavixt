@@ -1,7 +1,7 @@
-import classNames from "classnames";
+// import classNames from "classnames";
 import { useCallback, useState } from "react";
-import ColorPicker from 'react-best-gradient-color-picker'
-import OutsideClickHandler from 'react-outside-click-handler';
+// import ColorPicker from 'react-best-gradient-color-picker'
+// import OutsideClickHandler from 'react-outside-click-handler';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
@@ -138,7 +138,6 @@ function App() {
 									<thead>
 										<tr>
 											<th>key</th>
-											{/* <th>default</th> */}
 											<th>current value <em>(click to copy)</em></th>
 											<th>set value</th>
 										</tr>
@@ -278,22 +277,21 @@ interface ColorPickerProps {
 }
 
 function CustomColorPicker({ name, value, onChange }: ColorPickerProps) {
-	const [visible, setVisible] = useState(false);
+	// const [visible, setVisible] = useState(false);
 
 	return (
-		<OutsideClickHandler onOutsideClick={() => setVisible(false)}>
-			<div className="group cursor-pointer" onClick={() => setVisible(true)}>
+		// <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
+		// <div className="group cursor-pointer" onClick={() => setVisible(true)}>
+			<div className="group cursor-pointer">
 				<input
-					hidden
 					id={name}
 					name={name}
-					onChange={() => { }}
-					// type="color"
-					type="text"
+					onChange={(e) => onChange(e.target.value)}
+					type="color"
 					value={value}
 				/>
-				<div className="h-12 w-24 block border-2 border-slate-600" style={{ background: value }} />
-				<ColorPicker
+				{/* <div className="h-12 w-24 block border-2 border-slate-600" style={{ background: value }} /> */}
+				{/* <ColorPicker
 					className={classNames(
 						"z-10 absolute shadow-2xl shadow-slate-700 outline-slate-600 outline-4 rounded-xl -translate-y-1/2 -translate-x-1/2",
 						{
@@ -305,9 +303,9 @@ function CustomColorPicker({ name, value, onChange }: ColorPickerProps) {
 					onChange={onChange}
 					showHexAlpha
 					value={value}
-				/>
+				/> */}
 			</div>
-		</OutsideClickHandler>
+		// </OutsideClickHandler>
 	)
 }
 
