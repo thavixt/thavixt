@@ -1,7 +1,4 @@
-// import classNames from "classnames";
 import { useCallback, useState } from "react";
-// import ColorPicker from 'react-best-gradient-color-picker'
-// import OutsideClickHandler from 'react-outside-click-handler';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
@@ -46,7 +43,7 @@ function App() {
 	return (
 		<div className="mx-auto w-full min-w-lg max-w-2xl lg:max-w-7xl lg:grid lg:grid-cols-2 space-x-8 space-y-16 pt-8 pb-16 px-8">
 			<div className="col-span-2">
-				<h1>@thavixt/scrollbar</h1>
+				<h1>@thavixt/scrollbar-*</h1>
 			</div>
 
 			<div className="flex flex-col gap-4 highlight col-span-2">
@@ -172,7 +169,7 @@ function App() {
 																}))}
 															/>
 														) : (
-															<CustomColorPicker
+															<ColorPicker
 																name={key}
 																value={styles[key] as string}
 																onChange={(color) => setStyles((prev) => ({
@@ -276,36 +273,17 @@ interface ColorPickerProps {
 	onChange: (color: string) => void;
 }
 
-function CustomColorPicker({ name, value, onChange }: ColorPickerProps) {
-	// const [visible, setVisible] = useState(false);
-
+function ColorPicker({ name, value, onChange }: ColorPickerProps) {
 	return (
-		// <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
-		// <div className="group cursor-pointer" onClick={() => setVisible(true)}>
-			<div className="group cursor-pointer">
-				<input
-					id={name}
-					name={name}
-					onChange={(e) => onChange(e.target.value)}
-					type="color"
-					value={value}
-				/>
-				{/* <div className="h-12 w-24 block border-2 border-slate-600" style={{ background: value }} /> */}
-				{/* <ColorPicker
-					className={classNames(
-						"z-10 absolute shadow-2xl shadow-slate-700 outline-slate-600 outline-4 rounded-xl -translate-y-1/2 -translate-x-1/2",
-						{
-							"block": visible,
-							"hidden": !visible,
-						},
-					)}
-					hidePresets
-					onChange={onChange}
-					showHexAlpha
-					value={value}
-				/> */}
-			</div>
-		// </OutsideClickHandler>
+		<div className="group cursor-pointer">
+			<input
+				id={name}
+				name={name}
+				onChange={(e) => onChange(e.target.value)}
+				type="color"
+				value={value}
+			/>
+		</div>
 	)
 }
 
