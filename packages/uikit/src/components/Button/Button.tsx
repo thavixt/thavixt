@@ -22,6 +22,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
+      data-testid="Button"
       ref={ref}
       type={type}
       onClick={onClick}
@@ -74,7 +75,7 @@ export function Button({
       }
       {...props}
     >
-      <div data-testid="Button" className="flex space-x-2 items-center justify-center">
+      <div className="flex space-x-2 items-center justify-center">
         {loading ? (
           <Loader type="TubeSpinner" height={4} />
         ) : (
