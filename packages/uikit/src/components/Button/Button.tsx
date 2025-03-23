@@ -66,7 +66,7 @@ export function Button({
             'hover:dark:bg-gray-700 active:dark:bg-gray-600': !(disabled || loading) && variant === 'silent',
           },
           {
-            'rounded-sm': !icon,
+            'rounded-lg': !icon,
             '!h-[32px] !w-[32px] rounded-[50%]': icon,
           },
           className,

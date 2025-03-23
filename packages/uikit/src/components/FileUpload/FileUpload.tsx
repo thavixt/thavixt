@@ -116,15 +116,15 @@ export function FileUpload({ multiple = false, accept, onAction, disabled, actio
     >
       {!selectedFiles.length ? (
         <label htmlFor="file-upload">
-          <Typography.Caption className={cursorClass}>
+          <Typography.Label className={cursorClass}>
             Click to browse or drop files here
-          </Typography.Caption>
+          </Typography.Label>
         </label>
       ) : null}
       <input
         accept={accept}
         className="hidden"
-        disabled={interactive}
+        disabled={!interactive}
         id="file-upload"
         multiple={multiple}
         onChange={(e) => handleFiles(e.target.files)}
@@ -133,7 +133,7 @@ export function FileUpload({ multiple = false, accept, onAction, disabled, actio
       {selectedFiles.length > 0 && (
         <div className="w-full flex flex-col space-y-2">
           <Typography.Caption className="text-sm text-gray-600 font-semibold">
-            Selected files:{selectedFiles.length ? ` (${selectedFiles.length})` : null}
+            Selected files:{selectedFiles.length ? ` (${selectedFiles.length})` : ''}
           </Typography.Caption>
           <div className="max-h-[500px]">
             <Scrollbar className="h-full w-full max-h-100 p-1">
@@ -156,7 +156,7 @@ export function FileUpload({ multiple = false, accept, onAction, disabled, actio
                       />
                     )}
                     <span className="flex-1 ml-2 truncate px-2">
-                      <Typography.Label>{file.name.repeat(10)}</Typography.Label>
+                      <Typography.Label>{file.name}</Typography.Label>
                     </span>
                     <span>
                       <Typography.Label>{formatSize(file.size)}</Typography.Label>

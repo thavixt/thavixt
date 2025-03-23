@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { HTMLAttributes, PropsWithChildren, ReactNode } from "react";
+import { HTMLAttributes, PropsWithChildren } from "react";
 
 type TypographyProps<T = HTMLElement> = PropsWithChildren<HTMLAttributes<T>> & {
   className?: string;
@@ -22,7 +22,7 @@ export const TypographyStyles: Record<TypographyType, string> = {
   Code: 'inline font-mono bg-slate-600 dark:bg-slate-300 text-slate-100 dark:text-slate-800 px-1 rounded text-base',
 }
 
-export const Typography: Record<TypographyType, ({ children, className, ...props }: TypographyProps<HTMLElement>) => ReactNode> = {
+export const Typography = {
   /* titles */
   H1: function ({ children, className, ...props }: TypographyProps<HTMLHeadingElement>) {
     return <h1 {...props} className={classNames(className, TypographyStyles.H1)}>{children}</h1>
@@ -44,10 +44,10 @@ export const Typography: Record<TypographyType, ({ children, className, ...props
     return <div {...props} className={classNames(className, TypographyStyles.Body)}>{children}</div>
   },
   Text: function ({ children, className, ...props }: TypographyProps<HTMLSpanElement>) {
-    return <div {...props} className={classNames(className, TypographyStyles.Text)}>{children}</div>
+    return <span {...props} className={classNames(className, TypographyStyles.Text)}>{children}</span>
   },
   Label: function ({ children, className, ...props }: TypographyProps<HTMLSpanElement>) {
-    return <div {...props} className={classNames(className, TypographyStyles.Label)}>{children}</div>
+    return <span {...props} className={classNames(className, TypographyStyles.Label)}>{children}</span>
   },
   Button: function ({ children, className, ...props }: TypographyProps<HTMLSpanElement>) {
     return <span {...props} className={classNames(className, TypographyStyles.Button)}>{children}</span>
