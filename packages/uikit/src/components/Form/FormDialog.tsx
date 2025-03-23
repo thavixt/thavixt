@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useImperativeHandle, useRef } from "react";
-import { Form, FormProps } from "../Form/Form";
+import { Form, FormProps } from "./Form";
 import { Dialog, DialogHandle, DialogProps } from "../Dialog/Dialog";
 
 export type FormDialogHandle = RefObject<DialogHandle | null> & {

@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { ComponentProps, useRef } from 'react';
-import { FormDialog, FormDialogHandle } from '../FormDialog/FormDialog';
+import { FormDialog, FormDialogHandle } from './FormDialog';
 import { TextInput } from '../TextInput/TextInput';
 import { Button } from '../Button/Button';
 import { NumberInput } from '../NumberInput/NumberInput';
 import { onSubmit } from '../utils';
 
 const meta = {
-  title: 'Input/FormDialog',
+  title: 'Input/Form/FormDialog',
   component: FormDialog,
   parameters: {
     docs: {
