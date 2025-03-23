@@ -9,7 +9,7 @@ export interface IconProps extends HTMLAttributes<HTMLDivElement> {
   height?: number;
 }
 
-export function Icon({ height = 2, ...props }: IconProps) {
+export function Icon({ height = 3, ...props }: IconProps) {
   return (
     <div data-testid="Icon" {...props}>
       {createElement(IconList[props.icon], { height })}

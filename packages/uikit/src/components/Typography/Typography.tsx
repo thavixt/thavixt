@@ -18,12 +18,11 @@ export const TypographyStyles: Record<TypographyType, string> = {
   Body: classNames(commonStyles, 'block font-sans text-base text-pretty leading-6 pb-2'),
   Text: classNames(commonStyles, 'inline font-sans text-pretty'),
   Label: classNames(commonStyles, 'inline font-sans text-sm font-light leading-6'),
-  Button: 'inline font-sans text-sm font-semibold uppercase',
+  Button: 'inline font-sans text-sm font-semibold capitalize',
   Code: 'inline font-mono bg-slate-600 dark:bg-slate-300 text-slate-100 dark:text-slate-800 px-1 rounded text-base',
 }
 
 export const Typography = {
-  /* titles */
   H1: function ({ children, className, ...props }: TypographyProps<HTMLHeadingElement>) {
     return <h1 {...props} className={classNames(className, TypographyStyles.H1)}>{children}</h1>
   },
@@ -36,7 +35,6 @@ export const Typography = {
   Subtitle: function ({ children, className, ...props }: TypographyProps<HTMLHeadingElement>) {
     return <h5 {...props} className={classNames(className, TypographyStyles.Subtitle)}>{children}</h5>
   },
-  /* misc text */
   Caption: function ({ children, className, ...props }: TypographyProps<HTMLSpanElement>) {
     return <span {...props} className={classNames(className, TypographyStyles.Caption)}>{children}</span>
   },

@@ -78,11 +78,8 @@ export function Button({
         {loading ? (
           <Loader type="TubeSpinner" height={4} />
         ) : (
-          icon ? (
-            <Icon {...icon} />
-          ) : null)
+          icon ? <Icon {...icon} /> : <Typography.Button>{children}</Typography.Button>)
         }
-        <Typography.Button>{children}</Typography.Button>
       </div>
     </button>
   )
