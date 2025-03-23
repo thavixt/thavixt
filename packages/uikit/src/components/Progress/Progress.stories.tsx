@@ -2,16 +2,29 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Progress } from './Progress';
 import { ComponentProps, useEffect, useState } from 'react';
 import { Button } from '../Button/Button';
-import { ButtonBar } from '../Button/ButtonBar';
+import { ButtonBar } from '../ButtonBar/ButtonBar';
 
 const meta = {
   title: 'Feedback/Progress',
   component: Progress,
   tags: ['autodocs'],
   args: {
-    current: 25,
+    current: 15,
     label: 'Downloading @thavixt/uikit from npm',
     max: 100,
+  },
+} satisfies Meta<typeof Progress>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const Example: Story = {
+  args: {
+    inline: true,
+    label: 'Progress',
   },
   render: function StoryComponent({ label, max = 100, ...args }: ComponentProps<typeof Progress>) {
     const [value, setValue] = useState(args.current);
@@ -22,31 +35,52 @@ const meta = {
       }
       const step = max / 100;
       const interval = setInterval(() => setValue(prev => {
-        const next = prev >= max ? 0 : prev + step;
+        if (Math.random() < 0.3) {
+          return prev;
+        }
+        const next = prev >= max ? 0 : prev + (Math.random() * 10 * step);
         return Math.min(+next.toFixed(2), max);
-      }), 100);
+      }), 250);
       return () => clearInterval(interval);
     }, [max, stopped]);
     return (
-      <div className='flex flex-col space-y-2'>
-        <Progress {...args} label={label} max={max} current={max} />
-        <Progress {...args} max={max} current={max * 0.75} />
-        <Progress {...args} max={max} current={max * 0.5} />
-        <Progress {...args} max={max} current={max * 0.25} />
-        <Progress {...args} max={max} current={0} />
-        <Progress {...args} max={max} current={value} />
-        <Progress {...args} max={max} current={value / 7} />
+      <div className='flex space-x-2 align-center'>
         <ButtonBar>
-          <Button onClick={() => setValue(0)}>Reset</Button>
-          <Button onClick={() => setStopped(prev => !prev)}>Start / Stop</Button>
+          <Button variant='silent' onClick={() => setValue(0)}>Reset</Button>
+          <Button variant={stopped ? 'primary' : 'danger'} onClick={() => setStopped(prev => !prev)}>
+            {stopped ? 'Start' : 'Stop'}
+          </Button>
         </ButtonBar>
+        <Progress {...args} label={label} max={max} current={value} />
       </div>
     );
   },
-} satisfies Meta<typeof Progress>;
+};
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {};
+export const Colors: Story = {
+  render: () => (
+    <div className='flex flex-col space-y-1'>
+      <Progress max={100} current={0} />
+      <Progress max={100} current={100 * 0.05} />
+      <Progress max={100} current={100 * 0.10} />
+      <Progress max={100} current={100 * 0.15} />
+      <Progress max={100} current={100 * 0.20} />
+      <Progress max={100} current={100 * 0.25} />
+      <Progress max={100} current={100 * 0.30} />
+      <Progress max={100} current={100 * 0.35} />
+      <Progress max={100} current={100 * 0.40} />
+      <Progress max={100} current={100 * 0.44} />
+      <Progress max={100} current={100 * 0.50} />
+      <Progress max={100} current={100 * 0.55} />
+      <Progress max={100} current={100 * 0.60} />
+      <Progress max={100} current={100 * 0.65} />
+      <Progress max={100} current={100 * 0.70} />
+      <Progress max={100} current={100 * 0.75} />
+      <Progress max={100} current={100 * 0.80} />
+      <Progress max={100} current={100 * 0.85} />
+      <Progress max={100} current={100 * 0.90} />
+      <Progress max={100} current={100 * 0.95} />
+      <Progress max={100} current={100} />
+    </div>
+  )
+};

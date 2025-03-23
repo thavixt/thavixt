@@ -1,10 +1,17 @@
 # @thavixt/uikit
 
 [![npm package](https://img.shields.io/npm/v/@thavixt/uikit)](https://www.npmjs.com/package/@thavixt/uikit)
-![downloads](https://img.shields.io/npm/dm/@thavixt/uikit)
-![last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
-[![CI](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml)
  
+![Bundle size - minified](https://img.shields.io/bundlephobia/min/%40thavixt%2Fuikit)
+
+<!-- ![Downloads](https://img.shields.io/npm/dm/@thavixt/uikit) -->
+
+![last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
+
+[![Pipeline](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml)
+
+[![Website deployment](https://github.com/thavixt/thavixt/actions/workflows/deploy.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/deploy.yml)
+
 ## Installation
 
 ```shell

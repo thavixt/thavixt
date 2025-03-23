@@ -3,7 +3,7 @@ import { ComponentProps } from 'react';
 import { ThemeProvider } from './ThemeProvider';
 import { Typography } from '../Typography/Typography';
 import { Button } from '../Button/Button';
-import { ButtonBar } from '../Button/ButtonBar';
+import { ButtonBar } from '../ButtonBar/ButtonBar';
 
 const colors = (
   <div className="flex flex-col space-y-2">
@@ -41,7 +41,7 @@ const colors = (
 );
 
 const meta = {
-  title: 'Basic/ThemeProvider',
+  title: 'Basic/Theme provider',
   component: ThemeProvider,
   tags: ['autodocs'],
   parameters: {

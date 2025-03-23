@@ -1,5 +1,5 @@
 import { cloneElement, PropsWithChildren, useState } from "react";
-import { Accordion } from "./Accordion";
+import { Accordion } from "../Accordion/Accordion";
 import { getSlotElements, sleep } from "../../common/utils";
 
 interface AccordionGroupProps {

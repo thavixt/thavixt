@@ -8,9 +8,10 @@ interface ProgressProps extends CommonProps<HTMLProgressElement> {
   current: number;
   max?: number;
   label?: string;
+  inline?: boolean;
 }
 
-export function Progress({ label, className, max = 100, current, ...props }: ProgressProps) {
+export function Progress({ label, className, max = 100, current, inline, ...props }: ProgressProps) {
   const [resizeCounter, setResizeCounter] = useState(0);
   const [labelInside, setLabelInside] = useState(false);
   const progressRef = useRef<HTMLDivElement>(null);
@@ -30,8 +31,12 @@ export function Progress({ label, className, max = 100, current, ...props }: Pro
   }, [percent, percentLabel.length, resizeCounter]);
 
   return (
-    <div className={classNames('flex flex-col space-y-2 items-start', className)}>
-      {label ? <Typography.Label>{label}:</Typography.Label> : null}
+    <div className={classNames('grid space-y-2 items-center gap-x-2 gap-y-1', className, {
+      'grid-cols-1': !inline,
+      'grid-cols-[auto_minmax(100px,_1fr)]': inline
+    },
+    )}>
+      {label ? <Typography.Label className="m-0">{label}:</Typography.Label> : null}
       <progress hidden max={max} value={current} {...props}>{percentLabel}</progress>
       <div aria-hidden="true" className="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700 flex space-x-2">
         <div

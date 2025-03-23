@@ -15,7 +15,7 @@ const getMockData = (count: number, from = 0) => new Array(count).fill(mockData)
 });
 
 const meta = {
-  title: 'Data display/DataTable',
+  title: 'Data display/Data table',
   component: DataTable,
   tags: ['autodocs'],
   args: {

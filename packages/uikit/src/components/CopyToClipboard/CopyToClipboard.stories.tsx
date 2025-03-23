@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CopyToClipboard } from './CopyToClipboard';
 
 const meta = {
-  title: 'Basic/CopyToClipboard',
+  title: 'Basic/Copy to clipboard',
   component: CopyToClipboard,
   tags: ['autodocs'],
 } satisfies Meta<typeof CopyToClipboard>;

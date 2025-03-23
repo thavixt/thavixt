@@ -3,7 +3,7 @@ import { SwitchInput } from './SwitchInput';
 import { fn } from '@storybook/test';
 
 const meta = {
-  title: 'Input/SwitchInput',
+  title: 'Input/Switch input',
   component: SwitchInput,
   tags: ['autodocs'],
   args: {

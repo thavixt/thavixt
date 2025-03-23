@@ -3,7 +3,7 @@ import { NumberInput } from './NumberInput';
 import { fn } from '@storybook/test';
 
 const meta = {
-  title: 'Input/NumberInput',
+  title: 'Input/Number input',
   component: NumberInput,
   tags: ['autodocs'],
 } satisfies Meta<typeof NumberInput>;

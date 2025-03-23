@@ -5,7 +5,7 @@ import { Typography } from "../Typography/Typography";
 import { Icon } from "../Icon/Icon";
 import { formatSize } from "./formatSize";
 import { Button } from "../Button/Button";
-import { ButtonBar } from "../Button/ButtonBar";
+import { ButtonBar } from "../ButtonBar/ButtonBar";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 
 interface FileUploadProps {

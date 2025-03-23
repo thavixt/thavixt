@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { AccordionGroup } from './AccordionGroup';
 import { Typography } from '../Typography/Typography';
 import { ComponentProps } from 'react';
-import { Accordion, AccordionBody, AccordionOpenTitle, AccordionTitle } from './Accordion';
+import { Accordion, AccordionBody, AccordionOpenTitle, AccordionTitle } from '../Accordion/Accordion';
 import { fn } from '@storybook/test';
 
 const meta = {
-  title: 'Layout/Accordion/Accordion group',
+  title: 'Layout/Accordion group',
   component: AccordionGroup,
   tags: ['autodocs'],
   args: {

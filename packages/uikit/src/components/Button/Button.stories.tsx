@@ -22,43 +22,12 @@ export const Default: Story = {
   },
 };
 
-export const Primary: Story = {
-  args: {
-    variant: 'primary',
-  },
-};
-export const Secondary: Story = {
-  args: {
-    variant: 'secondary',
-  },
-};
-
-export const Danger: Story = {
-  args: {
-    variant: 'danger',
-  },
-};
-
-export const Icon: Story = {
-  args: {
-    icon: {
-      icon: 'Check',
-    },
-  },
-};
-
-export const Silent: Story = {
-  args: {
-    variant: 'silent',
-  },
-};
-
 export const All: Story = {
   render: () => {
-    const variants: ButtonVariant[] = ['default', 'primary', 'secondary', 'danger', 'silent'];
+    const buttonVariants: ButtonVariant[] = ['default', 'primary', 'secondary', 'danger', 'silent'];
     return (
       <div className="flex flex-col space-y-2">
-        {variants.map(variant => (
+        {buttonVariants.map(variant => (
           <Button variant={variant}>{variant}</Button>
         ))}
         <Button icon={{ icon: 'Volume1' }}>Icon</Button>

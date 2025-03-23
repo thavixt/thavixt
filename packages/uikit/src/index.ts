@@ -1,5 +1,5 @@
 export * from './components/Accordion/Accordion'
-export * from './components/Accordion/AccordionGroup'
+export * from './components/AccordionGroup/AccordionGroup'
 export * from './components/Avatar/Avatar'
 export * from './components/Badge/Badge'
 export * from './components/Box/Box'

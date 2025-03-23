@@ -8,8 +8,8 @@ const meta = {
   component: Icon,
   tags: ['autodocs'],
   args: {
-    className: 'text-slate-500 dark:text-slate-300',
-    height: 4,
+    className: 'text-indigo-500 dark:text-blue-500',
+    height: 3,
     icon: 'Arrow'
   }
 } satisfies Meta<typeof Icon>;

@@ -30,7 +30,7 @@ export function Button({
       title={title}
       className={
         classNames(
-          'min-w-8 h-fit w-fit px-2 py-1 transition-colors duration-150 select-none',
+          'min-w-8 h-fit my-1 w-fit px-2 py-1 transition-colors duration-150 select-none',
           {
             'cursor-pointer': !(disabled || loading),
             'cursor-default opacity-30 select-none': disabled || loading,

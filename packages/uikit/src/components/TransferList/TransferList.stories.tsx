@@ -17,7 +17,7 @@ const items = createItems(50);
 const defaultSelected = items.filter((_, i) => !(i % 3)).map(item => item.key);
 
 const meta = {
-  title: 'Input/TransferList',
+  title: 'Input/Transfer list',
   component: TransferList,
   tags: ['autodocs'],
   args: {

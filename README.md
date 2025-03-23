@@ -1,12 +1,18 @@
 # @thavixt monorepo
 
-[![CI](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml)
+[![Pipeline](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/thavixt.yml)
+
+[![Website deployment](https://github.com/thavixt/thavixt/actions/workflows/deploy.yml/badge.svg)](https://github.com/thavixt/thavixt/actions/workflows/deploy.yml)
 
 ## uikit
 
 [![npm package](https://img.shields.io/npm/v/@thavixt/uikit)](https://www.npmjs.com/package/@thavixt/uikit)
-![downloads](https://img.shields.io/npm/dm/@thavixt/uikit)
-![last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
+
+![Bundle size - minified](https://img.shields.io/bundlephobia/min/%40thavixt%2Fuikit)
+
+<!-- ![Downloads](https://img.shields.io/npm/dm/@thavixt/uikit) -->
+
+![Last updated](https://img.shields.io/npm/last-update/@thavixt/uikit)
 
 UI component library for React with Tailwind
 
@@ -17,8 +23,12 @@ UI component library for React with Tailwind
 ## scrollbar-core
 
 [![npm package](https://img.shields.io/npm/v/@thavixt/scrollbar-core)](https://www.npmjs.com/package/@thavixt/scrollbar-core)
-![NPM Downloads](https://img.shields.io/npm/dm/@thavixt/scrollbar-core)
-![last update](https://img.shields.io/npm/last-update/@thavixt/scrollbar-core)
+
+![Bundle size - minified](https://img.shields.io/bundlephobia/min/%40thavixt%2Fscrollbar-core)
+
+<!-- ![Downloads](https://img.shields.io/npm/dm/@thavixt/scrollbar-core) -->
+
+![Last update](https://img.shields.io/npm/last-update/@thavixt/scrollbar-core)
 
 Library for customizing scrollbars in websites.
 
@@ -29,8 +39,12 @@ Library for customizing scrollbars in websites.
 ## scrollbar-react
 
 [![npm package](https://img.shields.io/npm/v/@thavixt/scrollbar-react)](https://www.npmjs.com/package/@thavixt/scrollbar-react)
-![NPM Downloads](https://img.shields.io/npm/dm/@thavixt/scrollbar-react)
-![last update](https://img.shields.io/npm/last-update/@thavixt/scrollbar-react)
+
+![Bundle size - minified](https://img.shields.io/bundlephobia/min/%40thavixt%2Fscrollbar-react)
+
+<!-- ![Downloads](https://img.shields.io/npm/dm/@thavixt/scrollbar-react) -->
+
+![Last update](https://img.shields.io/npm/last-update/@thavixt/scrollbar-react)
 
 React package for customizing scrollbars in websites.
 

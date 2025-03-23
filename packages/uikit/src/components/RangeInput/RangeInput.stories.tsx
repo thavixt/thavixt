@@ -6,7 +6,7 @@ import { ReactElement, useRef, useState } from 'react';
 import { Button } from '../Button/Button';
 
 const meta = {
-  title: 'Input/RangeInput',
+  title: 'Input/Range input',
   component: RangeInput,
   tags: ['autodocs'],
 } satisfies Meta<typeof RangeInput>;

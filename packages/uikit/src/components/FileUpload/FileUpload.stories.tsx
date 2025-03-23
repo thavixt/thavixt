@@ -4,7 +4,7 @@ import { fn } from '@storybook/test';
 import { sleep } from '../../common/utils';
 
 const meta = {
-  title: 'Input/FileUpload',
+  title: 'Input/File upload',
   component: FileUpload,
   tags: ['autodocs'],
   args: {

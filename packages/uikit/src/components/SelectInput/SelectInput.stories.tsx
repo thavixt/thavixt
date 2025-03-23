@@ -3,7 +3,7 @@ import { Select } from './SelectInput';
 import { fn } from '@storybook/test';
 
 const meta = {
-  title: 'Input/SelectInput',
+  title: 'Input/Select input',
   component: Select,
   tags: ['autodocs'],
 } satisfies Meta<typeof Select>;
