@@ -17,35 +17,46 @@ const meta = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div className='h-[500px]'>
+        <Story />
+      </div>
+    ),
+  ],
   args: {
-    // className: 'max-w-md',
     brandName: '@thavixt/uikit',
     navItems: [
       {
-        key: 'auth',
-        label: 'Register or log in',
+        key: 'install',
+        label: 'Installation',
         onClick: fn(),
       },
       {
         key: 'docs',
-        label: 'Read the documentation',
+        label: 'Documentation',
+        onClick: fn(),
+      },
+      {
+        key: 'examples',
+        label: 'Example usage',
         onClick: fn(),
       },
       {
         key: 'pricing',
-        label: 'More about pricing and licensing',
+        label: 'Pricing and licensing',
         onClick: fn(),
       },
     ],
     logo: logo,
-    logoURL: '/',
+    logoURL: '/?path=/docs/navigation-navigation-bar--docs',
   },
   render: function StoryComponent(args: ComponentProps<typeof NavigationBar>) {
     return (
       <div>
         <NavigationBar {...args} />
         <div className="flex flex-col space-y-2">
-          {new Array(100).fill(0).map((_, i) => (
+          {new Array(30).fill(0).map((_, i) => (
             <SkeletonListItem key={i} />
           ))}
         </div>

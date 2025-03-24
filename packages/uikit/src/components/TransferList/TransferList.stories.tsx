@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TransferList } from './TransferList';
-import { ComponentProps } from 'react';
 import { fn } from '@storybook/test';
 
 const createItems = (count: number) => (
@@ -13,7 +12,7 @@ const createItems = (count: number) => (
   })
 )
 
-const items = createItems(50);
+const items = createItems(10);
 const defaultSelected = items.filter((_, i) => !(i % 3)).map(item => item.key);
 
 const meta = {
@@ -24,14 +23,15 @@ const meta = {
     items,
     defaultSelected,
     onChange: fn(),
+    className: 'h-[350px]',
   },
-  render: function StoryComponent(args: ComponentProps<typeof TransferList>) {
-    return (
-      <div className='w-[600px]'>
-        <TransferList {...args}/>
+  decorators: [
+    (Story) => (
+      <div className='h-fit'>
+        <Story />
       </div>
-    )
-  },
+    ),
+  ],
 } satisfies Meta<typeof TransferList>;
 
 export default meta;

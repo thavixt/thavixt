@@ -3,6 +3,7 @@ import { fn } from '@storybook/test';
 import { Skeleton, SkeletonCircle, SkeletonListItem, SkeletonRectangle, SkeletonRow, SkeletonSquare } from './Skeleton';
 import { ComponentProps, useState } from 'react';
 import { Button } from '../Button/Button';
+import { Typography } from '../Typography/Typography';
 
 const meta = {
   title: 'Layout/Skeleton',
@@ -19,8 +20,7 @@ const meta = {
     children: undefined,
     delay: 300,
     onLoad: fn(async () => {
-      // throw new Error('asd');
-      return <div>Fetched result example</div>
+      return <Typography.Body>Fetched content goes here</Typography.Body>
     }),
   },
 } satisfies Meta<typeof Skeleton>;
@@ -28,6 +28,60 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <div className='h-[200px]'>
+        <Story />
+      </div>
+    ),
+  ],
+  render: function StoryComponent({ onLoad, ...args }: ComponentProps<typeof Skeleton>) {
+    const [loaded, setLoaded] = useState(false);
+    const [key, setKey] = useState(0);
+    return (
+      <div className='flex flex-col justify-between h-[500px]'>
+        <div>
+          <div>{loaded ? 'Already loaded' : 'Scroll to the bottom'}</div>
+          <Button
+            onClick={() => {
+              setLoaded(false);
+              setKey(prev => prev + 1);
+            }}
+          >
+            Reset
+          </Button>
+        </div>
+        <div key={key}>
+          <Skeleton
+            {...args}
+            placeholder={(
+              <div className='flex space-x-2 mb-4'>
+                <div className="flex flex-col space-y-2 w-full justify-between">
+                  <SkeletonListItem />
+                  <div className="flex flex-col space-y-2 w-full justify-center mt-2">
+                    <SkeletonRow className='w-2/3' />
+                    <SkeletonRow className='w-1/3' />
+                    <SkeletonRow className='w-2/3 h-3 mt-2' />
+                    <SkeletonRow className='w-1/3' />
+                  </div>
+                </div>
+                <div className="size-fit flex flex-col self-end">
+                  <SkeletonSquare />
+                </div>
+              </div>
+            )}
+            onLoad={() => {
+              setLoaded(true);
+              return onLoad();
+            }}
+          />
+        </div>
+      </div>
+    )
+  },
+};
 
 export const ListItem = {
   render: function StoryComponent() {
@@ -75,49 +129,6 @@ export const Square: Story = {
     return (
       <div>
         <SkeletonSquare />
-      </div>
-    )
-  },
-};
-
-export const Example: Story = {
-  render: function StoryComponent({ onLoad, ...args }: ComponentProps<typeof Skeleton>) {
-    const [loaded, setLoaded] = useState(false);
-    const [key, setKey] = useState(0);
-    return (
-      <div className='flex flex-col justify-between h-[2000px]'>
-        <div>
-          <div>{loaded ? 'Already loaded' : 'Scroll to the bottom'}</div>
-          <Button onClick={() => {
-            setLoaded(false);
-            setKey(prev => prev + 1);
-          }}>Reset</Button>
-        </div>
-        <div key={key}>
-          <Skeleton
-            {...args}
-            placeholder={(
-              <div className='flex space-x-2'>
-                <div className="flex flex-col space-y-2 w-full justify-between">
-                  <SkeletonListItem />
-                  <div className="flex flex-col space-y-2 w-full justify-center mt-2">
-                    <SkeletonRow className='w-2/3' />
-                    <SkeletonRow className='w-1/3' />
-                    <SkeletonRow className='w-2/3 h-3 mt-2' />
-                    <SkeletonRow className='w-1/3' />
-                  </div>
-                </div>
-                <div className="size-fit flex flex-col self-end">
-                  <SkeletonSquare />
-                </div>
-              </div>
-            )}
-            onLoad={() => {
-              setLoaded(true);
-              return onLoad()
-            }}
-          />
-        </div>
       </div>
     )
   },

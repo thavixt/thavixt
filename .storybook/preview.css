@@ -6,3 +6,7 @@
 .docs-story {
   @apply bg-[#fdfdfd] dark:bg-[#333333];
 }
+
+.docs-story > div {
+  @apply p-0;
+}

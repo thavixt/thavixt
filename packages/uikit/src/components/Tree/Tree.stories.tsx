@@ -5,7 +5,7 @@ import { ComponentProps, useRef, useState } from 'react';
 import { Button } from '../Button/Button';
 
 const meta = {
-  title: 'Navigation/Tree',
+  title: 'Layout/Tree',
   component: Tree,
   tags: ['autodocs'],
   args: {

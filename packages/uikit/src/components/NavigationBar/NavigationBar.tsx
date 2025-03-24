@@ -5,7 +5,7 @@ import { themedBackgroundClasses } from "../../common/theme";
 import { ClickTarget } from "../ClickTarget/ClickTarget";
 import { Typography } from "../Typography/Typography";
 
-interface NavbarItem {
+export interface NavbarItem {
   key: string;
   label: string;
   tooltip?: string;
@@ -38,19 +38,35 @@ export function NavigationBar({
       )}
     >
       <ClickTarget onClickOutside={() => setIsOpen(false)}>
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="flex justify-between items-center h-fit">
-            <div className="flex items-center">
+        <div className="mx-auto px-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-2">
               {logoURL ? (
                 <a href={logoURL}>
-                  <img src={logo} alt="Logo" className="h-8 w-8 mr-2" />
+                  <img src={logo} alt="Logo" className="h-8 w-8" />
                 </a>
               ) : (
-                <img src={logo} alt="Logo" className="h-8 w-8 mr-2" />
+                <img src={logo} alt="Logo" className="h-8 w-8" />
               )}
-              <Typography.Subtitle>{brandName}</Typography.Subtitle>
+              <Typography.Subtitle className="truncate">{brandName}</Typography.Subtitle>
             </div>
-            <div className="relative">
+
+            <div className="relative hidden md:block">
+              {navItems.map((item) => (
+                <Button
+                  key={item.key}
+                  variant="silent"
+                  onClick={() => {
+                    item.onClick(item.key);
+                    setIsOpen(false);
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </div>
+
+            <div className="relative block md:hidden">
               <Button
                 icon={{ icon: isOpen ? 'Cross' : 'Caret', className: 'rotate-90' }}
                 variant="silent"
@@ -67,7 +83,7 @@ export function NavigationBar({
                   themedBackgroundClasses,
                 )}
               >
-                <div className="px-2 py-1 space-y-1 flex flex-col items-end shadow-xl">
+                <div className="flex flex-col items-end shadow-xl px-2 py-1 space-y-1">
                   {navItems.map((item) => (
                     <Button
                       className="whitespace-nowrap"
