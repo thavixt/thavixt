@@ -44,7 +44,7 @@ export const Example: Story = {
       return () => clearInterval(interval);
     }, [max, stopped]);
     return (
-      <div className='flex space-x-2 align-center'>
+      <div className='flex space-x-8 align-center'>
         <ButtonBar>
           <Button variant='silent' onClick={() => setValue(0)}>Reset</Button>
           <Button variant={stopped ? 'primary' : 'danger'} onClick={() => setStopped(prev => !prev)}>

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
-import { ThemeProvider } from './ThemeProvider';
+import { ThemeOverride } from './ThemeOverride';
 import { Typography } from '../Typography/Typography';
 import { Button } from '../Button/Button';
 import { ButtonBar } from '../ButtonBar/ButtonBar';
@@ -35,23 +35,25 @@ const colors = (
     </div>
     <ButtonBar>
       <Button variant='danger'>danger button (bg-red-500/600)</Button>
-      <div className='border-2 rounded-md px-2 border-neutral-500'>border-neutral-500</div>
+      <div className='border-2 rounded-md px-2 border-neutral-500'>
+        <Typography.Text>border-neutral-500</Typography.Text>
+      </div>
     </ButtonBar>
   </div>
 );
 
 const meta = {
-  title: 'Basic/Theme provider',
-  component: ThemeProvider,
+  title: 'Basic/Theme override',
+  component: ThemeOverride,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'Override the default colors defined by Tailwind, by wrapping a subtree in a `<ThemeProvider>`, and providing `colors`. Reference for the defaults: https://tailwindcss.com/docs/colors',
+        component: 'Override the default colors defined by Tailwind, by wrapping a subtree in a `<ThemeOverride>`, and providing a list of `colors`. Reference the defaults at https://tailwindcss.com/docs/colors.',
       },
     },
   },
-} satisfies Meta<typeof ThemeProvider>;
+} satisfies Meta<typeof ThemeOverride>;
 
 export default meta;
 
@@ -69,15 +71,15 @@ export const ColorOverrideExample: Story = {
       'red-600': '#B7B',
     },
   },
-  render: function StoryComponent(args: ComponentProps<typeof ThemeProvider>) {
+  render: function StoryComponent(args: ComponentProps<typeof ThemeOverride>) {
     return (
       <div className="flex flex-col space-y-2">
-        <Typography.Subtitle>Defaults:</Typography.Subtitle>
+        <Typography.Subtitle>Defaults - hover the colors to view the CSS class name:</Typography.Subtitle>
         {colors}
         <Typography.Subtitle>Override example:</Typography.Subtitle>
-        <ThemeProvider {...args}>
+        <ThemeOverride {...args}>
           {colors}
-        </ThemeProvider>
+        </ThemeOverride>
       </div>
     );
   }

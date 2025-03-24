@@ -7,7 +7,7 @@ type TypographyProps<T = HTMLElement> = PropsWithChildren<HTMLAttributes<T>> & {
 
 export type TypographyType = 'H1' | 'H2' | 'Title' | 'Subtitle' | 'Caption' | 'Body' | 'Button' | 'Code' | 'Text' | 'Label';
 
-const commonStyles = 'text-slate-600 dark:text-slate-300';
+const commonStyles = 'text-slate-600 dark:text-slate-200';
 
 export const TypographyStyles: Record<TypographyType, string> = {
   H1: classNames(commonStyles, 'block font-serif text-4xl font-bold tracking-wide capitalize leading-20'),
@@ -18,8 +18,8 @@ export const TypographyStyles: Record<TypographyType, string> = {
   Body: classNames(commonStyles, 'block font-sans text-base text-pretty leading-6 pb-2'),
   Text: classNames(commonStyles, 'inline font-sans text-pretty'),
   Label: classNames(commonStyles, 'inline font-sans text-sm font-light leading-6'),
-  Button: 'inline font-sans text-sm font-semibold capitalize',
-  Code: 'inline font-mono bg-slate-600 dark:bg-slate-300 text-slate-100 dark:text-slate-800 px-1 rounded text-base',
+  Button: 'inline font-sans text-sm font-semibold',
+  Code: 'inline font-mono bg-slate-600 dark:bg-slate-300 text-slate-100 dark:text-slate-800 px-1 py-0.5 rounded text-base',
 }
 
 export const Typography = {

@@ -31,7 +31,7 @@ export function Progress({ label, className, max = 100, current, inline, ...prop
   }, [percent, percentLabel.length, resizeCounter]);
 
   return (
-    <div className={classNames('grid space-y-2 items-center gap-x-2 gap-y-1', className, {
+    <div className={classNames('grid space-y-2 items-center gap-x-2 gap-y-1 w-full', className, {
       'grid-cols-1': !inline,
       'grid-cols-[auto_minmax(100px,_1fr)]': inline
     },

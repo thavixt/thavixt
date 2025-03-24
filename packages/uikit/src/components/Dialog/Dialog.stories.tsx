@@ -4,7 +4,7 @@ import { ComponentProps, useRef } from 'react';
 import { Dialog, DialogHandle } from './Dialog';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography/Typography';
-import { ButtonBar } from '../Button/ButtonBar';
+import { ButtonBar } from '../ButtonBar/ButtonBar';
 import { TextInput } from '../TextInput/TextInput';
 import { RadioInput } from '../RadioInput/RadioInput';
 
