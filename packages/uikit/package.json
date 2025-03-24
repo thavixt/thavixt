@@ -42,9 +42,9 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsc --project tsconfig.lib.json",
+    "build": "tsc --project tsconfig.build.json",
     "check": "npm run lint && npm run css-build && npm run tsc",
-    "tsc": "tsc --noEmit --project tsconfig.lib.json",
+    "tsc": "tsc --noEmit --project tsconfig.build.json",
     "clean": "rm -rf ./dist",
     "css-build": "npx @tailwindcss/cli --input ./input.css --output ./dist/index.css --minify",
     "css-watch": "npx @tailwindcss/cli --input ./input.css --output ./dist/index.css --watch",
