@@ -8,12 +8,22 @@ import { CommonProps } from "../../common/commonProps";
 import { themedBackgroundClasses } from "../../common/theme";
 
 const DRAG_IMAGE_ID = 'off_canvas_drag_image_id';
+type TransferListSide = 'available' | 'selected';
 
 function clearDragImage() {
   const dragImg = document.getElementById(DRAG_IMAGE_ID);
   if (dragImg) {
     dragImg.remove();
   }
+}
+
+function setCheckboxes(items: TransferListItem[], checked: boolean) {
+  items.forEach(item => {
+    const checkbox = document.querySelector<HTMLInputElement>(`input[type=checkbox]#${item.key}`);
+    if (checkbox) {
+      checkbox.checked = checked;
+    }
+  });
 }
 
 export type TransferListItemKey = string;
@@ -27,12 +37,26 @@ export interface TransferListProps extends Omit<CommonProps<HTMLDivElement>, 'on
   className?: string;
   items: TransferListItem[];
   defaultSelected: TransferListItemKey[];
+  transferSelectedText?: string;
+  transferAllText?: string;
   onChange: (selectedKeys: TransferListItemKey[]) => void;
 }
 
-export function TransferList({ ref, className, items, defaultSelected, onChange }: TransferListProps) {
+export function TransferList({
+  ref,
+  className,
+  items,
+  defaultSelected,
+  transferAllText = "Transfer all items",
+  transferSelectedText = "Transfer selected items",
+  onChange,
+}: TransferListProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [selected, setSelected] = useState<TransferListItemKey[]>(defaultSelected);
+  const lastClicked = useRef<{ side: TransferListSide; key: TransferListItemKey | null }>({
+    side: 'available',
+    key: null,
+  });
 
   const setSelectedKeys = useCallback((keys: TransferListItemKey[]) => {
     setSelected(keys);
@@ -40,20 +64,31 @@ export function TransferList({ ref, className, items, defaultSelected, onChange 
   }, [onChange]);
 
   const sortedAllItems = items.sort((a, b) => a.content.localeCompare(b.content, navigator.language, { numeric: true }));
+  const sortedAllKeys = sortedAllItems.map<TransferListItemKey>(item => item.key);
   const availableItems = sortedAllItems.filter(item => !selected.includes(item.key));
   const selectedItems = sortedAllItems.filter(item => selected.includes(item.key));
 
-  const containerClasses = 'h-full w-full grid grid-cols-[1fr_auto_1fr] gap-2 isolate max-h-100';
-  const formClasses = classNames('h-full w-full', className);
-  const boxClasses = classNames(themedBackgroundClasses, "p-2 flex flex-col space-y-2 h-full w-full max-h-100");
-  const scrollbarClasses = 'h-full w-full max-h-100 flex flex-col space-y-0.5';
-  const itemClasses = 'cursor-pointer flex items-center px-2 flex bg-transparent hover:bg-slate-200 hover:dark:bg-slate-600 rounded-sm';
+  const containerClasses = 'size-full grid grid-cols-[1fr_auto_1fr] gap-2 isolate';
+  const formClasses = 'h-full w-full';
+  const boxClasses = classNames(themedBackgroundClasses, "p-2 flex flex-col space-y-2 size-full");
+  const scrollbarClasses = classNames('size-full flex flex-col space-y-0.5', className);
+  const itemContainerClasses = 'cursor-pointer flex items-center px-2 flex bg-transparent hover:bg-slate-200 hover:dark:bg-slate-600 rounded-sm';
 
-  const onDragStart: (from: 'available' | 'selected') => React.DragEventHandler<HTMLDivElement> = (from) => (e) => {
+  const getItems = useCallback((side: TransferListSide): string[] => {
+    if (!formRef.current) {
+      return [];
+    }
+    const inputs = Array.from(formRef.current.querySelectorAll<HTMLInputElement>(`input[name="${side}"]`));
+    const selectedInputs = inputs.filter(input => input.checked);
+    const selectedInpuNames = selectedInputs.map(input => input.id);
+    return selectedInpuNames;
+  }, []);
+
+  const onDragStart: (side: TransferListSide) => React.DragEventHandler<HTMLDivElement> = useCallback((side) => (e) => {
     clearDragImage();
 
     e.dataTransfer.dropEffect = 'move';
-    const items = getItems(from);
+    const items = getItems(side);
     if (items.length === 0) {
       const input = e.currentTarget.querySelector('input');
       if (input?.id) {
@@ -62,9 +97,7 @@ export function TransferList({ ref, className, items, defaultSelected, onChange 
     }
     e.dataTransfer.setData('application/json', JSON.stringify(items));
 
-    // get labels of checked input
     const labels = e.currentTarget.parentElement?.querySelectorAll('input:checked + label');
-    // clone them into an off-canvas ghost element
     const ghostElement = document.createElement('div');
     ghostElement.id = DRAG_IMAGE_ID;
     ghostElement.style.position = 'absolute';
@@ -75,107 +108,89 @@ export function TransferList({ ref, className, items, defaultSelected, onChange 
       p.textContent = textContent;
       ghostElement.appendChild(p);
     })
-    // set drag image
     document.body.appendChild(ghostElement);
     e.dataTransfer.setDragImage(ghostElement, 0, 0);
-  }
-  const onDragEnd: React.DragEventHandler<HTMLDivElement> = (e) => {
+  }, [getItems]);
+
+  const onDragEnd: React.DragEventHandler<HTMLDivElement> = useCallback((e) => {
     e.preventDefault();
     clearDragImage();
-  }
-  const onDragOver: React.DragEventHandler<HTMLDivElement> = (e) => {
+  }, []);
+
+  const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback((e) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
-  }
-  const onDrop: (from: 'available' | 'selected') => React.DragEventHandler<HTMLDivElement> = (from) => (e) => {
+  }, []);
+
+  const onDrop: (side: TransferListSide) => React.DragEventHandler<HTMLDivElement> = useCallback((side) => (e) => {
     e.preventDefault();
     clearDragImage();
     const transferData = JSON.parse(e.dataTransfer.getData('application/json'));
-    if (from === 'selected') {
+    if (side === 'selected') {
       setSelectedKeys(Array.from(new Set([...selected, ...transferData])));
     } else {
       setSelectedKeys(selected.filter(key => !transferData.includes(key)));
     }
-  }
-  const onTransferClick: (from: 'available' | 'selected', all?: 'all') => (e: React.MouseEvent<HTMLButtonElement>) => void = (from, all) => (e) => {
-    e.preventDefault();
+  }, [selected, setSelectedKeys]);
 
+  const onTransferClick: (side: TransferListSide, all?: 'all') => (e: React.MouseEvent<HTMLButtonElement>) => void = useCallback((side, all) => (e) => {
+    e.preventDefault();
     if (all) {
-      if (from === 'available') {
+      if (side === 'available') {
         setSelectedKeys(items.map(item => item.key));
       } else {
         setSelectedKeys([]);
       }
       return;
     }
-
-    const selectedInpuNames = getItems(from);
-    if (from === 'available') {
+    const selectedInpuNames = getItems(side);
+    if (side === 'available') {
       setSelectedKeys(Array.from(new Set([...selected, ...selectedInpuNames])));
     } else {
       setSelectedKeys(selected.filter(key => !selectedInpuNames.includes(key)));
     }
+  }, [getItems, items, selected, setSelectedKeys]);
 
-    // if (from === 'available') {
-    //   setAvailableChecked([]);
-    // } else {
-    //   setSelectedChecked([]);
-    // }
-  }
-  const getItems = (from: 'available' | 'selected'): string[] => {
+  const selectAll = useCallback((side: TransferListSide, select = true) => () => {
     if (!formRef.current) {
       return [];
     }
-    const inputs = Array.from(formRef.current.querySelectorAll<HTMLInputElement>(`input[name="${from}"]`));
-    const selectedInputs = inputs.filter(input => input.checked);
-    const selectedInpuNames = selectedInputs.map(input => input.id);
-    return selectedInpuNames;
-  }
-
-  const selectAll = (from: 'available' | 'selected', select = true) => () => {
-    if (!formRef.current) {
-      return [];
-    }
-    const inputs = Array.from(formRef.current.querySelectorAll<HTMLInputElement>(`input[name="${from}"]`));
+    const inputs = Array.from(formRef.current.querySelectorAll<HTMLInputElement>(`input[name="${side}"]`));
     inputs.forEach(input => input.checked = select);
+  }, []);
 
-    // const keys = inputs.map(i => i.id);
-    // if (from === 'available') {
-    //   if (select) {
-    //     setAvailableChecked(keys);
-    //   } else {
-    //     setAvailableChecked([]);
-    //   }
-    // } else {
-    //   if (select) {
-    //     setSelectedChecked(keys);
-    //   } else {
-    //     setSelectedChecked([]);
-    //   }
-    // }
-  }
+  const onCheck = useCallback((side: TransferListSide) => (key: TransferListItemKey) => {
+    lastClicked.current = { side, key };
+  }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onCheck = (_from: 'available' | 'selected') => (_key: string, _checked: boolean) => {
-    // if (from === 'available') {
-    //   if (checked) {
-    //     setAvailableChecked(prev => [...prev, key]);
-    //   } else {
-    //     setAvailableChecked(prev => prev.filter(k => k !== key));
-    //   }
-    // }
-    // if (from === 'selected') {
-    //   if (checked) {
-    //     setSelectedChecked(prev => [...prev, key]);
-    //   } else {
-    //     setSelectedChecked(prev => prev.filter(k => k !== key));
-    //   }
-    // }
-  }
+  const onShift = useCallback((side: TransferListSide) => (key: TransferListItemKey, ctrl: boolean) => {
+    if (!lastClicked.current) {
+      return;
+    }
+
+    const selectedIndex = sortedAllKeys.findIndex(k => k === key);
+    const lastIndex = sortedAllKeys.findIndex(k => k === lastClicked.current.key);
+    let items = side === 'available' ? [...availableItems] : [...selectedItems];
+    if (lastIndex > selectedIndex) {
+      items = items.reverse();
+    }
+    let check = false;
+    const result = items.filter(item => {
+      if (item.key === lastClicked.current.key) {
+        check = true;
+      }
+      if (item.key === key) {
+        check = false;
+      }
+      return check || item.key === key;
+    });
+    setCheckboxes(result, !ctrl);
+    lastClicked.current = { side, key };
+  }, [availableItems, selectedItems, sortedAllKeys])
 
   return (
     <form ref={formRef} className={formClasses}>
-        <div data-testid="TransferList" ref={ref} className={containerClasses}>
+      <div data-testid="TransferList" ref={ref} className={containerClasses}>
         <div
           data-testid="TransferListAvailable"
           className={boxClasses}
@@ -189,18 +204,29 @@ export function TransferList({ ref, className, items, defaultSelected, onChange 
           </div>
           <Scrollbar className={scrollbarClasses}>
             {availableItems.map(item => (
-              <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('available')} onDragEnd={onDragEnd}>
-                <TransferListListItem item={item} side="available" onCheck={onCheck('available')} />
+              <div
+                key={item.key}
+                className={itemContainerClasses}
+                draggable
+                onDragStart={onDragStart('available')}
+                onDragEnd={onDragEnd}
+              >
+                <TransferListListItem
+                  item={item}
+                  side="available"
+                  onCheck={onCheck('available')}
+                  onShift={onShift('available')}
+                />
               </div>
             ))}
           </Scrollbar>
         </div>
-
         <div className="flex flex-col justify-center space-y-1">
           <Button
             disabled={selected.length === items.length}
             id="toSelected"
             onClick={onTransferClick('available', 'all')}
+            title={transferAllText}
             variant="silent"
           >
             <Icon icon="ArrowDouble" height={3} />
@@ -208,6 +234,7 @@ export function TransferList({ ref, className, items, defaultSelected, onChange 
           <Button
             id="toSelected"
             onClick={onTransferClick('available')}
+            title={transferSelectedText}
             variant="silent"
           >
             <Icon icon="Arrow" height={3} />
@@ -216,6 +243,7 @@ export function TransferList({ ref, className, items, defaultSelected, onChange 
             className="rotate-180"
             id="toSource"
             onClick={onTransferClick('selected')}
+            title={transferSelectedText}
             variant="silent"
           >
             <Icon icon="Arrow" height={3} />
@@ -225,12 +253,12 @@ export function TransferList({ ref, className, items, defaultSelected, onChange 
             disabled={selected.length === 0}
             id="toSource"
             onClick={onTransferClick('selected', 'all')}
+            title={transferAllText}
             variant="silent"
           >
             <Icon icon="ArrowDouble" height={3} />
           </Button>
         </div>
-
         <div
           data-testid="TransferListSelected"
           className={boxClasses}
@@ -244,33 +272,61 @@ export function TransferList({ ref, className, items, defaultSelected, onChange 
           </div>
           <Scrollbar className={scrollbarClasses}>
             {selectedItems.map(item => (
-              <div key={item.key} className={itemClasses} draggable onDragStart={onDragStart('selected')} onDragEnd={onDragEnd}>
-                <TransferListListItem item={item} side="selected" onCheck={onCheck('selected')} />
+              <div
+                key={item.key}
+                className={itemContainerClasses}
+                draggable
+                onDragStart={onDragStart('selected')}
+                onDragEnd={onDragEnd}
+              >
+                <TransferListListItem
+                  item={item}
+                  side="selected"
+                  onCheck={onCheck('selected')}
+                  onShift={onShift('selected')}
+                />
               </div>
             ))}
           </Scrollbar>
         </div>
-    </div>
-      </form>
+      </div>
+    </form>
   )
 }
 
 interface TransferListListItemProps {
   item: TransferListItem;
-  side: 'available' | 'selected'
+  side: TransferListSide
   onCheck: (key: string, checked: boolean) => void;
+  onShift: (key: string, ctrl: boolean) => void;
 }
 
-function TransferListListItem({ item, side, onCheck }: TransferListListItemProps) {
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = ({ target: { id, checked } }) => {
-    onCheck(id, checked)
-  }
+function TransferListListItem({ item, side, onCheck, onShift }: TransferListListItemProps) {
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    const { id, checked } = target;
+    onCheck(id, checked);
+  };
+  const onClick: React.MouseEventHandler<HTMLInputElement> = ({ nativeEvent }) => {
+    const shift = (nativeEvent as MouseEvent).shiftKey;
+    const ctrl = (nativeEvent as MouseEvent).ctrlKey;
+    if (shift) {
+      onShift(item.key, ctrl);
+    }
+  };
+
   return (
-    <>
-      <input className="peer cursor-pointer" type="checkbox" name={side} id={item.key} onChange={onChange} />
+    <div className="w-full flex" title={item.content}>
+      <input
+        className="peer cursor-pointer"
+        id={item.key}
+        name={side}
+        onChange={onChange}
+        onClick={onClick}
+        type="checkbox"
+      />
       <label className="peer-checked:font-semibold cursor-pointer pl-2 w-full" htmlFor={item.key}>
         <Typography.Text>{item.content}</Typography.Text>
       </label>
-    </>
+    </div>
   )
 }

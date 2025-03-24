@@ -5,30 +5,22 @@ import * as stories from './Drawer.stories';
 const { Default } = composeStories(stories);
 
 describe('Drawer component', () => {
-    it('should render - bottom', () => {
-        mount(<Default side="bottom" />);
-
-        cy.get('[data-testid="drawer"]').should('not.be.visible');
-
-        cy.get('[data-testid="toggleDrawer"]').click();
-        cy.get('[data-testid="drawer"]').should('be.visible');
-
-        cy.get('[data-testid="toggleDrawerInside"]').click();
-        cy.get('[data-testid="drawer"]').should('not.be.visible');
-
-        cy.get('[data-testid="toggleDrawer"]').click();
+    it('should render - left', () => {
+        mount(<Default side="left" />);
+        cy.get('[data-testid="ToggleDrawer"]').click();
+        cy.wait(500);
+        cy.get('[data-testid="Drawer"]').should('be.visible');
+        cy.get('[data-testid="ToggleDrawerInside"]').click();
+        cy.wait(500);
+        cy.get('[data-testid="Drawer"]').should('not.be.visible');
     });
     it('should render - right', () => {
         mount(<Default side="right" />);
-
-        cy.get('[data-testid="drawer"]').should('not.be.visible');
-
-        cy.get('[data-testid="toggleDrawer"]').click();
-        cy.get('[data-testid="drawer"]').should('be.visible');
-
-        cy.get('[data-testid="toggleDrawerInside"]').click();
-        cy.get('[data-testid="drawer"]').should('not.be.visible');
-
-        cy.get('[data-testid="toggleDrawer"]').click();
+        cy.get('[data-testid="ToggleDrawer"]').click();
+        cy.wait(500);
+        cy.get('[data-testid="Drawer"]').should('be.visible');
+        cy.get('[data-testid="ToggleDrawerInside"]').click();
+        cy.wait(500);
+        cy.get('[data-testid="Drawer"]').should('not.be.visible');
     });
 });

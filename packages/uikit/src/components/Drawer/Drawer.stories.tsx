@@ -30,7 +30,7 @@ const meta = {
     closeOnBackdrop: true,
     defaultOpen: false,
     children: (isOpen, toggle, side) => (
-      <Button data-testid="toggleDrawer" onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
+      <Button data-testid="ToggleDrawer" onClick={toggle}>{isOpen ? 'Close' : 'Open'} {side} drawer</Button>
     ),
     content: (toggle, side) => (
       <>
@@ -47,8 +47,8 @@ const meta = {
         </Scrollbar>
         <Divider />
         <ButtonBar full>
-          <Button data-testid="toggleDrawerInside" variant='silent' onClick={toggle}>Close</Button>
-          <Button data-testid="toggleDrawerInside" variant='secondary'>Log in</Button>
+          <Button data-testid="ToggleDrawerInside" variant='silent' onClick={toggle}>Close</Button>
+          <Button variant='secondary'>Log in</Button>
         </ButtonBar>
       </>
     ),

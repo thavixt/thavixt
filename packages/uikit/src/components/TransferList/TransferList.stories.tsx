@@ -12,7 +12,7 @@ const createItems = (count: number) => (
   })
 )
 
-const items = createItems(10);
+const items = createItems(30);
 const defaultSelected = items.filter((_, i) => !(i % 3)).map(item => item.key);
 
 const meta = {

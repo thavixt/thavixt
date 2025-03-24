@@ -4,9 +4,9 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  retries: 10,
   video: false,
   component: {
+    retries: 2,
     specPattern: 'packages/uikit/src/components/**/*.cy.tsx',
     watchForFileChanges: true,
     screenshotsFolder: 'cypress/screenshots',
@@ -24,14 +24,14 @@ export default defineConfig({
         // root: './storybook-static',
       }),
     },
-    setupNodeEvents(on, config) {
-      on('after:spec', (spec) => {
-        console.log('spec ran', spec)
-      });
-      on('after:run', (spec) => {
-        console.log('run finished', spec)
-      });
-      return config;
-    },
+    // setupNodeEvents(on, config) {
+    //   on('after:spec', (spec) => {
+    //     console.log('spec ran', spec);
+    //   });
+    //   on('after:run', (spec) => {
+    //     console.log('run finished', spec);
+    //   });
+    //   return config;
+    // },
   },
 });
