@@ -4,8 +4,9 @@ import { Typography } from '../Typography/Typography';
 import { TextInput } from '../TextInput/TextInput';
 import { NumberInput } from '../NumberInput/NumberInput';
 import { Form } from '../Form/Form';
-import { useState } from 'react';
+import { ComponentProps, useState } from 'react';
 import { RadioInput } from '../RadioInput/RadioInput';
+import { fn } from '@storybook/test';
 
 const meta = {
   title: 'Feedback/Toast',
@@ -18,10 +19,15 @@ const meta = {
       },
     },
   },
+  args: {
+    onToastCreated: fn(),
+    side: 'right',
+    timeout: 15000,
+  },
   decorators: [
-    (Story) => (
+    (Story, {args}) => (
       <div className='h-[500px]'>
-        <ToastProvider side="right">
+        <ToastProvider {...args}>
           <Story />
         </ToastProvider>
       </div>
@@ -43,7 +49,7 @@ export const Default: Story = {
       },
     },
   },
-  render: function StoryComponent() {
+  render: function StoryComponent(args: ComponentProps<typeof ToastProvider>) {
     const { activeToasts, clearToasts, createToast } = useToast();
     const [count, setCount] = useState(0);
 
@@ -60,7 +66,7 @@ export const Default: Story = {
       setCount(count + 1);
     };
     return (
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-2 p-1">
         <Form
           className='flex flex-col space-y-1'
           onReset={clearToasts}
@@ -75,7 +81,7 @@ export const Default: Story = {
             defaultValue={`Important message\n(and a small note)`}
           />
           <NumberInput
-            defaultValue={15_000}
+            defaultValue={args.timeout}
             label="Duration (ms)"
             min={1_000}
             name="toastDuration"

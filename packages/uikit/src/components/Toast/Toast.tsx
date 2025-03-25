@@ -11,7 +11,6 @@ import {
 import { noop } from "../../common/utils";
 
 const ANIMATION_DELAY = 150;
-
 const TOAST_COLORS: Record<ToastType, string> = {
   info: 'border-sky-400 bg-slate-200 dark:bg-slate-700',
   success: 'border-green-400 !bg-green-100',
@@ -37,6 +36,7 @@ export interface ToastContextType {
   }) => void;
   removeToast: (id: string) => void;
   clearToasts: () => void;
+  side: 'left' | 'right',
 }
 
 export const ToastContext = createContext<ToastContextType>({
@@ -44,6 +44,7 @@ export const ToastContext = createContext<ToastContextType>({
   createToast: noop,
   removeToast: noop,
   clearToasts: noop,
+  side: 'right',
 });
 
 /* provider */
@@ -53,13 +54,15 @@ interface ToastProviderProps {
    * `left` | `right`
    */
   side?: 'left' | 'right';
+  onToastCreated?: (toastId: string) => void;
+  timeout?: number;
 }
 
-export function ToastProvider({ children, side = 'right' }: PropsWithChildren<ToastProviderProps>) {
+export function ToastProvider({ children, side = 'right', onToastCreated, timeout = 15000 }: PropsWithChildren<ToastProviderProps>) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   const createToast = ({
-    content, type = 'info', duration = 15_000, onClick,
+    content, type = 'info', duration = timeout, onClick,
   }: {
     content: ReactNode; type?: ToastType; duration?: number; onClick?: () => void;
   }) => {
@@ -69,12 +72,13 @@ export function ToastProvider({ children, side = 'right' }: PropsWithChildren<To
       {
         id,
         content,
-        expires: Date.now() + duration,
+        expires: Date.now() + timeout,
         onClick,
         type,
       },
     ]);
-    setTimeout(() => setToasts(prev => prev.filter(toast => toast.id !== id)), duration)
+    setTimeout(() => setToasts(prev => prev.filter(toast => toast.id !== id)), duration);
+    onToastCreated?.(id);
     return id;
   };
 
@@ -101,6 +105,7 @@ export function ToastProvider({ children, side = 'right' }: PropsWithChildren<To
         createToast,
         removeToast,
         clearToasts,
+        side,
       }}
     >
       {children}
@@ -114,7 +119,7 @@ export function ToastProvider({ children, side = 'right' }: PropsWithChildren<To
 /* component rendered by the context */
 
 function ToastMessage({ toast }: { toast: Toast }) {
-  const { removeToast } = useContext(ToastContext);
+  const { removeToast, side } = useContext(ToastContext);
   const [visible, setVisible] = useState(false);
 
   const onClick = () => {
@@ -134,11 +139,13 @@ function ToastMessage({ toast }: { toast: Toast }) {
 
   return (
     <div
+      data-testid={`Toast ${toast.type}Toast`}
       className={classNames(
         "transition-all duration-350 relative min-w-[100px] w-fit max-w-[500px] shadow-md",
         "p-2 mt-2 cursor-pointer select-none border-2 rounded-md",
         {
-          'scale-75 opacity-0 left-64': !visible,
+          'scale-75 opacity-0 left-64': !visible && side === 'right',
+          'scale-75 opacity-0 -left-64': !visible && side === 'left',
           'scale-100 opacity-100 left-0': visible,
         },
         TOAST_COLORS[toast.type],
