@@ -32,7 +32,7 @@ export function RadioInput({ required, ref, ...props }: RadioInputProps) {
     <fieldset data-testid="RadioInput" onChange={onChange} ref={ref}>
       <div className={classes}>
         <WithLabel required={required} label={props.label} className="items-start">
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-0.5">
             {props.values.map(value => (
               <Radio
                 checked={props.value === value ? true : undefined}
@@ -60,17 +60,22 @@ interface RadioProps extends Partial<HTMLInputElement> {
 
 function Radio(props: RadioProps) {
   const classes = classNames(
-    'flex space-x-2',
+    'flex space-x-1.5 items-center',
     props.className,
+  );
+  const radioClasses = classNames(
+    'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600',
   );
 
   const id = `${props.name}_${props.value}-radio`;
 
+  // TODO: tabindex, accessibility
   return (
     <div className={classes}>
       <input
         data-testid={`RadioInput_${props.value}`}
         checked={props.checked}
+        className={radioClasses}
         defaultChecked={props.defaultChecked}
         id={id}
         name={props.name}
@@ -79,7 +84,7 @@ function Radio(props: RadioProps) {
         type="radio"
         value={props.value}
       />
-      <label className="min-w-24" htmlFor={id}>{props.value}</label>
+      <label className="min-w-24 mb-0.5" htmlFor={id}>{props.value}</label>
     </div>
   )
 }

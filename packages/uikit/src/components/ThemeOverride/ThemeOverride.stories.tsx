@@ -34,7 +34,7 @@ const colors = (
       <div title="white" className='border-white' />
     </div>
     <ButtonBar>
-      <Button variant='danger'>danger button (bg-red-500/600)</Button>
+      <Button variant='danger'>danger button (bg-red-500/600/700)</Button>
       <div className='border-2 rounded-md px-2 border-neutral-500'>
         <Typography.Text>border-neutral-500</Typography.Text>
       </div>
@@ -67,8 +67,9 @@ export const ColorOverrideExample: Story = {
       'cyan-500': 'var(--color-red-500)',
       'lime-500': 'rgb(250, 50, 50)',
       'neutral-500': 'limegreen',
-      'red-500': '#B0B',
-      'red-600': '#B7B',
+      'red-500': 'red',
+      'red-600': 'blue',
+      'red-700': 'green',
     },
   },
   render: function StoryComponent(args: ComponentProps<typeof ThemeOverride>) {

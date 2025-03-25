@@ -43,7 +43,7 @@ export const Default: Story = {
     return (
       <div className='flex flex-col justify-between h-[500px]'>
         <div>
-          <div>{loaded ? 'Already loaded' : 'Scroll to the bottom'}</div>
+          <Typography.Body>{loaded ? 'Already loaded' : 'Scroll to the bottom'}</Typography.Body>
           <Button
             onClick={() => {
               setLoaded(false);

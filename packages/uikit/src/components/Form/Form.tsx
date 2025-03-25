@@ -3,18 +3,20 @@ import { PropsWithChildren, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { Button } from "../Button/Button";
 import { Divider } from "../Divider/Divider";
-import { Icon } from "../Icon/Icon";
+import { ButtonBar } from "../ButtonBar/ButtonBar";
 
 export interface FormProps extends PropsWithChildren<Omit<CommonProps<HTMLFormElement>, 'onSubmit'>> {
   border?: boolean;
-  cancelText?: string,
-  resetText?: string,
-  submitText?: string,
+  cancelText?: string;
+  resetText?: string;
+  submitText?: string;
+  /* allow submitting multiple times - do not disable on a successful submission */
+  submitMultiple?: boolean;
 
   onCancel?: () => void | Promise<void>,
-  onSubmit?: (values: Record<string, FormDataEntryValue>) => void | Promise<void>,
-  onSubmitSuccess?: (values: Record<string, FormDataEntryValue>) => void | Promise<void>,
-  onSubmitError?: (error: Error, values: Record<string, FormDataEntryValue>) => void | Promise<void>,
+  onSubmit?: (values: Record<string, number | string>) => void | Promise<void>;
+  onSubmitSuccess?: (values: Record<string, number | string>) => void | Promise<void>;
+  onSubmitError?: (error: Error, values: Record<string, number | string>) => void | Promise<void>;
 }
 
 export function Form({
@@ -22,6 +24,7 @@ export function Form({
   cancelText = 'Cancel',
   resetText = 'Reset',
   submitText = 'Submit',
+  submitMultiple,
   children,
   className,
   ref,
@@ -29,6 +32,7 @@ export function Form({
   onSubmit: providedOnSubmit,
   onSubmitSuccess,
   onSubmitError,
+  ...props
 }: FormProps) {
   const formName = useRef(`dialogForm_${crypto.randomUUID().slice(0, 8)}`);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +42,8 @@ export function Form({
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const formElement = document.forms.namedItem(formName.current)!;
-    const formData = Object.fromEntries(new FormData(formElement).entries());
+    // TODO: fix type - form entries / values
+    const formData = Object.fromEntries(new FormData(formElement).entries()) as Record<string, string | number>;
     try {
       setError(null);
       setLoading(true);
@@ -58,7 +63,6 @@ export function Form({
       setLoading(false);
       return;
     }
-    setError(null);
   }
 
   const onCancel = () => {
@@ -67,13 +71,14 @@ export function Form({
     onFormCancel?.();
   };
 
-  const onReset: React.FormEventHandler<HTMLFormElement> = () => {
+  const onReset: React.FormEventHandler<HTMLFormElement> = (e) => {
+    props.onReset?.(e);
     setError(null);
     setSuccess(false);
-  }
+  };
 
-  const disabled = loading || success;
-
+  const successLock = submitMultiple ? false : success;
+  const disabled = loading || successLock;
   return (
     <form
       data-testid="Form"
@@ -83,8 +88,9 @@ export function Form({
       method="dialog"
       onSubmit={onSubmit}
       onReset={onReset}
+      {...props}
     >
-      <fieldset disabled={disabled}>
+      <fieldset disabled={loading}>
         <div className="flex flex-col space-y-4">
           <div className="flex flex-col space-y-2">
             {children}
@@ -95,23 +101,19 @@ export function Form({
               <p className="dark:text-red-400 text-red-700">{error}</p>
             </>
           ) : null}
-          <div className="flex space-x-2 justify-between">
-            <div className="flex space-x-2">
-              {onFormCancel ? (
-                <Button variant="default" onClick={onCancel} disabled={disabled}>
-                  {cancelText}
-                </Button>
-              ) : null}
-              <Button variant="default" type="reset" disabled={disabled}>
-                {resetText}
+          <ButtonBar>
+            {onFormCancel ? (
+              <Button variant="default" onClick={onCancel} disabled={disabled}>
+                {cancelText}
               </Button>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Button type="submit" variant="primary" loading={loading} disabled={disabled}>
-                {success ? <Icon icon="Check" /> : submitText}
-              </Button>
-            </div>
-          </div>
+            ) : null}
+            <Button variant="default" type="reset" disabled={loading}>
+              {resetText}
+            </Button>
+            <Button type="submit" variant="primary" loading={loading} success={success} disabled={disabled}>
+              {submitText}
+            </Button>
+          </ButtonBar>
         </div>
       </fieldset>
     </form>

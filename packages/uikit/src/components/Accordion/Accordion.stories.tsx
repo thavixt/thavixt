@@ -16,11 +16,8 @@ const meta = {
     return (
       <Accordion {...args}>
         <AccordionTitle>
-          <Typography.Text>Additional details</Typography.Text>
+          <Typography.Text>Implementation details</Typography.Text>
         </AccordionTitle>
-        <AccordionOpenTitle>
-          <Typography.Text>Details about the implementation of xyz</Typography.Text>
-        </AccordionOpenTitle>
         <AccordionBody>
           <Typography.Subtitle>Subtitle of this block of text</Typography.Subtitle>
           <Typography.Body>

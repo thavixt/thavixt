@@ -17,7 +17,7 @@ export const TypographyStyles: Record<TypographyType, string> = {
   Caption: classNames(commonStyles, 'block font-sans text-lg font-thin leading-12'),
   Body: classNames(commonStyles, 'block font-sans text-base text-pretty leading-6 pb-2'),
   Text: classNames(commonStyles, 'inline font-sans text-pretty'),
-  Label: classNames(commonStyles, 'inline font-sans text-sm font-light leading-6'),
+  Label: classNames(commonStyles, 'inline font-sans text-normal font-light leading-6'),
   Button: 'inline font-sans text-sm font-semibold',
   Code: 'inline font-mono bg-slate-600 dark:bg-slate-300 text-slate-100 dark:text-slate-800 px-1 py-0.5 rounded text-base',
 }

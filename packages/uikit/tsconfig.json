@@ -22,6 +22,7 @@
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
 
+		"declarationMap": true,
     "types": ["cypress", "cypress-real-events", "@testing-library/jest-dom"]
 	},
 	"include": ["./src/**/*"],

@@ -2,11 +2,11 @@ import classnames from "classnames";
 import { Typography } from "../Typography/Typography";
 
 export interface AvatarProps {
-  name: string;
   src: string;
+  name?: string;
   size?: "sm" | "md" | "lg" | "xl";
   status?: "online" | "offline" | "busy" | "away";
-  onClick?: (name: string) => void;
+  onClick?: (name?: string) => void;
 }
 
 export function Avatar({ src, name, size = 'sm', status = 'away', onClick }: AvatarProps) {
@@ -23,7 +23,7 @@ export function Avatar({ src, name, size = 'sm', status = 'away', onClick }: Ava
           alt={name}
           onClick={() => onClick?.(name)}
           className={classnames(
-            "rounded-full object-cover border-2 border-gray-300",
+            "rounded-full object-cover border-2 border-gray-400 dark:border-gray-300",
             {
               "w-8 h-8 text-xs": size === 'sm',
               "w-12 h-12 text-sm": size === 'md',
@@ -35,7 +35,7 @@ export function Avatar({ src, name, size = 'sm', status = 'away', onClick }: Ava
         {status && (
           <span
             className={classnames(
-              "absolute bottom-0 left-8 size-4 rounded-full border-2 border-white",
+              "absolute bottom-0 inset-x-2/3 size-4 rounded-full border-2 border-white",
               {
                 "bg-green-500": status === "online",
                 "bg-gray-400": status === "offline",

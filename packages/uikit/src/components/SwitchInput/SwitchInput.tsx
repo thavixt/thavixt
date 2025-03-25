@@ -29,7 +29,7 @@ export function SwitchInput({ ref, label, onChange: providedOnChange, name, requ
   );
   const switchKnobClasses = classNames(
     'w-5 h-5 z-100 pointer-events-none absolute -top-0.5 -left-0.5 transition-all',
-    'rounded-[50%] bg-slate-400 peer-checked:left-[14px] peer-checked:bg-blue-400 peer-disabled:bg-slate-400 hover:shadow-lg'
+    'rounded-[50%] bg-slate-400 peer-checked:left-[14px] peer-checked:bg-blue-600 peer-disabled:bg-slate-400 hover:shadow-lg'
   );
 
   const id = `${name}-switch`;

@@ -43,7 +43,7 @@ export const Vertical: Story = {
 
 export const Nested: Story = {
   args: {
-    className: 'border-none bg-transparent',
+    className: 'border-none bg-red-500',
     collapse: 10,
     split: 35,
   },

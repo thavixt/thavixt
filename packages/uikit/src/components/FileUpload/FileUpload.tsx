@@ -114,7 +114,7 @@ export function FileUpload({ multiple = false, accept, onAction, disabled, actio
         },
       )}
     >
-      {!selectedFiles.length ? (
+      {(multiple || !selectedFiles.length) ? (
         <label htmlFor="file-upload">
           <Typography.Label className={cursorClass}>
             Click to browse or drop files here

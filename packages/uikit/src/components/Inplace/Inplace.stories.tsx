@@ -11,7 +11,10 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Inplace is used to replace the content of an element on click - useful to create interactive data display elements.',
+        component: [
+          'Inplace is used to replace the content of an element on click - ex. to create interactive data display elements.',
+          '@TODO: actually do this..'
+        ].join('\n'),
       },
     },
   },
@@ -30,7 +33,7 @@ export const Default: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Inplace>) {
     const [value, setValue] = useState('something');
     return (
-      <Inplace {...args} replacement={<TextInput name='q' defaultValue={value} onEnter={v => setValue(v)} />} />
+      <Inplace {...args} replacement={<TextInput silent name='q' defaultValue={value} onEnter={v => setValue(v)} />} />
     )
   },
 };

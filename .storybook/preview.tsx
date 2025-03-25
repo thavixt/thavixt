@@ -1,3 +1,4 @@
+import React from 'react';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import type { Preview } from "@storybook/react";
 
@@ -12,6 +13,13 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div className='mx-2 my-4'>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const decorators = [

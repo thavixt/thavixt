@@ -10,6 +10,7 @@ import {
 } from "react";
 import { Divider } from "../Divider/Divider";
 import { getSlotElements } from "../../common/utils";
+import { Typography } from "../Typography/Typography";
 
 export type TabsHandle = RefObject<HTMLDivElement | null> & {
   nextTab: () => void;
@@ -26,7 +27,7 @@ export interface TabsProps extends PropsWithChildren {
 export function Tabs({ defaultTabIndex = 0, ref, children, ...props }: TabsProps) {
   const [activeTab, setActiveTab] = useState<number>(defaultTabIndex);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const tabs = getSlotElements(children, Tab);
   const tabTitles = tabs.map(tab => (tab.props as TabProps).title);
 
@@ -61,7 +62,7 @@ export function Tabs({ defaultTabIndex = 0, ref, children, ...props }: TabsProps
             onClick={() => setActiveTab(i)}
             title={tabTitle}
           >
-            {tabTitle}
+            <Typography.Text>{tabTitle}</Typography.Text>
           </div>
         )
       })}

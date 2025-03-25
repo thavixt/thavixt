@@ -4,6 +4,7 @@ import { Button } from "../Button/Button";
 import { themedBackgroundClasses } from "../../common/theme";
 import { ClickTarget } from "../ClickTarget/ClickTarget";
 import { Typography } from "../Typography/Typography";
+import { Avatar, AvatarProps } from "../Avatar/Avatar";
 
 export interface NavbarItem {
   key: string;
@@ -15,16 +16,16 @@ export interface NavbarItem {
 export interface NavbarProps {
   className?: string;
   brandName: string;
-  logo: string;
-  logoURL?: string,
+  image: string | Pick<AvatarProps, 'src' | 'status'>;
+  imageHref?: string,
   navItems?: NavbarItem[];
 }
 
 export function NavigationBar({
   className,
   brandName,
-  logo,
-  logoURL,
+  image,
+  imageHref,
   navItems = [],
 }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,17 +42,25 @@ export function NavigationBar({
         <div className="mx-auto px-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              {logoURL ? (
-                <a href={logoURL}>
-                  <img src={logo} alt="Logo" className="h-8 w-8" />
+              {imageHref ? (
+                <a href={imageHref}>
+                  {typeof image === "string" ? (
+                    <img src={image} alt="Brand image" className="h-8 w-8" />
+                  ) : (
+                    <Avatar {...image} />
+                  )}
                 </a>
               ) : (
-                <img src={logo} alt="Logo" className="h-8 w-8" />
+                typeof image === "string" ? (
+                  <img src={image} alt="Brand image" className="h-8 w-8" />
+                ) : (
+                  <Avatar {...image} />
+                )
               )}
               <Typography.Subtitle className="truncate">{brandName}</Typography.Subtitle>
             </div>
 
-            <div className="relative hidden md:block">
+            <div className="relative hidden md:block space-x-2">
               {navItems.map((item) => (
                 <Button
                   key={item.key}

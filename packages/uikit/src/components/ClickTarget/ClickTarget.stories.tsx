@@ -17,7 +17,6 @@ const meta = {
     const [info, setInfo] = useState('');
     return (
       <div className='flex flex-col space-y-2'>
-        <Button data-testid="regular-button">regular button</Button>
         <ClickTarget
           {...args}
           onClickInside={() => {

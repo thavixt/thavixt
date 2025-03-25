@@ -1,5 +1,3 @@
-// @ts-expect-error i guess i could just do proper file imports but meh
-import logo from './story-logo.png?url';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { ComponentProps } from 'react';
@@ -10,13 +8,6 @@ const meta = {
   title: 'Navigation/Navigation bar',
   component: NavigationBar,
   tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component: 'Check the `Default` story for a better demonstration.',
-      },
-    },
-  },
   decorators: [
     (Story) => (
       <div className='h-[500px]'>
@@ -28,35 +19,44 @@ const meta = {
     brandName: '@thavixt/uikit',
     navItems: [
       {
-        key: 'install',
-        label: 'Installation',
+        key: 'profile',
+        label: 'My profile',
         onClick: fn(),
       },
       {
-        key: 'docs',
-        label: 'Documentation',
+        key: 'friends',
+        label: 'Friends',
         onClick: fn(),
       },
       {
-        key: 'examples',
-        label: 'Example usage',
+        key: 'events',
+        label: 'Events nearby',
         onClick: fn(),
       },
       {
-        key: 'pricing',
-        label: 'Pricing and licensing',
+        key: 'prefs',
+        label: 'Preferences',
+        onClick: fn(),
+      },
+      {
+        key: 'help',
+        label: 'Help center',
         onClick: fn(),
       },
     ],
-    logo: logo,
-    logoURL: '/?path=/docs/navigation-navigation-bar--docs',
+    // image: "https://pc.net/img/terms/avatar.svg",
+    image: {
+      src: "https://pc.net/img/terms/avatar.svg",
+      status: "online",
+    },
+    imageHref: '/?path=/docs/navigation-navigation-bar--docs',
   },
   render: function StoryComponent(args: ComponentProps<typeof NavigationBar>) {
     return (
       <div>
         <NavigationBar {...args} />
         <div className="flex flex-col space-y-2">
-          {new Array(30).fill(0).map((_, i) => (
+          {new Array(50).fill(0).map((_, i) => (
             <SkeletonListItem key={i} />
           ))}
         </div>

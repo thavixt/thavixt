@@ -89,7 +89,7 @@ export const Example: Story = {
           <T.Body>
             Please provide the needed information about your pet. This assumes you currently keep the aformentioned animal in your place of residence.
           </T.Body>
-          <Form border onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <TextInput required label="Name" name='other' placeholder="Your pet's name" />
             <NumberInput required defaultValue={2} label='Age' name='age' placeholder='#' />
             <RadioInput required defaultValue='Cat' label='Species' name='species' values={['Cat', 'Dog']} />

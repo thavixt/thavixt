@@ -14,12 +14,14 @@ export interface TextInputProps extends Omit<CommonProps<HTMLInputElement | HTML
   required?: boolean;
   type?: 'text' | 'search' | 'textarea',
   value?: string;
+  silent?: boolean;
   
   onChange?: (value: string) => void;
   onEnter?: (value: string) => void;
 }
 
 export function TextInput({
+  silent,
   disabled,
   label,
   name,
@@ -34,8 +36,7 @@ export function TextInput({
 }: TextInputProps) {
   const classes = classNames(
     'px-2 w-full',
-    'border rounded-sm',
-    themedInputClasses,
+    silent ? "bg-transparent border-b-2 border-gray-400 dark:border-gray-300" : themedInputClasses,
     {
       'py-1 resize-none': type === 'textarea',
     },

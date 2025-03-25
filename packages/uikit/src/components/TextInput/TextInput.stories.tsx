@@ -9,7 +9,8 @@ const meta = {
   args: {
     name: 'input',
     label: 'Input',
-    defaultValue: 'something about that',
+    placeholder: 'something about that',
+    silent: false,
     onChange: fn(),
   }
 } satisfies Meta<typeof TextInput>;
@@ -21,6 +22,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     type: 'text',
+  }
+};
+
+export const Silent: Story = {
+  args: {
+    type: 'text',
+    silent: true,
   }
 };
 

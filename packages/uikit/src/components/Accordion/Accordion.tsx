@@ -1,19 +1,21 @@
 import classNames from "classnames";
 import { cloneElement, HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
-import { themedTextClasses } from "../../common/theme";
+import { themedBackgroundClasses, themedTextClasses } from "../../common/theme";
 import { getSlotElements } from "../../common/utils";
 
 export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean;
   open?: boolean;
-  /* controllable / AccordionGroup child */
   onOpen?: (open: boolean) => void;
-  inert?: boolean;
+  /**
+   * DO NOT USE - should be a separate component instead
+   */
+  groupItem?: boolean;
 }
 
 
-export function Accordion({ className, children, defaultOpen, ref, onOpen, inert, open: inertOpen, ...props }: AccordionProps) {
+export function Accordion({ className, children, defaultOpen, ref, onOpen, groupItem = false, open: inertOpen, ...props }: AccordionProps) {
   const [open, setOpen] = useState(defaultOpen);
   const id = useRef(props.id ?? crypto.randomUUID().slice(0, 4));
 
@@ -22,14 +24,14 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, inert
   const openTitleSlot = getSlotElements(children, AccordionOpenTitle)[0];
 
   useEffect(() => {
-    if (inert) {
+    if (groupItem) {
       setOpen(inertOpen);
     }
-  }, [inert, inertOpen]);
+  }, [groupItem, inertOpen]);
 
   const classes = classNames(
     'px-4 py-2 flex flex-col align-center',
-    themedTextClasses,
+    groupItem ? themedTextClasses : themedBackgroundClasses,
     className,
   );
   const svgClasses = classNames(
