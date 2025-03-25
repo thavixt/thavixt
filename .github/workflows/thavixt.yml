@@ -1,5 +1,14 @@
 name: thavixt
-on: [workflow_dispatch, push]
+on:
+  workflow_dispatch:
+    inputs:
+      parameter:
+        description: thavixt workflow triggered on GitHub UI
+  push:
+    branches:
+    - 'master' # only on master branch
+    tags-ignore:
+      - '**' # dont trigger extra runs on tag creation
 jobs:
   # build all packages
   build:
