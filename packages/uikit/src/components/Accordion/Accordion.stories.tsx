@@ -18,6 +18,9 @@ const meta = {
         <AccordionTitle>
           <Typography.Text>Implementation details</Typography.Text>
         </AccordionTitle>
+        <AccordionOpenTitle>
+          <Typography.Text>Close implementation details</Typography.Text>
+        </AccordionOpenTitle>
         <AccordionBody>
           <Typography.Subtitle>Subtitle of this block of text</Typography.Subtitle>
           <Typography.Body>
