@@ -43,7 +43,7 @@ jobs:
       # run vitest
       - run: npm run test
 
-  cypress-uikit:
+  uikit-cypress:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -60,7 +60,7 @@ jobs:
       - name: Run Cypress component testing for uikit
         run: npm run cyct:run
 
-  chromatic-uikit:
+  uikit-chromatic:
     needs: build
     runs-on: ubuntu-latest
     steps:
