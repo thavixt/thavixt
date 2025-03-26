@@ -51,10 +51,10 @@ export function Drawer({
     themedBackgroundClasses,
   );
   const backdropClasses = classNames(
-    'fixed top-0 left-0 size-full bg-black transition-opacity z-1999',
+    'fixed top-0 left-0 size-full bg-black transition-opacity z-1999 pointer-events-none',
     {
       'opacity-25': isOpen,
-      'opacity-0 pointer-events-none': !isOpen,
+      'opacity-0': !isOpen,
     },
   );
 

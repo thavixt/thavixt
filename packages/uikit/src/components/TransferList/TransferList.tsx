@@ -7,6 +7,12 @@ import { Typography } from "../Typography/Typography";
 import { CommonProps } from "../../common/commonProps";
 import { themedBackgroundClasses } from "../../common/theme";
 
+/**
+ * TODO: should split this big component into smaller files
+ * - split the rendered components?
+ * - and/or create a hook for the logic
+ */
+
 const DRAG_IMAGE_ID = 'off_canvas_drag_image_id';
 type TransferListSide = 'available' | 'selected';
 
@@ -25,6 +31,16 @@ function setCheckboxes(items: TransferListItem[], checked: boolean) {
     }
   });
 }
+
+const onDragEnd: React.DragEventHandler<HTMLDivElement> = (e) => {
+  e.preventDefault();
+  clearDragImage();
+};
+
+const onDragOver: React.DragEventHandler<HTMLDivElement> = (e) => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = "move";
+};
 
 export type TransferListItemKey = string;
 
@@ -111,16 +127,6 @@ export function TransferList({
     document.body.appendChild(ghostElement);
     e.dataTransfer.setDragImage(ghostElement, 0, 0);
   }, [getItems]);
-
-  const onDragEnd: React.DragEventHandler<HTMLDivElement> = useCallback((e) => {
-    e.preventDefault();
-    clearDragImage();
-  }, []);
-
-  const onDragOver: React.DragEventHandler<HTMLDivElement> = useCallback((e) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-  }, []);
 
   const onDrop: (side: TransferListSide) => React.DragEventHandler<HTMLDivElement> = useCallback((side) => (e) => {
     e.preventDefault();

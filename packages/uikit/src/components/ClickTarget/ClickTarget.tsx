@@ -17,10 +17,10 @@ export function ClickTarget({ onClickOutside, onClickInside, children }: ClickOu
 
 function useClickOutside(ref: React.RefObject<HTMLDivElement | null>, onClickOutside: () => void, onClickInside?: () => void) {
   useEffect(() => {
-    /**
-     * Alert if clicked on outside of element
-     */
     const handleClickOutside: EventListener = (event) => {
+      if ((event as MouseEvent).button !== 0) {
+        return;
+      }
       if (ref.current && !ref.current.contains(event.target as Node)) {
         onClickOutside();
         return;
@@ -29,11 +29,8 @@ function useClickOutside(ref: React.RefObject<HTMLDivElement | null>, onClickOut
         onClickInside();
       }
     }
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClickInside, onClickOutside, ref]);
 }
