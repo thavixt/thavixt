@@ -1,0 +1,62 @@
+.Box {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  border-radius: 0.5rem;
+}
+
+.Box--card {
+  box-shadow: 0 4px 6px -1px var(--gray-1), 0 2px 4px -2px var(--gray-1);
+  background-color: var(--slate-1);
+}
+[data-theme=dark] .Box--card {
+  box-shadow: 0 4px 6px -1px var(--gray-4), 0 2px 4px -2px var(--gray-4);
+  background-color: var(--slate-3);
+}
+
+.Box--paper {
+  background-color: var(--slate-1);
+  border: 1px solid var(--gray-1);
+}
+[data-theme=dark] .Box--paper {
+  background-color: var(--slate-3);
+  border: 1px solid var(--gray-3);
+}
+
+.Box__Header {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+.Box__Content {
+  padding: 1rem;
+}
+.Box__Footer {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Box__Header,
+.Box__Footer {
+  background-color: var(--slate-2);
+  padding: 0.5rem 1rem;
+}
+[data-theme=dark] .Box__Header,
+[data-theme=dark] .Box__Footer {
+  background-color: var(--slate-4);
+}
+
+.Box--sm {
+  max-width: 24rem;
+}
+.Box--md {
+  max-width: 32rem;
+}
+.Box--lg {
+  max-width: 42rem;
+}
+.Box--full {
+  min-width: 100%;
+}

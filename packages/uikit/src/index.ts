@@ -2,7 +2,7 @@ export { Accordion, type AccordionProps } from './components/Accordion/Accordion
 export { AccordionGroup, type AccordionGroupProps } from './components/AccordionGroup/AccordionGroup'
 export { Avatar, type AvatarProps } from './components/Avatar/Avatar'
 export { Badge, type BadgeProps } from './components/Badge/Badge'
-export * from './components/Box/Box'
+export { Box, type BoxProps } from './components/Box/Box'
 export * from './components/Breadcrumbs/Breadcrumbs'
 export * from './components/Button/Button'
 export * from './components/ButtonBar/ButtonBar'

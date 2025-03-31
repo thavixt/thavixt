@@ -1,3 +1,14 @@
+:root {
+  --slate-1: #eaf0f7;
+  --slate-2: #d1dae6;
+  --slate-3: #586d85;
+  --slate-4: #415972;
+  --gray-1: #b6bcc4;
+  --gray-2: #94979b;
+  --gray-3: #5d5e5f;
+  --gray-4: #414244;
+}
+
 .themedText {
   @apply text-slate-800 dark:text-slate-50;
 }
