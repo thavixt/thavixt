@@ -3,7 +3,7 @@ export { AccordionGroup, type AccordionGroupProps } from './components/Accordion
 export { Avatar, type AvatarProps } from './components/Avatar/Avatar'
 export { Badge, type BadgeProps } from './components/Badge/Badge'
 export { Box, type BoxProps } from './components/Box/Box'
-export * from './components/Breadcrumbs/Breadcrumbs'
+export { Breadcrumbs, type BreadcrumbProps } from './components/Breadcrumbs/Breadcrumbs'
 export * from './components/Button/Button'
 export * from './components/ButtonBar/ButtonBar'
 export * from './components/ClickTarget/ClickTarget'
