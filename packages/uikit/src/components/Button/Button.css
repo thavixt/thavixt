@@ -1,0 +1,74 @@
+.Button {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px var(--gray-1), 0 2px 4px -2px var(--gray-1);
+  color: var(--white);
+  cursor: pointer;
+  height: fit-content;
+  min-width: 16px;
+  padding: 0.25rem 0.5rem;
+  transition-duration: 250ms;
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+  user-select: none;
+}
+
+.Button--default {
+  color: var(--gray-4);
+  background-color: var(--slate-2);
+}
+
+.Button--primary {
+  background-color: var(--green-2);
+}
+
+.Button--secondary {
+  background-color: var(--indigo-2);
+}
+
+.Button--danger {
+  background-color: var(--red-2);
+}
+
+.Button--silent {
+  color: var(--gray-4);
+  text-decoration-line: underline;
+  box-shadow: none;
+}
+[data-theme=dark] .Button--silent {
+  color: var(--white);
+}
+.Button--silent:hover {
+  background-color: var(--slate-2);
+  color: var(--gray-4);
+}
+
+.Button--icon {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  padding: 0.25rem;
+}
+
+.Button--loading,
+.Button--disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.Button__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Button__content > :not(:last-child) {
+  margin-inline-end: 0.25rem;
+}
+
+.Button .Loader,
+.Button .Icon {
+  color: currentColor;
+}
+
+.Button:not(.Button--disabled):hover,
+.Button:not(.Button--loading):hover {
+  scale: 0.95;
+}
+

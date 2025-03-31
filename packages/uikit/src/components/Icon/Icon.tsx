@@ -12,7 +12,7 @@ export interface IconProps extends HTMLAttributes<HTMLDivElement> {
 
 export function Icon({ height = 3, className, ...props }: IconProps) {
   return (
-    <div data-testid="Icon" className={classNames(className ?? 'themedText', { 'cursor-pointer': props.onClick })} {...props}>
+    <div data-testid="Icon" className={classNames(className ?? 'Icon themedText', { 'cursor-pointer': props.onClick })} {...props}>
       {createElement(IconList[props.icon], { height })}
     </div>
   );

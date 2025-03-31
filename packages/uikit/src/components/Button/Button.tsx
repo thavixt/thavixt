@@ -4,21 +4,33 @@ import { CommonProps } from "../../common/commonProps";
 import { Loader } from "../Loader/Loader";
 import { Typography } from "../Typography/Typography";
 import { Icon, IconProps } from "../Icon/Icon";
+import "./Button.css";
 
 export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'danger' | 'silent';
 
 export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonElement>>, HTMLAttributes<HTMLButtonElement> {
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  variant?: ButtonVariant,
-  type?: HTMLButtonElement['type'],
-  loading?: boolean;
-  success?: boolean;
   disabled?: boolean;
   icon?: IconProps;
+  loading?: boolean;
+  success?: boolean;
+  type?: HTMLButtonElement['type'],
+  variant?: ButtonVariant,
+
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export function Button({
-  disabled, loading, success, ref, onClick, type = 'button', className, children, variant = 'default', icon, ...props
+  children, 
+  className, 
+  disabled, 
+  icon,
+  loading, 
+  ref, 
+  success, 
+  type = 'button', 
+  variant = 'default', 
+  onClick, 
+  ...props
 }: ButtonProps) {
   return (
     <button
@@ -29,54 +41,36 @@ export function Button({
       disabled={disabled || loading}
       className={
         classNames(
-          'min-w-4 h-fit w-fit px-2 py-1 transition-colors duration-150 select-none',
-          {
-            'cursor-pointer': !(disabled || loading),
-            'cursor-default opacity-30 select-none': disabled || loading,
-          },
-          {
-            'text-slate-100': variant !== 'default',
-            'text-slate-700': variant === 'default',
-            'text-slate-700 dark:text-slate-100': variant === 'silent',
-          },
-          {
-            'bg-gray-200 dark:bg-gray-300': variant === 'default',
-            'bg-green-500 dark:bg-green-600': variant === 'primary',
-            'bg-indigo-500 dark:bg-indigo-600': variant === 'secondary',
-            'bg-red-500 dark:bg-red-600': variant === 'danger',
-          },
-          {
-            'hover:bg-gray-300 active:bg-gray-400': variant === 'default' && !(disabled || loading),
-            'dark:hover:bg-gray-400 dark:active:bg-gray-500': variant === 'default' && !(disabled || loading),
-          },
-          {
-            'hover:bg-green-600 active:bg-green-700': variant === 'primary' && !(disabled || loading),
-            'dark:hover:bg-green-700 dark:active:bg-green-800': variant === 'primary' && !(disabled || loading),
-          },
-          {
-            'hover:bg-indigo-600 active:bg-indigo-700': variant === 'secondary' && !(disabled || loading),
-            'dark:hover:bg-indigo-700 dark:active:bg-indigo-800': variant === 'secondary' && !(disabled || loading),
-          },
-          {
-            'hover:bg-red-600 active:bg-red-700': variant === 'danger' && !(disabled || loading),
-            'dark:hover:bg-red-700 dark:active:bg-red-800': variant === 'danger' && !(disabled || loading),
-          },
-          {
-            'hover:underline': !(disabled || loading) && variant === 'silent',
-          },
-          {
-            'rounded-lg': !icon,
-            'aspect-square rounded-[50%]': icon,
-          },
+          'Button',
+          disabled && 'Button--disabled',
+          loading && 'Button--loading',
+          icon && 'Button--icon',
+          variant === 'default' && 'Button--default',
+          variant === 'primary' && 'Button--primary',
+          variant === 'secondary' && 'Button--secondary',
+          variant === 'danger' && 'Button--danger',
+          variant === 'silent' && 'Button--silent',
           className,
         )
       }
       {...props}
     >
-      <div className="flex space-x-1 items-center justify-center">
-        {icon ? <Icon {...{height: 2.5, className:"text-current", ...icon}} /> : <Typography.Button>{children}</Typography.Button>}
-        {(!icon && success) ? <Icon height={2} className="text-current" icon="Check" /> : null}
-        {(!icon && loading) ? <Loader height={4} className="text-current" type="TubeSpinner" /> : null}
+      <div className="Button__content">
+        {
+          icon
+            ? <Icon {...{ height: 2.5, ...icon }} />
+            : <Typography.Button>{children}</Typography.Button>
+        }
+        {
+          !icon && success
+            ? <Icon height={2} icon="Check" />
+            : null
+        }
+        {
+          !icon && loading
+            ? <Loader height={4} type="TubeSpinner" />
+            : null
+        }
       </div>
     </button>
   )

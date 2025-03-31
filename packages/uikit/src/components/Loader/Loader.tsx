@@ -13,7 +13,7 @@ export interface LoaderProps {
 
 export function Loader({ type = 'TubeSpinner', height = 8, className, ...props }: LoaderProps) {
   return (
-    <div data-testid="Loader" className={classNames(className ?? 'themedText')} {...props}>
+    <div data-testid="Loader" className={classNames(className ?? 'Loader themedText')} {...props}>
       {createElement(LoaderList[type], { height })}
     </div>
   );
