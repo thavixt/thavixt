@@ -3,7 +3,7 @@ import { Accordion } from "../Accordion/Accordion";
 import { getSlotElements, sleep } from "../../common/utils";
 import './AccordionGroup.css';
 
-interface AccordionGroupProps {
+export interface AccordionGroupProps {
   defaultOpen?: number;
   onOpen?: (tabIndex: number) => void;
 }

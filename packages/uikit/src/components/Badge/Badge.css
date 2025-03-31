@@ -1,0 +1,24 @@
+.Badge {
+  background-color: gray;
+  border-radius: 12px;
+  color: whitesmoke;
+  display: inline;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  margin: 0 0.25rem;
+  padding: 0.25rem 0.5rem;
+  transition-duration: 250ms;
+  transition-property: color, background-color, border-color;
+  user-select: none;
+}
+
+.Badge--clickable {
+  cursor: pointer;
+}
+.Badge--clickable:hover {
+  background-color: slategray;
+}
+
+.Badge--inactive {
+  opacity: 0.25;
+}

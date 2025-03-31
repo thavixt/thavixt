@@ -4,7 +4,7 @@ import { CommonProps } from "../../common/commonProps";
 import { getSlotElements } from "../../common/utils";
 import './Accordion.css';
 
-interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
+export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean;
   open?: boolean;
   onOpen?: (open: boolean) => void;
