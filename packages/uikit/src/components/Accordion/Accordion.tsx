@@ -2,19 +2,35 @@ import classNames from "classnames";
 import { cloneElement, HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { getSlotElements } from "../../common/utils";
+import './Accordion.css';
 
-export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
+interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean;
   open?: boolean;
   onOpen?: (open: boolean) => void;
-  /**
-   * DO NOT USE - should be a separate component instead
-   */
+}
+
+interface AccordionComponentProps extends AccordionProps {
   groupItem?: boolean;
 }
 
+export function Accordion(props: AccordionProps) {
+  return <AccordionComponent {...props} />;
+}
 
-export function Accordion({ className, children, defaultOpen, ref, onOpen, groupItem = false, open: inertOpen, ...props }: AccordionProps) {
+/**
+ * Internal use only: AccordionGroup
+ */
+export function AccordionComponent({
+  className,
+  children,
+  defaultOpen,
+  ref,
+  onOpen,
+  groupItem = false,
+  open: inertOpen,
+  ...props
+}: AccordionComponentProps) {
   const [open, setOpen] = useState(defaultOpen);
   const id = useRef(props.id ?? crypto.randomUUID().slice(0, 4));
 
@@ -28,25 +44,6 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, group
     }
   }, [groupItem, inertOpen]);
 
-  const classes = classNames(
-    'px-4 py-2 flex flex-col align-center',
-    className,
-  );
-  const svgClasses = classNames(
-    'fill-slate-500 size-6 transition -rotate-90 mr-1 -ml-1',
-    {
-      'rotate-0': open,
-    }
-  );
-  const contentClasses = classNames(
-    'pl-6 transition-all duration-250 overflow-hidden',
-    'themedText',
-    {
-      'max-h-screen': open,
-      'max-h-0': !open,
-    }
-  );
-
   const onClick: React.MouseEventHandler<HTMLDivElement> = () => {
     setOpen(prev => {
       onOpen?.(!prev);
@@ -55,27 +52,39 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, group
   }
 
   return (
-    <div data-testid={`Accordion-${id.current}`} ref={ref} className={classes} {...props}>
-      <div className="cursor-pointer flex w-full items-center" onClick={onClick}>
-        <svg className={svgClasses} viewBox="0 0 24 24">
+    <div
+      ref={ref}
+      data-testid={`Accordion-${id.current}`}
+      className={classNames(
+        'Accordion',
+        className,
+        {
+          'Accordion--open': open,
+          'Accordion--closed': !open,
+        },
+      )}
+      {...props}
+    >
+      <div className="AccordionContainer" onClick={onClick}>
+        <svg
+          className="Accordion__svg"
+          viewBox="0 0 24 24"
+        >
           <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
         </svg>
         <div>
-          {cloneElement(titleSlot, {
-            key: `AccordionTitle`,
-            className: classNames('hidden', { 'inline': !open }),
-          })}
-          {cloneElement(openTitleSlot ?? titleSlot, {
-            key: `AccordionOpenTitle`,
-            className: classNames('hidden', { 'inline font-semibold': open }),
-          })}
+          {
+            open
+              ? cloneElement(titleSlot, { key: `AccordionTitle` })
+              : cloneElement(openTitleSlot ?? titleSlot, { key: `AccordionOpenTitle` })
+          }
         </div>
       </div>
-      <div className={contentClasses} data-testid="content">
-        {cloneElement(bodySlot, {
-          key: `AccordionBody`,
-          open,
-        })}
+      <div
+        className="AccordionContent"
+        data-testid="content"
+      >
+        {cloneElement(bodySlot, { key: `AccordionBody`, open })}
       </div>
     </div>
   )
@@ -84,7 +93,7 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, group
 type AccordionSlotProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
 type AccordionBodySlotProps = AccordionSlotProps & { open?: boolean };
 
-export function AccordionBody({ children, className, open = false, ...props }: AccordionBodySlotProps) {
+function AccordionBody({ children, className, open = false, ...props }: AccordionBodySlotProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -97,24 +106,27 @@ export function AccordionBody({ children, className, open = false, ...props }: A
   }, [ref, open]);
 
   return (
-    <div data-testid="accordion-body" className={classNames(className, 'flex flex-col pt-1')} {...props}>
+    <div className={classNames(className, 'AccordionBody')} {...props}>
       {children}
     </div>
   )
 }
+Accordion.Body = AccordionBody;
 
-export function AccordionTitle({ children, ...props }: AccordionSlotProps) {
+function AccordionTitle({ children, ...props }: AccordionSlotProps) {
   return (
-    <div data-testid="accordion-title" {...props}>
+    <div className="AccordionTitle" {...props}>
       {children}
     </div>
   );
 }
+Accordion.Title = AccordionTitle;
 
-export function AccordionOpenTitle({ children, ...props }: AccordionSlotProps) {
+function AccordionOpenTitle({ children, ...props }: AccordionSlotProps) {
   return (
-    <div data-testid="accordion-opentitle" {...props}>
+    <div className="AccordionOpenTitle" {...props}>
       {children}
     </div>
   );
 }
+Accordion.OpenTitle = AccordionOpenTitle;

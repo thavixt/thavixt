@@ -1,0 +1,53 @@
+.Accordion {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.AccordionContainer {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.AccordionContent {
+  padding-left: 1.5rem;
+  transition: all;
+  transition-duration: 250ms;
+  overflow: hidden;
+}
+
+.AccordionBody {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.25rem;
+}
+
+
+.Accordion__svg {
+  fill: slategray;
+  height: 1.5rem;
+  width: 1.5rem;
+  transition: all;
+  transition-duration: 250ms;
+  margin-right: 0.25rem;
+  margin-left: -0.25rem;
+}
+
+.Accordion--open .Accordion__svg {
+  rotate: 0deg;
+}
+
+.Accordion--closed .Accordion__svg {
+  rotate: -90deg;
+}
+
+.Accordion--open .AccordionContent {
+  max-height: 100vh;
+  opacity: 1;
+}
+.Accordion--closed .AccordionContent {
+  max-height: 0;
+  opacity: 0;
+}

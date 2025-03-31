@@ -1,13 +1,9 @@
 import { cloneElement, PropsWithChildren, useState } from "react";
 import { Accordion } from "../Accordion/Accordion";
 import { getSlotElements, sleep } from "../../common/utils";
-import classNames from "classnames";
+import './AccordionGroup.css';
 
 interface AccordionGroupProps {
-  /**
-   * index of the default opened accordion
-   * - @todo: should be a key/string
-   */
   defaultOpen?: number;
   onOpen?: (tabIndex: number) => void;
 }
@@ -26,7 +22,7 @@ export function AccordionGroup({ children, defaultOpen = -1, onOpen: onOpened }:
   };
 
   return (
-    <div className={classNames('divide-y-1 divide-slate-300 dark:divide-slate-500')}>
+    <div className="AccordionGroup">
       {accordions.map((c, i) => {
         return cloneElement(c, {
           key: `accordiongroup-${i}`,

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { AccordionGroup } from './AccordionGroup';
 import { Typography } from '../Typography/Typography';
 import { ComponentProps } from 'react';
-import { Accordion, AccordionBody, AccordionOpenTitle, AccordionTitle } from '../Accordion/Accordion';
+import { Accordion } from '../Accordion/Accordion';
 import { fn } from '@storybook/test';
 
 const meta = {
@@ -16,10 +16,10 @@ const meta = {
     return (
       <AccordionGroup {...args}>
         <Accordion>
-          <AccordionTitle>
+          <Accordion.Title>
             <Typography.Text>Introduction</Typography.Text>
-          </AccordionTitle>
-          <AccordionBody>
+          </Accordion.Title>
+          <Accordion.Body>
             <Typography.Subtitle>Welcome {':)'}</Typography.Subtitle>
             <Typography.Body>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -27,17 +27,17 @@ const meta = {
             <Typography.Body>
               Eveniet quam ea modi inventore ad ratione rem magni tempore libero fuga?
             </Typography.Body>
-          </AccordionBody>
+          </Accordion.Body>
         </Accordion>
 
         <Accordion>
-          <AccordionTitle>
+          <Accordion.Title>
             <Typography.Text>Technical details</Typography.Text>
-          </AccordionTitle>
-          <AccordionOpenTitle>
+          </Accordion.Title>
+          <Accordion.OpenTitle>
             <Typography.Text>Close technical details</Typography.Text>
-          </AccordionOpenTitle>
-          <AccordionBody>
+          </Accordion.OpenTitle>
+          <Accordion.Body>
             <Typography.Subtitle>Introduction</Typography.Subtitle>
             <Typography.Body>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit animi autem magni placeat laboriosam quisquam quos, tenetur libero dicta fugit harum necessitatibus error iusto asperiores perferendis fugiat eveniet sequi unde. Aperiam eius ut, repellendus voluptates et culpa deleniti voluptatibus earum laudantium omnis non magnam consequuntur vero maiores nobis ipsa hic minima aliquid expedita eaque nesciunt totam, voluptatem commodi blanditiis? Laudantium eligendi labore ut officiis illo ea quod officia assumenda esse nemo tenetur, laboriosam delectus eos aperiam voluptatibus, sit porro ad quidem culpa quaerat animi voluptatem perspiciatis ipsum?
@@ -46,17 +46,17 @@ const meta = {
             <Typography.Body>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet, blanditiis dignissimos non consequuntur qui cumque adipisci error voluptas repellat veniam.
             </Typography.Body>
-          </AccordionBody>
+          </Accordion.Body>
         </Accordion>
 
         <Accordion>
-          <AccordionTitle>
+          <Accordion.Title>
             <Typography.Text>Technical details 2</Typography.Text>
-          </AccordionTitle>
-          <AccordionOpenTitle>
+          </Accordion.Title>
+          <Accordion.OpenTitle>
             <Typography.Text>Close technical details 2</Typography.Text>
-          </AccordionOpenTitle>
-          <AccordionBody>
+          </Accordion.OpenTitle>
+          <Accordion.Body>
             <Typography.Subtitle>Introduction</Typography.Subtitle>
             <Typography.Body>
               Asperiores, eius laudantium perferendis quibusdam blanditiis deleniti id vel ratione natus, libero dolores animi quod dignissimos ducimus exercitationem voluptatibus eligendi nam rerum sit laborum! Hic quam quidem accusantium tenetur repellendus impedit optio totam voluptates ratione quas quae necessitatibus inventore rerum est pariatur fugiat quisquam facere atque commodi veniam amet, dolor voluptatibus velit fugit. Corrupti unde, nam ipsum voluptates quo dolorum modi praesentium ex doloremque itaque magni minus ea neque voluptatibus eum eaque assumenda consequatur cum sint. Ipsa nam accusantium eius voluptate, eum odio optio ut, quisquam sint sit nobis facilis! Nulla distinctio eligendi praesentium facilis facere quaerat fuga dolores accusantium exercitationem voluptatem a dicta, quos natus minus. Voluptate ad illum ipsa labore in. Quisquam natus quis eum velit culpa ipsum! Veniam architecto error debitis voluptatum quia dicta, rerum ducimus magni ad ab inventore adipisci iste, soluta quae assumenda quam enim nostrum odio repellendus aut et voluptates id facere voluptatem. Id architecto dolorum aspernatur. Accusantium vel reiciendis illum deleniti modi voluptatum odit!
@@ -65,19 +65,19 @@ const meta = {
             <Typography.Body>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet, blanditiis dignissimos non consequuntur qui cumque adipisci error voluptas repellat veniam.
             </Typography.Body>
-          </AccordionBody>
+          </Accordion.Body>
         </Accordion>
 
         <Accordion>
-          <AccordionTitle>
+          <Accordion.Title>
             <Typography.Text>Notes</Typography.Text>
-          </AccordionTitle>
-          <AccordionBody>
+          </Accordion.Title>
+          <Accordion.Body>
             <Typography.Subtitle>See you soon!</Typography.Subtitle>
             <Typography.Body>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, voluptatem!
             </Typography.Body>
-          </AccordionBody>
+          </Accordion.Body>
         </Accordion>
       </AccordionGroup>
     )
