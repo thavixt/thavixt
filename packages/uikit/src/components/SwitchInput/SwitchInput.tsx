@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
-import { themedTextClasses } from "../../common/theme";
 import { WithLabel } from "../../common/WithLabel";
 
 export interface SwitchInputProps extends Omit<CommonProps<HTMLInputElement>, 'children' | 'onChange'> {
@@ -16,8 +15,7 @@ export interface SwitchInputProps extends Omit<CommonProps<HTMLInputElement>, 'c
 
 export function SwitchInput({ ref, label, onChange: providedOnChange, name, required, ...props }: SwitchInputProps) {
   const containerClasses = classNames(
-    'flex',
-    themedTextClasses,
+    'flex themedText',
     props.className,
   );
   const switchContainerClasses = classNames(
@@ -39,7 +37,7 @@ export function SwitchInput({ ref, label, onChange: providedOnChange, name, requ
 
   return (
     <div data-testid="SwitchInput" className={containerClasses}>
-      <WithLabel id={id} label={label} required={required}>
+      <WithLabel id={id} label={label} required={required} inline>
         <div className="flex flex-col justify-center">
           <div className={switchContainerClasses}>
             <input

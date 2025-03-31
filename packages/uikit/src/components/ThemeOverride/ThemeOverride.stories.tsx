@@ -38,6 +38,9 @@ const colors = (
       <div className='border-2 rounded-md px-2 border-neutral-500'>
         <Typography.Text>border-neutral-500</Typography.Text>
       </div>
+      <div className='rounded-sm border border-black bg-white px-2 py-0.5'>
+        <span className='text-cyan-500'>border-black bg-white div {'>'} cyan-500 span</span>
+      </div>
     </ButtonBar>
   </div>
 );

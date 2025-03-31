@@ -90,9 +90,9 @@ export const Example: Story = {
             Please provide the needed information about your pet. This assumes you currently keep the aformentioned animal in your place of residence.
           </T.Body>
           <Form onSubmit={onSubmit}>
-            <TextInput required label="Name" name='other' placeholder="Your pet's name" />
-            <NumberInput required defaultValue={2} label='Age' name='age' placeholder='#' />
-            <RadioInput required defaultValue='Cat' label='Species' name='species' values={['Cat', 'Dog']} />
+            <TextInput inline required label="Name" name='other' placeholder="Your pet's name" />
+            <NumberInput inline required defaultValue={2} label='Age' name='age' placeholder='#' />
+            <RadioInput inline required defaultValue='Cat' label='Species' name='species' values={['Cat', 'Dog']} />
             <SwitchInput required defaultChecked={true} label='Chipped' name='chipped' />
           </Form>
         </Box.Content>

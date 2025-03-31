@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
-import { themedInputClasses } from "../../common/theme";
 import { sortObjectByKeys } from "../../common/utils";
 import { useMemo } from "react";
 
@@ -15,6 +14,8 @@ export interface SelectProps<T extends Record<string, string>> extends Omit<Comm
   value?: keyof T;
   options: T;
   required?: boolean;
+  multiple?: boolean;
+  inline?: boolean;
 }
 
 export function Select<T extends Record<string, string>>({
@@ -28,12 +29,13 @@ export function Select<T extends Record<string, string>>({
   ref,
   value,
   required,
+  multiple,
+  inline,
   ...props
 }: SelectProps<T>) {
   const id = `${name}-select`;
   const classes = classNames(
-    'w-fit text-left border rounded-sm',
-    themedInputClasses,
+    'themedInput themedBorder px-1 w-fit rounded-sm ',
     props.className,
   );
 
@@ -43,7 +45,7 @@ export function Select<T extends Record<string, string>>({
   }
 
   return (
-    <WithLabel data-testid="SelectInput" label={label} id={id} required={required}>
+    <WithLabel data-testid="SelectInput" label={label} id={id} required={required} inline={inline}>
       <select
         ref={ref}
         className={classes}
@@ -53,6 +55,7 @@ export function Select<T extends Record<string, string>>({
         name={name}
         onChange={onChange}
         value={value as string}
+        multiple={multiple}
       >
         <option value="" disabled>{placeholder ?? 'Choose an option'}</option>
         {Object.entries(sortedOptions).map(([key, value]) => (

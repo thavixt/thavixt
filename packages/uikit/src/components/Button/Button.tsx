@@ -15,11 +15,10 @@ export interface ButtonProps extends PropsWithChildren<CommonProps<HTMLButtonEle
   success?: boolean;
   disabled?: boolean;
   icon?: IconProps;
-  title?: string;
 }
 
 export function Button({
-  disabled, loading, success, ref, onClick, type = 'button', className, children, variant = 'default', icon, title, ...props
+  disabled, loading, success, ref, onClick, type = 'button', className, children, variant = 'default', icon, ...props
 }: ButtonProps) {
   return (
     <button
@@ -28,10 +27,9 @@ export function Button({
       type={type}
       onClick={onClick}
       disabled={disabled || loading}
-      title={title}
       className={
         classNames(
-          'min-w-4 h-fit my-auto w-fit px-2 py-1 transition-colors duration-150 select-none',
+          'min-w-4 h-fit w-fit px-2 py-1 transition-colors duration-150 select-none',
           {
             'cursor-pointer': !(disabled || loading),
             'cursor-default opacity-30 select-none': disabled || loading,
@@ -64,8 +62,7 @@ export function Button({
             'dark:hover:bg-red-700 dark:active:bg-red-800': variant === 'danger' && !(disabled || loading),
           },
           {
-            'hover:bg-gray-200 active:bg-gray-300': !(disabled || loading) && variant === 'silent',
-            'hover:dark:bg-gray-600 active:dark:bg-gray-700': !(disabled || loading) && variant === 'silent',
+            'hover:underline': !(disabled || loading) && variant === 'silent',
           },
           {
             'rounded-lg': !icon,
@@ -77,9 +74,9 @@ export function Button({
       {...props}
     >
       <div className="flex space-x-1 items-center justify-center">
-        {icon ? <Icon {...{height: 2.5, ...icon}} /> : <Typography.Button>{children}</Typography.Button>}
-        {(!icon && success) ? <Icon height={2} icon="Check" /> : null}
-        {(!icon && loading) ? <Loader height={4} type="TubeSpinner" /> : null}
+        {icon ? <Icon {...{height: 2.5, className:"text-current", ...icon}} /> : <Typography.Button>{children}</Typography.Button>}
+        {(!icon && success) ? <Icon height={2} className="text-current" icon="Check" /> : null}
+        {(!icon && loading) ? <Loader height={4} className="text-current" type="TubeSpinner" /> : null}
       </div>
     </button>
   )

@@ -7,6 +7,6 @@ export const onSubmit: (values: Record<string, string | number | FormDataEntryVa
 
   const chance = Math.random();
   if (chance < 0.2) {
-    throw new Error(`That had a 20% chance. Try again.`)
+    throw new Error(`This had a 20% chance to fail - just try again.`)
   }
 }

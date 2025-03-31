@@ -8,7 +8,7 @@ const meta = {
   component: Button,
   tags: ['autodocs'],
   args: {
-    children: 'Click',
+    children: 'Click me',
     onClick: fn(),
   },
 } satisfies Meta<typeof Button>;
@@ -23,15 +23,15 @@ export const Default: Story = {
   },
 };
 
-export const All: Story = {
+export const Variants: Story = {
   render: () => {
     const buttonVariants: ButtonVariant[] = ['default', 'primary', 'secondary', 'danger', 'silent'];
     return (
       <ButtonBar>
-        {buttonVariants.map(variant => (
-          <Button variant={variant}>{variant}</Button>
-        ))}
-        <Button icon={{ icon: 'Volume1' }}>Icon</Button>
+        {buttonVariants.map(variant => <Button variant={variant}>{variant}</Button>)}
+        <Button icon={{ icon: 'Volume1' }} />
+        <Button loading>Loading</Button>
+        <Button success>Success</Button>
       </ButtonBar>
     )
   }

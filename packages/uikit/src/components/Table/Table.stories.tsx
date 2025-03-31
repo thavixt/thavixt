@@ -58,7 +58,7 @@ const meta = {
   },
   render: function StoryComponent(args: ComponentProps<typeof Table>) {
     return (
-      <div className="w-full h-[400px]">
+      <div className="w-full h-[410px]">
         <Table {...args} />
       </div>
     )

@@ -24,22 +24,22 @@ export const BUTTON_CLASSES = 'w-fit text-xs bg-transparent';
 export const CHECK_ALL_KEY = 'table_check_all';
 export const CHECK_COL_CLASSES = 'pl-3 pr-1 text-center w-12'
 
-export const CONTAINER_CLASSES_DATATABLE = 'size-full text-normal text-slate-500 dark:text-slate-300 rounded-lg';
+export const CONTAINER_CLASSES_DATATABLE = 'size-full text-normal text-gray-500 dark:text-gray-300 rounded-lg';
 export const CONTAINER_CLASSES = classNames(CONTAINER_CLASSES_DATATABLE, 'min-h-[200px] overflow-x-auto shadow-lg');
 const PADDING_CLASSES = 'px-4 py-2';
 
 export const TABLE_CLASSES_DATATABLE = 'table-auto w-full border-collapse text-sm';
-export const TABLE_CLASSES = classNames(TABLE_CLASSES_DATATABLE, 'bg-slate-100 dark:bg-slate-700');
+export const TABLE_CLASSES = classNames(TABLE_CLASSES_DATATABLE, 'bg-gray-100 dark:bg-gray-700');
 export const TABLE_CONTAINER_CLASSES = 'w-full h-full min-h-0';
 export const TABLE_ROW_HEIGHT = 44; // 4 * 11
 export const TBODY_CLASSES = '';
 
 export const TD_CLASSES = classNames(PADDING_CLASSES, 'whitespace-nowrap truncate max-w-[200px]');
 export const TFOOTTD_CLASSES = classNames(PADDING_CLASSES);
-export const TFOOT_CLASSES = 'sticky bottom-0 bg-slate-200 dark:bg-slate-800'
+export const TFOOT_CLASSES = 'sticky bottom-0 bg-gray-200 dark:bg-gray-800'
 
 export const THEAD_CLASSES_DATATABLE = 'text-sm';
-export const THEAD_CLASSES = classNames(THEAD_CLASSES_DATATABLE, 'sticky top-0 bg-slate-200 dark:bg-slate-800');
+export const THEAD_CLASSES = classNames(THEAD_CLASSES_DATATABLE, 'sticky top-0 bg-gray-200 dark:bg-gray-800');
 
 export const TH_CLASSES = classNames(PADDING_CLASSES, 'flex text-left truncate');
 const TH_CLASSES_SORTABLE = classNames(TH_CLASSES, 'cursor-pointer flex space-x-1 items-center');

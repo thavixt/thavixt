@@ -14,6 +14,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: [<Link href='#' self>Home</Link>, <Link href='#' self>Documentation</Link>, 'Component']
+    children: [
+    '@thavixt/uikit',
+    <Link href='#' self>Components</Link>,
+    <Link href='#' self>Basic</Link>,
+    'Breadcrumbs']
   }
 };

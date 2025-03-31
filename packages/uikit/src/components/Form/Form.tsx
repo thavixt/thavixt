@@ -2,8 +2,8 @@ import classNames from "classnames";
 import { PropsWithChildren, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { Button } from "../Button/Button";
-import { Divider } from "../Divider/Divider";
 import { ButtonBar } from "../ButtonBar/ButtonBar";
+import { Typography } from "../Typography/Typography";
 
 export interface FormProps extends PropsWithChildren<Omit<CommonProps<HTMLFormElement>, 'onSubmit'>> {
   border?: boolean;
@@ -56,8 +56,8 @@ export function Form({
       setSuccess(false);
       const error = e as Error;
       console.warn(e);
-      const name = error.name ?? 'Error'
-      const message = error.message ?? 'Something went wrong :('
+      const name = error.name ?? '';
+      const message = error.message ?? 'Something went wrong :(';
       setError(`${name} - ${message}`);
       onSubmitError?.(error, formData);
       setLoading(false);
@@ -97,8 +97,9 @@ export function Form({
           </div>
           {error ? (
             <>
-              <Divider />
-              <p className="dark:text-red-400 text-red-700">{error}</p>
+              <div className="border-l-4 border-red-500 dark:text-red-400 pl-2">
+                <Typography.Text className="text-red-500 dark:text-red-400">{error}</Typography.Text>
+              </div>
             </>
           ) : null}
           <ButtonBar>

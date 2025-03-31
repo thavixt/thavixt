@@ -7,32 +7,36 @@ import {
   useState,
   PropsWithChildren,
   ReactNode,
+  useRef,
 } from "react";
 import { noop } from "../../common/utils";
 
 const ANIMATION_DELAY = 150;
 const TOAST_COLORS: Record<ToastType, string> = {
-  info: 'border-sky-400 bg-slate-200 dark:bg-slate-700',
-  success: 'border-green-400 !bg-green-100',
-  warning: 'border-red-400 !bg-red-100',
+  info: 'bg-slate-200 dark:bg-slate-600',
+  success: 'bg-green-400 dark:bg-green-600',
+  warning: 'bg-red-400 dark:bg-red-700',
 }
-
-/* context */
 
 export type ToastType = 'info' | 'success' | 'warning';
 
 export interface Toast {
+  /** If provided, override the previous Toast with the same key, restarting it's timer */
   id: string;
+  /** 'info' | 'success' | 'warning' */
   type: ToastType;
+  /** Epoch of toast expiry */
   expires: number;
+  /** Content to display in the toast */
   content: ReactNode;
-  onClick?: () => void;
+  /** Called when the toast is clicked */
+  onClick?: (key: string) => void;
 }
 
 export interface ToastContextType {
   toasts: Toast[];
   createToast: ({ content, type, duration, onClick }: {
-    content: ReactNode; type?: ToastType; duration?: number; onClick?: () => void;
+    id?: string, content: ReactNode; type?: ToastType; duration?: number; onClick?: (id: string) => void;
   }) => void;
   removeToast: (id: string) => void;
   clearToasts: () => void;
@@ -47,39 +51,46 @@ export const ToastContext = createContext<ToastContextType>({
   side: 'right',
 });
 
-/* provider */
-
 interface ToastProviderProps {
   /**
    * `left` | `right`
    */
   side?: 'left' | 'right';
   onToastCreated?: (toastId: string) => void;
-  timeout?: number;
+  duration?: number;
 }
 
-export function ToastProvider({ children, side = 'right', onToastCreated, timeout = 15000 }: PropsWithChildren<ToastProviderProps>) {
+export function ToastProvider({ children, side = 'right', onToastCreated, duration: defaultDuration = 15_000 }: PropsWithChildren<ToastProviderProps>) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const timers = useRef<Map<string, NodeJS.Timeout>>(new Map());
 
   const createToast = ({
-    content, type = 'info', duration = timeout, onClick,
-  }: {
-    content: ReactNode; type?: ToastType; duration?: number; onClick?: () => void;
-  }) => {
-    const id = crypto.randomUUID().slice(0, 6);
+    id,
+    content,
+    duration = defaultDuration,
+    type = 'info',
+    onClick,
+  }: { id?: string, content: ReactNode, duration?: number, type?: ToastType, onClick?: (toastId: string) => void }) => {
+    const toastId = id ?? crypto.randomUUID().slice(0, 8);
     setToasts(prev => [
-      ...prev,
+      ...prev.filter(toast => toast.id !== toastId),
       {
-        id,
+        id: toastId,
         content,
-        expires: Date.now() + timeout,
+        expires: Date.now() + duration,
         onClick,
         type,
       },
     ]);
-    setTimeout(() => setToasts(prev => prev.filter(toast => toast.id !== id)), duration);
-    onToastCreated?.(id);
-    return id;
+    onToastCreated?.(toastId);
+
+    const timer = timers.current.get(toastId);
+    if (timer) {
+      clearInterval(timer);
+    }
+    timers.current.set(toastId, setTimeout(() => setToasts(prev => prev.filter(toast => toast.id !== toastId)), duration));
+
+    return toastId;
   };
 
   const removeToast = useCallback((id: string) => {
@@ -110,21 +121,33 @@ export function ToastProvider({ children, side = 'right', onToastCreated, timeou
     >
       {children}
       <div className={toastContainerClasses}>
-        {toasts.map((toast) => <ToastMessage key={toast.id} toast={toast} />)}
+        {toasts.map((toast) => <ToastMessage key={toast.id} {...toast} />)}
       </div>
     </ToastContext.Provider>
   )
 }
 
-/* component rendered by the context */
-
-function ToastMessage({ toast }: { toast: Toast }) {
+export function ToastMessage({ content, expires, id, type = 'info', onClick }: Toast) {
+  const duration = useRef(expires - Date.now());
   const { removeToast, side } = useContext(ToastContext);
   const [visible, setVisible] = useState(false);
+  const [indicatorWidth, setIndicatorWidth] = useState(100);
 
-  const onClick = () => {
-    toast.onClick?.();
-    removeToast(toast.id);
+  useEffect(() => {
+    if (!isFinite(expires)) {
+      return;
+    }
+    const interval = setInterval(() => {
+      const remaining = expires - Date.now();
+      const current = Math.floor((remaining / duration.current) * 100);
+      setIndicatorWidth(Math.max(0, current));
+    }, 250);
+    return () => clearInterval(interval);
+  }, [expires]);
+
+  const onToastClick = () => {
+    onClick?.(id);
+    removeToast(id);
   }
 
   useEffect(() => {
@@ -133,31 +156,45 @@ function ToastMessage({ toast }: { toast: Toast }) {
   }, []);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setVisible(false), toast.expires - Date.now() - ANIMATION_DELAY * 2);
+    const timeout = setTimeout(() => setVisible(false), duration.current - ANIMATION_DELAY);
     return () => clearTimeout(timeout);
-  }, [toast.expires]);
+  }, [id, duration]);
 
   return (
     <div
-      data-testid={`Toast ${toast.type}Toast`}
+      key={id}
+      data-testid={`Toast ${type}Toast`}
       className={classNames(
-        "transition-all duration-350 relative min-w-[100px] w-fit max-w-[500px] shadow-md",
-        "p-2 mt-2 cursor-pointer select-none border-2 rounded-md",
+        "relative min-w-[100px] w-fit max-w-[500px]",
+        "transition-all duration-500 shadow-xl",
+        "mt-2 cursor-pointer select-none rounded-md",
         {
           'scale-75 opacity-0 left-64': !visible && side === 'right',
           'scale-75 opacity-0 -left-64': !visible && side === 'left',
           'scale-100 opacity-100 left-0': visible,
+          'pb-1': isFinite(expires),
         },
-        TOAST_COLORS[toast.type],
+        TOAST_COLORS[type],
       )}
-      onClick={onClick}
+      onClick={onToastClick}
     >
-      {toast.content}
+      <div className="px-3 py-2 min-w-[150px]">
+        {content}
+      </div>
+      {isFinite(expires) ? (
+        <div
+          data-testid="ToastDurationIndicator"
+          className={classNames(
+            'absolute bottom-0 h-2 bg-black dark:bg-white opacity-35 transition-all duration-500 w-full',
+            indicatorWidth > 0 ? 'visible' : 'hidden',
+            indicatorWidth > 90 ? 'rounded-b-sm' : 'rounded-bl-sm',
+          )}
+          style={{ width: `${indicatorWidth}%` }}
+        />
+      ) : null}
     </div>
   )
 }
-
-/* hook */
 
 export function useToast() {
   const { clearToasts, createToast, removeToast, toasts } = useContext(ToastContext);

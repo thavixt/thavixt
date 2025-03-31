@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { ReactNode, RefObject, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { themedTextClasses } from "../../common/theme";
+import { Typography } from "../Typography/Typography";
 
 export type TreeHandle = RefObject<HTMLDivElement | null> & {
   open: () => void;
@@ -78,8 +78,7 @@ function TreeItem({ item, onClick, defaultOpen }: TreeItemProps) {
   };
 
   const containerClasses = classNames(
-    themedTextClasses,
-    'flex items-center space-x-1 cursor-pointer w-fit px-2 rounded-sm hover:underline underline-offset-4',
+    'themedText flex items-center space-x-1 cursor-pointer w-fit px-2 rounded-sm hover:underline underline-offset-4',
     {
       'ml-6': !hasChildren,
     },
@@ -106,7 +105,7 @@ function TreeItem({ item, onClick, defaultOpen }: TreeItemProps) {
         <svg className={svgClasses} viewBox="0 0 24 24">
           <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
         </svg>
-        <div>{item.label}</div>
+        <Typography.Text>{item.label}</Typography.Text>
       </div>
       <div className={childClasses} >
         {item.children?.map(childItem => (

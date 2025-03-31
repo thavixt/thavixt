@@ -8,7 +8,6 @@ import {
   useRef,
   useState
 } from "react";
-import { Divider } from "../Divider/Divider";
 import { getSlotElements } from "../../common/utils";
 import { Typography } from "../Typography/Typography";
 
@@ -55,8 +54,8 @@ export function Tabs({ defaultTabIndex = 0, ref, children, ...props }: TabsProps
           <div
             key={`tab-${i}`}
             data-testid={`Tab-${i}`}
-            className={classNames('cursor-pointer truncate px-2 transition-colors rounded-md', {
-              'bg-slate-300 dark:bg-slate-600': i === activeTab,
+            className={classNames('cursor-pointer truncate px-2 transition-colors rounded-t-md', {
+              'bg-gray-300 dark:bg-gray-600': i === activeTab,
               'opacity-50': i !== activeTab,
             })}
             onClick={() => setActiveTab(i)}
@@ -67,7 +66,7 @@ export function Tabs({ defaultTabIndex = 0, ref, children, ...props }: TabsProps
         )
       })}
       </div>
-      <Divider />
+      <div className="themedBorder mb-2"></div>
       <div className="flex flex-col pt-2 relative">
         {tabs.map((c, i) => {
           return cloneElement(c, { active: i === activeTab, key: `tab-${i}` })

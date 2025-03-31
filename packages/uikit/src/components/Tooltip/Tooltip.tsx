@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
-import { themedTextClasses } from "../../common/theme";
 
 type Position = 'left' | 'right' | 'top' | 'bottom';
 
@@ -28,8 +27,7 @@ export function Tooltip({ ref, className, children, tooltip, position = 'bottom'
     className,
   );
   const textClasses = classNames(
-    themedTextClasses,
-    "static cursor-help border-b-1 border-slate-400",
+    "themedText static cursor-help border-b-1 border-slate-400",
   )
 
   return (

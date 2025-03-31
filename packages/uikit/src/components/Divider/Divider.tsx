@@ -16,7 +16,8 @@ export function Divider({ className, ref, small, unicorn, vertical, ...props }: 
       'bg-linear-245 from-purple-500 to-pink-500': unicorn && vertical,
     },
     {
-      'my-2 h-0.5': !vertical,
+      'my-4 h-0.5': !vertical,
+      'mx-4': vertical,
       'h-full': vertical && !small,
       'h-1/2': vertical && small,
     },
@@ -26,10 +27,7 @@ export function Divider({ className, ref, small, unicorn, vertical, ...props }: 
       'w-1/2': !vertical && small,
     },
     className,
-  )
-  return (
-    // <div className={classNames({ "px-1": vertical, "py-1": !vertical })}>
-    <div data-testid="Divider" role="separator" ref={ref} className={classes} {...props} />
-    // </div>
-  )
+  );
+
+  return <div data-testid="Divider" role="separator" ref={ref} className={classes} {...props} />;
 }

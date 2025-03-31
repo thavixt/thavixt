@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { cloneElement, HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
-import { themedBackgroundClasses, themedTextClasses } from "../../common/theme";
 import { getSlotElements } from "../../common/utils";
 
 export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
@@ -31,7 +30,6 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, group
 
   const classes = classNames(
     'px-4 py-2 flex flex-col align-center',
-    groupItem ? themedTextClasses : themedBackgroundClasses,
     className,
   );
   const svgClasses = classNames(
@@ -42,7 +40,7 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, group
   );
   const contentClasses = classNames(
     'pl-6 transition-all duration-250 overflow-hidden',
-    themedTextClasses,
+    'themedText',
     {
       'max-h-screen': open,
       'max-h-0': !open,
@@ -57,7 +55,7 @@ export function Accordion({ className, children, defaultOpen, ref, onOpen, group
   }
 
   return (
-    <div data-testid={`Accordion-${id}`} ref={ref} className={classes} {...props}>
+    <div data-testid={`Accordion-${id.current}`} ref={ref} className={classes} {...props}>
       <div className="cursor-pointer flex w-full items-center" onClick={onClick}>
         <svg className={svgClasses} viewBox="0 0 24 24">
           <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>

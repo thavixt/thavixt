@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { ReactElement, RefObject, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { themedBackgroundClasses } from "../../common/theme";
 import { CommonProps } from "../../common/commonProps";
 import { ClickTarget } from "../ClickTarget/ClickTarget";
 import { Button } from "../Button/Button";
+import { Typography } from "../Typography/Typography";
 
 export type DialogHandle = RefObject<HTMLDialogElement | null> & {
   close: () => void;
@@ -86,7 +86,7 @@ export function Dialog({
   const classes = classNames(
     'transition-all relative m-auto min-w-[400px] w-fit max-w-[900px] select-none',
     'rounded-xl shadow-2xl backdrop:bg-black/25 backdrop:backdrop-blur-xs',
-    themedBackgroundClasses,
+    'bg-slate-50 dark:bg-gray-500',
     {
       'scale-75 opacity-0': !dialogOpen,
       'scale-100 opacity-100': dialogOpen,
@@ -103,14 +103,14 @@ export function Dialog({
   return (
     <dialog data-testid="Dialog" ref={dialogRef} className={classes} {...props}>
       <ClickTarget onClickOutside={onClickOutside}>
-        <div className="px-6 py-4 select-text">
+        <div className="p-4 pt-2 select-text">
           {closeIcon ? (
             <div className="absolute right-0 -top-0.5 p-1">
               <Button variant="silent" icon={{ icon: 'Cross' }} onClick={closeModal} />
             </div>
           ) : null}
-          {title ? <div className="text-xl text-center pb-4 px-4">{title}</div> : null}
-          <div className="mb-2 flex flex-col space-y-2">
+          {title ? <Typography.Title className="text-center pb-2">{title}</Typography.Title> : null}
+          <div className="flex flex-col space-y-2">
             {typeof children === 'function' ? children(closeModal) : children}
           </div>
         </div>

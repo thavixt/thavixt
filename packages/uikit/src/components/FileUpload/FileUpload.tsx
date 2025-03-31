@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { themedBackgroundClasses } from "../../common/theme";
 import { Typography } from "../Typography/Typography";
 import { Icon } from "../Icon/Icon";
 import { formatSize } from "./formatSize";
@@ -103,9 +102,10 @@ export function FileUpload({ multiple = false, accept, onAction, disabled, actio
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       className={classNames(
-        "border-2 border-dashed rounded-xl p-4 flex flex-col items-center justify-center text-center",
+        cursorClass,
+        "themedBackground themedBorder border-dashed",
+        "rounded-xl p-4 flex flex-col items-center justify-center text-center",
         "transition duration-200 ease-in-out min-w-[300px]",
-        cursorClass, themedBackgroundClasses,
         {
           "!border-transparent disabled opacity-50": disabled,
           "pointer-events-none": !interactive,

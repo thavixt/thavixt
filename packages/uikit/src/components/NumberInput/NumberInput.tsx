@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
-import { themedInputClasses } from "../../common/theme";
 
 export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'children' | 'onChange'> {
   value?: number;
@@ -12,15 +11,15 @@ export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'c
   min?: number;
   placeholder?: string;
   required?: boolean;
+  inline?: boolean;
 
   onChange?: (value: number) => void;
 }
 
-export function NumberInput({ ref, required, name, label, min, max, onChange: providedOnChange, ...props }: NumberInputProps) {
+export function NumberInput({ ref, required, name, label, min, max, onChange: providedOnChange, inline, ...props }: NumberInputProps) {
   const id = `${crypto.randomUUID().slice(0, 4)}_${name}-number`;
   const classes = classNames(
-    'border rounded-sm text-center w-24',
-    themedInputClasses,
+    'themedInput themedBorder rounded-sm text-center w-24',
     props.className,
   );
 
@@ -47,7 +46,7 @@ export function NumberInput({ ref, required, name, label, min, max, onChange: pr
   }
 
   return (
-    <WithLabel data-testid="NumberInput" label={label} id={id} required={required}>
+    <WithLabel data-testid="NumberInput" label={label} id={id} required={required} inline={inline}>
       <input
         ref={ref}
         required={required}

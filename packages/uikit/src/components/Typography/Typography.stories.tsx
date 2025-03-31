@@ -36,15 +36,21 @@ export const ExampleThoughtsSection: Story = {
     return (
       <Box type='paper' size='lg'>
         <Box.Header>
-          <Typography.Title>Title of the story about that awesome time</Typography.Title>
+          <Typography.Title>Title about doing that thing</Typography.Title>
         </Box.Header>
         <Box.Content>
-          <Typography.Subtitle>Subtitle about the beginning of something</Typography.Subtitle>
+          <Typography.Subtitle>Subtitle for this revolutionary techique I came up with</Typography.Subtitle>
           <Typography.Body>
-            Body text in latin - Lorem ipsum dolor, sit amet consectetur adipisicing eliTypography. Odio quidem blanditiis aperiam ullam maiores ipsa aut, adipisci alias iusto possimus voluptates praesentium quam beatae illo laboriosam nemo culpa dicta distinctio dolor in amet? Tempore laboriosam earum illum placeat! Fugit, voluptates maxime. Impedit, cupiditate nobis libero eaque porro eius blanditiis ipsam soluta laborum! Ipsam, repellat? Maxime accusamus sapiente impedit explicabo commodi earum, voluptas ipsum, nisi, cumque eius porro fugiat sinTypography. Dignissimos cum quis, voluptatibus, optio fugit officiis deserunt possimus assumenda eum expedita aperiam quaerat corporis voluptatum consequuntur autem? Ullam pariatur atque minima libero sint illo! Labore, vero amet? Repellat, odio reprehenderit?
+            Lorem ipsum dolor, sit amet consectetur adipisicing eli. Odio quidem blanditiis aperiam ullam maiores ipsa aut, adipisci alias iusto possimus voluptates praesentium quam beatae illo laboriosam nemo culpa dicta distinctio dolor in amet? Tempore laboriosam earum illum placeat! Fugit, voluptates maxime.
           </Typography.Body>
-          <Typography.Caption>Caption - kinda getting it now...</Typography.Caption>
-          <Typography.Body>The result looked like this: <Typography.Code>type TailwindColor = {'`${Color}-${Number}`'};</Typography.Code></Typography.Body>
+          <Typography.Caption>Okay, but how do i <em>actually </em> do it?</Typography.Caption>
+          <Typography.Body>
+            Nihil veritatis nostrum eveniet architecto molestiae voluptatum adipisci amet iure quaerat laborum repellat, impedit quam rem a animi laboriosam non quas consequuntur!
+          </Typography.Body>
+          <Typography.Body>
+            Ex, beatae excepturi? Accusantium ipsa quam similique quaerat dolor facere odio possimus iusto. Eos aut explicabo, tempora laborum molestias dolorum ex ipsum, numquam dolore itaque cupiditate rem. Nulla libero ut sed pariatur delectus deleniti laboriosam asperiores, veritatis harum quis necessitatibus debitis. Quaerat?
+          </Typography.Body>
+          <Typography.Body>The solution is: <Typography.Code>type TailwindColor = {'`${Color}-${Number}`'};</Typography.Code></Typography.Body>
         </Box.Content>
       </Box>
     )

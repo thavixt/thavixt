@@ -13,9 +13,9 @@ const meta = {
   render: function StoryComponent(args: ComponentProps<typeof Form>) {
     return (
       <Form {...args}>
-        <TextInput required label="Name" placeholder="Your name" name='name' />
-        <TextInput required label="Occupation" placeholder="Job title" name='job' defaultValue='software engineer' />
-        <NumberInput min={18} label='Age' name='age' />
+        <TextInput inline required label="Name" placeholder="Your name" name='name' defaultValue='Jane Doe' />
+        <TextInput inline required label="Occupation" placeholder="Job title" name='job' defaultValue='software engineer' />
+        <NumberInput inline min={18} label='Age' name='age' defaultValue={21} />
       </Form>
     )
   },

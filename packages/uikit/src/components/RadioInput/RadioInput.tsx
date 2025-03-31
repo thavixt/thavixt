@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { RefObject } from "react";
 import { CommonProps } from "../../common/commonProps";
-import { themedTextClasses } from "../../common/theme";
 import { WithLabel } from "../../common/WithLabel";
 
 export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 'children' | 'onChange'> {
@@ -15,12 +14,13 @@ export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 
   values: string[];
   required?: boolean;
   onChange?: (chekedId: string) => void;
+  inline?: boolean;
 }
 
-export function RadioInput({ required, ref, ...props }: RadioInputProps) {
+export function RadioInput({ required, ref, inline, ...props }: RadioInputProps) {
   const classes = classNames(
     'w-fit grid grid-cols-[minmax(106px,auto)_auto]',
-    themedTextClasses,
+    'themedText',
     props.className,
   );
 
@@ -31,7 +31,7 @@ export function RadioInput({ required, ref, ...props }: RadioInputProps) {
   return (
     <fieldset data-testid="RadioInput" onChange={onChange} ref={ref}>
       <div className={classes}>
-        <WithLabel required={required} label={props.label} className="items-start">
+        <WithLabel required={required} label={props.label} className="items-start" inline={inline}>
           <div className="flex flex-col space-y-0.5">
             {props.values.map(value => (
               <Radio

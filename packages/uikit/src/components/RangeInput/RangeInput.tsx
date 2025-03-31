@@ -2,7 +2,6 @@ import classNames from "classnames";
 import { ReactElement, useEffect, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
-import { themedInputClasses } from "../../common/theme";
 import { Typography } from "../Typography/Typography";
 
 export interface RangeInputProps extends Omit<CommonProps<HTMLInputElement>, 'children' | 'onChange'> {
@@ -18,6 +17,7 @@ export interface RangeInputProps extends Omit<CommonProps<HTMLInputElement>, 'ch
   name: string;
   /** Display the current input value */
   showValue?: boolean;
+  inline?: boolean;
   transformValue?: (value: number, min: number, max: number) => string | number;
   /** element to render after the input */
   after?: (value: string | number, min: number, max: number) => ReactElement;
@@ -25,10 +25,9 @@ export interface RangeInputProps extends Omit<CommonProps<HTMLInputElement>, 'ch
   before?: (value: string | number, min: number, max: number) => ReactElement;
 }
 
-export function RangeInput({ required, showValue = true, ref, min = 0, max = 100, defaultValue = 0, step = 1, ...props }: RangeInputProps) {
+export function RangeInput({ required, showValue = true, ref, min = 0, max = 100, defaultValue = 0, step = 1, inline, ...props }: RangeInputProps) {
   const classes = classNames(
-    'flex space-x-2 bg-slate-400 rounded-md h-2 cursor-pointer disabled:cursor-default',
-    themedInputClasses,
+    'flex space-x-2 rounded-md h-2 cursor-pointer disabled:cursor-default',
     props.className,
   );
 
@@ -53,8 +52,8 @@ export function RangeInput({ required, showValue = true, ref, min = 0, max = 100
   }, [props.value])
 
   return (
-    <WithLabel data-testid="RangeInput" label={props.label} id={props.name} required={required}>
-      <div className="flex space-x-1 items-center">
+    <WithLabel data-testid="RangeInput" label={props.label} id={props.name} required={required} inline={inline}>
+      <div className="flex space-x-2 items-center">
         {props.before?.(getValue(currentValue), min, max)}
         <input
           ref={ref}
@@ -71,7 +70,7 @@ export function RangeInput({ required, showValue = true, ref, min = 0, max = 100
           type="range"
           value={props.value}
         />
-        {showValue ? <Typography.Label className="">{getValue(currentValue)}</Typography.Label> : null}
+        {showValue ? <Typography.Label className="min-w-8">{getValue(currentValue)}</Typography.Label> : null}
         {props.after?.(getValue(currentValue), min, max)}
       </div>
     </WithLabel>

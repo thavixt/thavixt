@@ -12,7 +12,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Skeleton is a placeholder to display while the actual content is being fetched.',
+        component: '`<Skeleton>` is a placeholder to display while the actual content is being fetched. When the content appears in the viewport (detected with an `IntersectionObserver`), the `onLoad` argument is called, and its return value replaces the original child elements after `delay` ms.',
       },
     },
   },
@@ -30,18 +30,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  decorators: [
-    (Story) => (
-      <div className='h-[200px]'>
-        <Story />
-      </div>
-    ),
-  ],
   render: function StoryComponent({ onLoad, ...args }: ComponentProps<typeof Skeleton>) {
     const [loaded, setLoaded] = useState(false);
     const [key, setKey] = useState(0);
     return (
-      <div className='flex flex-col justify-between h-[500px]'>
+      <div className='flex flex-col justify-between h-[120dvh] p-4'>
         <div>
           <Typography.Body>{loaded ? 'Already loaded' : 'Scroll to the bottom'}</Typography.Body>
           <Button

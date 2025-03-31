@@ -8,7 +8,7 @@ const meta = {
   component: Icon,
   tags: ['autodocs'],
   args: {
-    className: 'text-indigo-500 dark:text-blue-500',
+    // className: 'text-indigo-500 dark:text-blue-500',
     height: 3,
     icon: 'Arrow'
   }

@@ -5,7 +5,6 @@ import { Icon } from "../Icon/Icon";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Typography } from "../Typography/Typography";
 import { CommonProps } from "../../common/commonProps";
-import { themedBackgroundClasses } from "../../common/theme";
 
 /**
  * TODO: should split this big component into smaller files
@@ -86,7 +85,7 @@ export function TransferList({
 
   const containerClasses = 'size-full grid grid-cols-[1fr_auto_1fr] gap-2 isolate';
   const formClasses = 'h-full w-full';
-  const boxClasses = classNames(themedBackgroundClasses, "p-2 flex flex-col space-y-2 size-full");
+  const boxClasses = "themedBackground themedBorder p-2 flex flex-col space-y-2 size-full";
   const scrollbarClasses = classNames('size-full flex flex-col space-y-0.5', className);
   const itemContainerClasses = 'cursor-pointer flex items-center px-2 flex bg-transparent hover:bg-slate-200 hover:dark:bg-slate-600 rounded-sm';
 
@@ -227,7 +226,7 @@ export function TransferList({
             ))}
           </Scrollbar>
         </div>
-        <div className="flex flex-col justify-center space-y-1">
+        <div className="flex flex-col justify-center">
           <Button
             disabled={selected.length === items.length}
             id="toSelected"
@@ -321,13 +320,12 @@ function TransferListListItem({ item, side, onCheck, onShift }: TransferListList
   };
 
   return (
-    <div className="w-full flex" title={item.content}>
+    <div className="w-full flex" title={item.content} onClick={onClick}>
       <input
         className="peer cursor-pointer"
         id={item.key}
         name={side}
         onChange={onChange}
-        onClick={onClick}
         type="checkbox"
       />
       <label className="peer-checked:font-semibold cursor-pointer pl-2 w-full" htmlFor={item.key}>

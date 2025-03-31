@@ -8,13 +8,6 @@ const meta = {
   title: 'Navigation/Navigation bar',
   component: NavigationBar,
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <div className='h-[500px]'>
-        <Story />
-      </div>
-    ),
-  ],
   args: {
     brandName: '@thavixt/uikit',
     navItems: [
@@ -53,12 +46,10 @@ const meta = {
   },
   render: function StoryComponent(args: ComponentProps<typeof NavigationBar>) {
     return (
-      <div>
+      <div className='p-4'>
         <NavigationBar {...args} />
         <div className="flex flex-col space-y-2">
-          {new Array(50).fill(0).map((_, i) => (
-            <SkeletonListItem key={i} />
-          ))}
+          {new Array(20).fill(0).map((_, i) => <SkeletonListItem key={i} />)}
         </div>
       </div>
     )

@@ -10,7 +10,7 @@ export interface BadgeProps extends PropsWithChildren<CommonProps<HTMLDivElement
 export function Badge({ children, className, onClick, inactive, ref }: BadgeProps) {
   const classes = classNames(
     'inline rounded-xl shadow-md transition-colors mx-1 select-none',
-    'px-2 py-1 text-sm leading-3',
+    'px-2 py-0.5 text-sm leading-3',
     'text-slate-100 dark:text-slate-700',
     {
       'bg-slate-700 dark:bg-slate-100': !inactive,

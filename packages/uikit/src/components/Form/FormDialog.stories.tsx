@@ -28,9 +28,9 @@ const meta = {
           Open dialog
         </Button>
         <FormDialog {...args} ref={ref}>
-          <TextInput required label="Name" placeholder="Your name" name='name'/>
-          <TextInput required label="Occupation" placeholder="Job title" name='job'/>
-          <NumberInput min={18} label='Age' name='experience'/>
+          <TextInput inline required label="Name" placeholder="Your name" name='name'/>
+          <TextInput inline required label="Occupation" placeholder="Job title" name='job'/>
+          <NumberInput inline min={18} label='Age' name='experience'/>
         </FormDialog>
       </>
     )

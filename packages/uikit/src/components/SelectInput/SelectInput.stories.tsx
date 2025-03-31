@@ -39,3 +39,14 @@ export const Default: Story = {
     options: generatedItems,
   }
 };
+
+export const Multiple: Story = {
+  args: {
+    defaultValue: 'cat',
+    onChange: fn(),
+    label: 'Select multiple animals',
+    name: 'animal',
+    options: generatedItems,
+    multiple: true,
+  }
+};

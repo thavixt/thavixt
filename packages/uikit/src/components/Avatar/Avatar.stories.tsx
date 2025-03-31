@@ -7,10 +7,10 @@ const meta = {
   component: Avatar,
   tags: ['autodocs'],
   args: {
-    name: '[SWE lead] Jane Doe',
+    name: 'John Doe',
     size: 'md',
     src: 'https://pc.net/img/terms/avatar.svg',
-    status: 'online',
+    // status: 'online',
     onClick: fn(),
   },
 } satisfies Meta<typeof Avatar>;

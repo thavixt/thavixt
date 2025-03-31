@@ -17,8 +17,8 @@ export function Progress({ label, className, max = 100, current, inline, ...prop
   const progressRef = useRef<HTMLDivElement>(null);
   useResizeObserver(() => setResizeCounter(prev => prev + 1));
 
-  const labelClasses = 'text-slate-600 text-xs';
-  const insideLabelClasses = 'text-slate-100 text-xs';
+  const labelClasses = 'text-slate-600 dark:text-slate-200 text-xs';
+  const insideLabelClasses = 'text-slate-200 text-xs';
   const percent = +((current / max) * 100).toFixed();
   const percentLabel = `${percent.toString().padStart(3)}%`;
 
@@ -38,7 +38,7 @@ export function Progress({ label, className, max = 100, current, inline, ...prop
     )}>
       {label ? <Typography.Label className="m-0">{label}:</Typography.Label> : null}
       <progress hidden max={max} value={current} {...props}>{percentLabel}</progress>
-      <div aria-hidden="true" className="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700 flex space-x-2">
+      <div aria-hidden="true" className="rounded-full h-4 w-full bg-gray-200 dark:bg-gray-600 flex space-x-2">
         <div
           ref={progressRef}
           className="h-4 rounded-full flex justify-center transition-all"
@@ -49,10 +49,12 @@ export function Progress({ label, className, max = 100, current, inline, ...prop
           ) : null}
         </div>
         {!labelInside ? (
-          <div className={labelClasses}>{percentLabel}</div>
+          <div className={labelClasses}>
+            {percentLabel}
+          </div>
         ) : null}
       </div>
-    </div>
+    </div >
   )
 }
 

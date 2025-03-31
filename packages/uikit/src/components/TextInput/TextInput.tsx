@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { RefObject } from "react";
 import { CommonProps } from "../../common/commonProps";
-import { themedInputClasses } from "../../common/theme";
 import { WithLabel } from "../../common/WithLabel";
 
 export interface TextInputProps extends Omit<CommonProps<HTMLInputElement | HTMLTextAreaElement>, 'children' | 'onChange'> {
@@ -15,7 +14,8 @@ export interface TextInputProps extends Omit<CommonProps<HTMLInputElement | HTML
   type?: 'text' | 'search' | 'textarea',
   value?: string;
   silent?: boolean;
-  
+  inline?: boolean;
+
   onChange?: (value: string) => void;
   onEnter?: (value: string) => void;
 }
@@ -32,11 +32,14 @@ export function TextInput({
   onChange: providedOnChange,
   onEnter,
   onKeyDown: providedOnKeyDown,
+  inline,
   ...props
 }: TextInputProps) {
   const classes = classNames(
     'px-2 w-full',
-    silent ? "bg-transparent border-b-2 border-gray-400 dark:border-gray-300" : themedInputClasses,
+    silent
+      ? "text-slate-600 dark:text-slate-50 placeholder:text-slate-400 bg-transparent border-b-2 border-gray-400 dark:border-gray-300"
+      : 'themedInput themedBorder ',
     {
       'py-1 resize-none': type === 'textarea',
     },
@@ -56,7 +59,7 @@ export function TextInput({
   const id = `${name}-text`;
 
   return (
-    <WithLabel data-testid="TextInput" label={label} id={id} required={required}>
+    <WithLabel data-testid="TextInput" label={label} id={id} required={required} inline={inline}>
       {['text', 'search'].includes(type) ? (
         <input
           ref={ref as RefObject<HTMLInputElement>}
@@ -70,9 +73,9 @@ export function TextInput({
           readOnly={readonly}
           onKeyDown={onKeyDown}
           {...props}
-          />
-        ) : (
-          <textarea
+        />
+      ) : (
+        <textarea
           ref={ref as RefObject<HTMLTextAreaElement>}
           id={id}
           className={classes}

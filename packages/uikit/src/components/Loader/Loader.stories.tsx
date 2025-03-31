@@ -15,7 +15,7 @@ const meta = {
     },
   },
   args: {
-    className: 'text-indigo-500 dark:text-blue-500',
+    // className: 'text-indigo-500 dark:text-blue-500',
     height: 8,
     type: 'TubeSpinner',
   }

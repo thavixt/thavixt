@@ -7,17 +7,15 @@ type TypographyProps<T = HTMLElement> = PropsWithChildren<HTMLAttributes<T>> & {
 
 export type TypographyType = 'H1' | 'H2' | 'Title' | 'Subtitle' | 'Caption' | 'Body' | 'Button' | 'Code' | 'Text' | 'Label';
 
-const commonStyles = 'text-slate-600 dark:text-slate-200';
-
 export const TypographyStyles: Record<TypographyType, string> = {
-  H1: classNames(commonStyles, 'block font-serif text-4xl font-bold tracking-wide capitalize leading-20'),
-  H2: classNames(commonStyles, 'block font-serif text-3xl font-bold tracking-wide capitalize leading-12'),
-  Title: classNames(commonStyles, 'block font-sans text-2xl font-semibold leading-12'),
-  Subtitle: classNames(commonStyles, 'block font-sans text-lg font-semibold leading-12'),
-  Caption: classNames(commonStyles, 'block font-sans text-lg font-thin leading-12'),
-  Body: classNames(commonStyles, 'block font-sans text-base text-pretty leading-6 pb-2'),
-  Text: classNames(commonStyles, 'inline font-sans text-pretty'),
-  Label: classNames(commonStyles, 'inline font-sans text-normal font-light leading-6'),
+  H1: classNames('themedText block font-serif text-4xl font-bold tracking-wide capitalize leading-20'),
+  H2: classNames('themedText block font-serif text-3xl font-bold tracking-wide capitalize leading-12'),
+  Title: classNames('themedText block font-sans text-2xl font-semibold leading-12'),
+  Subtitle: classNames('themedText block font-sans text-lg font-semibold leading-12'),
+  Caption: classNames('themedText block font-sans text-lg font-thin leading-12'),
+  Body: classNames('themedText block font-sans text-base text-pretty leading-6 pb-2'),
+  Text: classNames('themedText inline font-sans text-pretty'),
+  Label: classNames('themedText inline font-sans text-normal font-light leading-6'),
   Button: 'inline font-sans text-sm font-semibold',
   Code: 'inline font-mono bg-slate-600 dark:bg-slate-300 text-slate-100 dark:text-slate-800 px-1 py-0.5 rounded text-base',
 }

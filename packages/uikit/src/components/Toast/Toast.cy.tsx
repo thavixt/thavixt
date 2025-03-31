@@ -8,7 +8,7 @@ describe('Toast component', () => {
    it('should fade out after timer ends', () => {
       const onToastCreatedSpy = cy.spy().as('onToastCreated');
       // @ts-expect-error mehhhh
-      mount(<Default onToastCreated={onToastCreatedSpy} timeout={1000} />);
+      mount(<Default onToastCreated={onToastCreatedSpy} duration={1000} />);
 
       cy.get('button[type=submit]')
          .click();

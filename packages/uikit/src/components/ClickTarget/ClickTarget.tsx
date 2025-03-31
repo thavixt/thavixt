@@ -6,12 +6,12 @@ export interface ClickOutsideProps extends PropsWithChildren<Omit<CommonProps<HT
   onClickInside?: () => void;
 }
 
-export function ClickTarget({ onClickOutside, onClickInside, children }: ClickOutsideProps) {
+export function ClickTarget({ onClickOutside, onClickInside, children, ...props }: ClickOutsideProps) {
   const ref = useRef<HTMLDivElement>(null);
   useClickOutside(ref, onClickOutside, onClickInside);
 
   return (
-    <div data-testid="ClickTarget" ref={ref}>{children}</div>
+    <div data-testid="ClickTarget" ref={ref} {...props}>{children}</div>
   )
 }
 

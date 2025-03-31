@@ -9,7 +9,7 @@ export interface AvatarProps {
   onClick?: (name?: string) => void;
 }
 
-export function Avatar({ src, name, size = 'sm', status = 'away', onClick }: AvatarProps) {
+export function Avatar({ src, name, size = 'sm', status, onClick }: AvatarProps) {
   return (
     <div className={classnames(
       'inline-flex flex-col p-1 items-center group',

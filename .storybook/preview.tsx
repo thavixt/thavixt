@@ -1,4 +1,3 @@
-import React from 'react';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import type { Preview } from "@storybook/react";
 
@@ -13,13 +12,13 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <div className='mx-2 my-4'>
-        <Story />
-      </div>
-    ),
-  ],
+  // decorators: [
+  //   (Story, args) => (
+  //     <div data-theme={args.globals.theme} className='themeWrapper'>
+  //       <Story />
+  //     </div>
+  //   ),
+  // ],
 };
 
 export const decorators = [
@@ -29,7 +28,7 @@ export const decorators = [
       dark: 'dark',
     },
     defaultTheme: 'light',
-    attributeName: 'data-theme',
+    attributeName: 'data-theme', // handled with a custom decorator instead
   }),
 ];
 

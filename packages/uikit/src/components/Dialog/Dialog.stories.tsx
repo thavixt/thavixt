@@ -29,8 +29,8 @@ const meta = {
     children: (close) => (
       <>
         <Typography.Body>Lorem ipsum, dolor sit amet consectetur adipisicing elit. In, maxime?</Typography.Body>
-        <TextInput name='something' label='Something' placeholder='Something about that'/>
-        <RadioInput name='radio' values={['first', 'second']} defaultValue='second' label='Radio input'/>
+        <TextInput inline name='something' label='Something' placeholder='Something about that'/>
+        <RadioInput inline name='radio' values={['first', 'second']} defaultValue='second' label='Radio input'/>
         <ButtonBar full>
           <Button onClick={close}>Close</Button>
         </ButtonBar>

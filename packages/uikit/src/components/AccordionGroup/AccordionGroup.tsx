@@ -2,7 +2,6 @@ import { cloneElement, PropsWithChildren, useState } from "react";
 import { Accordion } from "../Accordion/Accordion";
 import { getSlotElements, sleep } from "../../common/utils";
 import classNames from "classnames";
-import { themedBackgroundClasses } from "../../common/theme";
 
 interface AccordionGroupProps {
   /**
@@ -27,7 +26,7 @@ export function AccordionGroup({ children, defaultOpen = -1, onOpen: onOpened }:
   };
 
   return (
-    <div className={classNames('divide-y-1 divide-slate-300 dark:divide-slate-500', themedBackgroundClasses)}>
+    <div className={classNames('divide-y-1 divide-slate-300 dark:divide-slate-500')}>
       {accordions.map((c, i) => {
         return cloneElement(c, {
           key: `accordiongroup-${i}`,

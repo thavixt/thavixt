@@ -1,12 +1,26 @@
 @import "tailwindcss";
+@import "../packages/uikit/utilities.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-:root,
-.docs-story {
-  @apply bg-[#fdfdfd] dark:bg-[#333333];
+.sb-main-padded,
+.sb-story,
+.innerZoomElementWrapper > *,
+.sb-main-padded,
+.docs-story > div {
+  @apply !p-0 !border-none !border-0;
 }
 
-.docs-story > div {
-  @apply p-0;
+#storybook-root {
+  @apply p-2 min-h-dvh;
+}
+
+.docs-story,
+#storybook-root {
+  /* Light and dark theme */
+  @apply bg-[#fdfdfd] dark:bg-[#444444];
+}
+
+.sb-story {
+  @apply max-h-[650px];
 }

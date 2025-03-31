@@ -4,11 +4,12 @@ import { Typography } from "../components/Typography/Typography";
 
 interface WithLabelProps extends LabelProps {
   label?: string;
+  inline?: boolean;
 }
 
-export function WithLabel({ children, label, className, id, required }: PropsWithChildren<WithLabelProps>) {
+export function WithLabel({ children, label, className, id, required, inline = false }: PropsWithChildren<WithLabelProps>) {
   const classes = classNames(
-    'flex space-x-2',
+    inline ? 'flex space-x-2' : 'flex flex-col space-y-1',
     className,
   );
 
