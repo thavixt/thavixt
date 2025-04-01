@@ -42,7 +42,6 @@ export function Button({
       className={
         classNames(
           'Button',
-          disabled && 'Button--disabled',
           loading && 'Button--loading',
           icon && 'Button--icon',
           variant === 'default' && 'Button--default',

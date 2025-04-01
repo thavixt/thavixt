@@ -7,6 +7,7 @@ const meta = {
   component: ButtonBar,
   tags: ['autodocs'],
   args: {
+    full: false,
     children: <>
       <Button variant='danger'>danger</Button>
       <Button variant='default'>default</Button>
@@ -15,7 +16,7 @@ const meta = {
       <Button variant='silent'>silent</Button>
     </>,
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof ButtonBar>;
 
 export default meta;
 

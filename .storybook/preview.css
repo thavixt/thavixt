@@ -17,8 +17,11 @@
 
 .docs-story,
 #storybook-root {
-  /* Light and dark theme */
-  @apply bg-[#fdfdfd] dark:bg-[#444444];
+  /* @apply mx-[-10px] mt-[-10px]; */
+}
+/* Light and dark theme */
+.themeStoryDecorator {
+  @apply bg-[#fdfdfd] dark:bg-[#444444] p-4 pb-10 m-[-10px];
 }
 
 .sb-story {

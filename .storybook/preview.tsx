@@ -1,5 +1,6 @@
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import type { Preview } from "@storybook/react";
+import React from 'react';
 
 import './preview.css';
 
@@ -12,13 +13,13 @@ const preview: Preview = {
       },
     },
   },
-  // decorators: [
-  //   (Story, args) => (
-  //     <div data-theme={args.globals.theme} className='themeWrapper'>
-  //       <Story />
-  //     </div>
-  //   ),
-  // ],
+  decorators: [
+    (Story, args) => (
+      <div data-theme={args.globals.theme} className='themeStoryDecorator'>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const decorators = [

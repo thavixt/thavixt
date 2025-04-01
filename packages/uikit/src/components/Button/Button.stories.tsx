@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Button, ButtonVariant } from './Button';
+import { ComponentProps } from 'react';
 
 const meta = {
   title: 'Basic/Button',
@@ -23,14 +24,19 @@ export const Default: Story = {
 };
 
 export const Variants: Story = {
-  render: () => {
+  render: function StoryComponent(args: ComponentProps<typeof Button>) {
     const buttonVariants: ButtonVariant[] = ['default', 'primary', 'secondary', 'danger', 'silent'];
     return (
       <div className='flex flex-col space-y-2 items-start'>
-        {buttonVariants.map(variant => <Button variant={variant}>{variant}</Button>)}
-        <Button loading>Loading</Button>
-        <Button success>Success</Button>
-        <Button icon={{ icon: 'Volume1' }} />
+        {buttonVariants.map(variant => (
+          <Button key={variant} {...args} variant={variant}>
+            {`${variant[0].toUpperCase()}${variant.slice(1)}`}
+          </Button>
+        ))}
+        <Button {...args} disabled>Disabled</Button>
+        <Button {...args} loading>Loading</Button>
+        <Button {...args} success>Success</Button>
+        <Button {...args} icon={{ icon: 'Volume1' }} />
       </div>
     )
   }

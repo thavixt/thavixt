@@ -1,16 +1,18 @@
 import classNames from "classnames";
 import { PropsWithChildren } from "react";
+import "./ButtonBar.css";
 
-export function ButtonBar({children, full}: PropsWithChildren<{ full?: boolean }>) {
-  const classes = classNames(
-    'flex space-x-2 items-center', 
-    {
-      'w-full justify-end': full,
-      'w-fit': !full,
-    }
-  );
+interface ButtonBarProps extends PropsWithChildren {
+  full?: boolean;
+}
 
-  return <div className={classes}>
-    {children}
-  </div>
+export function ButtonBar({ children, full }: ButtonBarProps) {
+  return (
+    <div
+      data-testid="ButtonBar"
+      className={classNames('ButtonBar', full && 'ButtonBar--full')}
+    >
+      {children}
+    </div>
+  )
 }

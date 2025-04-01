@@ -1,0 +1,14 @@
+.ButtonBar {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+
+  & > .Button:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+.ButtonBar--full {
+  width: 100%;
+  justify-content: end;
+}
