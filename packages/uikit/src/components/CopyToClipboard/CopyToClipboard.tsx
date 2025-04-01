@@ -1,5 +1,5 @@
 import { Typography } from "../Typography/Typography";
-import classNames from "classnames";
+import "./CopyToClipboard.css";
 
 interface CopyToClipboardProps {
 	/**
@@ -11,25 +11,25 @@ interface CopyToClipboardProps {
 	 * Transform the content before copying
 	 */
 	transform?: (value: string) => string;
+	onClick: (value: string) => void;
 }
 
-export function CopyToClipboard({ children, transform, title }: CopyToClipboardProps) {
+export function CopyToClipboard({ children, transform, title, onClick: providedOnClick }: CopyToClipboardProps) {
 	const transformedText = transform ? transform(children) : children;
-	const titleText = title ?? `Copy ${transformedText} to clipboard`;
+	const titleText = title ?? `Copy "${transformedText}" to clipboard`;
 	const onClick = () => {
 		navigator.clipboard.writeText(transformedText);
-		alert(`"${transformedText}" copied to clipboard.`)
+		if (providedOnClick) {
+			providedOnClick(transformedText);
+		} else {
+			alert(`"${transformedText}" copied to clipboard.`)
+		}
 	};
 
 	return (
 		<div
-			className={classNames(
-				"themedBorder",
-				"inline px-2 py-1 cursor-pointer",
-				"bg-slate-100 hover:bg-slate-200",
-				"dark:bg-slate-600 dark:hover:bg-slate-700",
-				"border-2",
-			)}
+			data-testid="CopyToClipboard"
+			className="CopyToClipboard"
 			onClick={onClick}
 			title={titleText}
 		>
