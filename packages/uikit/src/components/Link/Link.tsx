@@ -11,6 +11,10 @@ export interface LinkProps extends PropsWithChildren<CommonProps<HTMLAnchorEleme
   self?: boolean,
 };
 
+/**
+ * after:content-['_↗']
+ */
+
 export function Link({ self, ...props}: LinkProps) {
   const classes = classNames(
     'inline-flex items-center',

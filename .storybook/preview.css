@@ -3,27 +3,10 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-.sb-main-padded,
-.sb-story,
-.innerZoomElementWrapper > *,
-.sb-main-padded,
-.docs-story > div {
-  @apply !p-0 !border-none !border-0;
-}
-
-#storybook-root {
-  @apply p-2 min-h-dvh;
-}
-
-.docs-story,
-#storybook-root {
-  /* @apply mx-[-10px] mt-[-10px]; */
-}
 /* Light and dark theme */
-.themeStoryDecorator {
-  @apply bg-[#fdfdfd] dark:bg-[#444444] p-4 pb-10 m-[-10px];
-}
-
-.sb-story {
-  @apply max-h-[650px];
+/* story page */
+html,
+/* story preview on default page */
+html .docs-story {
+  @apply bg-[#fdfdfd] dark:bg-[#444444];
 }

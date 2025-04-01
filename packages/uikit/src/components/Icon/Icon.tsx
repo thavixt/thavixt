@@ -1,6 +1,7 @@
 import { createElement, HTMLAttributes } from "react";
 import { IconList, IconType } from "./IconList";
 import classNames from "classnames";
+import "./Icon.css";
 
 export interface IconProps extends HTMLAttributes<HTMLDivElement> {
   icon: IconType;
@@ -12,8 +13,12 @@ export interface IconProps extends HTMLAttributes<HTMLDivElement> {
 
 export function Icon({ height = 3, className, ...props }: IconProps) {
   return (
-    <div data-testid="Icon" className={classNames(className ?? 'Icon themedText', { 'cursor-pointer': props.onClick })} {...props}>
-      {createElement(IconList[props.icon], { height })}
-    </div>
+    <span
+      data-testid="Icon"
+      className={classNames('Icon', props.onClick && 'Icon--clickable')}
+      {...props}
+    >
+      {createElement(IconList[props.icon], { height, className })}
+    </span>
   );
 }

@@ -1,15 +1,21 @@
 :root {
-  --green-1: #80e580;
-  --green-2: #2ed32e;
-  --green-3: #289c28;
-  --indigo-1: #7665f0;
-  --indigo-2: #4f39f6;
-  --indigo-3: #311dc9;
-  --red-1: #f54952;
-  --red-2: #fb2c36;
-  --red-3: #d3040e;
+  /*
+    to help converting from Tailwind:
+    - 1 unit = 4px
+    - 2 unit = 8px
+    - 3 unit = 12px
+    - 4 unit = 16px
+    - 8 unit = 32px
+    - 16 unit = 64px
+    - 24 unit = 96px
+    - 32 unit = 128px
+  */
+  --scale: 4;
 
-  --gray-1: #b6bcc4;
+  --white: whitesmoke;
+  --black: #1b2229;
+
+  --gray-1: #d1dae6;
   --gray-2: #94979b;
   --gray-3: #5d5e5f;
   --gray-4: #414244;
@@ -18,8 +24,15 @@
   --slate-3: #4e6681;
   --slate-4: #283f58;
 
-  --white: whitesmoke;
-  --black: #1b2229;
+  --green-1: #80e580;
+  --green-2: #2ed32e;
+  --green-3: #289c28;
+  --indigo-1: #7b6bf3;
+  --indigo-2: #4f39f6;
+  --indigo-3: #311dc9;
+  --red-1: #f14e56;
+  --red-2: #fb2c36;
+  --red-3: #d3040e;
 }
 
 .themedText {

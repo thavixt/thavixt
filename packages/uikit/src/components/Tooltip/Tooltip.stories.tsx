@@ -1,31 +1,33 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
 import { Tooltip } from './Tooltip';
+import { Icon } from '../Icon/Icon';
+import classNames from 'classnames';
 
 const meta = {
   title: 'Basic/Tooltip',
   component: Tooltip,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Show any content on hover.',
+      },
+    },
+  },
   args: {
-    children: 'Hover here',
-    tooltip: 'This is a very awesome tip here, wow',
+    children: 'Hover me',
+    tooltip: 'just about anything goes here i guess ¯\\_(ツ)_/¯',
     position: 'bottom',
     visible: false,
   },
   decorators: [
     (Story) => (
-      <div className='min-h-[120px]'>
+      <div className='m-16'>
         <Story />
       </div>
     ),
   ],
-  render: function StoryComponent(args: ComponentProps<typeof Tooltip>) {
-    return (
-      <div className='my-8 mx-16 grid grid-cols-2 gap-8'>
-        <Tooltip {...args} />
-      </div>
-    )
-  }
 } satisfies Meta<typeof Tooltip>;
 
 export default meta;
@@ -37,26 +39,29 @@ export const Default: Story = {};
 export const AlwaysVisible: Story = {
   args: {
     visible: true,
-    position: 'bottom',
+    tooltip: (side) => (
+      <>
+        <Icon
+          icon="Arrow"
+          height={2}
+          className={classNames('mr-1 transform', {
+            'rotate-180': side === 'right',
+            'rotate-270': side === 'bottom',
+            'rotate-0': side === 'left',
+            'rotate-90': side === 'top',
+          })}
+        />
+        {side} tooltip from there
+      </>
+    ),
   },
-};
-
-export const AllOrientations: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Tooltip>) {
     return (
-      <div className='m-2 mb-20 flex flex-col gap-16 items-center'>
-        <Tooltip {...args} position='left'>
-          {args.children} for a left tooltip
-        </Tooltip>
-        <Tooltip {...args} position='top'>
-          {args.children} for a top tooltip
-        </Tooltip>
-        <Tooltip {...args} position='right'>
-          {args.children} for a right tooltip
-        </Tooltip>
-        <Tooltip {...args} position='bottom'>
-          {args.children} for a bottom tooltip
-        </Tooltip>
+      <div className='flex flex-col gap-24 items-center'>
+        <Tooltip {...args} position='right' />
+        <Tooltip {...args} position='bottom' />
+        <Tooltip {...args} position='left' />
+        <Tooltip {...args} position='top' />
       </div>
     )
   }

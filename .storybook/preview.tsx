@@ -1,11 +1,22 @@
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import * as DocBlock from '@storybook/blocks';
 import type { Preview } from "@storybook/react";
 import React from 'react';
 
 import './preview.css';
 
+const docsPage = () => (
+  <>
+      <DocBlock.Title />
+      <DocBlock.Description />
+      <DocBlock.Controls  />
+      <DocBlock.Stories />
+  </>
+);
+
 const preview: Preview = {
   parameters: {
+    docs: { page: docsPage },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -13,15 +24,16 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    (Story, args) => (
-      <div data-theme={args.globals.theme} className='themeStoryDecorator'>
-        <Story />
-      </div>
-    ),
-  ],
+  // decorators: [
+  //   (Story, args) => (
+  //     <div data-theme={args.globals.theme} className='themeStoryDecorator'>
+  //       <Story />
+  //     </div>
+  //   ),
+  // ],
 };
 
+// https://github.com/storybookjs/storybook/blob/next/code/addons/themes/docs/api.md
 export const decorators = [
   withThemeByDataAttribute({
     themes: {
@@ -29,7 +41,7 @@ export const decorators = [
       dark: 'dark',
     },
     defaultTheme: 'light',
-    attributeName: 'data-theme', // handled with a custom decorator instead
+    attributeName: 'data-theme',
   }),
 ];
 
