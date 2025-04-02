@@ -1,0 +1,14 @@
+.Inplace {
+  display: inline-flex;
+  padding: 0 0.25rem;
+}
+
+.Inplace__text {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.Inplace__replacement {
+  display: flex;
+}

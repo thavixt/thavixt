@@ -12,13 +12,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "`<Inplace>` is used to replace the content of an element on click.",
+        component: "`<Inplace>` is used to replace the content of an element on click. Could be use to make editable sections, by replacing a piece of text with a `<TextInput>`. After replacing, the next callback will fire on the `blur` event.",
       },
     },
   },
   args: {
     onReplace: fn(),
-    children: 'Click to replace me',
     replacement: <TextInput name='story' defaultValue='story' />,
   },
 } satisfies Meta<typeof Inplace>;
@@ -29,7 +28,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Inplace>) {
-    const [value, setValue] = useState('Click me!!44!!!!4!');
+    const [value, setValue] = useState('Click here!');
     const ref = useRef<HTMLInputElement>(null);
     const onReplace = (replaced: boolean) => {
       if (ref.current) {
@@ -41,13 +40,13 @@ export const Default: Story = {
     return (
       <div className="inline">
         <Typography.Text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis eum quas voluptatem soluta, necessitatibus possimus reprehenderit enim totam consequuntur ipsa sapiente, dicta asperiores! Maiores quae quidem ut iusto ullam explicabo.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis eum quas voluptatem soluta, necessitatibus possimus reprehenderit enim totam consequuntur ipsa sapiente, dicta asperiores! Maiores quae quidem ut iusto ullam explicabo. Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </Typography.Text>
         <Inplace onReplace={onReplace} replacement={<TextInput ref={ref} silent name='example' defaultValue={value} onEnter={v => setValue(v)} />}>
           {value}
         </Inplace>
         <Typography.Text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique odit incidunt iusto sint error impedit itaque alias nobis nesciunt facilis, repellat sunt quaerat odio, ratione voluptatum provident temporibus fuga ad.
+          Similique odit incidunt iusto sint error impedit itaque alias nobis nesciunt facilis, repellat sunt quaerat odio, ratione voluptatum provident temporibus fuga ad.
         </Typography.Text>
       </div>
     )
