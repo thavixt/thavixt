@@ -29,7 +29,7 @@ export function Tooltip({ ref, className, children, tooltip, position = 'bottom'
         {children}
       </Typography.Text>
       <div data-testid="Tooltip__content" className={tooltipClasses}>
-        <Typography.Text className="Tooltip__target">
+        <Typography.Text>
           {typeof tooltip === 'function' ? tooltip(position) : tooltip}
         </Typography.Text>
         <div className="Tooltip__arrow" />
