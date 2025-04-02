@@ -4,13 +4,14 @@ import "./ButtonBar.css";
 
 interface ButtonBarProps extends PropsWithChildren {
   full?: boolean;
+  className?: string;
 }
 
-export function ButtonBar({ children, full }: ButtonBarProps) {
+export function ButtonBar({ children, className, full }: ButtonBarProps) {
   return (
     <div
       data-testid="ButtonBar"
-      className={classNames('ButtonBar', full && 'ButtonBar--full')}
+      className={classNames('ButtonBar', className, full && 'ButtonBar--full')}
     >
       {children}
     </div>

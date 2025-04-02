@@ -1,0 +1,45 @@
+.Form > fieldset:not(.Form--fieldset) > legend {
+  padding-bottom: 0.5rem;
+}
+
+.Form fieldset.Form--fieldset > legend {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.Form--fieldset {
+  border: 1px solid var(--gray-2);
+  border-radius: 12px;
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+}
+[data-theme=dark] .Form--fieldset {
+  border-color: var(--slate-2);
+}
+
+.Form--container {
+  /* pass */
+}
+
+.Form--content {
+  display: block;
+  flex-direction: column;
+
+  & > * {
+    margin-bottom: 0.35rem;
+  }
+}
+
+.Form--error {
+  color: var(--red-2);
+  font-size: 0.8rem;
+  &.Form--error--disabled {
+    opacity: 0.5;
+  }
+}
+[data-theme=dark] .Form--error {
+  color: var(--red-1);
+}
+
+.Form--buttons {
+  margin-top: 0.5rem;
+}

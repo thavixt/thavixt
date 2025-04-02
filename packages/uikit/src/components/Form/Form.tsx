@@ -4,6 +4,7 @@ import { CommonProps } from "../../common/commonProps";
 import { Button } from "../Button/Button";
 import { ButtonBar } from "../ButtonBar/ButtonBar";
 import { Typography } from "../Typography/Typography";
+import "./Form.css";
 
 export interface FormProps extends PropsWithChildren<Omit<CommonProps<HTMLFormElement>, 'onSubmit'>> {
   border?: boolean;
@@ -12,6 +13,8 @@ export interface FormProps extends PropsWithChildren<Omit<CommonProps<HTMLFormEl
   submitText?: string;
   /* allow submitting multiple times - do not disable on a successful submission */
   submitMultiple?: boolean;
+  /* text of `<legend>` in `<fieldset>` */
+  title?: string;
 
   onCancel?: () => void | Promise<void>,
   onSubmit?: (values: Record<string, number | string>) => void | Promise<void>;
@@ -20,21 +23,23 @@ export interface FormProps extends PropsWithChildren<Omit<CommonProps<HTMLFormEl
 }
 
 export function Form({
+  ref,
+  children,
+  className,
+  id,
+  title,
   border,
   cancelText = 'Cancel',
   resetText = 'Reset',
   submitText = 'Submit',
   submitMultiple,
-  children,
-  className,
-  ref,
   onCancel: onFormCancel,
   onSubmit: providedOnSubmit,
   onSubmitSuccess,
   onSubmitError,
   ...props
 }: FormProps) {
-  const formName = useRef(`dialogForm_${crypto.randomUUID().slice(0, 8)}`);
+  const formName = useRef(`dialogForm_${id ?? crypto.randomUUID().slice(0, 8)}`);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -45,10 +50,10 @@ export function Form({
     // TODO: fix type - form entries / values
     const formData = Object.fromEntries(new FormData(formElement).entries()) as Record<string, string | number>;
     try {
-      setError(null);
       setLoading(true);
       setSuccess(false);
       await providedOnSubmit?.(formData);
+      setError(null);
       setLoading(false);
       setSuccess(true);
       await onSubmitSuccess?.(formData);
@@ -58,7 +63,7 @@ export function Form({
       console.warn(e);
       const name = error.name ?? '';
       const message = error.message ?? 'Something went wrong :(';
-      setError(`${name} - ${message}`);
+      setError(`${name}: ${message}`);
       onSubmitError?.(error, formData);
       setLoading(false);
       return;
@@ -83,35 +88,40 @@ export function Form({
     <form
       data-testid="Form"
       ref={ref}
-      className={classNames(className, 'group rounded-md', { 'p-4 border border-slate-300 dark:border-slate-600': border })}
+      className={classNames('Form group', className)}
       id={formName.current}
       method="dialog"
       onSubmit={onSubmit}
       onReset={onReset}
       {...props}
     >
-      <fieldset disabled={loading}>
-        <div className="flex flex-col space-y-4">
-          <div className="flex flex-col space-y-2">
-            {children}
-          </div>
+      <fieldset className={border ? 'Form--fieldset' : undefined} disabled={loading}>
+        <legend>
+          <Typography.Label>{title}</Typography.Label>
+        </legend>
+        <div className="Form--container">
+          <div className="Form--content">{children}</div>
           {error ? (
-            <>
-              <div className="border-l-4 border-red-500 dark:text-red-400 pl-2">
-                <Typography.Text className="text-red-500 dark:text-red-400">{error}</Typography.Text>
-              </div>
-            </>
+            <Typography.Body className={classNames("Form--error", disabled && "Form--error--disabled")}>
+              {error}
+            </Typography.Body>
           ) : null}
-          <ButtonBar>
+          <ButtonBar className="Form--buttons" full>
             {onFormCancel ? (
-              <Button variant="default" onClick={onCancel} disabled={disabled}>
+              <Button onClick={onCancel} disabled={disabled}>
                 {cancelText}
               </Button>
             ) : null}
-            <Button variant="default" type="reset" disabled={loading}>
+            <Button type="reset" disabled={disabled}>
               {resetText}
             </Button>
-            <Button type="submit" variant="primary" loading={loading} success={success} disabled={disabled}>
+            <Button
+              type="submit"
+              variant="primary"
+              loading={loading}
+              success={success}
+              disabled={disabled}
+            >
               {submitText}
             </Button>
           </ButtonBar>

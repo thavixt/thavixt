@@ -11,14 +11,19 @@ export interface IconProps extends HTMLAttributes<HTMLDivElement> {
   height?: number;
 }
 
+/**
+ * @todo
+ * TODO: consistent sizing with Icon and Loader components
+ * probably using var(--scale) or smt 
+ */
 export function Icon({ height = 3, className, ...props }: IconProps) {
   return (
-    <span
+    <div
       data-testid="Icon"
       className={classNames('Icon', props.onClick && 'Icon--clickable')}
       {...props}
     >
       {createElement(IconList[props.icon], { height, className })}
-    </span>
+    </div>
   );
 }

@@ -14,14 +14,16 @@ const meta = {
     return (
       <Form {...args}>
         <TextInput inline required label="Name" placeholder="Your name" name='name' defaultValue='Jane Doe' />
-        <TextInput inline required label="Occupation" placeholder="Job title" name='job' defaultValue='software engineer' />
-        <NumberInput inline min={18} label='Age' name='age' defaultValue={21} />
+        <TextInput inline required label="Role" placeholder="Frontend / UXUI" name='role' defaultValue='frontend engineer' />
+        <NumberInput inline min={18} label='Age' name='age' defaultValue={24} />
       </Form>
     )
   },
   args: {
-    className: 'border-red-500 text-sm',
-    // onCancel: fn(),
+    title: "Job application for Company XYZ Inc.",
+    onReset: fn(),
+    border: false,
+    submitMultiple: false,
     onSubmitError: fn(),
     onSubmitSuccess: fn(),
   }
