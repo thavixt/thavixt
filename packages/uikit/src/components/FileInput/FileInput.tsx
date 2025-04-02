@@ -6,16 +6,31 @@ import { formatSize } from "./formatSize";
 import { Button } from "../Button/Button";
 import { ButtonBar } from "../ButtonBar/ButtonBar";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
+import "./FileInput.css";
+import { CommonProps } from "../../common/commonProps";
 
-interface FileUploadProps {
+interface FileInputProps extends CommonProps<HTMLInputElement> {
   multiple?: boolean;
   accept?: string;
   disabled?: boolean;
   onAction?: (files: File[]) => Promise<void>;
   action?: string;
+  label?: string;
 }
 
-export function FileUpload({ multiple = false, accept, onAction, disabled, action = "Upload" }: FileUploadProps) {
+export function FileInput(
+  { 
+    ref, 
+    id = 'file-upload', 
+    label = 'Click to select files, or drop here', 
+    multiple = false, 
+    accept = '*', onAction, 
+    disabled, 
+    action = "Upload",
+    className,
+    ...props
+   }: FileInputProps
+) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [dragActive, setDragActive] = useState(false);
   const [processing, setProcessing] = useState(false);
@@ -93,7 +108,6 @@ export function FileUpload({ multiple = false, accept, onAction, disabled, actio
 
   const onClear = () => setSelectedFiles([]);
 
-  const cursorClass = disabled ? "cursor-not-allowed" : "cursor-pointer";
   const interactive = !(disabled || processing);
 
   return (
@@ -102,60 +116,45 @@ export function FileUpload({ multiple = false, accept, onAction, disabled, actio
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       className={classNames(
-        cursorClass,
-        "themedBackground themedBorder border-dashed",
-        "rounded-xl p-4 flex flex-col items-center justify-center text-center",
-        "transition duration-200 ease-in-out min-w-[300px]",
-        {
-          "!border-transparent disabled opacity-50": disabled,
-          "pointer-events-none": !interactive,
-          "drop-shadow-md": !dragActive,
-          "drop-shadow-xl": dragActive,
-        },
+        "FileInput",
+        disabled && "FileInput--disabled",
+        interactive && "FileInput--interactive",
+        dragActive && "FileInput--dragactive",
+        className,
       )}
     >
-      {(multiple || !selectedFiles.length) ? (
-        <label htmlFor="file-upload">
-          <Typography.Label className={cursorClass}>
-            Click to browse or drop files here
-          </Typography.Label>
-        </label>
-      ) : null}
+      {<label htmlFor={id}>
+        <Typography.Label>{label}</Typography.Label>
+      </label>}
       <input
+        ref={ref}
         accept={accept}
         className="hidden"
         disabled={!interactive}
-        id="file-upload"
+        id={id}
         multiple={multiple}
         onChange={(e) => handleFiles(e.target.files)}
         type="file"
+        {...props}
       />
       {selectedFiles.length > 0 && (
-        <div className="w-full flex flex-col space-y-2">
-          <Typography.Caption className="text-sm text-gray-600 font-semibold">
-            Selected files:{selectedFiles.length ? ` (${selectedFiles.length})` : ''}
-          </Typography.Caption>
-          <div className="max-h-[500px]">
-            <Scrollbar className="h-full w-full max-h-100 p-1">
-              <ul className="space-y-2">
+        <div className="FileInput__files">
+          <div className="FileInput__filelist">
+            <Scrollbar className="FileInput__scrollbar">
+              <ul>
                 {selectedFiles.map(file => (
                   <li
                     key={file.name}
                     title={file.name}
-                    className={classNames(
-                      "flex items-center justify-between shadow-sm p-2 rounded-md",
-                      "bg-slate-100 dark:bg-slate-700",
-                      "hover:bg-slate-200 hover:dark:bg-slate-600",
-                    )}
+                    className="FileInput__file"
                   >
                     {file.type.startsWith("image/") && (
                       <img
                         src={URL.createObjectURL(file)}
                         alt={file.name}
-                        className="w-12 h-12 rounded-md object-cover"
                       />
                     )}
-                    <span className="flex-1 ml-2 truncate px-2">
+                    <span className="FileInput__label">
                       <Typography.Label>{file.name}</Typography.Label>
                     </span>
                     <span>
@@ -165,7 +164,7 @@ export function FileUpload({ multiple = false, accept, onAction, disabled, actio
                       hidden={!interactive}
                       icon="CrossCircled"
                       height={3}
-                      className={classNames('ml-2 hover:opacity-50', cursorClass)}
+                      className="FileInput__icon"
                       onClick={() => onDelete(file.name)}
                     />
                   </li>
@@ -175,11 +174,20 @@ export function FileUpload({ multiple = false, accept, onAction, disabled, actio
           </div>
           {selectedFiles.length ? (
             <ButtonBar full>
-              <Button variant="silent" onClick={onClear} disabled={!interactive}>
+              <Button
+                variant="silent"
+                onClick={onClear}
+                disabled={!interactive}
+              >
                 Clear
               </Button>
-              <Button variant="primary" onClick={onClick} disabled={!interactive} loading={processing}>
-                {action}
+              <Button
+                variant="primary"
+                onClick={onClick}
+                disabled={!interactive}
+                loading={processing}
+              >
+                {action} ({selectedFiles.length})
               </Button>
             </ButtonBar>
           ) : null}

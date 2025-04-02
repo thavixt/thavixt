@@ -7,10 +7,12 @@ import './preview.css';
 
 const docsPage = () => (
   <>
-      <DocBlock.Title />
-      <DocBlock.Description />
-      <DocBlock.Controls  />
-      <DocBlock.Stories />
+    <DocBlock.Title />
+    <DocBlock.Description />
+    <DocBlock.Primary />
+    <DocBlock.Controls />
+    {/* <DocBlock.Source /> */}
+    {/* <DocBlock.Stories /> */}
   </>
 );
 
