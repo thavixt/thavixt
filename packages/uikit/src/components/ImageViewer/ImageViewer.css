@@ -1,0 +1,156 @@
+.ImageViewer {
+  --border: var(--gray-2);
+  --bg: var(--gray-1);
+
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  user-select: none;
+  cursor: pointer;
+  padding: 1rem;
+  border: 1px solid var(--border);
+
+  background-color: var(--bg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-clip: initial;
+}
+[data-theme=dark] .ImageViewer {
+  --border: var(--gray-3);
+  --bg: var(--gray-4);
+}
+
+.ImageViewer__filter {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(12px) brightness(35%);
+}
+
+.ImageViewer__imageContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  max-height: 100%;
+  user-select: none;
+}
+
+.ImageViewer__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  aspect-ratio: 2/1;
+}
+
+.ImageViewer > .Dialog {
+  width: 100%;
+  height: 100%;
+  max-width: 90dvw;
+  max-height: 90dvh;
+  padding: 12px;
+  cursor: default;
+
+  & .Dialog__content {
+    height: 100%;
+    max-height: 90%;
+  }
+
+  & .ImageViewer__container {
+    display: grid;
+    grid-template-columns: 3fr auto 1fr;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    isolation: isolate;
+    cursor: default;
+  }
+  
+  & .ImageViewer__image {
+    width: 100%;
+    height: 100%;
+    max-height: initial;
+    max-width: initial;
+  }
+
+  & .ImageViewer__description {
+    mix-blend-mode: unset;
+  }
+}
+
+.ImageViewer__controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+
+  pointer-events: none;
+
+  & .ImageViewer__controls__prev,
+  & .ImageViewer__controls__next {
+    pointer-events: all;
+  }
+
+  & .ImageViewer__controls__prev,
+  & .ImageViewer__controls__next {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    
+    width: 20%;
+    height: 100%;
+
+    cursor: pointer;
+    max-width: 200px;
+    opacity: 0.35;
+    padding: 0 0.5rem;
+    transition-duration: 250ms;
+    transition: opacity;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.ImageViewer__control--disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+  & .ImageViewer__controls__prev .Button,
+  & .ImageViewer__controls__next .Button {
+    margin-bottom: 1rem;
+  }
+
+  & .ImageViewer__controls__prev svg {
+    rotate: 180deg;
+  }
+}
+
+.ImageViewer__description {
+  padding: 0.5rem 0;
+  max-width: 60%;
+  font-size: 0.85rem;
+  user-select: all;
+}
+
+.ImageViewer__sidebar {
+  height: 100%;
+  width: 100%;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}

@@ -15,9 +15,10 @@ export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 
   required?: boolean;
   onChange?: (chekedId: string) => void;
   inline?: boolean;
+  disabled?: boolean;
 }
 
-export function RadioInput({ required, ref, inline, ...props }: RadioInputProps) {
+export function RadioInput({ disabled, required, ref, inline, ...props }: RadioInputProps) {
   const classes = classNames(
     'w-fit grid grid-cols-[minmax(106px,auto)_auto]',
     'themedText',
@@ -40,6 +41,7 @@ export function RadioInput({ required, ref, inline, ...props }: RadioInputProps)
                 key={value}
                 name={props.name}
                 value={value}
+                disabled={disabled}
               />
             ))}
           </div>
@@ -58,31 +60,23 @@ interface RadioProps extends Partial<HTMLInputElement> {
   value: string;
 }
 
-function Radio(props: RadioProps) {
-  const classes = classNames(
-    'flex space-x-1.5 items-center',
-    props.className,
-  );
-  const radioClasses = classNames(
-    'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600',
-  );
+function Radio({ className, ...props }: RadioProps) {
+  const classes = classNames('flex space-x-1.5 items-center', className,);
+  const radioClasses = 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600';
 
   const id = `${props.name}_${props.value}-radio`;
 
   // TODO: tabindex, accessibility
   return (
     <div className={classes}>
+      {/* @TODO FIXME */}
+      {/* @ts-expect-error some whacky type magic */}
       <input
         data-testid={`RadioInput_${props.value}`}
-        checked={props.checked}
         className={radioClasses}
-        defaultChecked={props.defaultChecked}
         id={id}
-        name={props.name}
-        ref={props.ref}
-        required={props.required}
         type="radio"
-        value={props.value}
+        {...props}
       />
       <label className="min-w-24 mb-0.5" htmlFor={id}>{props.value}</label>
     </div>

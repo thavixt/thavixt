@@ -1,11 +1,11 @@
 .Button {
-  --shadow: var(--gray-1);
+  --shadow: var(--slate-3);
   --bg: var(--slate-1);
   --hover-bg: var(--slate-2);
 
   background-color: var(--bg);
   border-radius: 0.5rem;
-  box-shadow: 2px 2px 4px 0px var(--shadow);
+  box-shadow: 1px 2px 4px 0px var(--shadow);
   color: var(--white);
   cursor: pointer;
   height: fit-content;
@@ -60,6 +60,10 @@
   aspect-ratio: 1/1;
   border-radius: 50%;
   padding: 0.25rem;
+
+  & svg {
+    display: block;
+  }
 }
 
 .Button--loading,
@@ -71,6 +75,7 @@
 
 .Button__content {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   

@@ -9,11 +9,12 @@ interface DividerProps extends CommonProps<HTMLDivElement> {
 
 export function Divider({ className, ref, small, unicorn, vertical, ...props }: DividerProps) {
   const classes = classNames(
-    'self-center text-transparent',
+    'self-center text-transparent rounded-lg',
     {
-      'bg-slate-300 dark:bg-slate-500': !unicorn && !className,
-      'bg-linear-65 from-purple-500 to-pink-500': unicorn && !vertical,
-      'bg-linear-245 from-purple-500 to-pink-500': unicorn && vertical,
+      'bg-slate-400 dark:bg-slate-600': !unicorn && !className,
+      'from-purple-500 to-pink-500': unicorn,
+      'bg-linear-65': unicorn && !vertical,
+      'bg-linear-245': unicorn && vertical,
     },
     {
       'my-4 h-0.5': !vertical,

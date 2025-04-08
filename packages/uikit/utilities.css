@@ -12,27 +12,29 @@
   */
   --scale: 4;
 
-  --white: whitesmoke;
-  --black: #1b2229;
+  --white: rgb(245, 245, 245);
+  --black: rgb(25, 25, 25);
 
-  --gray-1: #e0e6ee;
-  --gray-2: #c1c4c7;
-  --gray-3: #787a7c;
-  --gray-4: #414244;
-  --slate-1: #c9ddf5;
-  --slate-2: #94a4bd;
-  --slate-3: #4e6681;
-  --slate-4: #283f58;
+  --gray-1: rgb(220, 220, 220);
+  --gray-2: rgb(180, 180, 180);
+  --gray-3: rgb(120, 120, 120);
+  --gray-4: rgb(80, 80, 80);
+  --gray-5: rgb(35, 35, 35);
+  --slate-1: rgb(200, 221, 245);
+  --slate-2: rgb(148, 164, 189);
+  --slate-3: rgb(78, 102, 129);
+  --slate-4: rgb(40, 63, 88);
+  --slate-5: rgb(22, 40, 59);
 
-  --green-1: #80e580;
-  --green-2: #2ed32e;
-  --green-3: #289c28;
-  --indigo-1: #7b6bf3;
-  --indigo-2: #4f39f6;
-  --indigo-3: #311dc9;
-  --red-1: #f14e56;
-  --red-2: #fb2c36;
-  --red-3: #d3040e;
+  --green-1: rgb(128, 229, 128);
+  --green-2: rgb(46, 211, 46);
+  --green-3: rgb(40, 156, 40);
+  --indigo-1: rgb(123, 107, 243);
+  --indigo-2: rgb(79, 57, 246);
+  --indigo-3: rgb(49, 29, 201);
+  --red-1: rgb(241, 78, 86);
+  --red-2: rgb(251, 44, 54);
+  --red-3: rgb(211, 4, 14);
 }
 
 .themedText {

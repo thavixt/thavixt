@@ -4,7 +4,6 @@ import { ComponentProps, useRef } from 'react';
 import { Dialog, DialogHandle } from './Dialog';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography/Typography';
-import { ButtonBar } from '../ButtonBar/ButtonBar';
 import { TextInput } from '../TextInput/TextInput';
 import { RadioInput } from '../RadioInput/RadioInput';
 
@@ -20,20 +19,19 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    closeIcon: false,
-    closeOnClickOutside: true,
+    closeIcon: true,
+    closeOnClickOutside: false,
     onClose: fn(),
     onOpen: fn(),
     open: false,
     title: "Dialog example",
-    children: (close) => (
+    children: () => (
       <>
-        <Typography.Body>Lorem ipsum, dolor sit amet consectetur adipisicing elit. In, maxime?</Typography.Body>
-        <TextInput inline name='something' label='Something' placeholder='Something about that'/>
-        <RadioInput inline name='radio' values={['first', 'second']} defaultValue='second' label='Radio input'/>
-        <ButtonBar full>
-          <Button onClick={close}>Close</Button>
-        </ButtonBar>
+        <Typography.Body>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ullam libero exercitationem veniam sint harum minus, repudiandae quis corrupti laborum odit, quo ut nam eligendi voluptatibus nostrum suscipit aliquid. A fuga quo impedit labore perspiciatis possimus quaerat alias corporis, incidunt, facilis porro nemo quibusdam autem saepe expedita, explicabo veniam! Quia quibusdam cupiditate, quisquam corrupti fuga molestias voluptatem corporis earum ex veritatis dolore sequi alias harum consectetur velit dolor eum, aspernatur recusandae iure similique doloribus impedit commodi, cum mollitia. Optio libero, nemo beatae, dolore iusto sunt veniam, deleniti modi est perferendis doloremque quisquam praesentium corporis nihil illum quibusdam dignissimos voluptates molestiae!
+        </Typography.Body>
+        <TextInput disabled inline name='something' label='Something' defaultValue="Can't change this"/>
+        <RadioInput disabled inline name='radio' values={['first', 'second']} defaultValue='second' label='Radio input'/>
       </>
     ),
   },
