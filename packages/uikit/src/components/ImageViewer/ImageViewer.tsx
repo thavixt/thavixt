@@ -7,21 +7,23 @@ import { Divider } from "../Divider/Divider";
 import { Button } from "../Button/Button";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Typography } from "../Typography/Typography";
+import { sleep } from "../../common/utils";
 
 interface Image {
   src: string;
   description?: string;
 }
 
-interface ImageViewerProps extends Omit<CommonProps<HTMLImageElement>, 'src'> {
+interface ImageViewerProps extends Omit<CommonProps<HTMLImageElement>, 'src' | 'onChange'> {
   src: (Image | string)[];
   sidebar?: (index: number) => ReactNode;
   title?: string;
   width?: number;
   height?: number;
+  onChange?: (imageIndex: number) => void;
 }
 
-export function ImageViewer({ className, src, sidebar, title, width = 300, height = 300, ...imageProps }: ImageViewerProps) {
+export function ImageViewer({ onChange, className, src, sidebar, title, width = 300, height = 300, ...imageProps }: ImageViewerProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const srcList = useMemo(() => Array.isArray(src) ? src : [src], [src]);
@@ -29,9 +31,21 @@ export function ImageViewer({ className, src, sidebar, title, width = 300, heigh
   const currentImageSrc = typeof currentImage === "string" ? currentImage : currentImage.src;
   const currentImageDesc = `(${index + 1}/${src.length}) ${typeof currentImage === "string" ? '' : currentImage.description}`;
 
-  const onClick = () => setDialogOpen(true);
-  const onNext = () => setIndex(prev => Math.min(prev + 1, srcList.length - 1));
-  const onPrev = () => setIndex(prev => Math.max(prev - 1, 0));
+  const onClick = async () => setDialogOpen(true);
+  const onNext = () => {
+    setIndex(prev => {
+      const next = Math.min(prev + 1, srcList.length - 1);
+      onChange?.(next);
+      return next;
+    });
+  };
+  const onPrev = () => {
+    setIndex(prev => {
+      const next = Math.max(prev - 1, 0);
+      onChange?.(next);
+      return next;
+    });
+  };
 
   return (
     <div

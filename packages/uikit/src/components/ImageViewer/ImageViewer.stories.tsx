@@ -2,12 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ImageViewer } from './ImageViewer';
 import { Typography } from '../Typography/Typography';
 import { SkeletonListItem } from '../Skeleton/Skeleton';
+import { fn } from '@storybook/test';
 
 const meta = {
   title: 'Layout/Image viewer',
   component: ImageViewer,
   tags: ['autodocs'],
   args: {
+    onChange: fn(),
     width: 500,
     height: 500,
     title: "Discussion about my photo gallery",
