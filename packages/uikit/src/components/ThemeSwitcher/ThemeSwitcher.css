@@ -1,0 +1,23 @@
+.ThemeSwitcher--right {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+}
+
+.ThemeSwitcher--left {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+}
+
+.ThemeSwitcher--bottomright {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.ThemeSwitcher--bottomleft {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+}
