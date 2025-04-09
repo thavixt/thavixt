@@ -32,9 +32,9 @@ export const Custom: Story = {
   args: {
     children: StoryChildren(),
     styles: {
-      thumbColor: '#4f4',
+      thumbColor: '#0f0',
+      trackColor: '#f0f',
       thumbColorDark: 'red',
-      trackColor: '#ccd',
       trackColorDark: 'blue',
     }
   }

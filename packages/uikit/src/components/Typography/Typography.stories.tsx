@@ -1,37 +1,47 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Typography, TypographyStyles, TypographyType } from '../Typography/Typography';
-import { createElement } from 'react';
+import { ComponentProps, createElement, FC } from 'react';
 import { Box } from '../Box/Box';
 
 const lorem = 'Lorem ipsum dolor sit amet';
 
+interface StoryProps {
+  storyText: string;
+}
+
+type StoryFC = FC<StoryProps>;
+
 const meta = {
   title: 'Basic/Typography',
-  // component: Typography,
+  component: Typography as unknown as StoryFC,
   tags: ['autodocs'],
-  render: function StoryComponent() {
+  render: function StoryComponent(args: ComponentProps<StoryFC>) {
     return (
       <div className="flex flex-col space-y-2">
         {Object.keys(TypographyStyles).map(key => (
           <div key={key} className='grid grid-cols-[100px_auto] gap-4 items-center'>
-            <Typography.Body>{key}</Typography.Body>
+            <Typography.Text>{key}</Typography.Text>
             <div>
-              {createElement(Typography[key as TypographyType], { children: lorem })}
+              {createElement(Typography[key as TypographyType], { children: args.storyText })}
             </div>
           </div>
         ))}
       </div>
     )
   }
-} satisfies Meta<typeof Typography>;
+} satisfies Meta<StoryFC>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Variants: Story = {
+  args: {
+    storyText: lorem,
+  },
+};
 
-export const ExampleThoughtsSection: Story = {
+export const ExampleThoughtsSection = {
   render: function StoryComponent() {
     return (
       <Box type='paper' size='lg'>

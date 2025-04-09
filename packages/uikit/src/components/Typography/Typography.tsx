@@ -8,10 +8,10 @@ type TypographyProps<T = HTMLElement> = PropsWithChildren<HTMLAttributes<T>> & {
 export type TypographyType = 'H1' | 'H2' | 'Title' | 'Subtitle' | 'Caption' | 'Body' | 'Button' | 'Code' | 'Text' | 'Label';
 
 export const TypographyStyles: Record<TypographyType, string> = {
-  H1: classNames('themedText block font-serif text-4xl font-bold tracking-wide capitalize leading-20'),
-  H2: classNames('themedText block font-serif text-3xl font-bold tracking-wide capitalize leading-12'),
-  Title: classNames('themedText block font-sans text-2xl font-semibold leading-12'),
-  Subtitle: classNames('themedText block font-sans text-lg font-semibold leading-12'),
+  H1: classNames('themedText block font-serif text-4xl font-bold tracking-wide capitalize leading-20 first-letter:text-6xl'),
+  H2: classNames('themedText block font-serif text-3xl font-bold tracking-wide capitalize leading-12 first-letter:text-5xl'),
+  Title: classNames('themedText block font-sans text-2xl font-semibold leading-16'),
+  Subtitle: classNames('themedText block font-sans text-lg font-semibold leading-14'),
   Caption: classNames('themedText block font-sans text-lg font-thin leading-12'),
   Body: classNames('themedText block font-sans text-base text-pretty leading-6 pb-2'),
   Text: classNames('themedText inline font-sans text-pretty'),
