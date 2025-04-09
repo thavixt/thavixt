@@ -7,7 +7,6 @@ import { Divider } from "../Divider/Divider";
 import { Button } from "../Button/Button";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Typography } from "../Typography/Typography";
-import { sleep } from "../../common/utils";
 
 interface Image {
   src: string;
