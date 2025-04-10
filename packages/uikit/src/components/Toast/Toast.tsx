@@ -18,9 +18,9 @@ const TOAST_COLORS: Record<ToastType, string> = {
   warning: 'bg-red-400 dark:bg-red-700',
 }
 
-export type ToastType = 'info' | 'success' | 'warning';
+type ToastType = 'info' | 'success' | 'warning';
 
-export interface Toast {
+interface Toast {
   /** If provided, override the previous Toast with the same key, restarting it's timer */
   id: string;
   /** 'info' | 'success' | 'warning' */
@@ -33,7 +33,7 @@ export interface Toast {
   onClick?: (key: string) => void;
 }
 
-export interface ToastContextType {
+interface ToastContextType {
   toasts: Toast[];
   createToast: ({ content, type, duration, onClick }: {
     id?: string, content: ReactNode; type?: ToastType; duration?: number; onClick?: (id: string) => void;
@@ -43,7 +43,7 @@ export interface ToastContextType {
   side: 'left' | 'right',
 }
 
-export const ToastContext = createContext<ToastContextType>({
+const ToastContext = createContext<ToastContextType>({
   toasts: [],
   createToast: noop,
   removeToast: noop,

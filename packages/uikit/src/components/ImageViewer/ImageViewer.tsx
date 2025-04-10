@@ -13,7 +13,7 @@ interface Image {
   description?: string;
 }
 
-interface ImageViewerProps extends Omit<CommonProps<HTMLImageElement>, 'src' | 'onChange'> {
+export interface ImageViewerProps extends Omit<CommonProps<HTMLImageElement>, 'src' | 'onChange'> {
   src: (Image | string)[];
   sidebar?: (index: number) => ReactNode;
   title?: string;
