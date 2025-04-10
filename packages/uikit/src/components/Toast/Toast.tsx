@@ -62,7 +62,7 @@ interface ToastProviderProps {
 
 export function ToastProvider({ children, side = 'right', onToastCreated, duration: defaultDuration = 15_000 }: PropsWithChildren<ToastProviderProps>) {
   const [toasts, setToasts] = useState<Toast[]>([]);
-  const timers = useRef<Map<string, NodeJS.Timeout>>(new Map());
+  const timers = useRef<Map<string, number>>(new Map());
 
   const createToast = ({
     id,
@@ -88,7 +88,8 @@ export function ToastProvider({ children, side = 'right', onToastCreated, durati
     if (timer) {
       clearInterval(timer);
     }
-    timers.current.set(toastId, setTimeout(() => setToasts(prev => prev.filter(toast => toast.id !== toastId)), duration));
+    const timeout = setTimeout(() => setToasts(prev => prev.filter(toast => toast.id !== toastId)), duration) as unknown as number;
+    timers.current.set(toastId, timeout);
 
     return toastId;
   };

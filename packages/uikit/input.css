@@ -10,6 +10,6 @@
 @source "!./**/*.cy.tsx";
 @source "!./**/*.stories.tsx";
 
-@import "../packages/uikit/utilities.css";
+@import "./utilities.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

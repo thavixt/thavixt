@@ -51,7 +51,7 @@
     "dev": "tsc --watch --project tsconfig.lib.json",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "prebuild": "npm run clean && npm run css-build && npm run check && npm run lint:fix",
+    "prebuild": "npm run clean && npm run css-build && npm run check && npm run lint",
     "prepack": "npm run build"
   },
   "dependencies": {
