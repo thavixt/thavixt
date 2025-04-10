@@ -1,5 +1,11 @@
+.Icon,
 .Icon  > svg {
   display: inline;
+}
+
+.Icon {
+  display: flex;
+  place-items: center;
 }
 
 .Icon--clickable {

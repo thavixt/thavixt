@@ -3,18 +3,19 @@ import { ReactNode } from "react";
 import { Typography } from "../Typography/Typography";
 import { CommonProps } from "../../common/commonProps";
 import "./Tooltip.css";
+import "./Tooltip.css";
 
 type TooltipPosition = 'left' | 'right' | 'top' | 'bottom';
 
 interface TooltipProps extends CommonProps {
-  tooltip: ReactNode | ((position: TooltipPosition) => ReactNode)
+  Tooltip: ReactNode | ((position: TooltipPosition) => ReactNode)
   position?: TooltipPosition;
   visible?: boolean;
   className?: string;
 }
 
-export function Tooltip({ ref, className, children, tooltip, position = 'bottom', visible }: TooltipProps) {
-  const tooltipClasses = classNames(
+export function Tooltip({ ref, className, children, Tooltip, position = 'bottom', visible }: TooltipProps) {
+  const TooltipClasses = classNames(
     'Tooltip__content', className,
     visible && 'Tooltip__content--visible',
     position === 'top' && 'Tooltip__content--top',
@@ -28,9 +29,9 @@ export function Tooltip({ ref, className, children, tooltip, position = 'bottom'
       <Typography.Text className="Tooltip__target">
         {children}
       </Typography.Text>
-      <div data-testid="Tooltip__content" className={tooltipClasses}>
+      <div data-testid="Tooltip__content" className={TooltipClasses}>
         <Typography.Text>
-          {typeof tooltip === 'function' ? tooltip(position) : tooltip}
+          {typeof Tooltip === 'function' ? Tooltip(position) : Tooltip}
         </Typography.Text>
         <div className="Tooltip__arrow" />
       </div>

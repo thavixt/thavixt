@@ -20,10 +20,10 @@ export function Icon({ height = 3, className, ...props }: IconProps) {
   return (
     <div
       data-testid="Icon"
-      className={classNames('Icon', props.onClick && 'Icon--clickable')}
+      className={classNames('Icon', className, props.onClick && 'Icon--clickable')}
       {...props}
     >
-      {createElement(IconList[props.icon], { height, className })}
+      {createElement(IconList[props.icon], { height })}
     </div>
   );
 }

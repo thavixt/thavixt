@@ -17,7 +17,7 @@ const meta = {
   },
   args: {
     children: 'Hover me',
-    tooltip: 'just about anything goes here i guess ¯\\_(ツ)_/¯',
+    Tooltip: 'just about anything goes here i guess ¯\\_(ツ)_/¯',
     position: 'bottom',
     visible: false,
   },
@@ -39,7 +39,7 @@ export const Default: Story = {};
 export const AlwaysVisible: Story = {
   args: {
     visible: true,
-    tooltip: (side) => (
+    Tooltip: (side) => (
       <>
         <Icon
           icon="Arrow"
@@ -51,13 +51,13 @@ export const AlwaysVisible: Story = {
             'rotate-90': side === 'top',
           })}
         />
-        {side} tooltip from there
+        from there
       </>
     ),
   },
   render: function StoryComponent(args: ComponentProps<typeof Tooltip>) {
     return (
-      <div className='flex flex-col gap-24 items-center'>
+      <div className='flex flex-col gap-32 items-center'>
         <Tooltip {...args} position='right' />
         <Tooltip {...args} position='bottom' />
         <Tooltip {...args} position='left' />
@@ -66,4 +66,3 @@ export const AlwaysVisible: Story = {
     )
   }
 };
-

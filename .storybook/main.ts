@@ -2,9 +2,13 @@ import { dirname, join } from "path";
 import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
+  core: {
+    disableTelemetry: true,
+  },
+  framework: getAbsolutePath("@storybook/react-vite"),
   stories: [
     '../packages/uikit/src/Readme.mdx',
-    "../packages/uikit/src/components/**/*.stories.mdx",
+    // "../packages/uikit/src/components/**/*.stories.mdx",
     "../packages/uikit/src/components/**/*.stories.@(js|jsx|ts|tsx)"
   ],
   addons: [
@@ -17,10 +21,9 @@ const config: StorybookConfig = {
     //   options: { transcludeMarkdown: true }
     // },
   ],
-  framework: getAbsolutePath("@storybook/react-vite"),
-  core: {
-    disableTelemetry: true,
-  }
+  docs: {
+    defaultName: 'Overview',
+  },
 };
 export default config;
 

@@ -4,7 +4,7 @@
   --hover-bg: var(--slate-2);
 
   background-color: var(--bg);
-  border-radius: 0.5rem;
+  border-radius: 8px;
   box-shadow: 1px 2px 4px 0px var(--shadow);
   color: var(--white);
   cursor: pointer;
@@ -41,10 +41,11 @@
   --hover-bg: var(--red-3);
 }
 .Button--silent {
-  background-color: transparent;
+  --bg: transparent;
+  --hover-bg: var(--gray-2);
   box-shadow: none;
   color: var(--gray-4);
-  text-decoration-line: underline;
+  /* text-decoration-line: underline; */
 
   &:hover {
     color: var(--gray-4);
@@ -75,7 +76,6 @@
 
 .Button__content {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   

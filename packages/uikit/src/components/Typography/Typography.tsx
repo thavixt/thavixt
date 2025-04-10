@@ -16,7 +16,7 @@ export const TypographyStyles: Record<TypographyType, string> = {
   Body: classNames('themedText block font-sans text-base text-pretty leading-6 pb-2'),
   Text: classNames('themedText inline font-sans text-pretty'),
   Label: classNames('themedText inline font-sans text-normal font-light leading-6'),
-  Button: 'inline font-sans text-sm font-semibold',
+  Button: 'inline-flex font-sans text-sm font-semibold',
   Code: 'inline font-mono bg-slate-600 dark:bg-slate-300 text-slate-100 dark:text-slate-800 px-1 py-0.5 rounded text-base',
 }
 

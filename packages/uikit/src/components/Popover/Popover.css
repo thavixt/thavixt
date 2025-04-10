@@ -1,0 +1,94 @@
+/* .Popover__icon.Icon {
+  display: none;
+} */
+
+.Popover {
+  --bg: var(--white);
+  --shadow: var(--gray-2);
+  --offset: 12px;
+
+  background: var(--bg);
+  box-shadow: 2px 2px 8px 0px var(--shadow);
+
+  position: absolute;
+  border-radius: 8px;
+  border: none;
+  inset: unset;
+  margin: 0;
+
+  [data-theme=dark] & {
+    --bg: var(--black);
+    --shadow: var(--gray-5);
+  }
+
+  .Popover__icon {
+    padding-left: 6px;
+  }
+
+  .Popover__icon.Icon {
+    display: inline-flex;
+  }
+}
+
+.Popover__toggle {
+  cursor: pointer;
+  appearance: none;
+  display: inline-flex;
+  justify-items: center;
+}
+
+.Popover__items {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+.Popover__item {
+  font-size: 14px;
+  --hoverBg: var(--gray-1);
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 4px 8px;
+  cursor: pointer;
+
+  [data-theme=dark] & {
+    --hoverBg: var(--gray-4);
+  }
+
+  &:hover {
+    background: var(--hoverBg);
+  }
+}
+
+.Popover__item>.Button {
+  width: 100%;
+  justify-items: flex-start;
+}
+
+.Popover--top {
+  bottom: calc(anchor(top) + var(--offset));
+}
+
+.Popover--bottom {
+  top: calc(anchor(bottom) + var(--offset));
+}
+
+.Popover--top,
+.Popover--bottom {
+  left: anchor(left);
+}
+
+.Popover--left {
+  right: calc(anchor(left) + var(--offset));
+}
+
+.Popover--right {
+  left: calc(anchor(right) + var(--offset));
+}
+
+.Popover--left,
+.Popover--right {
+  top: anchor(top);
+}

@@ -57,3 +57,7 @@ or
 /* or */
 @import "node_modules/@thavixt/uikit/dist/index.css";
 ```
+
+## Inspiration
+
+- [Open UI](https://open-ui.org/)
