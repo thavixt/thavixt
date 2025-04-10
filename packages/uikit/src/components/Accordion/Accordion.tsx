@@ -3,6 +3,8 @@ import { cloneElement, HTMLAttributes, PropsWithChildren, useEffect, useRef, use
 import { CommonProps } from "../../common/commonProps";
 import { getSlotElements } from "../../common/utils";
 import './Accordion.css';
+import { Icon } from "../Icon/Icon";
+import { Typography } from "../Typography/Typography";
 
 export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean;
@@ -15,13 +17,13 @@ interface AccordionComponentProps extends AccordionProps {
 }
 
 export function Accordion(props: AccordionProps) {
-  return <AccordionComponent {...props} />;
+  return <AccordionBase {...props} />;
 }
 
 /**
- * Internal use only: AccordionGroup
+ * For internal usage only.
  */
-export function AccordionComponent({
+export function AccordionBase({
   className,
   children,
   defaultOpen,
@@ -66,12 +68,9 @@ export function AccordionComponent({
       {...props}
     >
       <div className="AccordionContainer" onClick={onClick}>
-        <svg
-          className="Accordion__svg"
-          viewBox="0 0 24 24"
-        >
-          <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
-        </svg>
+        <Typography.Text>
+          <Icon className="Accordion__svg" icon="Caret" />
+        </Typography.Text>
         <div>
           {
             open

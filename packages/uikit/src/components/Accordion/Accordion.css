@@ -26,7 +26,6 @@
 
 
 .Accordion__svg {
-  fill: slategray;
   height: 1.5rem;
   width: 1.5rem;
   transition: all;
@@ -36,11 +35,11 @@
 }
 
 .Accordion--open .Accordion__svg {
-  rotate: 0deg;
+  rotate: 90deg;
 }
 
 .Accordion--closed .Accordion__svg {
-  rotate: -90deg;
+  rotate: 0deg;
 }
 
 .Accordion--open .AccordionContent {

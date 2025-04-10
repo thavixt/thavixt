@@ -1,5 +1,5 @@
-import { cloneElement, PropsWithChildren, useState } from "react";
-import { Accordion } from "../Accordion/Accordion";
+import { PropsWithChildren, useState } from "react";
+import { Accordion, AccordionBase } from "../Accordion/Accordion";
 import { getSlotElements, sleep } from "../../common/utils";
 import './AccordionGroup.css';
 
@@ -23,14 +23,15 @@ export function AccordionGroup({ children, defaultOpen = -1, onOpen: onOpened }:
 
   return (
     <div className="AccordionGroup">
-      {accordions.map((c, i) => {
-        return cloneElement(c, {
-          key: `accordiongroup-${i}`,
-          groupItem: true,
-          onOpen: onOpen(i),
-          open: i === openIndex,
-        })
-      })}
+      {accordions.map((c, i) => (
+        <AccordionBase
+          key={`accordiongroup-${i}`}
+          groupItem
+          onOpen={onOpen(i)}
+          open={i === openIndex}
+          {...c.props}
+        />
+      ))}
     </div>
   )
 }
