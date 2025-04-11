@@ -4,14 +4,14 @@
   flex-direction: column;
 }
 
-.AccordionContainer {
+.AccordionHeader {
   cursor: pointer;
   display: flex;
   width: 100%;
   align-items: center;
 }
 
-.AccordionContent {
+.AccordionBody {
   padding-left: 1.5rem;
   transition: all;
   transition-duration: 250ms;
@@ -42,11 +42,11 @@
   rotate: 0deg;
 }
 
-.Accordion--open .AccordionContent {
+.Accordion--open .AccordionBody {
   max-height: 100vh;
   opacity: 1;
 }
-.Accordion--closed .AccordionContent {
+.Accordion--closed .AccordionBody {
   max-height: 0;
   opacity: 0;
 }

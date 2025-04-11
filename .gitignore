@@ -25,7 +25,8 @@ lerna-debug.log*
 storybook-static
 
 # Cypress
-cypress/screenshots
+cypress/*
+!cypress/support
 
 # Test coverage
 coverage

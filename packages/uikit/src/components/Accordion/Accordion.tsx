@@ -67,23 +67,23 @@ export function AccordionBase({
       )}
       {...props}
     >
-      <div className="AccordionContainer" onClick={onClick}>
+      <div className="AccordionHeader" data-testid="AccordionHeader" onClick={onClick}>
         <Typography.Text>
           <Icon className="Accordion__svg" icon="Caret" />
         </Typography.Text>
         <div>
           {
             open
-              ? cloneElement(titleSlot, { key: `AccordionTitle` })
-              : cloneElement(openTitleSlot ?? titleSlot, { key: `AccordionOpenTitle` })
+              ? cloneElement(openTitleSlot ?? titleSlot, open ? openTitleSlot.props : titleSlot.props)
+              : cloneElement(titleSlot, titleSlot.props)
           }
         </div>
       </div>
       <div
-        className="AccordionContent"
-        data-testid="content"
+        className="AccordionBody"
+        data-testid="AccordionBody"
       >
-        {cloneElement(bodySlot, { key: `AccordionBody`, open })}
+        {cloneElement(bodySlot, { ...bodySlot.props, key: `AccordionBody`, open })}
       </div>
     </div>
   )
@@ -105,7 +105,7 @@ function AccordionBody({ children, className, open = false, ...props }: Accordio
   }, [ref, open]);
 
   return (
-    <div className={classNames(className, 'AccordionBody')} {...props}>
+    <div data-testid="AccordionBody" className={classNames(className, 'AccordionBody')} {...props}>
       {children}
     </div>
   )
@@ -114,7 +114,7 @@ Accordion.Body = AccordionBody;
 
 function AccordionTitle({ children, ...props }: AccordionSlotProps) {
   return (
-    <div className="AccordionTitle" {...props}>
+    <div data-testid="AccordionTitle" className="AccordionTitle" {...props}>
       {children}
     </div>
   );
@@ -123,7 +123,7 @@ Accordion.Title = AccordionTitle;
 
 function AccordionOpenTitle({ children, ...props }: AccordionSlotProps) {
   return (
-    <div className="AccordionOpenTitle" {...props}>
+    <div data-testid="AccordionOpenTitle" className="AccordionOpenTitle" {...props}>
       {children}
     </div>
   );

@@ -18,7 +18,7 @@ const TOAST_COLORS: Record<ToastType, string> = {
   warning: 'bg-red-400 dark:bg-red-700',
 }
 
-type ToastType = 'info' | 'success' | 'warning';
+export type ToastType = 'info' | 'success' | 'warning';
 
 interface Toast {
   /** If provided, override the previous Toast with the same key, restarting it's timer */

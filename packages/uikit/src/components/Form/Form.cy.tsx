@@ -10,10 +10,11 @@ describe('Form component', () => {
 
       mount(<Default onSubmit={onSubmit} />);
 
+      cy.get('input[name=name').clear();
       cy.get('button[type=submit').click();
       cy.get('@onSubmit').should('not.be.called');
 
-      cy.get('input[name=name').type('Jane Doe');
+      cy.get('input[name=name').type('My name goes here');
       cy.get('button[type=submit').click();
       cy.get('@onSubmit').should('be.calledOnce');
    });

@@ -5,6 +5,9 @@ import * as stories from './Toast.stories';
 const { Default } = composeStories(stories);
 
 describe('Toast component', () => {
+   beforeEach(() => {
+      cy.viewport(400, 800);
+   })
    it('should fade out after timer ends', () => {
       const onToastCreatedSpy = cy.spy().as('onToastCreated');
       // @ts-expect-error mehhhh
@@ -29,7 +32,7 @@ describe('Toast component', () => {
 
       cy.get('button[type=submit]')
          .click();
-      cy.wait(500);
+      cy.wait(250);
       cy.get(`[data-testid~="infoToast"]`)
          .should('be.visible');
       cy.get(`[data-testid~="Toast"]`)
@@ -42,7 +45,7 @@ describe('Toast component', () => {
          .click();
       cy.get('button[type=submit]')
          .click();
-      cy.wait(500);
+      cy.wait(250);
       cy.get(`[data-testid~="successToast"]`)
          .should('be.visible');
       cy.get(`[data-testid~="Toast"]`)
@@ -55,7 +58,7 @@ describe('Toast component', () => {
          .click();
       cy.get('button[type=submit]')
          .click();
-      cy.wait(500);
+      cy.wait(250);
       cy.get(`[data-testid~="warningToast"]`)
          .should('be.visible');
       cy.get(`[data-testid~="Toast"]`)
@@ -80,7 +83,7 @@ describe('Toast component', () => {
          .type('Hello world!');
       cy.get('button[type=submit]')
          .click();
-      cy.wait(500);
+      cy.wait(250);
       cy.get(`[data-testid~="infoToast"]`)
          .should('be.visible');
       cy.get(`[data-testid~="infoToast"]`)
