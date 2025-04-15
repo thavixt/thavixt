@@ -30,8 +30,10 @@ const meta = {
         <Typography.Body>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ullam libero exercitationem veniam sint harum minus, repudiandae quis corrupti laborum odit, quo ut nam eligendi voluptatibus nostrum suscipit aliquid. A fuga quo impedit labore perspiciatis possimus quaerat alias corporis, incidunt, facilis porro nemo quibusdam autem saepe expedita, explicabo veniam! Quia quibusdam cupiditate, quisquam corrupti fuga molestias voluptatem corporis earum ex veritatis dolore sequi alias harum consectetur velit dolor eum, aspernatur recusandae iure similique doloribus impedit commodi, cum mollitia. Optio libero, nemo beatae, dolore iusto sunt veniam, deleniti modi est perferendis doloremque quisquam praesentium corporis nihil illum quibusdam dignissimos voluptates molestiae!
         </Typography.Body>
-        <TextInput disabled inline name='something' label='Something' defaultValue="Can't change this"/>
-        <RadioInput disabled inline name='radio' values={['first', 'second']} defaultValue='second' label='Radio input'/>
+        <div className="flex flex-col space-y-2 pt-2">
+          <TextInput inline name='something' label='Something' defaultValue="Anything could happen with this" />
+          <RadioInput inline name='radio' values={['first', 'second']} defaultValue='second' label='Radio input' />
+        </div>
       </>
     ),
   },
@@ -40,7 +42,7 @@ const meta = {
     const onClick = () => ref.current?.open();
     return (
       <>
-        <Button onClick={onClick}>
+        <Button variant='primary' onClick={onClick}>
           Open dialog
         </Button>
         <Dialog {...args} ref={ref} />

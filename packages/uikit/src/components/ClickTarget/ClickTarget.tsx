@@ -15,7 +15,7 @@ export function ClickTarget({ onClickOutside, onClickInside, children, ...props 
   )
 }
 
-function useClickOutside(ref: React.RefObject<HTMLDivElement | null>, onClickOutside: () => void, onClickInside?: () => void) {
+export function useClickOutside(ref: React.RefObject<HTMLDivElement | null>, onClickOutside: () => void, onClickInside?: () => void) {
   useEffect(() => {
     const handleClickOutside: EventListener = (event) => {
       if ((event as MouseEvent).button !== 0) {

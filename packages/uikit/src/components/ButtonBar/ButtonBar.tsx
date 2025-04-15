@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { PropsWithChildren } from "react";
 import "./ButtonBar.css";
 
-interface ButtonBarProps extends PropsWithChildren {
+export interface ButtonBarProps extends PropsWithChildren {
   full?: boolean;
   className?: string;
 }

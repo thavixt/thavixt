@@ -9,6 +9,8 @@
     - 16 unit = 64px
     - 24 unit = 96px
     - 32 unit = 128px
+
+    also: https://tailwind-to-css.vercel.app/
   */
   --scale: 4;
 
@@ -19,7 +21,7 @@
   --gray-2: rgb(180, 180, 180);
   --gray-3: rgb(120, 120, 120);
   --gray-4: rgb(80, 80, 80);
-  --gray-5: rgb(35, 35, 35);
+  --gray-5: rgb(40, 40, 40);
   --slate-1: rgb(200, 221, 245);
   --slate-2: rgb(148, 164, 189);
   --slate-3: rgb(78, 102, 129);

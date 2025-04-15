@@ -1,7 +1,7 @@
 import { Typography } from "../Typography/Typography";
 import "./CopyToClipboard.css";
 
-interface CopyToClipboardProps {
+export interface CopyToClipboardProps {
 	/**
 	 * text to display and copy
 	 */
