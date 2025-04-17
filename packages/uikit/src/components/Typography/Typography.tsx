@@ -1,8 +1,9 @@
 import classNames from "classnames";
-import { HTMLAttributes, PropsWithChildren } from "react";
+import { HTMLAttributes, PropsWithChildren, RefObject } from "react";
 
 type TypographyProps<T = HTMLElement> = PropsWithChildren<HTMLAttributes<T>> & {
   className?: string;
+  ref?: RefObject<T | null>;
 };
 
 export type TypographyType = 'H1' | 'H2' | 'Title' | 'Subtitle' | 'Caption' | 'Body' | 'Button' | 'Code' | 'Text' | 'Label';
