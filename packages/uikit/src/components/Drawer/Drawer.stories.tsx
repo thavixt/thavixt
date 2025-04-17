@@ -105,22 +105,12 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const RightSide: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByTestId('Drawer') as HTMLElement).not.toBeVisible();
     await userEvent.click(canvas.getByTestId('ToggleDrawer'));
     await sleep(500);
-    expect(canvas.getByTestId('Drawer') as HTMLElement).toBeVisible();
-  },
-};
-
-export const DefaultOpen: Story = {
-  args: {
-    defaultOpen: true,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
     expect(canvas.getByTestId('Drawer') as HTMLElement).toBeVisible();
     await userEvent.click(canvas.getByTestId('ToggleDrawerInside'));
     await sleep(500);
@@ -128,9 +118,15 @@ export const DefaultOpen: Story = {
   },
 };
 
-export const DefaultOpenLeft: Story = {
+export const LeftSide: Story = {
   args: {
     side: 'left',
-    defaultOpen: true,
-  }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByTestId('Drawer') as HTMLElement).not.toBeVisible();
+    await userEvent.click(canvas.getByTestId('ToggleDrawer'));
+    await sleep(500);
+    expect(canvas.getByTestId('Drawer') as HTMLElement).toBeVisible();
+  },
 };
