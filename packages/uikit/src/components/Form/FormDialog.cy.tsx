@@ -8,7 +8,7 @@ describe('FormDialog component', () => {
    it('should render', () => {
       const onSubmit = cy.spy().as('onSubmit');
       
-      mount(<Default defaultOpen onSubmit={onSubmit}/>);
+      mount(<Default open onSubmit={onSubmit}/>);
 
       cy.get('button[type=submit').click();
       cy.get('input[name=name').type('Jane Doe');
