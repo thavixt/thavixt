@@ -11,3 +11,10 @@
 .Icon--clickable {
   cursor: pointer;
 }
+
+.Icon {
+  color: var(--slate-4);
+  [data-theme=dark] & {
+    color: var(--slate-1);
+  }
+}
