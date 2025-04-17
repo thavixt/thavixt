@@ -24,7 +24,7 @@ const meta = {
 
     return (
       <>
-        <Button onClick={onClick}>
+        <Button variant='primary' onClick={onClick}>
           Open dialog
         </Button>
         <FormDialog {...args} ref={ref}>
@@ -39,7 +39,6 @@ const meta = {
     cancelText: 'Cancel',
     className: '',
     closeOnClickOutside: false,
-    defaultOpen: false,
     onClose: fn(),
     onOpen: fn(),
     onSubmit,

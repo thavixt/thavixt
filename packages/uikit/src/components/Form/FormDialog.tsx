@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useImperativeHandle, useRef } from "react";
+import { RefObject, useImperativeHandle, useRef } from "react";
 import { Form, FormProps } from "./Form";
 import { Dialog, DialogHandle, DialogProps } from "../Dialog/Dialog";
 
@@ -8,7 +8,7 @@ export type FormDialogHandle = RefObject<DialogHandle | null> & {
 
 export interface FormDialogProps extends
   Omit<FormProps, 'onCancel' | 'ref'>,
-  Pick<DialogProps, 'defaultOpen' | 'closeOnClickOutside' | 'onClose' | 'onOpen' | 'open'> {
+  Pick<DialogProps, 'closeOnClickOutside' | 'onClose' | 'onOpen' | 'open'> {
   ref?: RefObject<FormDialogHandle | null>,
 }
 
@@ -17,7 +17,6 @@ export function FormDialog({
   children,
   closeOnClickOutside,
   className,
-  defaultOpen,
   open,
   ref,
   resetText: reset,
@@ -43,12 +42,6 @@ export function FormDialog({
       formRef.current.reset();
     }
   }
-
-  useEffect(() => {
-    if (defaultOpen && dialogRef.current) {
-      dialogRef.current.open();
-    }
-  }, [defaultOpen, ref]);
 
   return (
     <Dialog
