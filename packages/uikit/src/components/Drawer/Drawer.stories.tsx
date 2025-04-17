@@ -76,20 +76,24 @@ const meta = {
 
     return (
       <div className="flex flex-col space-y-4 px-4 py-2">
-        <Drawer {...args} onOpen={onOpen} onClose={onClose}/>
-        <div className="flex flex-col space-y-4">
-          <Typography.H1>The drawer is {isOpen ? 'opened' : 'closed'}</Typography.H1>
-          <Typography.Title>List of things</Typography.Title>
-          {new Array(listItemCount).fill(null).map((_, i) => (
-            <>
-              <Typography.Subtitle id={`link${i + 1}`}>List item #{i + 1}</Typography.Subtitle>
-              <div className="flex flex-col space-y-4">
-                <SkeletonListItem />
-                <SkeletonListItem />
-                <SkeletonListItem />
+        <Drawer {...args} onOpen={onOpen} onClose={onClose} />
+        <div className="flex flex-col">
+          <Typography.H2>The drawer is {isOpen ? 'opened' : 'closed'}</Typography.H2>
+          <Typography.Subtitle>List of things to click in the sidebar:</Typography.Subtitle>
+          <div className="flex flex-col space-y-8">
+            {new Array(listItemCount).fill(null).map((_, i) => (
+              <div className="flex flex-col space-y-2">
+                <Typography.Caption id={`link${i + 1}`}>
+                  List item #{i + 1}
+                </Typography.Caption>
+                <div className="flex flex-col space-y-4">
+                  <SkeletonListItem />
+                  <SkeletonListItem />
+                  <SkeletonListItem />
+                </div>
               </div>
-            </>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     )
@@ -101,3 +105,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const DefaultOpen: Story = {
+  args: {
+    defaultOpen: true,
+  }
+};
+
+export const DefaultOpenLeft: Story = {
+  args: {
+    side: 'left',
+    defaultOpen: true,
+  }
+};

@@ -1,11 +1,11 @@
 .Button {
-  --shadow: var(--slate-3);
+  /* --shadow: var(--slate-3); */
   --bg: var(--slate-1);
   --hover-bg: var(--slate-2);
 
   background-color: var(--bg);
   border-radius: 8px;
-  box-shadow: 1px 2px 4px 0px var(--shadow);
+  /* box-shadow: 1px 2px 4px 0px var(--shadow); */
   color: var(--white);
   cursor: pointer;
   height: fit-content;
@@ -17,12 +17,12 @@
   user-select: none;
   
   &:hover:not(:disabled) {
-    box-shadow: none;
+    /* box-shadow: none; */
     background-color: var(--hover-bg);
   }
-  [data-theme=dark] & {
-    --shadow: var(--gray-3);
-  }
+  /* [data-theme=dark] & {
+    --shadow: var(--gray-4);
+  } */
 }
 
 .Button--default {
@@ -43,7 +43,7 @@
 .Button--silent {
   --bg: transparent;
   --hover-bg: var(--gray-2);
-  box-shadow: none;
+  /* box-shadow: none; */
   color: var(--gray-4);
   /* text-decoration-line: underline; */
 
