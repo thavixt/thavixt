@@ -17,6 +17,11 @@
   transition-duration: 300ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 0;
+  opacity: 0;
+
+  &.Drawer--open {
+    opacity: 1;
+  }
 
   &.Drawer--left {
     border-top-right-radius: 0.5rem;

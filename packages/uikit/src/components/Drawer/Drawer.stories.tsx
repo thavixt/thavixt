@@ -9,7 +9,8 @@ import { Link } from '../Link/Link';
 import { ComponentProps, useState } from 'react';
 import { SkeletonListItem, SkeletonRow } from '../Skeleton/Skeleton';
 import classNames from 'classnames';
-import { fn } from '@storybook/test';
+import { fn, userEvent, within, expect } from '@storybook/test';
+import { sleep } from '../../common/utils';
 
 const listItemCount = 6;
 
@@ -104,12 +105,27 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByTestId('Drawer') as HTMLElement).not.toBeVisible();
+    await userEvent.click(canvas.getByTestId('ToggleDrawer'));
+    await sleep(500);
+    expect(canvas.getByTestId('Drawer') as HTMLElement).toBeVisible();
+  },
+};
 
 export const DefaultOpen: Story = {
   args: {
     defaultOpen: true,
-  }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByTestId('Drawer') as HTMLElement).toBeVisible();
+    await userEvent.click(canvas.getByTestId('ToggleDrawerInside'));
+    await sleep(500);
+    expect(canvas.getByTestId('ToggleDrawerInside') as HTMLElement).not.toBeVisible();
+  },
 };
 
 export const DefaultOpenLeft: Story = {
