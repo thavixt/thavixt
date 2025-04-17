@@ -12,15 +12,24 @@ export type DialogHandle = RefObject<HTMLDialogElement | null> & {
 };
 
 export interface DialogProps extends Omit<CommonProps<HTMLDialogElement>, 'children' | 'ref'> {
-  children: ((close: () => void) => ReactElement) | ReactElement;
-  closeIcon?: boolean;
-  closeOnClickOutside?: boolean;
-  defaultOpen?: boolean,
-  onClose?: () => void;
-  onOpen?: () => void;
-  open?: boolean,
   ref?: RefObject<DialogHandle | null>,
+  /** Dialog content */
+  children: ((close: () => void) => ReactElement) | ReactElement;
+  /** Dialog title */
   title?: string;
+  
+  /** Initial state on first render */
+  open?: boolean,
+  
+  /** Show an explicit close button in the dialog */
+  closeIcon?: boolean;
+  /** Close dialog on clicking the backdrop */
+  closeOnClickOutside?: boolean;
+  
+  /** Called on closing the dialog */
+  onClose?: () => void;
+  /** Called on opening the dialog */
+  onOpen?: () => void;
 }
 
 export function Dialog({
@@ -31,13 +40,13 @@ export function Dialog({
   onClose,
   onOpen,
   open = false,
-  defaultOpen = false,
   ref,
   title = "&nbsp;",
   ...props
 }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [dialogOpen, setDialogOpen] = useState(defaultOpen || open);
+  const [dialogOpen, setDialogOpen] = useState(open);
+
 
   const closeModal = useCallback(() => {
     setDialogOpen(() => {
@@ -63,35 +72,35 @@ export function Dialog({
     ref,
     () => ({
       current: dialogRef?.current,
-      close: closeModal,
-      open: openModal,
+      close: () => setDialogOpen(false),
+      open: () => setDialogOpen(true),
     }),
-    [closeModal, openModal],
+    [],
   );
 
   useEffect(() => {
-    if (open) {
-      openModal();
-    } else {
-      closeModal();
-    }
-  }, [closeModal, open, openModal]);
+    setDialogOpen(open);
+  }, [open]);
 
   useEffect(() => {
     if (dialogOpen) {
+      document.documentElement.classList.add('Dialog--disableScroll');
+      document.body.classList.add('Dialog--disableScroll');
       openModal();
     } else {
+      document.documentElement.classList.remove('Dialog--disableScroll');
+      document.body.classList.remove('Dialog--disableScroll');
       closeModal();
     }
   }, [closeModal, dialogOpen, openModal]);
 
-  const classes = classNames('Dialog', dialogOpen && 'Dialog--open', className);
-
   const onClickOutside = () => {
     if (closeOnClickOutside) {
-      closeModal();
+      setDialogOpen(false);
     }
   };
+
+  const classes = classNames('Dialog', dialogOpen ? 'Dialog--open' : 'Dialog--closed', className);
 
   return (
     <dialog data-testid="Dialog" ref={dialogRef} className={classes} {...props}>
@@ -111,13 +120,13 @@ export function Dialog({
                 data-testid="DialogCloseButton"
                 variant="silent"
                 icon={{ icon: 'Cross' }}
-                onClick={closeModal}
+                onClick={() => setDialogOpen(false)}
               />
             )
             : null}
         </div>
         <div className="Dialog__content">
-          {typeof children === 'function' ? children(closeModal) : children}
+          {typeof children === 'function' ? children(() => setDialogOpen(false)) : children}
         </div>
       </ClickTarget>
     </dialog >

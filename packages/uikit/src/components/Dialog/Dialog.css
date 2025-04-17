@@ -1,43 +1,53 @@
-dialog.Dialog {
+@keyframes open {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes close {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+
+Dialog {
   position: relative;
   width: fit-content;
   max-width: 900px;
   margin: auto;
-
+  background: var(--white);
   border-radius: 0.75rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   user-select: none;
 
-  background: var(--white);
+  transition: display 250ms allow-discrete, overlay 250ms allow-discrete;
+
+  animation: close 250ms forwards;
+  &[open] {
+    animation: open 250ms forwards;
+
+    &::backdrop {
+      backdrop-filter: blur(4px) opacity(50) grayscale(0.75) brightness(50%);
+    }
+  }
 
   [data-theme=dark] & {
-    background: var(--gray-5);
-  }
-
-  transition-duration: 250ms;
-  transition-property: transform opacity;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-
-  transform: scale(0.75);
-  opacity: 0;
-
-  &::backdrop {
-    transition: backdrop-filter 0.25s;
-    backdrop-filter: blur(0px) opacity(100) grayscale(0) brightness(100%);
-  }
-}
-
-dialog.Dialog--open {
-  transform: scale(1);
-  opacity: 1;
-
-  &::backdrop {
-    backdrop-filter: blur(4px) opacity(50) grayscale(0.75) brightness(50%);
+    background: var(--slate-5);
   }
 }
 
 .Dialog__container {
-  padding: 1.5rem;
+  padding: 24px 32px;
   height: 100%;
   user-select: text;
 
@@ -65,4 +75,8 @@ dialog.Dialog--open {
   margin-top: 0.5rem;
   flex-direction: column;
   height: fit-content;
+}
+
+.Dialog--disableScroll {
+  overflow: hidden;
 }

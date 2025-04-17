@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { ComponentProps, useRef } from 'react';
 import { Dialog, DialogHandle } from './Dialog';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography/Typography';
 import { TextInput } from '../TextInput/TextInput';
 import { RadioInput } from '../RadioInput/RadioInput';
+import { fn, userEvent, within, expect } from '@storybook/test';
+import { sleep } from '../../common/utils';
 
 const meta = {
   title: 'Layout/Dialog',
@@ -19,11 +20,11 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
+    open: false,
     closeIcon: true,
     closeOnClickOutside: false,
     onClose: fn(),
     onOpen: fn(),
-    open: false,
     title: "Dialog example",
     children: () => (
       <>
@@ -42,7 +43,10 @@ const meta = {
     const onClick = () => ref.current?.open();
     return (
       <>
-        <Button variant='primary' onClick={onClick}>
+        <Typography.Body>
+          Dialog is {args.open ? 'opened' : 'initially open, then closed'}.
+        </Typography.Body>
+        <Button variant='primary' onClick={onClick} data-testid="OpenDialogButton">
           Open dialog
         </Button>
         <Dialog {...args} ref={ref} />
@@ -55,5 +59,20 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Closed: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByTestId('OpenDialogButton'));
+    await sleep(300);
+    expect(canvas.getByTestId('Dialog') as HTMLElement).toBeVisible();
+    await userEvent.click(canvas.getByTestId('DialogCloseButton'));
+    await sleep(300);
+  },
+};
+
+export const Open: Story = {
+  args: {
+    open: true,
+  },
+};
 
