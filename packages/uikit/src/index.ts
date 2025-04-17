@@ -10,7 +10,7 @@ export { useClickOutside, ClickTarget, type ClickOutsideProps } from './componen
 export { CopyToClipboard, type CopyToClipboardProps } from './components/CopyToClipboard/CopyToClipboard'
 export { Dialog, type DialogHandle, type DialogProps } from './components/Dialog/Dialog'
 export { Divider, type DividerProps } from './components/Divider/Divider'
-export * from './components/Drawer/Drawer'
+export { Drawer, type DrawerProps } from './components/Drawer/Drawer'
 export * from './components/FileInput/FileInput'
 export * from './components/Form/Form'
 export * from './components/Form/FormDialog'
