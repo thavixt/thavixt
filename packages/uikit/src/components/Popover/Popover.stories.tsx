@@ -18,7 +18,15 @@ const meta = {
   },
   args: {
     id: 'story',
-  }
+  },
+  decorators: [
+    (Story) => (
+      <div>
+        <div data-testid="outsideClickTarget"></div>
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Popover>;
 
 export default meta;
@@ -50,6 +58,7 @@ export const Default: Story = {
     expect(canvas.queryByText('Nested option 2') as HTMLElement).toBeVisible();
     // clear
     await userEvent.click(canvas.getByTestId('Popover-story'));
+    await userEvent.click(canvas.getByTestId('outsideClickTarget'));
     await sleep(250);
     expect(canvas.queryByText('Nested option 2') as HTMLElement).not.toBeVisible();
   },
@@ -112,6 +121,7 @@ export const NestedExample: Story = {
     expect(canvas.queryByText('Final option 3') as HTMLElement).toBeVisible();
     // clear
     await userEvent.click(canvas.getByTestId('Popover-story'));
+    await userEvent.click(canvas.getByTestId('outsideClickTarget'));
     await sleep(250);
     expect(canvas.queryByText('Final option 3') as HTMLElement).not.toBeVisible();
   },

@@ -47,7 +47,7 @@ export function Popover({
   const content = (
     <>
       <button
-        className="PopoverToggle"
+        className="Popover__toggle"
         popoverTarget={popoverTarget}
         popoverTargetAction="toggle"
         data-testid={`Popover-${id}`}

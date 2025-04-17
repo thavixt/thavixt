@@ -35,6 +35,10 @@
   appearance: none;
   display: inline-flex;
   justify-items: center;
+
+  &:hover {
+    opacity: 0.65;
+  }
 }
 
 .Popover__items {
