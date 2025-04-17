@@ -27,9 +27,11 @@ const preview: Preview = {
       },
     },
     chromatic: {
-      light: storyModes['light'],
-      dark: storyModes['dark'],
-    }
+      modes: {
+        light: storyModes['light'],
+        dark: storyModes['dark'],
+      },
+    },
   },
   // decorators: [
   //   (Story, args) => (
