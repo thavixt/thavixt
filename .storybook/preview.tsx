@@ -4,6 +4,7 @@ import type { Preview } from "@storybook/react";
 import React from 'react';
 
 import './preview.css';
+import { storyModes } from './modes';
 
 const docsPage = () => (
   <>
@@ -25,6 +26,10 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    chromatic: {
+      light: storyModes['light'],
+      dark: storyModes['dark'],
+    }
   },
   // decorators: [
   //   (Story, args) => (

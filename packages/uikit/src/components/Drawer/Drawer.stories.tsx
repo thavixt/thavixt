@@ -7,12 +7,12 @@ import { Divider } from '../Divider/Divider';
 import { ButtonBar } from '../ButtonBar/ButtonBar';
 import { Link } from '../Link/Link';
 import { ComponentProps, useState } from 'react';
-import { SkeletonListItem, SkeletonRow } from '../Skeleton/Skeleton';
+import { SkeletonListItem, SkeletonRectangle, SkeletonRow } from '../Skeleton/Skeleton';
 import classNames from 'classnames';
 import { fn, userEvent, within, expect } from '@storybook/test';
 import { sleep } from '../../common/utils';
 
-const listItemCount = 6;
+const listItemCount = 2;
 
 const meta = {
   title: 'Layout/Drawer',
@@ -43,10 +43,16 @@ const meta = {
       <>
         <Typography.Subtitle>Sidebar</Typography.Subtitle>
         <div className="flex flex-col space-y-4">
+          <SkeletonRow />
           <SkeletonListItem />
           <SkeletonRow />
           <SkeletonRow />
           <SkeletonRow />
+          <SkeletonListItem />
+          <SkeletonRow />
+          <SkeletonRow />
+          <SkeletonRow />
+          <SkeletonRectangle />
         </div>
         <Divider />
         <Scrollbar>
@@ -79,7 +85,7 @@ const meta = {
       <div className="flex flex-col space-y-4 px-4 py-2">
         <Drawer {...args} onOpen={onOpen} onClose={onClose} />
         <div className="flex flex-col">
-          <Typography.H2>The drawer is {isOpen ? 'opened' : 'closed'}</Typography.H2>
+          <Typography.H2>The drawer is {isOpen ? 'opened' : 'closed'} on the {args.side}</Typography.H2>
           <Typography.Subtitle>List of things to click in the sidebar:</Typography.Subtitle>
           <div className="flex flex-col space-y-8">
             {new Array(listItemCount).fill(null).map((_, i) => (

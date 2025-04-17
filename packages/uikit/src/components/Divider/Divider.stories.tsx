@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
 import { Divider } from './Divider';
+import { Typography } from '../Typography/Typography';
 
 const meta = {
   title: 'Layout/Divider',
@@ -8,30 +9,32 @@ const meta = {
   tags: ['autodocs'],
   render: function StoryComponent(args: ComponentProps<typeof Divider>) {
     return (
-      <div className="text-slate-900 dark:text-slate-200">
+      <div>
         <div className='flex flex-col text-center'>
-          <span>This text is divided by</span>
           <Divider {...args} />
-          <span>Divider components</span>
+          <Typography.Text>
+            The content here is divided by <Typography.Code>{'<Divider/>'}</Typography.Code> components,
+          </Typography.Text>
           <Divider {...args} unicorn />
-          <span>which are just some lines which could be</span>
+          <Typography.Text>
+            which are just some lines to separate layout.
+          </Typography.Text>
           <Divider {...args} small />
-          <span>full-width or smaller, colorful or plain gray by default</span>
+          <Typography.Text>
+            They can be full or half width, <Typography.Code>unicorn</Typography.Code> or plain gray by default.
+          </Typography.Text>
           <Divider {...args} unicorn small />
-          <span>but you can provide it any color via the <code>className</code> prop</span>
-          <Divider {...args} className='bg-green-400' />
           <div className="flex h-[200px] items-center justify-between">
-            <span>a</span>
+            <Typography.Text>They</Typography.Text>
             <Divider {...args} vertical />
-            <span>b</span>
+            <Typography.Text>can be</Typography.Text>
             <Divider {...args} unicorn vertical />
-            <span>they can even be vertical</span>
+            <Typography.Text>vertical</Typography.Text>
             <Divider {...args} small vertical />
-            <span>c</span>
+            <Typography.Text>or</Typography.Text>
             <Divider {...args} unicorn small vertical />
-            <span>d</span>
+            <Typography.Text>horizontal.</Typography.Text>
           </div>
-          <Divider {...args} className='bg-red-600' />
         </div>
       </div>
     )
