@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Icon } from '../Icon/Icon';
 import { ComponentProps } from 'react';
 import { IconList, IconType } from '../Icon/IconList';
-import { Typography } from '../Typography/Typography';
+import { CopyToClipboard } from '../CopyToClipboard/CopyToClipboard';
 
 const meta = {
   title: 'Illustration/Icon',
@@ -19,27 +19,28 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
-
 export const All: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Icon>) {
     return (
       <>
-        <table className="table-auto border-collapse">
-          <tbody>
-            {Object.keys(IconList).sort().map((key) => (
-              <tr key={key}>
-                <td className='p-2 border border-slate-200 dark:border-slate-500'>
-                  <Typography.Code>{key}</Typography.Code>
-                </td>
-                <td className='p-2 border border-slate-200 dark:border-slate-500'>
-                  <Icon {...args} icon={key as IconType} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="grid grid-cols-2 gap-x-16">
+          {Object.keys(IconList).sort().map((key) => (
+            <div className='p-2 flex gap-4 items-center' key={key}>
+              <Icon {...args} icon={key as IconType} />
+              <CopyIcon type={key as IconType} />
+            </div>
+          ))}
+        </div>
       </>
     )
   },
 };
+
+function CopyIcon({type}: {type: IconType}) {
+  return (
+    <CopyToClipboard transform={(text) => `<Icon type="${text}" />`}>
+      {type}
+    </CopyToClipboard>
+  )
+}
+

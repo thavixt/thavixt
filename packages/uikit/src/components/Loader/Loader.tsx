@@ -1,6 +1,7 @@
 import { createElement } from "react";
 import { LoaderType, LoaderList } from "./LoaderList";
 import classNames from "classnames";
+import "./Loader.css";
 
 export interface LoaderProps {
   type?: LoaderType;
@@ -13,7 +14,7 @@ export interface LoaderProps {
 
 export function Loader({ type = 'TubeSpinner', height = 8, className, ...props }: LoaderProps) {
   return (
-    <div data-testid="Loader" className={classNames(className ?? 'Loader themedText')} {...props}>
+    <div data-testid="Loader" className={classNames('Loader', className)} {...props}>
       {createElement(LoaderList[type], { height })}
     </div>
   );

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Loader } from './Loader';
 import { ComponentProps } from 'react';
 import { LoaderList, LoaderType } from './LoaderList';
+import { CopyToClipboard } from '../CopyToClipboard/CopyToClipboard';
 
 const meta = {
   title: 'Illustration/Loader',
@@ -25,27 +26,25 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
-
 export const All: Story = {
   render: function StoryComponent(args: ComponentProps<typeof Loader>) {
     return (
-      <>
-        <table className="table-auto border-collapse text-slate-800 dark:text-slate-100">
-          <tbody>
-            {Object.keys(LoaderList).sort().map((key) => (
-              <tr key={key}>
-                <td className='p-2 border border-slate-200 dark:border-slate-500'>
-                  <code>{key}</code>
-                </td>
-                <td className='p-2 border border-slate-200 dark:border-slate-500'>
-                  <Loader {...args} type={key as LoaderType} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </>
+      <div className="grid grid-cols-2 gap-x-16">
+        {Object.keys(LoaderList).sort().map((key) => (
+          <div className='p-2 flex gap-4 items-center' key={key}>
+            <Loader {...args} type={key as LoaderType} />
+            <CopyLoader type={key as LoaderType} />
+          </div>
+        ))}
+      </div>
     )
   },
 };
+
+function CopyLoader({type}: {type: LoaderType}) {
+  return (
+    <CopyToClipboard transform={(text) => `<Loader type="${text}" />`}>
+      {type}
+    </CopyToClipboard>
+  )
+}

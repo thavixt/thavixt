@@ -11,7 +11,7 @@ export interface CopyToClipboardProps {
 	 * Transform the content before copying
 	 */
 	transform?: (value: string) => string;
-	onClick: (value: string) => void;
+	onClick?: (value: string) => void;
 }
 
 export function CopyToClipboard({ children, transform, title, onClick: providedOnClick }: CopyToClipboardProps) {
