@@ -7,10 +7,11 @@ export interface AvatarProps {
   name?: string;
   size?: "sm" | "md" | "lg" | "xl";
   status?: "online" | "offline" | "busy" | "away";
+  title?: string;
   onClick?: (name?: string) => void;
 }
 
-export function Avatar({ src, name, size = 'md', status, onClick }: AvatarProps) {
+export function Avatar({ src, name, size = 'md', status, onClick, title }: AvatarProps) {
   return (
     <div className={classnames('Avatar', { "Avatar--clickable": !!onClick })}>
       <div className="Avatar__content">
@@ -18,6 +19,7 @@ export function Avatar({ src, name, size = 'md', status, onClick }: AvatarProps)
           src={src}
           alt={name}
           onClick={() => onClick?.(name)}
+          title={title}
           className={classnames(
             "Avatar__image",
             {

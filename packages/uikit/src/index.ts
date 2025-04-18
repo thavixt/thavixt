@@ -19,7 +19,7 @@ export { ImageViewer, type ImageViewerProps } from './components/ImageViewer/Ima
 export { Inplace, type InplaceProps } from './components/Inplace/Inplace'
 export { Link, type LinkProps } from './components/Link/Link'
 export { Loader, type LoaderProps } from './components/Loader/Loader'
-export * from './components/NavigationBar/NavigationBar'
+export { NavigationBar, type NavbarItem, type NavbarProps } from './components/NavigationBar/NavigationBar'
 export * from './components/NumberInput/NumberInput'
 export { Popover, type PopoverProps } from './components/Popover/Popover'
 export * from './components/Progress/Progress'

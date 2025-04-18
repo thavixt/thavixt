@@ -4,6 +4,7 @@ import { Button } from "../Button/Button";
 import { ClickTarget } from "../ClickTarget/ClickTarget";
 import { Typography } from "../Typography/Typography";
 import { Avatar, AvatarProps } from "../Avatar/Avatar";
+import "./NavigationBar.css";
 
 export interface NavbarItem {
   key: string;
@@ -17,6 +18,7 @@ export interface NavbarProps {
   brandName: string;
   image: string | Pick<AvatarProps, 'src' | 'status'>;
   imageHref?: string,
+  imageTooltip?: string;
   navItems?: NavbarItem[];
 }
 
@@ -25,87 +27,86 @@ export function NavigationBar({
   brandName,
   image,
   imageHref,
+  imageTooltip,
   navItems = [],
 }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav
-      className={classNames(
-        'themedBackground themedBorder sticky place-self-center w-full z-1000 top-2 left-0 p-2 shadow-md mb-4 mx-auto max-w-4xl',
-        className,
-      )}
+      className={classNames("NavigationBar", className)}
     >
-      <ClickTarget className="mx-auto px-4" onClickOutside={() => setIsOpen(false)}>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            {imageHref ? (
-              <a href={imageHref}>
-                {typeof image === "string" ? (
-                  <img src={image} className="h-8 w-8" />
-                ) : (
-                  <Avatar {...image} />
-                )}
-              </a>
-            ) : (
-              typeof image === "string" ? (
-                <img src={image} className="h-8 w-8" />
+      <div className="NavigationBar__container-wrapper">
+        <div className="NavigationBar__container">
+          {imageHref ? (
+            <a href={imageHref} data-testid="NavigationBarBrandLink">
+              {typeof image === "string" ? (
+                <img title={imageTooltip} src={image} className="NavigationBar__img" />
               ) : (
-                <Avatar {...image} />
-              )
-            )}
-            <Typography.Subtitle className="truncate">{brandName}</Typography.Subtitle>
-          </div>
+                <Avatar title={imageTooltip} {...image} />
+              )}
+            </a>
+          ) : (
+            typeof image === "string" ? (
+              <img title={imageTooltip} src={image} className="NavigationBar__img" />
+            ) : (
+              <Avatar title={imageTooltip} {...image} />
+            )
+          )}
+          <Typography.Subtitle className="NavigationBar__brand">
+            {brandName}
+          </Typography.Subtitle>
+        </div>
 
-          <div className="relative hidden md:block space-x-2">
-            {navItems.map((item) => (
-              <Button
-                key={item.key}
-                variant="silent"
-                onClick={() => {
-                  item.onClick(item.key);
-                  setIsOpen(false);
-                }}
-              >
-                {item.label}
-              </Button>
-            ))}
-          </div>
-
-          <div className="relative block md:hidden">
+        <div className="NavigationBar--itemsContainer">
+          {navItems.map((item) => (
             <Button
-              icon={{ type: isOpen ? 'Cross' : 'Caret', className: 'rotate-90' }}
+              data-testid="NavigationBarItem"
+              key={item.key}
+              variant="silent"
+              onClick={() => {
+                item.onClick(item.key);
+                setIsOpen(false);
+              }}
+            >
+              {item.label}
+            </Button>
+          ))}
+        </div>
+
+        <div className="NavigationBar--navWrapper">
+          <ClickTarget className="NavigationBar__clickTarget" onClickOutside={() => setIsOpen(false)}>
+            <Button
+              data-testid="NavigationBarNavButton"
+              icon={{ type: isOpen ? 'Cross' : 'Caret', className: 'NavigationBar--navButton' }}
               variant="silent"
               onClick={() => setIsOpen(prev => !prev)}
             />
-            <div
-              className={classNames(
-                'themedBackground themedBorder p-1 absolute top-full -mt-1 right-0 w-fit transition-all opacity-0 shadow-xl',
-                {
-                  '-z-1 collapse': !isOpen,
-                  'z-10 opacity-100': isOpen,
-                },
-              )}
-            >
-              <div className="flex flex-col items-end px-2 py-1 space-y-1">
-                {navItems.map((item) => (
-                  <Button
-                    className="whitespace-nowrap"
-                    key={item.key}
-                    variant="silent"
-                    onClick={() => {
-                      item.onClick(item.key);
-                      setIsOpen(false);
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
-              </div>
+          </ClickTarget>
+          <div
+            className={classNames(
+              'NavigationBar--navContainer',
+              isOpen && 'NavigationBar--navContainer-open',
+            )}
+          >
+            <div className="NavigationBar--navItem">
+              {navItems.map((item) => (
+                <Button
+                  data-testid="NavigationBarListItem"
+                  key={item.key}
+                  variant="silent"
+                  onClick={() => {
+                    item.onClick(item.key);
+                    setIsOpen(false);
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
             </div>
           </div>
         </div>
-      </ClickTarget>
+      </div>
     </nav>
   );
 };

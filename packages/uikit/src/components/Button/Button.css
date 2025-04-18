@@ -42,7 +42,7 @@
 }
 .Button--silent {
   --bg: transparent;
-  --hover-bg: var(--gray-2);
+  --hover-bg: var(--gray-1);
   /* box-shadow: none; */
   color: var(--gray-4);
   /* text-decoration-line: underline; */
