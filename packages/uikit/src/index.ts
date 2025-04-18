@@ -42,4 +42,4 @@ export { useToast, ToastProvider, type ToastMessage } from './components/Toast/T
 export * from './components/Tooltip/Tooltip'
 export * from './components/TransferList/TransferList'
 export * from './components/Tree/Tree'
-export * from './components/Typography/Typography'
+export { Typography, type TypographyProps, type TypographyType } from './components/Typography/Typography'

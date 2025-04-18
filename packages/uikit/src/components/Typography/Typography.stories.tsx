@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Typography, TypographyStyles, TypographyType } from '../Typography/Typography';
+import { Typography, TypographyType } from '../Typography/Typography';
 import { ComponentProps, createElement, FC } from 'react';
 import { Box } from '../Box/Box';
 
-const lorem = 'Lorem ipsum dolor sit amet';
+const lorem = 'This is a piece of text with semantic meaning';
 
 interface StoryProps {
   storyText: string;
@@ -18,11 +18,15 @@ const meta = {
   render: function StoryComponent(args: ComponentProps<StoryFC>) {
     return (
       <div className="flex flex-col space-y-2">
-        {Object.keys(TypographyStyles).map(key => (
+        {Object.keys(Typography).map(key => (
           <div key={key} className='grid grid-cols-[100px_auto] gap-4 items-center'>
             <Typography.Text>{key}</Typography.Text>
             <div>
-              {createElement(Typography[key as TypographyType], { children: args.storyText })}
+              {createElement(Typography[key as TypographyType], {
+                children: key === 'Body'
+                  ? 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam dolores necessitatibus expedita similique minima reiciendis explicabo blanditiis quaerat accusamus laboriosam quis, cum non dicta consequuntur soluta natus nesciunt, culpa quia possimus odio ad, quas aspernatur et. Ducimus voluptates consectetur ipsam hic. Officiis ullam quisquam, eligendi placeat odit culpa mollitia incidunt.'
+                  : args.storyText,
+              })}
             </div>
           </div>
         ))}
