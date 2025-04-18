@@ -36,7 +36,7 @@ export const Variants: Story = {
         <Button {...args} disabled>Disabled</Button>
         <Button {...args} loading>Loading</Button>
         <Button {...args} success>Success</Button>
-        <Button {...args} icon={{ icon: 'Volume1' }} />
+        <Button {...args} icon={{ type: 'Volume1' }} />
       </div>
     )
   }

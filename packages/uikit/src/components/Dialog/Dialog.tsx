@@ -119,7 +119,7 @@ export function Dialog({
               <Button
                 data-testid="DialogCloseButton"
                 variant="silent"
-                icon={{ icon: 'Cross' }}
+                icon={{ type: 'Cross' }}
                 onClick={() => setDialogOpen(false)}
               />
             )

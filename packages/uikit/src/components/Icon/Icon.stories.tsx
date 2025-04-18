@@ -11,7 +11,7 @@ const meta = {
   args: {
     // className: 'text-indigo-500 dark:text-blue-500',
     height: 3,
-    icon: 'Arrow'
+    type: 'Arrow'
   }
 } satisfies Meta<typeof Icon>;
 
@@ -26,7 +26,7 @@ export const All: Story = {
         <div className="grid grid-cols-2 gap-x-16">
           {Object.keys(IconList).sort().map((key) => (
             <div className='p-2 flex gap-4 items-center' key={key}>
-              <Icon {...args} icon={key as IconType} />
+              <Icon {...args} type={key as IconType} />
               <CopyIcon type={key as IconType} />
             </div>
           ))}

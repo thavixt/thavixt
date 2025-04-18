@@ -69,7 +69,7 @@ export function AccordionBase({
     >
       <div className="AccordionHeader" data-testid="AccordionHeader" onClick={onClick}>
         <Typography.Text>
-          <Icon className="Accordion__svg" icon="Caret" />
+          <Icon className="Accordion__svg" type="Caret" />
         </Typography.Text>
         <div>
           {

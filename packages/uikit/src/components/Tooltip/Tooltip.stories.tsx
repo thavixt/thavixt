@@ -42,7 +42,7 @@ export const AlwaysVisible: Story = {
     Tooltip: (side) => (
       <>
         <Icon
-          icon="Arrow"
+          type="Arrow"
           height={2}
           className={classNames('mr-1 transform', {
             'rotate-180': side === 'right',

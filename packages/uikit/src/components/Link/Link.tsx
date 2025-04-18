@@ -1,32 +1,31 @@
 import classNames from "classnames";
-import { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren } from "react";
 import { CommonProps } from "../../common/commonProps";
+import "./Link.css";
+import { Icon } from "../Icon/Icon";
+import { IconType } from "../Icon/IconList";
 
 export interface LinkProps extends PropsWithChildren<CommonProps<HTMLAnchorElement>> {
   /** URL to go to */
   href: string;
   /** Render an icon on the right */
-  icon?: ReactNode;
+  icon?: IconType | false;
   /** Open link in new window (target="_blank") - default `true` */
   self?: boolean,
 };
 
 /**
- * after:content-['_↗']
+ * A functional component that renders a customizable hyperlink (`<a>` element).
+ *
+ * @returns {JSX.Element} The rendered `<a>` element with the specified properties.
  */
-
-export function Link({ self, ...props}: LinkProps) {
-  const classes = classNames(
-    'inline-flex items-center',
-    'font-semibold underline underline-offset-4',
-    'text-indigo-500 hover:text-blue-500 visited:text-purple-600',
-    props.className,
-  );
+export function Link({ self, icon = "Link", ...props }: LinkProps) {
+  const classes = classNames('Link', props.className);
 
   return (
     <a data-testid="Link" ref={props.ref} className={classes} href={props.href} target={self ? '_self' : '_blank'}>
       {props.children}
-      {props.icon}
+      {icon ? <Icon type={icon} height={2} /> : null}
     </a>
   )
 }

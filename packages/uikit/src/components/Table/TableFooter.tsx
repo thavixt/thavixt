@@ -58,7 +58,7 @@ export function TableFooter({
                 onClick={onPrevPage}
                 disabled={!hasPrevPage}
                 variant="silent"
-                icon={{ icon: 'Arrow', className: 'rotate-180' }}
+                icon={{ type: 'Arrow', className: 'rotate-180' }}
               />
               <span
                 title="Current page"
@@ -74,7 +74,7 @@ export function TableFooter({
                 onClick={onNextPage}
                 disabled={!hasNextPage}
                 variant="silent"
-                icon={{ icon: 'Arrow' }}
+                icon={{ type: 'Arrow' }}
               />
             </div>
           ) : null}

@@ -234,7 +234,7 @@ export function TransferList({
             title={transferAllText}
             variant="silent"
           >
-            <Icon icon="ArrowDouble" height={3} />
+            <Icon type="ArrowDouble" height={3} />
           </Button>
           <Button
             id="toSelected"
@@ -242,7 +242,7 @@ export function TransferList({
             title={transferSelectedText}
             variant="silent"
           >
-            <Icon icon="Arrow" height={3} />
+            <Icon type="Arrow" height={3} />
           </Button>
           <Button
             className="rotate-180"
@@ -251,7 +251,7 @@ export function TransferList({
             title={transferSelectedText}
             variant="silent"
           >
-            <Icon icon="Arrow" height={3} />
+            <Icon type="Arrow" height={3} />
           </Button>
           <Button
             className="rotate-180"
@@ -261,7 +261,7 @@ export function TransferList({
             title={transferAllText}
             variant="silent"
           >
-            <Icon icon="ArrowDouble" height={3} />
+            <Icon type="ArrowDouble" height={3} />
           </Button>
         </div>
         <div

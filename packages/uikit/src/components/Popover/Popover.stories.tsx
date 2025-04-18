@@ -67,7 +67,7 @@ export const Default: Story = {
 export const NestedExample: Story = {
   args: {
     target: (
-      <Button title='Change settings' variant='silent' icon={{ icon: "Gear" }} />
+      <Button title='Change settings' variant='silent' icon={{ type: "Gear" }} />
     ),
     onClick: fn(),
     children: [

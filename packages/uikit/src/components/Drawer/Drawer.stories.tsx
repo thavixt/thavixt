@@ -32,7 +32,7 @@ const meta = {
     target: (_, toggle) => (
       <Button
         data-testid="ToggleDrawer"
-        icon={{ icon: 'List', height: 4 }}
+        icon={{ type: 'List', height: 4 }}
         onClick={toggle}
         className={classNames("fixed top-4 right-8 shadow-md z-10")}
       />

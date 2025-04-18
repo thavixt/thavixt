@@ -58,7 +58,7 @@ export function Popover({
         ) : (
           target
         )}
-        {context.onClick ? <Icon className="Popover__icon" icon="Caret" height={2} /> : null}
+        {context.onClick ? <Icon className="Popover__icon" type="Caret" height={2} /> : null}
       </button>
       <div
         ref={ref}

@@ -74,7 +74,7 @@ export function NavigationBar({
 
           <div className="relative block md:hidden">
             <Button
-              icon={{ icon: isOpen ? 'Cross' : 'Caret', className: 'rotate-90' }}
+              icon={{ type: isOpen ? 'Cross' : 'Caret', className: 'rotate-90' }}
               variant="silent"
               onClick={() => setIsOpen(prev => !prev)}
             />

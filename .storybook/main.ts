@@ -24,6 +24,12 @@ const config: StorybookConfig = {
   docs: {
     defaultName: 'Overview',
   },
+  // better then the default react-docgen
+  // https://github.com/storybookjs/storybook/issues/25305
+  // https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#react-docgen-component-analysis-by-default
+  typescript: {
+    reactDocgen: "react-docgen-typescript",
+  }
 };
 export default config;
 

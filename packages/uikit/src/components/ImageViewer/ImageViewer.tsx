@@ -113,7 +113,7 @@ function ImageControls({
         )}
         onClick={prev}
       >
-        <Button icon={{ icon: "Arrow" }} />
+        <Button icon={{ type: "Arrow" }} />
       </div>
       <div
         className={classNames(
@@ -121,7 +121,7 @@ function ImageControls({
         )}
         onClick={next}
       >
-        <Button icon={{ icon: "Arrow" }} />
+        <Button icon={{ type: "Arrow" }} />
       </div>
     </div>
   );

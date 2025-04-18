@@ -22,7 +22,7 @@ export function Breadcrumbs(props: BreadcrumbProps) {
           {(i < children.length - 1)
             ? (
               <span className="Breadcrumbs__caret">
-                <Icon icon="Caret" height={2.5} />
+                <Icon type="Caret" height={2.5} />
               </span>
             )
             : null

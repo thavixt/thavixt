@@ -1,0 +1,26 @@
+.Link {
+  --default: var(--indigo-2);
+  --hover: var(--indigo-1);
+  --visited: var(--indigo-3);
+  --current: var(--default);
+
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--current);
+
+  &:hover {
+    --current: var(--hover);
+  }
+
+  &:visited {
+    --current: var(--visited);
+  }
+
+  border-bottom: 1px solid var(--current);
+
+  .Icon {
+    color: var(--current);
+    padding-left: 0.25rem;
+  }
+}

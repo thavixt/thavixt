@@ -18,10 +18,18 @@ export const Default: Story = {
   }
 };
 
-export const WithIcon: Story = {
+export const CustomIcon: Story = {
   args: {
     children: 'Click here to go somewhere',
     href: 'https://komlosidev.net/',
-    icon: "🌍",
+    icon: "Check",
+  }
+};
+
+export const WithoutIcon: Story = {
+  args: {
+    children: 'Click here to go somewhere',
+    href: 'https://komlosidev.net/',
+    icon: false,
   }
 };

@@ -9,7 +9,7 @@ import { Scrollbar } from "../Scrollbar/Scrollbar";
 import "./FileInput.css";
 import { CommonProps } from "../../common/commonProps";
 
-interface FileInputProps extends CommonProps<HTMLInputElement> {
+export interface FileInputProps extends CommonProps<HTMLInputElement> {
   multiple?: boolean;
   accept?: string;
   disabled?: boolean;
@@ -162,7 +162,7 @@ export function FileInput(
                     </span>
                     <Icon
                       hidden={!interactive}
-                      icon="CrossCircled"
+                      type="CrossCircled"
                       height={3}
                       className="FileInput__icon"
                       onClick={() => onDelete(file.name)}

@@ -106,7 +106,7 @@ export const CustomMusicPlayer: Story = {
             onClick={() => paused ? play() : pause()}
             title={paused ? 'Play' : 'Pause'}
           >
-            <Icon height={3} icon={paused ? 'Play' : 'Pause'} />
+            <Icon height={3} type={paused ? 'Play' : 'Pause'} />
           </Button>
           <div className="flex flex-col">
             <small title={title} className='truncate w-[160px] text-slate-600 dark:text-slate-400'>{title}</small>
@@ -148,10 +148,10 @@ function getPercentageBetween(value: number, max: number) {
 function getAfterIcon(transformedValue: string | number): ReactElement {
   const value = parseInt(transformedValue.toString());
   if (value === 0) {
-    return <Icon height={3} icon='Volume0' />;
+    return <Icon height={3} type='Volume0' />;
   }
   if (value < 60) {
-    return <Icon height={3} icon='Volume1' />;
+    return <Icon height={3} type='Volume1' />;
   }
-  return <Icon height={3} icon='Volume2' />;
+  return <Icon height={3} type='Volume2' />;
 } 

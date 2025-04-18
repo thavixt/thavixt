@@ -79,7 +79,7 @@ export function Button({
         }
         {
           !icon && success
-            ? <Icon height={2} icon="Check" />
+            ? <Icon height={2} type="Check" />
             : null
         }
         {

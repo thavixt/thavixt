@@ -47,7 +47,7 @@ export function ThemeSwitcher({ ref, className, position = "inline" }: ThemeSwit
       ref={ref}
       className={classes}
       onClick={switchTheme}
-      icon={{ icon: currentTheme === 'dark' ? 'Light' : 'Dark' }}
+      icon={{ type: currentTheme === 'dark' ? 'Light' : 'Dark' }}
       title={currentTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
     />
   )

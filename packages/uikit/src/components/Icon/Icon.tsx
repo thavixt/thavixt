@@ -1,29 +1,30 @@
-import { createElement, HTMLAttributes } from "react";
+import { createElement, HTMLAttributes, JSX } from "react";
 import { IconList, IconType } from "./IconList";
 import classNames from "classnames";
 import "./Icon.css";
 
 export interface IconProps extends HTMLAttributes<HTMLDivElement> {
-  icon: IconType;
+  type: IconType;
   /**
-   * `x * 4` (tailwind scale)
+   * `x * 4px`
    * */
   height?: number;
+  className?: string;
 }
 
 /**
- * @todo
- * TODO: consistent sizing with Icon and Loader components
- * probably using var(--scale) or smt 
+ * A reusable `Icon` component that renders an icon based on the provided type.
+ *
+ * @returns {JSX.Element} The rendered icon component.
  */
-export function Icon({ height = 3, className, ...props }: IconProps) {
+export function Icon({ height = 3, className, ...props }: IconProps): JSX.Element {
   return (
     <div
       data-testid="Icon"
       className={classNames('Icon', className, props.onClick && 'Icon--clickable')}
       {...props}
     >
-      {createElement(IconList[props.icon], { height })}
+      {createElement(IconList[props.type], { height })}
     </div>
   );
 }

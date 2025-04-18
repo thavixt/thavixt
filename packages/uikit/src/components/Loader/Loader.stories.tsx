@@ -8,13 +8,6 @@ const meta = {
   title: 'Illustration/Loader',
   component: Loader,
   tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component: 'Animated SVGs suggesting that backdround tasks are in-progress, or some data is loading',
-      },
-    },
-  },
   args: {
     // className: 'text-indigo-500 dark:text-blue-500',
     height: 8,
