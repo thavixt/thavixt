@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ImageViewer } from './ImageViewer';
-import { Typography } from '../Typography/Typography';
-import { SkeletonListItem } from '../Skeleton/Skeleton';
-import { fn } from '@storybook/test';
+import { userEvent, within, expect, fn } from '@storybook/test';
+import { sleep } from '../../common/utils';
 
 const meta = {
   title: 'Layout/Image viewer',
@@ -12,39 +11,23 @@ const meta = {
     onChange: fn(),
     width: 500,
     height: 500,
-    title: "Discussion about my photo gallery",
+    title: "Random pictures from picsum.photos",
     src: [
       {
-        src: "https://images.squarespace-cdn.com/content/v1/5cd57d59ca525b7e9eae595c/1559580050048-SR8UV1RAZ1D3HXKCF2Q0/Budapest+2018-06-28-004.jpg?format=2500w",
-        description: "Example description here", 
+        src: "https://picsum.photos/id/237/1200/600",
+        description: "1200x600 image", 
       },
+      "https://picsum.photos/id/231/900/600",
       {
-        src: "https://images.squarespace-cdn.com/content/v1/5cd57d59ca525b7e9eae595c/1559837452531-YUX6NAEA7X2HTD42CXD1/Budapest+2018-07-01-013.jpg?format=2500w",
-        description: "Example description again"
+        src: "https://picsum.photos/id/239/1200/780",
+        description: "1200x780 image"
       },
+      "https://picsum.photos/id/240/1000/500",
       {
-        src: "https://images.squarespace-cdn.com/content/v1/5cd57d59ca525b7e9eae595c/1559838072543-FYN9HZJR4LSIB03YPHOP/Budapest+2018-07-01-011.jpg?format=1500w",
-        description: "Example description yet again"
+        src: "https://picsum.photos/id/242/1000/600",
+        description: "1000x600 image"
       },
-      {
-        src: "https://images.squarespace-cdn.com/content/v1/5cd57d59ca525b7e9eae595c/1559838106459-OTR6920UHSDZGGPFLQBF/_MG_2630.jpg?format=2500w",
-        description: "No more descriptions from here on :("
-      },
-      "https://images.squarespace-cdn.com/content/v1/5cd57d59ca525b7e9eae595c/1559838134110-IYGFV8DU15GA5JYWK8KG/_MG_2626.jpg?format=2500w",
-      "https://images.squarespace-cdn.com/content/v1/5cd57d59ca525b7e9eae595c/1559842290532-0UJVFJGXFOHJ8GBN38D8/Budapest+2018-06-29-013.jpg?format=2500w",
     ],
-    sidebar: (index) => (
-      <div className='flex flex-col space-y-4'>
-        <div className='sticky top-0 left-0 bg-slate-100 dark:bg-gray-800 z-100'>
-          <Typography.Body>
-            Comments or notes about image #{index}
-          </Typography.Body>
-        </div>
-        {new Array(Math.ceil(Math.random() * 10)).fill(null).map((_, i) => (
-          <SkeletonListItem key={`${i}-${Math.random()}`}/>
-        ))}
-      </div>
-    )
   }
 } satisfies Meta<typeof ImageViewer>;
 
@@ -52,4 +35,46 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByTestId('ImageViewer')).toBeVisible();
+    expect(canvas.queryByTestId('ImageViewerDialog')).not.toBeInTheDocument();
+    await sleep(250);
+    expect(canvas.getByTestId('ImageViewerImage0')).toBeVisible();
+    expect(canvas.queryByTestId('ImageViewerImage1')).not.toBeInTheDocument();
+    userEvent.click(canvas.getByTestId('ImageViewerNextButton'));
+    await sleep(250);
+    expect(canvas.queryByTestId('ImageViewerImage0')).not.toBeInTheDocument();
+    expect(canvas.getByTestId('ImageViewerImage1')).toBeVisible();
+    userEvent.click(canvas.getByTestId('ImageViewerPrevButton'));
+    await sleep(250);
+    expect(canvas.getByTestId('ImageViewerImage0')).toBeVisible();
+    expect(canvas.queryByTestId('ImageViewerImage1')).not.toBeInTheDocument();
+    await sleep(250);
+  },
+};
+
+export const Dialog: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    
+    userEvent.click(canvas.getByTestId('ImageViewerImage0'));
+    await sleep(250);
+    expect(canvas.queryByTestId('ImageViewerDialog')).toBeVisible();
+    expect(canvas.getByTestId('ImageViewerDialogImage0')).toBeVisible();
+    expect(canvas.queryByTestId('ImageViewerDialogImage1')).not.toBeInTheDocument();
+    userEvent.click(canvas.getByTestId('ImageViewerDialogNextButton'));
+    await sleep(250);
+    expect(canvas.queryByTestId('ImageViewerDialogImage0')).not.toBeInTheDocument();
+    expect(canvas.getByTestId('ImageViewerImage1')).toBeVisible();
+    userEvent.click(canvas.getByTestId('ImageViewerDialogPrevButton'));
+    await sleep(250);
+    expect(canvas.getByTestId('ImageViewerDialogImage0')).toBeVisible();
+    expect(canvas.queryByTestId('ImageViewerImage1')).not.toBeInTheDocument();
+    userEvent.click(canvas.getByTestId('DialogCloseButton'));
+    await sleep(250);
+    userEvent.click(canvas.getByTestId('ImageViewerImage0'));
+    await sleep(250);
+  },
+};

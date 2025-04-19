@@ -41,7 +41,7 @@ export function Dialog({
   onOpen,
   open = false,
   ref,
-  title = "&nbsp;",
+  title,
   ...props
 }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -118,7 +118,8 @@ export function Dialog({
             ? (
               <Button
                 data-testid="DialogCloseButton"
-                variant="silent"
+                className="Dialog__closeButton"
+                // variant="silent"
                 icon={{ type: 'Cross' }}
                 onClick={() => setDialogOpen(false)}
               />

@@ -15,7 +15,7 @@ export { FileInput, type FileInputProps } from './components/FileInput/FileInput
 export { Form, type FormProps } from './components/Form/Form'
 export { FormDialog, type FormDialogHandle, type FormDialogProps } from './components/Form/FormDialog'
 export { Icon, type IconProps } from './components/Icon/Icon'
-export { ImageViewer, type ImageViewerProps } from './components/ImageViewer/ImageViewer'
+export { ImageViewer, type ImageViewerImage, type ImageViewerProps } from './components/ImageViewer/ImageViewer'
 export { Inplace, type InplaceProps } from './components/Inplace/Inplace'
 export { Link, type LinkProps } from './components/Link/Link'
 export { Loader, type LoaderProps } from './components/Loader/Loader'
