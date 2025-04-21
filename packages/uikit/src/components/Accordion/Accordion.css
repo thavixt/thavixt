@@ -12,18 +12,19 @@
 }
 
 .AccordionBody {
+  display: flex;
+  flex-direction: column;
   padding-left: 1.5rem;
+  
   transition: all;
   transition-duration: 250ms;
   overflow: hidden;
 }
 
-.AccordionBody {
-  display: flex;
-  flex-direction: column;
-  padding-top: 0.25rem;
-}
 
+.Accordion--open .AccordionBody {
+  padding-top: 1rem;
+}
 
 .Accordion__svg {
   height: 1.5rem;

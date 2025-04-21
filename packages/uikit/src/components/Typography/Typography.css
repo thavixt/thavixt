@@ -31,12 +31,14 @@
 
   &.Typography__H1,
   &.Typography__H2,
-  &.Typography__Title,
+  &.Typography__Title {
+    --spacing: 1rem;
+  }
   &.Typography__Subtitle,
   &.Typography__Caption,
   &.Typography__Body,
   &.Typography__Body2 {
-    --spacing: 1rem;
+    --spacing: 0.5rem;
   }
 
   &.Typography__Title {
@@ -47,7 +49,7 @@
     font-size: 1rem;
   }
   &.Typography__Body2 {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 200;
   }
 
@@ -79,6 +81,7 @@
     display: inline-flex;
     font-size: 0.875rem;
     font-weight: 600;
+    text-transform: uppercase;
   }
 
   display: block;

@@ -1,6 +1,6 @@
 import classnames from "classnames";
-import { Typography } from "../Typography/Typography";
 import './Avatar.css';
+import { Typography } from "../Typography/Typography";
 
 export interface AvatarProps {
   src: string;
@@ -44,7 +44,7 @@ export function Avatar({ src, name, size = 'md', status, onClick, title }: Avata
           />
         )}
       </div>
-      <Typography.Label>{name}</Typography.Label>
+      <Typography type="label">{name}</Typography>
     </div>
   );
 };

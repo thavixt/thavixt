@@ -53,9 +53,9 @@ export function NavigationBar({
               <Avatar title={imageTooltip} {...image} />
             )
           )}
-          <Typography.Subtitle className="NavigationBar__brand">
+          <Typography type="subtitle" className="NavigationBar__brand">
             {brandName}
-          </Typography.Subtitle>
+          </Typography>
         </div>
 
         <div className="NavigationBar--itemsContainer">

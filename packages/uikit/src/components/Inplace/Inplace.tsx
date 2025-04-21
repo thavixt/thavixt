@@ -31,9 +31,9 @@ export function Inplace(
       className={classNames('Inplace', className)}
     >
       {replaced ? null : (
-        <Typography.Text className="Inplace__text" onClick={onClick}>
+        <Typography type="text" className="Inplace__text" onClick={onClick}>
           {children}
-        </Typography.Text>
+        </Typography>
       )}
       {replaced ? (
         <div className="Inplace__replacement" onBlur={onBlur}>

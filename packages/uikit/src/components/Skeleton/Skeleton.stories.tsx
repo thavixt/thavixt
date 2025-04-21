@@ -20,7 +20,7 @@ const meta = {
     children: undefined,
     delay: 300,
     onLoad: fn(async () => {
-      return <Typography.Body>Fetched content goes here</Typography.Body>
+      return <Typography type="body">Fetched content goes here</Typography>
     }),
   },
 } satisfies Meta<typeof Skeleton>;
@@ -36,7 +36,7 @@ export const Default: Story = {
     return (
       <div className='flex flex-col justify-between h-[120dvh] p-4'>
         <div>
-          <Typography.Body>{loaded ? 'Already loaded' : 'Scroll to the bottom'}</Typography.Body>
+          <Typography type="body">{loaded ? 'Already loaded' : 'Scroll to the bottom'}</Typography>
           <Button
             onClick={() => {
               setLoaded(false);

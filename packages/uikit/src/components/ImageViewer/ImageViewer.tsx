@@ -173,8 +173,8 @@ function Image({ children, source, title, description, index, dialog, ...imagePr
       {children}
       {description ? (
         <div className="ImageViewer__description">
-          <Typography.Body>{title}</Typography.Body>
-          <Typography.Label>{description}</Typography.Label>
+          <Typography type="body">{title}</Typography>
+          <Typography type="label">{description}</Typography>
         </div>
       ) : null}
     </div>

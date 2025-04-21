@@ -54,7 +54,7 @@ export function Popover({
         {...buttonProps}
       >
         {typeof target === "string" ? (
-          <Typography.Label>{target}</Typography.Label>
+          <Typography type="label">{target}</Typography>
         ) : (
           target
         )}
@@ -98,7 +98,7 @@ function PopoverItem({ children, id, ...props }: PopoverItemProps) {
   }
 
   return (
-    <Typography.Label
+    <Typography type="label"
       data-testid={`PopoverItem-${id}`}
       {...props}
       key={id}
@@ -106,7 +106,7 @@ function PopoverItem({ children, id, ...props }: PopoverItemProps) {
       onClick={onClick}
     >
       {children}
-    </Typography.Label>
+    </Typography>
   );
 }
 

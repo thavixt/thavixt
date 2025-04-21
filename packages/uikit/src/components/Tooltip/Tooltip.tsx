@@ -26,13 +26,13 @@ export function Tooltip({ ref, className, children, Tooltip, position = 'bottom'
 
   return (
     <div data-testid="Tooltip" ref={ref} className="Tooltip">
-      <Typography.Text className="Tooltip__target">
+      <Typography type="text" className="Tooltip__target">
         {children}
-      </Typography.Text>
+      </Typography>
       <div data-testid="Tooltip__content" className={TooltipClasses}>
-        <Typography.Text>
+        <Typography type="text">
           {typeof Tooltip === 'function' ? Tooltip(position) : Tooltip}
-        </Typography.Text>
+        </Typography>
         <div className="Tooltip__arrow" />
       </div>
     </div>

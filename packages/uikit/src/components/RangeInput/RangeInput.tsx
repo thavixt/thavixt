@@ -70,7 +70,7 @@ export function RangeInput({ required, showValue = true, ref, min = 0, max = 100
           type="range"
           value={props.value}
         />
-        {showValue ? <Typography.Label className="min-w-8">{getValue(currentValue)}</Typography.Label> : null}
+        {showValue ? <Typography type="label" className="min-w-8">{getValue(currentValue)}</Typography> : null}
         {props.after?.(getValue(currentValue), min, max)}
       </div>
     </WithLabel>

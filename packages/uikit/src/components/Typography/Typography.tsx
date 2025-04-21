@@ -1,12 +1,14 @@
 import classNames from "classnames";
-import { HTMLAttributes, PropsWithChildren, RefObject } from "react";
+import { HTMLAttributes, PropsWithChildren, LabelHTMLAttributes } from "react";
 import "./Typography.css";
+import { CommonProps } from "../../common/commonProps";
 
-export type TypographyVariant =
+type TypographyVariant =
   "h1" |
   "h2" |
   "title" |
   "subtitle" |
+  "caption" |
   "body" |
   "body2" |
   "text" |
@@ -14,34 +16,35 @@ export type TypographyVariant =
   "button" |
   "code";
 
-export type TypographyVariantProps = HTMLAttributes<HTMLElement> & {
-  className?: string;
+export type TypographyProps<T = HTMLElement> = CommonProps<T> & HTMLAttributes<T> & {
   type: TypographyVariant;
 } & (
-    ({ type: 'h1' } & HTMLAttributes<HTMLHeadElement>) |
-    ({ type: 'h2' } & HTMLAttributes<HTMLHeadElement>) |
-    ({ type: 'title' } & HTMLAttributes<HTMLHeadElement>) |
-    ({ type: 'subtitle' } & HTMLAttributes<HTMLHeadElement>) |
-    ({ type: 'body' } & HTMLAttributes<HTMLParagraphElement>) |
-    ({ type: 'body2' } & HTMLAttributes<HTMLParagraphElement>) |
-    ({ type: 'text' } & HTMLAttributes<HTMLSpanElement>) |
-    ({ type: 'label' } & HTMLAttributes<HTMLLabelElement>) |
-    ({ type: 'button' } & HTMLAttributes<HTMLSpanElement>) |
-    ({ type: 'code' } & HTMLAttributes<HTMLDivElement>)
-  )
+    ({ type: 'h1' }) |
+    ({ type: 'h2' }) |
+    ({ type: 'title' }) |
+    ({ type: 'subtitle' }) |
+    ({ type: 'caption' }) |
+    ({ type: 'body' }) |
+    ({ type: 'body2' }) |
+    ({ type: 'text' }) |
+    ({ type: 'label' } & LabelHTMLAttributes<T>) |
+    ({ type: 'button' }) |
+    ({ type: 'code' })
+  );
 
-export function T({
+export function Typography({
   className,
   children,
-  type: t,
+  type: t = 'text',
   ...props
-}: PropsWithChildren<TypographyVariantProps>) {
+}: PropsWithChildren<TypographyProps>) {
   const classes = classNames(
     'Typography',
     t === 'h1' && 'Typography__H1',
     t === 'h2' && 'Typography__H2',
     t === 'title' && 'Typography__Title',
     t === 'subtitle' && 'Typography__Subtitle',
+    t === 'caption' && 'Typography__Caption',
     t === 'body' && 'Typography__Body',
     t === 'body2' && 'Typography__Body2',
     t === 'text' && 'Typography__Text',
@@ -71,6 +74,11 @@ export function T({
       {children}
     </h4>;
   }
+  if (t === 'caption') {
+    return <h5 className={classes} {...(props as HTMLAttributes<HTMLHeadingElement>)}>
+      {children}
+    </h5>;
+  }
   if (['body', 'body2'].includes(t)) {
     return <p className={classes} {...(props as HTMLAttributes<HTMLParagraphElement>)}>
       {children}
@@ -94,68 +102,3 @@ export function T({
     </div>;
   }
 };
-
-
-/**
- * @deprecated use `<T type="...">` or `<Typography type="..">`
- */
-export type TypographyProps<T = HTMLElement> = HTMLAttributes<T> & PropsWithChildren<{
-  className?: string;
-  ref?: RefObject<T | null>;
-}>;
-
-/**
- * @deprecated use `<T type="...">` or `<Typography type="..">`
- */
-export const Typography = {
-  H1: function ({ children, className, ...props }: TypographyProps<HTMLHeadingElement>) {
-    return <h1 {...props} className={classNames('Typography Typography__H1', className)}>
-      {children}
-    </h1>
-  },
-  H2: function ({ children, className, ...props }: TypographyProps<HTMLHeadingElement>) {
-    return <h2 {...props} className={classNames('Typography Typography__H2', className)}>
-      {children}
-    </h2>
-  },
-  Title: function ({ children, className, ...props }: TypographyProps<HTMLHeadingElement>) {
-    return <h4 {...props} className={classNames('Typography Typography__Title', className)}>
-      {children}
-    </h4>
-  },
-  Subtitle: function ({ children, className, ...props }: TypographyProps<HTMLHeadingElement>) {
-    return <h5 {...props} className={classNames('Typography Typography__Subtitle', className)}>
-      {children}
-    </h5>
-  },
-  Caption: function ({ children, className, ...props }: TypographyProps<HTMLSpanElement>) {
-    return <span {...props} className={classNames('Typography Typography__Caption', className)}>
-      {children}
-    </span>
-  },
-  Body: function ({ children, className, ...props }: TypographyProps<HTMLDivElement>) {
-    return <div {...props} className={classNames('Typography Typography__Body', className)}>
-      {children}
-    </div>
-  },
-  Text: function ({ children, className, ...props }: TypographyProps<HTMLSpanElement>) {
-    return <span {...props} className={classNames('Typography Typography__Text', className)}>
-      {children}
-    </span>
-  },
-  Label: function ({ children, className, ...props }: TypographyProps<HTMLLabelElement>) {
-    return <label {...props} className={classNames('Typography Typography__Label', className)}>
-      {children}
-    </label>
-  },
-  Button: function ({ children, className, ...props }: TypographyProps<HTMLSpanElement>) {
-    return <span {...props} className={classNames('Typography Typography__Button', className)}>
-      {children}
-    </span>
-  },
-  Code: function ({ children, className, ...props }: TypographyProps<HTMLSpanElement>) {
-    return <code {...props} className={classNames('Typography Typography__Code', className)}>
-      {children}
-    </code>
-  },
-}

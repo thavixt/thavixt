@@ -1,44 +1,42 @@
 import classNames from "classnames";
-import { cloneElement, HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from "react";
+import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from "react";
 import { CommonProps } from "../../common/commonProps";
-import { getSlotElements } from "../../common/utils";
-import './Accordion.css';
 import { Icon } from "../Icon/Icon";
-import { Typography } from "../Typography/Typography";
+import './Accordion.css';
 
 export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean;
   open?: boolean;
+  title: string;
+  openTitle?: string;
   onOpen?: (open: boolean) => void;
-}
-
-interface AccordionComponentProps extends AccordionProps {
-  groupItem?: boolean;
 }
 
 export function Accordion(props: AccordionProps) {
   return <AccordionBase {...props} />;
 }
 
+interface AccordionBaseProps extends AccordionProps {
+  groupItem?: boolean;
+}
+
 /**
  * For internal usage only.
  */
 export function AccordionBase({
-  className,
-  children,
-  defaultOpen,
   ref,
-  onOpen,
+  children,
+  className,
+  defaultOpen,
   groupItem = false,
+  onOpen,
   open: inertOpen,
+  openTitle,
+  title,
   ...props
-}: AccordionComponentProps) {
+}: AccordionBaseProps) {
   const [open, setOpen] = useState(defaultOpen);
   const id = useRef(props.id ?? crypto.randomUUID().slice(0, 4));
-
-  const bodySlot = getSlotElements(children, AccordionBody)[0];
-  const titleSlot = getSlotElements(children, AccordionTitle)[0];
-  const openTitleSlot = getSlotElements(children, AccordionOpenTitle)[0];
 
   useEffect(() => {
     if (groupItem) {
@@ -68,31 +66,24 @@ export function AccordionBase({
       {...props}
     >
       <div className="AccordionHeader" data-testid="AccordionHeader" onClick={onClick}>
-        <Typography.Text>
-          <Icon className="Accordion__svg" type="Caret" />
-        </Typography.Text>
-        <div>
-          {
-            open
-              ? cloneElement(openTitleSlot ?? titleSlot, open ? openTitleSlot.props : titleSlot.props)
-              : cloneElement(titleSlot, titleSlot.props)
-          }
+        <Icon className="Accordion__svg" type="Caret" />
+        <div
+          data-testid={open ? 'AccordionOpenTitle' : 'AccordionTitle'}
+          className={open ? 'AccordionOpenTitle' : 'AccordionTitle'}
+          {...props}
+        >
+          {open ? openTitle ?? title : title}
         </div>
       </div>
-      <div
-        className="AccordionBody"
-        data-testid="AccordionBody"
-      >
-        {cloneElement(bodySlot, { ...bodySlot.props, key: `AccordionBody`, open })}
-      </div>
+      <AccordionBody open>{children}</AccordionBody>
     </div>
   )
 }
 
-type AccordionSlotProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
-type AccordionBodySlotProps = AccordionSlotProps & { open?: boolean };
+type AccordionPartProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
+type AccordionBodyProps = AccordionPartProps & { open?: boolean };
 
-function AccordionBody({ children, className, open = false, ...props }: AccordionBodySlotProps) {
+function AccordionBody({ children, open = false }: AccordionBodyProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -105,27 +96,8 @@ function AccordionBody({ children, className, open = false, ...props }: Accordio
   }, [ref, open]);
 
   return (
-    <div data-testid="AccordionBody" className={classNames(className, 'AccordionBody')} {...props}>
+    <div data-testid="AccordionBody" className="AccordionBody">
       {children}
     </div>
   )
 }
-Accordion.Body = AccordionBody;
-
-function AccordionTitle({ children, ...props }: AccordionSlotProps) {
-  return (
-    <div data-testid="AccordionTitle" className="AccordionTitle" {...props}>
-      {children}
-    </div>
-  );
-}
-Accordion.Title = AccordionTitle;
-
-function AccordionOpenTitle({ children, ...props }: AccordionSlotProps) {
-  return (
-    <div data-testid="AccordionOpenTitle" className="AccordionOpenTitle" {...props}>
-      {children}
-    </div>
-  );
-}
-Accordion.OpenTitle = AccordionOpenTitle;

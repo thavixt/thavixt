@@ -69,7 +69,7 @@ export function Button({
       <div className="Button__content">
         {
           children
-            ? <Typography.Button>{children}</Typography.Button>
+            ? <Typography type="button">{children}</Typography>
             : null
         }
         {

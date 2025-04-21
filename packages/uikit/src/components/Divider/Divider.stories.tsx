@@ -12,28 +12,28 @@ const meta = {
       <div>
         <div className='flex flex-col text-center'>
           <Divider {...args} />
-          <Typography.Text>
-            The content here is divided by <Typography.Code>{'<Divider/>'}</Typography.Code> components,
-          </Typography.Text>
+          <Typography type="text">
+            The content here is divided by <Typography type="code">{'<Divider/>'}</Typography> components,
+          </Typography>
           <Divider {...args} unicorn />
-          <Typography.Text>
+          <Typography type="text">
             which are just some lines to separate layout.
-          </Typography.Text>
+          </Typography>
           <Divider {...args} small />
-          <Typography.Text>
-            They can be full or half width, <Typography.Code>unicorn</Typography.Code> or plain gray by default.
-          </Typography.Text>
+          <Typography type="text">
+            They can be full or half width, <Typography type="code">unicorn</Typography> or plain gray by default.
+          </Typography>
           <Divider {...args} unicorn small />
           <div className="flex h-[200px] items-center justify-between">
-            <Typography.Text>They</Typography.Text>
+            <Typography type="text">They</Typography>
             <Divider {...args} vertical />
-            <Typography.Text>can be</Typography.Text>
+            <Typography type="text">can be</Typography>
             <Divider {...args} unicorn vertical />
-            <Typography.Text>vertical</Typography.Text>
+            <Typography type="text">vertical</Typography>
             <Divider {...args} small vertical />
-            <Typography.Text>or</Typography.Text>
+            <Typography type="text">or</Typography>
             <Divider {...args} unicorn small vertical />
-            <Typography.Text>horizontal.</Typography.Text>
+            <Typography type="text">horizontal.</Typography>
           </div>
         </div>
       </div>

@@ -2,10 +2,10 @@ import { composeStories } from '@storybook/react';
 import { mount } from '@cypress/react';
 import * as stories from './Typography.stories';
 
-const { Default } = composeStories(stories);
+const { Variants } = composeStories(stories);
 
 describe('Typography component', () => {
    it('should render', () => {
-      mount(<Default />);
+      mount(<Variants />);
    });
 });

@@ -204,7 +204,7 @@ export function TransferList({
         >
           <div className="flex justify-between items-center">
             <Button variant="silent" onClick={selectAll('available')}>Select all</Button>
-            <Typography.Label>({items.length - selected.length})</Typography.Label>
+            <Typography type="label">({items.length - selected.length})</Typography>
             <Button variant="silent" onClick={selectAll('available', false)}>Deselect all</Button>
           </div>
           <Scrollbar className={scrollbarClasses}>
@@ -272,7 +272,7 @@ export function TransferList({
         >
           <div className="flex justify-between items-center pb-1">
             <Button className="text-xs" variant="silent" onClick={selectAll('selected')}>Select all</Button>
-            <Typography.Label>({selected.length})</Typography.Label>
+            <Typography type="label">({selected.length})</Typography>
             <Button className="text-xs" variant="silent" onClick={selectAll('selected', false)}>Deselect all</Button>
           </div>
           <Scrollbar className={scrollbarClasses}>
@@ -329,7 +329,7 @@ function TransferListListItem({ item, side, onCheck, onShift }: TransferListList
         type="checkbox"
       />
       <label className="peer-checked:font-semibold cursor-pointer pl-2 w-full" htmlFor={item.key}>
-        <Typography.Text>{item.content}</Typography.Text>
+        <Typography type="text">{item.content}</Typography>
       </label>
     </div>
   )

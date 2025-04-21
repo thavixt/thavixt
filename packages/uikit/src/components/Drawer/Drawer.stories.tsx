@@ -41,7 +41,7 @@ const meta = {
     onClose: fn(),
     children: (toggle, side) => (
       <>
-        <Typography.Subtitle>Sidebar</Typography.Subtitle>
+        <Typography type="subtitle">Sidebar</Typography>
         <div className="flex flex-col space-y-4">
           <SkeletonRow />
           <SkeletonListItem />
@@ -85,14 +85,14 @@ const meta = {
       <div className="flex flex-col space-y-4 px-4 py-2">
         <Drawer {...args} onOpen={onOpen} onClose={onClose} />
         <div className="flex flex-col">
-          <Typography.H2>The drawer is {isOpen ? 'opened' : 'closed'} on the {args.side}</Typography.H2>
-          <Typography.Subtitle>List of things to click in the sidebar:</Typography.Subtitle>
+          <Typography type="h2">The drawer is {isOpen ? 'opened' : 'closed'} on the {args.side}</Typography>
+          <Typography type="subtitle">List of things to click in the sidebar:</Typography>
           <div className="flex flex-col space-y-8">
             {new Array(listItemCount).fill(null).map((_, i) => (
               <div className="flex flex-col space-y-2">
-                <Typography.Caption id={`link${i + 1}`}>
+                <Typography type="caption" id={`link${i + 1}`}>
                   List item #{i + 1}
-                </Typography.Caption>
+                </Typography>
                 <div className="flex flex-col space-y-4">
                   <SkeletonListItem />
                   <SkeletonListItem />

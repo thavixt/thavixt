@@ -36,7 +36,7 @@ export function Progress({ label, className, max = 100, current, inline, ...prop
       'grid-cols-[auto_minmax(100px,_1fr)]': inline
     },
     )}>
-      {label ? <Typography.Label className="m-0">{label}:</Typography.Label> : null}
+      {label ? <Typography type="label" className="m-0">{label}:</Typography> : null}
       <progress hidden max={max} value={current} {...props}>{percentLabel}</progress>
       <div aria-hidden="true" className="rounded-full h-4 w-full bg-gray-200 dark:bg-gray-600 flex space-x-2">
         <div

@@ -11,7 +11,8 @@ export function Breadcrumbs(props: BreadcrumbProps) {
   const children = Children.toArray(props.children);
 
   return (
-    <Typography.Body
+    <Typography
+      type="body"
       data-testid="Breadcrumbs"
       ref={props.ref}
       className={classNames('Breadcrumbs', props.className)}
@@ -29,6 +30,6 @@ export function Breadcrumbs(props: BreadcrumbProps) {
           }
         </Fragment>
       ))}
-    </Typography.Body>
+    </Typography>
   )
 }

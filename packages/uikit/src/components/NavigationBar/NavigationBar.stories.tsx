@@ -52,7 +52,7 @@ const meta = {
     return (
       <div className='p-4'>
         <NavigationBar {...args} />
-        <Typography.Title>Example page title text</Typography.Title>
+        <Typography type="title">Example page title text</Typography>
         <div className="flex flex-col space-y-8 pt-4">
           {new Array(15).fill(0).map((_, i) => <SkeletonListItem key={i} />)}
         </div>

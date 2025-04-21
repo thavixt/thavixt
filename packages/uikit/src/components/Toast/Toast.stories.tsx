@@ -50,7 +50,7 @@ export const Default: Story = {
       const id = values.toastId ? values.toastId as string : undefined;
       const content = (
         <div className='flex flex-col space-y-2'>
-          <Typography.Text className='whitespace-pre-wrap'>{values.toastMessage}</Typography.Text>
+          <Typography type="text" className='whitespace-pre-wrap'>{values.toastMessage}</Typography>
         </div>
       );
       const onClick = (toastId: string) => {
@@ -93,8 +93,8 @@ export const Default: Story = {
             values={['info', 'success', 'warning']}
           />
         </Form>
-        <Typography.Text>Active toasts: {activeToasts.length}</Typography.Text>
-        <Typography.Text>Last clicked toast: {lastClickedToastId}</Typography.Text>
+        <Typography type="text">Active toasts: {activeToasts.length}</Typography>
+        <Typography type="text">Last clicked toast: {lastClickedToastId}</Typography>
       </div>
     )
   },
@@ -109,19 +109,19 @@ export const ToastMessage = {
             id="info"
             expires={Infinity}
             type='info'
-            content={(<Typography.Text>Info toast</Typography.Text>)}
+            content={(<Typography type="text">Info toast</Typography>)}
           />
           <ToastMessageComponent
             id="success"
             expires={Infinity}
             type='success'
-            content={(<Typography.Text>Success toast</Typography.Text>)}
+            content={(<Typography type="text">Success toast</Typography>)}
           />
           <ToastMessageComponent
             id="warning"
             expires={Infinity}
             type='warning'
-            content={(<Typography.Text>Warning toast</Typography.Text>)}
+            content={(<Typography type="text">Warning toast</Typography>)}
           />
         </div>
 
@@ -130,19 +130,19 @@ export const ToastMessage = {
             id="info"
             expires={Date.now() + 5_000}
             type='info'
-            content={(<Typography.Text>Info toast</Typography.Text>)}
+            content={(<Typography type="text">Info toast</Typography>)}
           />
           <ToastMessageComponent
             id="success"
             expires={Date.now() + 10_000}
             type='success'
-            content={(<Typography.Text>Success toast</Typography.Text>)}
+            content={(<Typography type="text">Success toast</Typography>)}
           />
           <ToastMessageComponent
             id="warning"
             expires={Date.now() + 15_000}
             type='warning'
-            content={(<Typography.Text>Warning toast</Typography.Text>)}
+            content={(<Typography type="text">Warning toast</Typography>)}
           />
         </div>
       </div>

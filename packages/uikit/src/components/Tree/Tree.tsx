@@ -105,7 +105,7 @@ function TreeItem({ item, onClick, defaultOpen }: TreeItemProps) {
         <svg className={svgClasses} viewBox="0 0 24 24">
           <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
         </svg>
-        <Typography.Text>{item.label}</Typography.Text>
+        <Typography type="text">{item.label}</Typography>
       </div>
       <div className={childClasses} >
         {item.children?.map(childItem => (

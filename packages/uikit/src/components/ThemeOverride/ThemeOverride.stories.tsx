@@ -36,7 +36,7 @@ const colors = (
     <ButtonBar>
       <Button variant='danger'>danger button (bg-red-500/600/700)</Button>
       <div className='border-2 rounded-md px-2 border-neutral-500'>
-        <Typography.Text>border-neutral-500</Typography.Text>
+        <Typography type="text">border-neutral-500</Typography>
       </div>
       <div className='rounded-sm border border-black bg-white px-2 py-0.5'>
         <span className='text-cyan-500'>border-black bg-white div {'>'} cyan-500 span</span>
@@ -78,9 +78,9 @@ export const ColorOverrideExample: Story = {
   render: function StoryComponent(args: ComponentProps<typeof ThemeOverride>) {
     return (
       <div className="flex flex-col space-y-2">
-        <Typography.Subtitle>Defaults - hover the colors to view the CSS class name:</Typography.Subtitle>
+        <Typography type="subtitle">Defaults - hover the colors to view the CSS class name:</Typography>
         {colors}
-        <Typography.Subtitle>Override example:</Typography.Subtitle>
+        <Typography type="subtitle">Override example:</Typography>
         <ThemeOverride {...args}>
           {colors}
         </ThemeOverride>

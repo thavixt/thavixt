@@ -39,15 +39,15 @@ export const Default: Story = {
 
     return (
       <div className="inline">
-        <Typography.Text>
+        <Typography type="text">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis eum quas voluptatem soluta, necessitatibus possimus reprehenderit enim totam consequuntur ipsa sapiente, dicta asperiores! Maiores quae quidem ut iusto ullam explicabo. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </Typography.Text>
+        </Typography>
         <Inplace onReplace={onReplace} replacement={<TextInput ref={ref} silent name='example' defaultValue={value} onEnter={v => setValue(v)} />}>
           {value}
         </Inplace>
-        <Typography.Text>
+        <Typography type="text">
           Similique odit incidunt iusto sint error impedit itaque alias nobis nesciunt facilis, repellat sunt quaerat odio, ratione voluptatum provident temporibus fuga ad.
-        </Typography.Text>
+        </Typography>
       </div>
     )
   },

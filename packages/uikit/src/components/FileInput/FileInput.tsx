@@ -123,9 +123,7 @@ export function FileInput(
         className,
       )}
     >
-      {<label htmlFor={id}>
-        <Typography.Label>{label}</Typography.Label>
-      </label>}
+      <Typography type="label" htmlFor={id}>{label}</Typography>
       <input
         ref={ref}
         accept={accept}
@@ -155,10 +153,10 @@ export function FileInput(
                       />
                     )}
                     <span className="FileInput__label">
-                      <Typography.Label>{file.name}</Typography.Label>
+                      <Typography type="label">{file.name}</Typography>
                     </span>
                     <span>
-                      <Typography.Label>{formatSize(file.size)}</Typography.Label>
+                      <Typography type="label">{formatSize(file.size)}</Typography>
                     </span>
                     <Icon
                       hidden={!interactive}

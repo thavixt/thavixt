@@ -97,14 +97,14 @@ export function Form({
     >
       <fieldset className={border ? 'Form--fieldset' : undefined} disabled={loading}>
         <legend>
-          <Typography.Label>{title}</Typography.Label>
+          <Typography type="label">{title}</Typography>
         </legend>
         <div className="Form--container">
           <div className="Form--content">{children}</div>
           {error ? (
-            <Typography.Body className={classNames("Form--error", disabled && "Form--error--disabled")}>
+            <Typography type="body" className={classNames("Form--error", disabled && "Form--error--disabled")}>
               {error}
-            </Typography.Body>
+            </Typography>
           ) : null}
           <ButtonBar className="Form--buttons" full>
             {onFormCancel ? (

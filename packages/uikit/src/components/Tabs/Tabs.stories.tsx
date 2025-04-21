@@ -14,10 +14,10 @@ const meta = {
     defaultTabIndex: 2,
     children: [
       <Tabs.Tab title='Tab 1'>
-        <Typography.Body>Content of the first tab.</Typography.Body>
+        <Typography type="body">Content of the first tab.</Typography>
       </Tabs.Tab>,
       <Tabs.Tab title="Second tab that has a much longer title">
-        <Typography.Body>So I guess you've already read the first tab?</Typography.Body>
+        <Typography type="body">So I guess you've already read the first tab?</Typography>
       </Tabs.Tab>,
       <Tabs.Tab title='Tab with Form'>
         <Form>

@@ -61,7 +61,7 @@ export function Tabs({ defaultTabIndex = 0, ref, children, ...props }: TabsProps
             onClick={() => setActiveTab(i)}
             title={tabTitle}
           >
-            <Typography.Text>{tabTitle}</Typography.Text>
+            <Typography type="text">{tabTitle}</Typography>
           </div>
         )
       })}

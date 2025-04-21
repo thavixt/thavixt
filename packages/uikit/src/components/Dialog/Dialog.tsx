@@ -108,9 +108,9 @@ export function Dialog({
         <div className={title ? 'Dialog--title' : 'Dialog--notitle'}>
           {title
             ? (
-              <Typography.Title className="Dialog--titletext">
+              <Typography type="title" className="Dialog--titletext">
                 {title}
-              </Typography.Title>
+              </Typography>
             )
             : null
           }

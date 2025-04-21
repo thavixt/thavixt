@@ -22,10 +22,10 @@ const meta = {
       <div>
         <ThemeSwitcher {...args} />
         <div className="flex flex-col py-8 px-16">
-          <Typography.Title>Title of this amazing article</Typography.Title>
-          <Typography.Body>
+          <Typography type="title">Title of this amazing article</Typography>
+          <Typography type="body">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste repellendus nemo sed aut temporibus. Tenetur quasi commodi eum vero! Et in accusantium quasi excepturi sint odit assumenda iure distinctio reiciendis earum veniam, officia voluptatem nemo aperiam reprehenderit fugiat ad veritatis porro ab culpa deleniti ipsa fuga illum. Magni magnam error obcaecati cum excepturi a. Natus quibusdam sed provident enim, ex earum odio vel nobis, dignissimos reprehenderit voluptatibus sequi nostrum minus et neque, doloribus consectetur quasi quo quos iusto nesciunt voluptate porro laudantium. Magnam harum, dolore corrupti nemo aperiam recusandae. Labore iure nam quaerat? Distinctio laudantium temporibus aspernatur earum iusto nesciunt?
-          </Typography.Body>
+          </Typography>
         </div>
       </div>
     )

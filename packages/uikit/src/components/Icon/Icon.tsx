@@ -19,12 +19,12 @@ export interface IconProps extends HTMLAttributes<HTMLDivElement> {
  */
 export function Icon({ height = 3, className, ...props }: IconProps): JSX.Element {
   return (
-    <div
+    <span
       data-testid="Icon"
       className={classNames('Icon', className, props.onClick && 'Icon--clickable')}
       {...props}
     >
       {createElement(IconList[props.type], { height })}
-    </div>
+    </span>
   );
 }

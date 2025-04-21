@@ -1,6 +1,6 @@
 .Link {
-  --default: var(--indigo-2);
-  --hover: var(--indigo-1);
+  --default: var(--blue-2);
+  --hover: var(--blue-1);
   --visited: var(--indigo-3);
   --current: var(--default);
 
@@ -14,7 +14,7 @@
   }
 
   &:visited {
-    --current: var(--visited);
+    --current: var(--hover);
   }
 
   border-bottom: 1px solid var(--current);

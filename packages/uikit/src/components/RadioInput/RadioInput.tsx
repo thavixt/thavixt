@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
 import "./RadioInput.css"
-import { T } from "../Typography/Typography";
+import { Typography } from "../Typography/Typography";
 
 export interface RadioInputProps extends Omit<CommonProps<HTMLFieldSetElement>, 'children' | 'onChange'> {
   defaultValue?: string;
@@ -71,9 +71,9 @@ function Radio({ name, value, checked, defaultChecked }: RadioProps) {
         name={name}
         type="radio"
       />
-      <T type="label" htmlFor={id}>
+      <Typography type="label" htmlFor={id}>
         {value}
-      </T>
+      </Typography>
     </div>
   )
 }

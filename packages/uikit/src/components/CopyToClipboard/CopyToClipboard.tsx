@@ -33,9 +33,9 @@ export function CopyToClipboard({ children, transform, title, onClick: providedO
 			onClick={onClick}
 			title={titleText}
 		>
-			<Typography.Text className="normal-case">
+			<Typography type="text" className="normal-case">
 				{children}
-			</Typography.Text>
+			</Typography>
 		</div>
 	)
 }

@@ -20,12 +20,12 @@ export function Quote({ children, className, by, link, ...props }: QuoteProps) {
 
   return (
     <blockquote className={containerClasses} {...props} cite={link}>
-      <Typography.Body className={quoteClasses}>
-        <Typography.Text className={quotationMarkClasses}>&#x00AB;{' '}</Typography.Text>
-        <Typography.Text>{children}</Typography.Text>
-        <Typography.Text className={quotationMarkClasses}>{' '}&#x00BB;</Typography.Text>
-      </Typography.Body>
-      <Typography.Body className={fromClasses}>
+      <Typography type="body" className={quoteClasses}>
+        <Typography type="text" className={quotationMarkClasses}>&#x00AB;{' '}</Typography>
+        <Typography type="text">{children}</Typography>
+        <Typography type="text" className={quotationMarkClasses}>{' '}&#x00BB;</Typography>
+      </Typography>
+      <Typography type="body" className={fromClasses}>
         <address>
           {link ? (
             <Link href={link}>— {by}</Link>
@@ -33,7 +33,7 @@ export function Quote({ children, className, by, link, ...props }: QuoteProps) {
             <span>— {by}</span>
           )}
         </address>
-      </Typography.Body>
+      </Typography>
     </blockquote>
   )
 }

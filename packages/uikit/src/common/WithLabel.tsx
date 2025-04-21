@@ -34,10 +34,10 @@ export function Label({ children, id, required }: PropsWithChildren<LabelProps>)
 
   return (
     <label className="min-w-32" htmlFor={id} title={typeof children === 'string' ? children : undefined}>
-      <Typography.Label>
+      <Typography type="label">
         {required ? <span className="text-red-500">{'* '}</span> : ''}
         {children}:
-      </Typography.Label>
+      </Typography>
     </label>
   )
 }
