@@ -28,15 +28,15 @@
   --slate-4: rgb(40, 63, 88);
   --slate-5: rgb(22, 40, 59);
 
-  --green-1: rgb(128, 229, 128);
-  --green-2: rgb(46, 211, 46);
-  --green-3: rgb(40, 156, 40);
-  --indigo-1: rgb(132, 116, 252);
-  --indigo-2: rgb(79, 57, 246);
-  --indigo-3: rgb(83, 17, 204);
-  --red-1: rgb(241, 78, 86);
-  --red-2: rgb(251, 44, 54);
-  --red-3: rgb(211, 4, 14);
+  --green-1: rgb(90, 223, 90);
+  --green-2: rgb(51, 180, 51);
+  --green-3: rgb(22, 143, 22);
+  --indigo-1: rgb(113, 96, 241);
+  --indigo-2: rgb(65, 45, 219);
+  --indigo-3: rgb(69, 15, 170);
+  --red-1: rgb(243, 90, 98);
+  --red-2: rgb(228, 56, 65);
+  --red-3: rgb(189, 27, 35);
 }
 
 .themedText {

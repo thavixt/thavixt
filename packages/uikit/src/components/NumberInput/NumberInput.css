@@ -1,0 +1,13 @@
+.NumberInput {
+  text-align: center;
+  width: 100px;
+  
+  background: var(--white);
+  outline: 2px solid var(--gray-2);
+  border-radius: 4px;
+  
+  [data-theme=dark] & {
+    background: var(--gray-4);
+    color: var(--white);
+  }
+}

@@ -17,6 +17,12 @@ const meta = {
     type: 'card',
     size: 'sm',
   },
+  argTypes: {
+    type: {
+      options: ['card', 'paper'],
+      control: { type: 'radio' },
+    },
+  },
   render: function StoryComponent(args: ComponentProps<typeof Box>) {
     return (
       <Box {...args}>

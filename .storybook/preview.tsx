@@ -24,6 +24,7 @@ const preview: Preview = {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
+        radio: /(type|variant)$/i,
       },
     },
     chromatic: {

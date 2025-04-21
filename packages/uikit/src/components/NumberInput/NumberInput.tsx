@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { CommonProps } from "../../common/commonProps";
 import { WithLabel } from "../../common/WithLabel";
+import "./NumberInput.css";
 
 export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'children' | 'onChange'> {
   value?: number;
@@ -18,10 +19,7 @@ export interface NumberInputProps extends Omit<CommonProps<HTMLInputElement>, 'c
 
 export function NumberInput({ ref, required, name, label, min, max, onChange: providedOnChange, inline, ...props }: NumberInputProps) {
   const id = `${crypto.randomUUID().slice(0, 4)}_${name}-number`;
-  const classes = classNames(
-    'themedInput themedBorder rounded-sm text-center w-24',
-    props.className,
-  );
+  const classes = classNames("NumberInput", props.className);
 
   const contrainValue = (value: string | number) => {
     let result = +value;

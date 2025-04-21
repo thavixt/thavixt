@@ -6,7 +6,9 @@
   background-color: var(--bg);
   border-radius: 8px;
   /* box-shadow: 1px 2px 4px 0px var(--shadow); */
-  color: var(--white);
+  & .Typography {
+    color: var(--white);
+  }
   cursor: pointer;
   height: fit-content;
   min-width: 16px;
@@ -26,7 +28,9 @@
 }
 
 .Button--default {
-  color: var(--gray-4);
+  & .Typography {
+    color: var(--gray-5);
+  }
 }
 .Button--primary {
   --bg: var(--green-2);
@@ -43,17 +47,18 @@
 .Button--silent {
   --bg: transparent;
   --hover-bg: var(--gray-1);
-  /* box-shadow: none; */
-  color: var(--gray-4);
-  /* text-decoration-line: underline; */
-
-  &:hover {
-    color: var(--gray-4);
+  
+  & .Typography {
+    color: var(--gray-5);
   }
-  [data-theme=dark] & {
+
+  &:hover .Typography {
+    color: var(--gray-5);
+  }
+  [data-theme=dark] & .Typography {
     color: var(--white);
     &:hover {
-      color: var(--gray-4);
+      color: var(--gray-5);
     }
   }
 }

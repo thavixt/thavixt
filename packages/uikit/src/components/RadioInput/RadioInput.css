@@ -1,0 +1,21 @@
+.RadioInput {
+  width: fit-content;
+  display: grid;
+  grid-column: minmax(106px, auto) auto;
+
+}
+
+.RadioInput .RadioList {
+  display: flex;
+  flex-direction: column;
+}
+
+.RadioInput .RadioWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.RadioInput .Radio {
+  cursor: pointer;
+}
