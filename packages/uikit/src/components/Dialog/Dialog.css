@@ -16,7 +16,7 @@
   }
   to {
     opacity: 0;
-    scale: 0.9;
+    scale: 0.8;
   }
 }
 
@@ -36,9 +36,9 @@
   &[open] {
     animation: open 250ms forwards;
 
-    &::backdrop {
+    /* &::backdrop {
       backdrop-filter: blur(4px) opacity(50) grayscale(0.75) brightness(50%);
-    }
+    } */
   }
 
   [data-theme=dark] & {
