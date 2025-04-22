@@ -26,6 +26,7 @@ export function AccordionGroup({ children, defaultOpen = -1, onOpen: onOpened }:
       {accordions.map((c, i) => (
         <AccordionBase
           key={`accordiongroup-${i}`}
+          data-testid={`AccordionGroup-${i}`}
           groupItem
           onOpen={onOpen(i)}
           open={i === openIndex}

@@ -3,7 +3,8 @@ import { AccordionGroup } from './AccordionGroup';
 import { Typography } from '../Typography/Typography';
 import { ComponentProps } from 'react';
 import { Accordion } from '../Accordion/Accordion';
-import { fn } from '@storybook/test';
+import { userEvent, within, expect, fn } from '@storybook/test';
+import { sleep } from '../../common/utils';
 
 const meta = {
   title: 'Layout/Accordion group',
@@ -53,7 +54,26 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.queryByTestId('AccordionGroup-0')).toBeVisible();
+    expect(canvas.queryByTestId('AccordionGroup-1')).toBeVisible();
+    expect(canvas.queryByTestId('AccordionGroup-2')).toBeVisible();
+    expect(document.querySelector('[data-testid=AccordionGroup-1] [data-testid=AccordionTitle]')).toBeInTheDocument();
+    expect(document.querySelector('[data-testid=AccordionGroup-1] [data-testid=AccordionOpenTitle]')).not.toBeInTheDocument();
+    
+    userEvent.click(document.querySelector('[data-testid=AccordionGroup-1] [data-testid=AccordionTitle]') as HTMLElement);
+    await sleep(500);
+    expect(document.querySelector('[data-testid=AccordionGroup-1] [data-testid=AccordionTitle]')).not.toBeInTheDocument();
+    expect(document.querySelector('[data-testid=AccordionGroup-1] [data-testid=AccordionOpenTitle]')).toBeInTheDocument();
+    
+    userEvent.click(document.querySelector('[data-testid=AccordionGroup-1] [data-testid=AccordionOpenTitle]') as HTMLElement);
+    await sleep(500);
+    expect(document.querySelector('[data-testid=AccordionGroup-1] [data-testid=AccordionTitle]')).toBeInTheDocument();
+    expect(document.querySelector('[data-testid=AccordionGroup-1] [data-testid=AccordionOpenTitle]')).not.toBeInTheDocument();
+  },
+};
 
 export const DefaultOpen: Story = {
   args: {

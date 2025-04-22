@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Accordion } from './Accordion';
-import { fn } from '@storybook/test';
 import { Typography } from '../Typography/Typography';
 import { ComponentProps } from 'react';
+import { userEvent, within, expect, fn } from '@storybook/test';
+import { sleep } from '../../common/utils';
 
 const meta = {
   title: 'Layout/Accordion',
@@ -34,10 +35,24 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByTestId('AccordionTitle')).toBeVisible();
+    expect(canvas.queryByTestId('AccordionOpenTitle')).not.toBeInTheDocument();
+    userEvent.click(canvas.getByTestId('AccordionTitle'));
+    await sleep(500);
+    expect(canvas.queryByTestId('AccordionTitle')).not.toBeInTheDocument();
+    expect(canvas.getByTestId('AccordionOpenTitle')).toBeVisible();
+    userEvent.click(canvas.getByTestId('AccordionOpenTitle'));
+    await sleep(250);
+    expect(canvas.getByTestId('AccordionTitle')).toBeVisible();
+    expect(canvas.queryByTestId('AccordionOpenTitle')).not.toBeInTheDocument();
+  },
+};
 
 export const DefaultOpen: Story = {
   args: {
     defaultOpen: true,
-  }
+  },
 };

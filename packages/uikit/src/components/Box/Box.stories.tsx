@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Box } from './Box';
-import { Typography as T } from '../Typography/Typography';
+import { Typography } from '../Typography/Typography';
 import { ComponentProps } from 'react';
 import { Form } from '../Form/Form';
 import { onSubmit } from '../utils';
@@ -27,11 +27,11 @@ const meta = {
     return (
       <Box {...args}>
         <Box.Content>
-          <T.Text>
+          <Typography type='text'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
-          </T.Text>
+          </Typography>
         </Box.Content>
       </Box>
     )
@@ -62,18 +62,18 @@ export const Segmented: Story = {
     return (
       <Box {...args}>
         <Box.Header>
-          <T.Title>Header</T.Title>
+          <Typography type='title'>Header</Typography>
         </Box.Header>
         <Box.Content>
-          <T.Text>
+          <Typography type='text'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, recusandae.
-          </T.Text>
+          </Typography>
         </Box.Content>
         <Box.Footer>
-          <T.Text>Footer1</T.Text>
-          <T.Text>Footer2</T.Text>
+          <Typography type='text'>Footer1</Typography>
+          <Typography type='text'>Footer2</Typography>
         </Box.Footer>
       </Box>
     )
@@ -86,15 +86,15 @@ export const Example: Story = {
     return (
       <Box {...args}>
         <Box.Header>
-          <T.Title>Registering your pet</T.Title>
+          <Typography type='title'>Registering your pet</Typography>
         </Box.Header>
         <Box.Content>
-          <T.Caption>
+          <Typography type='caption'>
             Required by the government in your state.
-          </T.Caption>
-          <T.Body>
+          </Typography>
+          <Typography type='body'>
             Please provide the needed information about your pet. This assumes you currently keep the aformentioned animal in your place of residence.
-          </T.Body>
+          </Typography>
           <Form onSubmit={onSubmit}>
             <TextInput inline required label="Name" name='other' placeholder="Your pet's name" />
             <NumberInput inline required defaultValue={2} label='Age' name='age' placeholder='#' />

@@ -65,17 +65,16 @@ export function AccordionBase({
       )}
       {...props}
     >
-      <div className="AccordionHeader" data-testid="AccordionHeader" onClick={onClick}>
+      <div data-testid="AccordionHeader" className="AccordionHeader" onClick={onClick}>
         <Icon className="Accordion__svg" type="Caret" />
         <div
           data-testid={open ? 'AccordionOpenTitle' : 'AccordionTitle'}
           className={open ? 'AccordionOpenTitle' : 'AccordionTitle'}
-          {...props}
         >
           {open ? openTitle ?? title : title}
         </div>
       </div>
-      <AccordionBody open>{children}</AccordionBody>
+      <AccordionBody open={open}>{children}</AccordionBody>
     </div>
   )
 }
