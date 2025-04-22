@@ -55,24 +55,20 @@ interface RadioProps {
   value: string;
 }
 
-function Radio({ name, value, checked, defaultChecked }: RadioProps) {
-  const id = `${name}_${value}-radio`;
+function Radio({ ...props }: RadioProps) {
+  const id = `${name}_${props.value}-radio`;
 
   // TODO: tabindex, accessibility
   return (
     <div className='RadioWrapper'>
       <input
-        tabIndex={0}
-        checked={checked}
-        className='Radio'
-        data-testid={`RadioInput_${value}`}
-        defaultChecked={defaultChecked}
+        data-testid={`RadioInput_${props.value}`}
         id={id}
-        name={name}
         type="radio"
+        {...props}
       />
       <Typography type="label" htmlFor={id}>
-        {value}
+        {props.value}
       </Typography>
     </div>
   )

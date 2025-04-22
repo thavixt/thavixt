@@ -56,6 +56,8 @@ export const Default: Story = {
       const onClick = (toastId: string) => {
         setLastClickedToastId(toastId);
       };
+      console.log(values);
+      console.log(type);
       createToast({ content, duration, type, id, onClick });
       setCount(count + 1);
     };
@@ -130,19 +132,19 @@ export const ToastMessage = {
             id="info"
             expires={Date.now() + 5_000}
             type='info'
-            content={(<Typography type="text">Info toast</Typography>)}
+            content={(<Typography type="text">Info toast with timer</Typography>)}
           />
           <ToastMessageComponent
             id="success"
             expires={Date.now() + 10_000}
             type='success'
-            content={(<Typography type="text">Success toast</Typography>)}
+            content={(<Typography type="text">Success toast with timer</Typography>)}
           />
           <ToastMessageComponent
             id="warning"
             expires={Date.now() + 15_000}
             type='warning'
-            content={(<Typography type="text">Warning toast</Typography>)}
+            content={(<Typography type="text">Warning toast with timer</Typography>)}
           />
         </div>
       </div>
