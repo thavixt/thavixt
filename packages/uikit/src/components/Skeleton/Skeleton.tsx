@@ -9,6 +9,27 @@ export interface SkeletonProps extends CommonProps<HTMLDivElement> {
   delay?: number,
 };
 
+/**
+ * A React component that renders a skeleton placeholder until the actual content is loaded.
+ * The content is loaded asynchronously when the component becomes visible in the viewport.
+ * Check the `Loader Example` story for an example usage.
+ *
+ * @param {SkeletonProps} props - The props for the Skeleton component.
+ * @param {number} [props.delay=300] - The delay in milliseconds before marking the component as visible.
+ * @param {React.ReactNode} [props.placeholder] - The placeholder content to display while loading.
+ * @param {() => Promise<React.ReactElement>} props.onLoad - A function that asynchronously loads the content to display.
+ *
+ * @returns {React.ReactElement} The skeleton placeholder or the loaded content.
+ *
+ * @example
+ * ```tsx
+ * <Skeleton
+ *   delay={500}
+ *   placeholder={<div>Loading...</div>}
+ *   onLoad={async () => <div>Loaded Content</div>}
+ * />
+ * ```
+ */
 export function Skeleton({ delay = 300, placeholder, onLoad }: SkeletonProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -81,6 +102,7 @@ export function SkeletonRow({ className = 'w-full' }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
+      data-testid="SkeletonRow"
       className={classNames('h-2 rounded-lg py-1 bg-slate-400 transition animate-pulse', className)}
     />
   )
@@ -88,25 +110,41 @@ export function SkeletonRow({ className = 'w-full' }: { className?: string }) {
 
 export function SkeletonRectangle({ className = 'h-24 w-48' }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={classNames('rounded-lg p-1 bg-slate-400 transition animate-pulse', className)} />
+    <div
+      aria-hidden="true"
+      data-testid="SkeletonRectangle"
+      className={classNames('rounded-lg p-1 bg-slate-400 transition animate-pulse', className)}
+    />
   )
 }
 
 export function SkeletonSquare({ className = 'h-24 w-24' }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={classNames('rounded-lg p-1 bg-slate-400 transition animate-pulse', className)} />
+    <div
+      aria-hidden="true"
+      data-testid="SkeletonSquare"
+      className={classNames('rounded-lg p-1 bg-slate-400 transition animate-pulse', className)}
+    />
   )
 }
 
 export function SkeletonCircle({ className = 'size-12' }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={classNames('rounded-[50%] bg-slate-400 transition animate-pulse', className)} />
+    <div
+      aria-hidden="true"
+      data-testid="SkeletonCircle"
+      className={classNames('rounded-[50%] bg-slate-400 transition animate-pulse', className)}
+    />
   )
 }
 
 export function SkeletonListItem({ className = 'size-12' }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={classNames('flex space-x-4 w-full', className)}>
+    <div
+      data-testid="SkeletonListItem"
+      aria-hidden="true"
+      className={classNames('flex space-x-4 w-full', className)}
+    >
       <div className="size-fit">
         <SkeletonCircle />
       </div>

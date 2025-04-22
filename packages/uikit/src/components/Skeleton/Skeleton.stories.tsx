@@ -1,26 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { Skeleton, SkeletonCircle, SkeletonListItem, SkeletonRectangle, SkeletonRow, SkeletonSquare } from './Skeleton';
 import { ComponentProps, useState } from 'react';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography/Typography';
+import { userEvent, within, expect, fn } from '@storybook/test';
+import { sleep } from '../../common/utils';
 
 const meta = {
   title: 'Layout/Skeleton',
   component: Skeleton,
   tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component: '`<Skeleton>` is a placeholder to display while the actual content is being fetched. When the content appears in the viewport (detected with an `IntersectionObserver`), the `onLoad` argument is called, and its return value replaces the original child elements after `delay` ms.',
-      },
-    },
-  },
   args: {
     children: undefined,
     delay: 300,
     onLoad: fn(async () => {
-      return <Typography type="body">Fetched content goes here</Typography>
+      return <Typography data-testid="StoryReplacedContent" type="body">Fetched content goes here</Typography>
     }),
   },
 } satisfies Meta<typeof Skeleton>;
@@ -29,15 +23,35 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Variants = {
+  render: function StoryComponent() {
+    return (
+      <div className='grid grid-cols-[1fr_3fr] gap-4'>
+        SkeletonListItem
+        <SkeletonListItem />
+        SkeletonCircle
+        <SkeletonCircle />
+        SkeletonRectangle
+        <SkeletonRectangle />
+        SkeletonRow
+        <SkeletonRow />
+        SkeletonSquare
+        <SkeletonSquare />
+      </div>
+    )
+  },
+};
+
+export const LoaderExample: Story = {
   render: function StoryComponent({ onLoad, ...args }: ComponentProps<typeof Skeleton>) {
     const [loaded, setLoaded] = useState(false);
     const [key, setKey] = useState(0);
     return (
-      <div className='flex flex-col justify-between h-[120dvh] p-4'>
+      <div data-testid="StoryWrapper" className='flex flex-col justify-between h-[150dvh] p-4'>
         <div>
           <Typography type="body">{loaded ? 'Already loaded' : 'Scroll to the bottom'}</Typography>
           <Button
+            data-testid="StoryResetButton"
             onClick={() => {
               setLoaded(false);
               setKey(prev => prev + 1);
@@ -74,55 +88,18 @@ export const Default: Story = {
       </div>
     )
   },
-};
-
-export const ListItem = {
-  render: function StoryComponent() {
-    return (
-      <div>
-        <SkeletonListItem />
-      </div>
-    )
-  },
-};
-
-export const Circle = {
-  render: function StoryComponent() {
-    return (
-      <div>
-        <SkeletonCircle />
-      </div>
-    )
-  },
-};
-
-
-export const Rectangle: Story = {
-  render: function StoryComponent() {
-    return (
-      <div>
-        <SkeletonRectangle />
-      </div>
-    )
-  },
-};
-
-export const Row: Story = {
-  render: function StoryComponent() {
-    return (
-      <div>
-        <SkeletonRow />
-      </div>
-    )
-  },
-};
-
-export const Square: Story = {
-  render: function StoryComponent() {
-    return (
-      <div>
-        <SkeletonSquare />
-      </div>
-    )
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByTestId('Skeleton')).toBeVisible();
+    expect(canvas.queryByTestId('StoryReplacedContent')).not.toBeInTheDocument();
+    (canvas.getByTestId('Skeleton') as HTMLElement).scrollIntoView({behavior: 'smooth'});
+    await sleep(1000);
+    expect(canvas.queryByTestId('Skeleton')).not.toBeInTheDocument();
+    expect(canvas.getByTestId('StoryReplacedContent')).toBeVisible();
+    await sleep(250);
+    userEvent.click(canvas.getByTestId('StoryResetButton'));
+    await sleep(250);
+    expect(canvas.getByTestId('Skeleton')).toBeVisible();
+    expect(canvas.queryByTestId('StoryReplacedContent')).not.toBeInTheDocument();
   },
 };
