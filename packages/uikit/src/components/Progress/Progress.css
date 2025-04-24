@@ -1,0 +1,47 @@
+.Progress {
+  /* defined in the react component props */
+  /* --barHeight: 20px; */
+  align-items: center;
+  width: 100%;
+
+  display: grid;
+  column-gap: 0.5rem;
+  row-gap: 0.25rem;
+  grid-template-columns: 1fr;
+
+  &.Progress--inline {
+    grid-template-columns: auto 1fr;
+  }
+}
+
+.Progress__wrapper {
+  display: flex;
+  border-radius: 9999px;
+  width: 100%;
+  height: var(--barHeight);
+  background-color: var(--gray-1);
+}
+
+.Progress__label {
+  font-size: 0.75rem;
+  line-height: calc(var(--barHeight) - 1px);
+
+  &.Progress--labelOutside {
+    color: var(--gray-4);
+    margin-left: 0.25rem;
+  }
+}
+
+.Progress__bar {
+  display: flex;
+  justify-content: center;
+  border-radius: 9999px;
+  height: var(--barHeight);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 250ms;
+
+  & .Progress--labelInside {
+    color: var(--white);
+  }
+}
