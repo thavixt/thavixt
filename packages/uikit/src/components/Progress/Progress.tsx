@@ -5,7 +5,7 @@ import { Typography } from "../Typography/Typography";
 import { useResizeObserver } from "../../common/useResizeObserver";
 import "./Progress.css";
 
-interface ProgressProps extends CommonProps<HTMLProgressElement> {
+export interface ProgressProps extends CommonProps<HTMLProgressElement> {
   /** Current value */
   current: number;
   /** Max value */
