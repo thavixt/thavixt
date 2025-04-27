@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import { RefObject, useContext, useMemo } from "react";
+import { JSX, RefObject, useContext, useMemo } from "react";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
-import { DataKey, TABLE_CONTAINER_CLASSES, CONTAINER_CLASSES_DATATABLE, TABLE_CLASSES_DATATABLE, TableDataRow } from "./common";
+import { DataKey, TABLE_CONTAINER_CLASSES, SCROLLCONTAINER_CLASSES_DATATABLE, TABLE_CLASSES_DATATABLE, TableDataRow } from "./common";
 import { TableBody } from "./TableBody";
 import { TableHeader } from "./TableHeader";
 import { TableContext, TableContextProvider } from "./TableContext";
@@ -13,12 +13,19 @@ interface StaticDataTableProps<T> {
 }
 
 export interface DataTableProps<T extends TableDataRow> extends StaticDataTableProps<T> {
-  columns: Record<DataKey, string>;
+  columns: Record<DataKey, {name: string, width: string | number}>;
   defaultSortBy?: DataKey;
   placeholder?: string;
   primaryKey: DataKey;
 };
 
+/**
+ * A light-weight, generic DataTable component that provides a table structure with sorting.
+ *
+ * @template T - The type of the table data row, extending the `TableDataRow` interface.
+ *
+ * @returns {JSX.Element} The rendered DataTable component wrapped in a `TableContextProvider`.
+ */
 export function DataTable<T extends TableDataRow>({
   ref,
   columns,
@@ -26,7 +33,7 @@ export function DataTable<T extends TableDataRow>({
   placeholder = '-',
   primaryKey,
   ...staticTableProps
-}: DataTableProps<T>) {
+}: DataTableProps<T>): JSX.Element {
 
   return (
     <TableContextProvider value={{
@@ -67,7 +74,7 @@ function TableContent<T extends TableDataRow>({
   }, [data, sortBy, sortDirection]);
 
   return (
-    <Scrollbar data-testid="DataTable" className={classNames(CONTAINER_CLASSES_DATATABLE, className)}>
+    <Scrollbar data-testid="DataTable" className={classNames(SCROLLCONTAINER_CLASSES_DATATABLE, className)}>
       <div className={TABLE_CONTAINER_CLASSES} role="rowgroup">
         <table ref={ref} className={TABLE_CLASSES_DATATABLE} role="grid">
           <TableHeader />

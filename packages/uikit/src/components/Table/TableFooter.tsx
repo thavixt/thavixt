@@ -41,10 +41,13 @@ export function TableFooter({
           <td className={TFOOTTD_CLASSES} colSpan={checkable ? 2 : 1}>
             <div className="max-w-48">
               <TextInput
+                data-testid="TableSearchInput"
+                id="tableSearchInput"
                 disabled={loading}
                 placeholder={searchPlaceholder}
                 name="search"
                 onChange={setSearchTerm}
+                type="search"
               />
             </div>
           </td>
@@ -54,6 +57,7 @@ export function TableFooter({
             <div className="flex justify-end items-center">
               <Button
                 title="Previous page"
+                data-testid="TablePreviousPage"
                 className={classNames(BUTTON_CLASSES)}
                 onClick={onPrevPage}
                 disabled={!hasPrevPage}
@@ -61,6 +65,7 @@ export function TableFooter({
                 icon={{ type: 'Arrow', className: 'rotate-180' }}
               />
               <span
+                data-testid="TableCurrentPage"
                 title="Current page"
                 className="text-xs text-center min-w-24">
                 <span>
@@ -70,6 +75,7 @@ export function TableFooter({
               </span>
               <Button
                 title="Next page"
+                data-testid="TableNextPage"
                 className={BUTTON_CLASSES}
                 onClick={onNextPage}
                 disabled={!hasNextPage}

@@ -10,7 +10,7 @@ export interface InplaceProps extends PropsWithChildren<CommonProps<HTMLDivEleme
 };
 
 export function Inplace(
-  { children = 'Click to replace.', className, replacement, onReplace, ref }: InplaceProps
+  { children = 'Click to replace.', className, replacement, onReplace, ref, ...props }: InplaceProps
 ) {
   const [replaced, setReplaced] = useState(false);
 
@@ -26,20 +26,17 @@ export function Inplace(
 
   return (
     <div
+      onBlurCapture={onBlur}
       ref={ref}
       data-testid="Inplace"
       className={classNames('Inplace', className)}
+      {...props}
     >
-      {replaced ? null : (
+      {replaced ? replacement : (
         <Typography type="text" className="Inplace__text" onClick={onClick}>
           {children}
         </Typography>
       )}
-      {replaced ? (
-        <div className="Inplace__replacement" onBlur={onBlur}>
-          {replacement}
-        </div>
-      ) : null}
     </div>
   )
 }

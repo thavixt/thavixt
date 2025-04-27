@@ -22,10 +22,8 @@ export interface TextInputProps extends Omit<CommonProps<HTMLInputElement | HTML
 
 export function TextInput({
   silent,
-  disabled,
   label,
-  name,
-  readonly,
+  id = `textinput-${crypto.randomUUID().slice(0, 4)}`,
   ref,
   required,
   type = 'text',
@@ -56,21 +54,14 @@ export function TextInput({
     }
   }
 
-  const id = `${name}-text`;
-
   return (
     <WithLabel data-testid="TextInput" label={label} id={id} required={required} inline={inline}>
       {['text', 'search'].includes(type) ? (
         <input
           ref={ref as RefObject<HTMLInputElement>}
-          id={id}
           className={classes}
-          name={name}
-          type={type}
+          id={id}
           onChange={onChange}
-          required={required}
-          disabled={disabled}
-          readOnly={readonly}
           onKeyDown={onKeyDown}
           {...props}
         />
@@ -78,13 +69,8 @@ export function TextInput({
         <textarea
           ref={ref as RefObject<HTMLTextAreaElement>}
           id={id}
-          className={classes}
-          name={name}
           onChange={onChange}
-          required={required}
           rows={3}
-          disabled={disabled}
-          readOnly={readonly}
           onKeyDown={onKeyDown}
           {...props}
         />

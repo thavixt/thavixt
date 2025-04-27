@@ -131,7 +131,7 @@ export function usePagination<T>(
           setInitialLoad(false);
           setError(error as Error);
           setIsLoading(false);
-          console.error('Loading initial page failed.', error);
+          console.error('Loading <Table> initial page failed.', error);
         }
       }
     })();

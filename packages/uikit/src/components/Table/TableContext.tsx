@@ -3,7 +3,7 @@ import { DataKey, SortDirection } from "./common";
 
 interface TableContextProps {
   checkable: boolean;
-  columns: Record<DataKey, string>;
+  columns: Record<DataKey, {name: string, width: string | number}>;
   emptyText: string;
   errorText: string;
   loadingText: string;
@@ -12,6 +12,8 @@ interface TableContextProps {
   search: boolean;
   searchPlaceholder: string;
   sortBy: DataKey;
+  virtualized: boolean;
+  rowHeight: number;
   
   checked: Set<DataKey>,
   error: Error | null;
@@ -35,6 +37,8 @@ export const TableContext = createContext<TableContextType>({
   primaryKey: '',
   search: false,
   searchPlaceholder: '',
+  virtualized: false,
+  rowHeight: 44,
 
   sortBy: '',
   setSortBy: () => { },
@@ -65,6 +69,8 @@ export function TableContextProvider({
     searchPlaceholder = "Search rows",
     sortBy: defaultSortBy,
     sortDirection: defaultSortDirection,
+    virtualized = false,
+    rowHeight = 44,
   }
 }: PropsWithChildren<{ value: Partial<TableContextProps> }>) {
   const [sortBy, setSortBy] = useState<DataKey>(defaultSortBy ?? primaryKey);
@@ -87,6 +93,8 @@ export function TableContextProvider({
       searchPlaceholder,
       sortBy,
       sortDirection,
+      rowHeight,
+      virtualized,
       setChecked,
       setError,
       setSortBy,

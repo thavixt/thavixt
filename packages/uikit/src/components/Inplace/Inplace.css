@@ -1,14 +1,13 @@
 .Inplace {
-  display: inline-flex;
+  display: inline;
   padding: 0 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .Inplace__text {
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
-}
-
-.Inplace__replacement {
-  display: flex;
 }

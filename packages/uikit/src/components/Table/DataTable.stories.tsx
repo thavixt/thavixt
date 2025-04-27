@@ -8,7 +8,7 @@ const getMockData = (count: number, from = 0) => new Array(count).fill(mockData)
   return {
     ...row,
     key: `${i}`,
-    name: `IBM ${i % 2 ? 'Base Laptop' : 'Office PC'} ${i}`,
+    name: `IBM ${i % 2 ? 'Base Laptop' : 'Office PC'} ${i + 1}`,
     price: `$${(i % 10) * 100 + 199}`,
     year: i % 4 ? 2020 + i % 5 : undefined,
   }
@@ -21,9 +21,9 @@ const meta = {
   args: {
     data: getMockData(10),
     columns: {
-      name: 'Name',
-      year: 'Year',
-      price: 'Price',
+      name: { name: 'Name', width: '50%' },
+      year: { name: 'Year', width: '25%' },
+      price: { name: 'Price', width: '25%' },
     },
     primaryKey: 'name',
   },

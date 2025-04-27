@@ -1,12 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Table, TableHandle } from './Table';
 import { Button } from '../Button/Button';
-import { fn } from '@storybook/test';
 import { ComponentProps, useRef } from 'react';
+import { Inplace } from '../Inplace/Inplace';
+import { NumberInput } from '../NumberInput/NumberInput';
+import { TextInput } from '../TextInput/TextInput';
+import { RadioInput } from '../RadioInput/RadioInput';
+import { fn, userEvent, within, expect, waitForElementToBeRemoved } from '@storybook/test';
 import { sleep } from '../../common/utils';
 
 const mockData = { key: 'msi', name: 'Radium Power Office PC', category: 'Desktop PC', price: '$1999' };
-const getMockData = (count: number, from = 0) => new Array(count).fill(mockData).map((row, index) => {
+const getMockData = (count = 30, from = 0) => new Array(count).fill(mockData).map((row, index) => {
   const i = index + from;
   return {
     ...row,
@@ -48,17 +52,18 @@ const meta = {
       ...getMockData(27)
     ],
     columns: {
-      name: 'Name',
-      category: 'Category',
-      year: 'Year',
-      price: 'Price',
+      name: { name: 'Name', width: "35%" },
+      category: { name: 'Category', width: "20%" },
+      year: { name: 'Year', width: "20%" },
+      price: { name: 'Price', width: "20%" },
+      actions: { name: 'Row Actions', width: "15%" },
     },
     primaryKey: 'name',
     onSelect: fn(),
   },
   render: function StoryComponent(args: ComponentProps<typeof Table>) {
     return (
-      <div className="w-full h-[410px]">
+      <div className="h-[500px] w-full max-w-[900px]">
         <Table {...args} />
       </div>
     )
@@ -69,22 +74,107 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Basic: Story = {};
+
+// @TODO: optimize rendering
+// somewhere the 10k lines slow stuff down
+export const Editable10KRows: Story = {
   args: {
-    data: [
-      ...storyRows,
-      ...getMockData(10)
-    ],
-  }
+    data: getMockData(10000),
+    virtualized: true,
+    search: true,
+    renderCell: (key, row) => {
+      if (key === 'name') {
+        return <Inplace
+          title='Click to edit name'
+          replacement={
+            <TextInput
+              name='name'
+              defaultValue={row[key] as string}
+              onChange={value => console.log(`You changed the name from '${row[key]}' to '${value}'`)}
+            />
+          }
+        >
+          {row[key]}
+        </Inplace>;
+      }
+      if (key === 'category') {
+        return <Inplace
+          title='Click to edit category'
+          replacement={
+            <RadioInput
+              name='category'
+              inline
+              defaultValue={row[key] as string}
+              onChange={radio => console.log(`You changed the category from '${row[key]}' to '${radio}'`)}
+              values={['PC', 'Laptop']}
+            />
+          }
+        >
+          {row[key]}
+        </Inplace>;
+      }
+      if (key === 'year') {
+        return <Inplace
+          title='Click to edit year'
+          replacement={
+            <NumberInput
+              name='year'
+              defaultValue={parseInt(row[key] as string)}
+              onChange={value => console.log(`You changed the year from '${row[key]}' to '${value}'`)}
+            />
+          }
+        >
+          {row[key]}
+        </Inplace>;
+      }
+      if (key === 'price') {
+        return <Inplace
+          title='Click to edit price (uhmm...)'
+          replacement={
+            <NumberInput
+              name='price'
+              defaultValue={parseInt(row[key]?.toString().slice(1) as string)}
+              onChange={value => console.log(`You changed the price from '${row[key]}' to $'${value}'`)}
+            />
+          }
+        >
+          {row[key]}
+        </Inplace>;
+      }
+      return row[key];
+    }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await sleep(500);
+    expect(canvas.getByText('Radium Business Laptop 1')).toBeVisible();
+    expect(canvas.queryByText('Radium Power PC 9998')).not.toBeInTheDocument();
+    const scrollContainer = document.querySelector('[data-testid=Scrollbar]') as HTMLDivElement;
+    scrollContainer.scrollTo({top: scrollContainer.scrollHeight, behavior: 'smooth'});
+    await sleep(1000);
+    expect(canvas.getByText('Radium Power PC 9998')).toBeVisible();
+    scrollContainer.scrollTo({top: 0, behavior: 'smooth'});
+    await sleep(500);
+  },
 };
 
 export const Searchable: Story = {
   args: {
-    data: getMockData(10),
+    data: getMockData(100),
     defaultSortBy: 'price',
     search: true,
     searchPlaceholder: 'Search (ex: "399 laptop")'
-  }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const rowToSearch = 'Radium Power PC 12'
+    await userEvent.type(canvas.getByTestId('TableSearchInput'), rowToSearch);
+    await sleep(500);
+    expect(canvas.getByText(rowToSearch)).toBeVisible();
+    await userEvent.clear(canvas.getByTestId('TableSearchInput'));
+    await sleep(250);
+  },
 };
 
 export const Checkable: Story = {
@@ -109,7 +199,17 @@ export const Checkable: Story = {
         </div>
       </div>
     )
-  }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(document.querySelector('input[name="1"]') as HTMLInputElement);
+    await userEvent.click(document.querySelector('input[name="10"]') as HTMLInputElement);
+    await sleep(250);
+    await userEvent.click(canvas.getByTestId('TableCheckAll'));
+    await sleep(250);
+    await userEvent.click(canvas.getByTestId('TableCheckAll'));
+    await sleep(250);
+  },
 };
 
 export const LoadingState: Story = {
@@ -117,7 +217,12 @@ export const LoadingState: Story = {
     paginated: true,
     loading: true,
     loadingText: "Alright, I'll admit it - this will never finish loading",
-  }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await sleep(500);
+    await expect(canvas.getByTestId('TableLoaderRow')).toBeVisible();
+  },
 };
 
 export const EmptyState: Story = {
@@ -125,7 +230,12 @@ export const EmptyState: Story = {
     paginated: true,
     data: [],
     emptyText: "There's nothing to show at the moment. Perhaps having a backend to fetch data from would be cool!",
-  }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await sleep(500);
+    await expect(canvas.getByTestId('TableEmptyRow')).toBeVisible();
+  },
 };
 
 export const ErrorState: Story = {
@@ -139,13 +249,39 @@ export const ErrorState: Story = {
         "You might want to provide a default with the errorText prop of the <Table>."
       ].join("\n"));
     }),
-  }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const loader = canvas.queryByTestId('TableLoaderRow') as HTMLElement;
+    await waitForElementToBeRemoved(loader, {interval: 1000});
+    await sleep(250);
+    await expect(canvas.getByTestId('TableErrorRow')).toBeVisible();
+  },
 };
 
 export const Paginated: Story = {
   args: {
     paginated: true,
-  }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await sleep(250);
+    await expect(canvas.getByTestId('TableCurrentPage').innerText).toEqual('0 - 9 of 30');
+    await userEvent.click(canvas.getByTestId('TableNextPage'));
+    await expect(canvas.getByTestId('TableCurrentPage').innerText).toEqual('9 - 18 of 30');
+    await userEvent.click(canvas.getByTestId('TableNextPage'));
+    await expect(canvas.getByTestId('TableCurrentPage').innerText).toEqual('18 - 27 of 30');
+    await userEvent.click(canvas.getByTestId('TableNextPage'));
+    await expect(canvas.getByTestId('TableCurrentPage').innerText).toEqual('27 - 30 of 30');
+    await sleep(250);
+    await userEvent.click(canvas.getByTestId('TablePreviousPage'));
+    await expect(canvas.getByTestId('TableCurrentPage').innerText).toEqual('18 - 27 of 30');
+    await userEvent.click(canvas.getByTestId('TablePreviousPage'));
+    await expect(canvas.getByTestId('TableCurrentPage').innerText).toEqual('9 - 18 of 30');
+    await userEvent.click(canvas.getByTestId('TablePreviousPage'));
+    await expect(canvas.getByTestId('TableCurrentPage').innerText).toEqual('0 - 9 of 30');
+    await sleep(250);
+  },
 };
 
 export const PaginatedWithFixedPageSize: Story = {

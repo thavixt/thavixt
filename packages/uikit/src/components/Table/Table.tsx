@@ -1,15 +1,16 @@
 import classNames from "classnames";
-import { PropsWithChildren, ReactElement, RefObject, useCallback, useContext, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { JSX, PropsWithChildren, ReactElement, ReactNode, RefObject, useCallback, useContext, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { omitKey } from "../../common/utils";
 import { Scrollbar } from "../Scrollbar/Scrollbar";
 import { Loader } from "../Loader/Loader";
-import { DataKey, CONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES, OnPageHandler, PLACEHOLDER_TD_CLASSES, TableDataRow } from "./common";
+import { DataKey, SCROLLCONTAINER_CLASSES, TABLE_ROW_HEIGHT, TABLE_CONTAINER_CLASSES, TABLE_CLASSES, PLACEHOLDER_TR_CLASSES, OnPageHandler, PLACEHOLDER_TD_CLASSES, TableDataRow } from "./common";
 import { TableBody } from "./TableBody";
 import { TableFooter } from "./TableFooter";
 import { TableHeader } from "./TableHeader";
 import { getPagedData, hasNextPage, hasPrevPage } from "./utils";
 import { usePagination } from "./usePagination";
 import { TableContext, TableContextProvider } from "./TableContext";
+import "./Table.css";
 
 const MAX_COLSPAN = 99999;
 
@@ -21,8 +22,13 @@ export type TableHandle = RefObject<HTMLDivElement | null> & {
 }
 
 interface StaticTableProps<T> {
+  /** Table container classes */
   className?: string;
+  /** Table rows */
   data: Array<T>;
+  /** "Virtualize" table rows */
+  virtualized?: boolean;
+  /** Show loading state */
   loading?: boolean;
   /**
    * - `false | undefined` (default) has no pagination - all rows rendered, scroll if needed
@@ -30,28 +36,52 @@ interface StaticTableProps<T> {
    * - `number` sets a specific page size
    * */
   paginated?: number | boolean;
+  /** Table handle */
   ref?: RefObject<TableHandle | null>;
 
+  /** Table actions cell content */
   actions?: (dataKey: DataKey, row: T) => ReactElement;
   /** If provided, the content of next page and the currently known max page size should be returned */
   onPage?: OnPageHandler<T>;
+  /** Table check callback */
   onSelect?: (selectedDataKeys: DataKey[], data: T[]) => void;
+  /** Table cell renderer */
+  renderCell?: (column: DataKey, row: T) => ReactNode;
 }
 
 export interface TableProps<T extends TableDataRow> extends StaticTableProps<T> {
   /** Selectable - render a checkbox column at the start */
   checkable?: boolean;
-  columns: Record<DataKey, string>;
+  /** Table columns */
+  columns: Record<DataKey | 'actions', { name: string, width: string | number }>;
+  /** Sort rows by value */
   defaultSortBy?: DataKey;
+  /** Empty tabla placeholder */
   emptyText?: string;
+  /** Loader error message */
   errorText?: string;
+  /** Text to display while loading */
   loadingText?: string;
+  /** Cell placeholder text */
   placeholder?: string;
+  /** Primary row key */
   primaryKey: DataKey;
+  /** Search input placeholder text */
   searchPlaceholder?: string;
+  /** Allow search */
   search?: boolean;
+  /** Row size */
+  rowHeight?: number;
 };
 
+/**
+ * A generic Table component that provides a flexible and customizable table structure.
+ * It supports features like sorting, searching, pagination with loading, a virtualization-like solution, etc.
+ *
+ * @template T - The type of the data rows in the table.
+ *
+ * @returns {JSX.Element} The rendered Table component.
+ */
 export function Table<T extends TableDataRow>({
   ref,
 
@@ -65,9 +95,11 @@ export function Table<T extends TableDataRow>({
   primaryKey,
   search = false,
   searchPlaceholder = 'Search rows',
+  virtualized,
+  rowHeight = 44,
 
   ...staticTableProps
-}: TableProps<T>) {
+}: TableProps<T>): JSX.Element {
 
   return (
     <TableContextProvider value={{
@@ -81,6 +113,8 @@ export function Table<T extends TableDataRow>({
       search: search,
       searchPlaceholder: searchPlaceholder,
       sortBy: defaultSortBy ?? primaryKey,
+      virtualized: virtualized || false,
+      rowHeight: rowHeight,
     }}
     >
       <TableContent ref={ref} {...staticTableProps} />
@@ -97,8 +131,9 @@ function TableContent<T extends TableDataRow>({
   onSelect,
   paginated,
   ref,
+  renderCell,
 }: StaticTableProps<T>) {
-  const { checkable, checked, emptyText, loadingText, sortBy, sortDirection, setChecked } = useContext(TableContext);
+  const { checked, emptyText, loadingText, sortBy, sortDirection, setChecked, columns, virtualized } = useContext(TableContext);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
@@ -187,7 +222,7 @@ function TableContent<T extends TableDataRow>({
     const showEmptyText = !currentPageData.length;
     if (placeholderRowHeight) {
       rows.push(
-        <PlaceholderTR key="tabler_emptytext" height={placeholderRowHeight} checkable={checkable}>
+        <PlaceholderTR data-testid="TableEmptyRow" key="tabler_emptytext" height={placeholderRowHeight}>
           <div className={PLACEHOLDER_TD_CLASSES}>
             <span>{showEmptyText ? emptyText : ''}</span>
           </div>
@@ -195,25 +230,25 @@ function TableContent<T extends TableDataRow>({
       );
     }
     return rows;
-  }, [checkable, currentPageData.length, emptyText, placeholderRowHeight]);
+  }, [currentPageData.length, emptyText, placeholderRowHeight]);
 
   const loaderRow = useMemo(
-    () => <PlaceholderTR key="table_loadingtext" height={loaderRowHeight} checkable={checkable}>
+    () => <PlaceholderTR data-testid="TableLoaderRow" key="table_loadingtext" height={loaderRowHeight}>
       <div className={PLACEHOLDER_TD_CLASSES}>
         <span>{loadingText}</span>
         <Loader type="SpinningDots" height={8} />
       </div>
     </PlaceholderTR>,
-    [checkable, loaderRowHeight, loadingText],
+    [loaderRowHeight, loadingText],
   );
 
   const errorRow = useCallback(
-    (errorMessage: string) => <PlaceholderTR key="table_errortext" height={loaderRowHeight} checkable={checkable}>
+    (errorMessage: string) => <PlaceholderTR data-testid="TableErrorRow" key="table_errortext" height={loaderRowHeight}>
       <div className={PLACEHOLDER_TD_CLASSES}>
         <span>{errorMessage}</span>
       </div>
     </PlaceholderTR>,
-    [checkable, loaderRowHeight],
+    [loaderRowHeight],
   );
 
   useLayoutEffect(() => {
@@ -257,14 +292,18 @@ function TableContent<T extends TableDataRow>({
     [checked, currentPageData, tableData],
   );
 
+  const onRender = useCallback(() => setRenderCount(prev => prev + 1), []);
   const isLoading = loading || paginationLoading;
 
-  const onRender = useCallback(() => setRenderCount(prev => prev + 1), []);
-
   return (
-    <Scrollbar data-testid="Table" className={classNames(CONTAINER_CLASSES, className)}>
+    <Scrollbar data-testid="Table" className={classNames(SCROLLCONTAINER_CLASSES, className)}>
       <div ref={containerRef} className={classNames(TABLE_CONTAINER_CLASSES, { 'overflow-hidden': placeholderRowHeight > 0 })} role="rowgroup">
-        <table ref={tableRef} className={TABLE_CLASSES} role="grid">
+        <table ref={tableRef} className={classNames(TABLE_CLASSES, virtualized && 'Table--virtualized')} role="table">
+          <colgroup>
+            {Object.entries(columns).map(([key, col]) => (
+              <col key={key} span={1} width={typeof col === 'string' ? undefined : col.width} />
+            ))}
+          </colgroup>
           <TableHeader
             checkedSize={checked.size}
             dataLength={tableData.length}
@@ -279,6 +318,7 @@ function TableContent<T extends TableDataRow>({
             onCheck={handleRowCheck}
             placeholderRows={placeholderRows}
             rowActions={actions}
+            renderCell={renderCell}
           />
           <TableFooter
             onRender={onRender}
@@ -298,13 +338,14 @@ function TableContent<T extends TableDataRow>({
   );
 }
 
-function PlaceholderTR({ checkable, children, height }: PropsWithChildren<{ checkable?: boolean; height: number }>) {
+function PlaceholderTR({ children, height, ...props }: PropsWithChildren<{ height: number }>) {
   return (
     <tr
       className={PLACEHOLDER_TR_CLASSES}
       style={{ height }}
+      {...props}
     >
-      {checkable ? <td /> : null}
+      {/* {checkable ? <td /> : null} */}
       {children ? (<td colSpan={MAX_COLSPAN}><em>{children}</em></td>) : null}
     </tr>
   );

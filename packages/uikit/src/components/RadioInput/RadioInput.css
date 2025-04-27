@@ -3,19 +3,18 @@
   display: grid;
   grid-column: minmax(106px, auto) auto;
 
-}
+  .RadioInput__RadioList {
+    display: flex;
+    flex-direction: column;
 
-.RadioInput .RadioList {
-  display: flex;
-  flex-direction: column;
-}
+    .RadioWrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
 
-.RadioInput .RadioWrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.RadioInput .Radio {
-  cursor: pointer;
+  .Radio {
+    cursor: pointer;
+  }
 }
