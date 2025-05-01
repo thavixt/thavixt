@@ -1,0 +1,23 @@
+.Quote {
+  /* pass */
+}
+
+.Quote__text {
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-style: italic;
+  text-align: center;
+}
+
+.Quote__mark {
+  /* pass */
+}
+
+.Quote__from {
+  opacity: 0.6;
+  padding: 0.5rem 0;
+  text-align: right;
+}
+
+.Quote .Box__Footer {
+  justify-content: flex-end;
+}
