@@ -16,13 +16,13 @@ export function getSlotElements<T>(children: ReactNode, type: React.FC<T>) {
 }
 
 export function sortObjectByKeys<T extends Record<string, unknown>>(obj: T): T {
-  return Object.keys(obj).sort((a, b) => a.localeCompare(b, navigator.language, { numeric: true})).reduce((acc, cur) => ({
+  return Object.keys(obj).sort((a, b) => a.localeCompare(b, navigator.language, { numeric: true })).reduce((acc, cur) => ({
     ...acc,
     [cur]: obj[cur],
   }), {} as T);
 }
 
-export const noop = () => {};
+export const noop = () => { };
 
 export const throttle = <R, A extends unknown[]>(
   fn: (...args: A) => R,

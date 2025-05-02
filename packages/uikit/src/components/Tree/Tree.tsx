@@ -1,24 +1,48 @@
 import classNames from "classnames";
-import { ReactNode, RefObject, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { JSX, ReactNode, RefObject, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { Icon } from "../Icon/Icon";
 import { Typography } from "../Typography/Typography";
+import "./Tree.css";
+
+export type TreeItem = {
+  /** Unique key */
+  key: string;
+  /** Text to display */
+  label: ReactNode;
+  /** Nested tree items */
+  children?: TreeItem[];
+}
 
 export type TreeHandle = RefObject<HTMLDivElement | null> & {
+  /** Open all items */
   open: () => void;
+  /** Collapse all items */
   collapse: () => void;
 }
 
 export interface TreeProps {
-  className?: string;
-  defaultOpen?: boolean;
-  items: TreeItem[];
   ref?: RefObject<TreeHandle | null>;
-
+  className?: string;
+  /** Whether the tree is fully opened by default */
+  defaultOpen?: boolean;
+  /** Tree children */
+  items: TreeItem[];
+  /** Callback on tree item click */
   onClick?: (key: string) => void;
 };
 
+/**
+ * The `Tree` component renders a tree structure with expandable and collapsible items.
+ * It supports controlled and uncontrolled states for managing the open/closed state of the tree.
+ *
+ * @returns {JSX.Element} A tree structure with the provided items.
+ *
+ * @remarks
+ * - The `useImperativeHandle` hook exposes imperative methods (`open` and `collapse`) for controlling the tree state.
+ */
 export function Tree({
   items, className, onClick, ref, defaultOpen
-}: TreeProps) {
+}: TreeProps): JSX.Element {
   const divRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<boolean | undefined>(defaultOpen);
   const [counter, setCount] = useState(0);
@@ -45,18 +69,10 @@ export function Tree({
   );
 
   return (
-    <div ref={divRef} className={classNames('w-fit', className)} key={`tree-${counter}`}>
-      {items.map(item => (
-        <TreeItem key={item.key} item={item} onClick={onClick} defaultOpen={open} />
-      ))}
+    <div ref={divRef} className={classNames('Tree', className)} key={`tree-${counter}`}>
+      {items.map(item => <TreeItem key={item.key} item={item} onClick={onClick} defaultOpen={open} />)}
     </div>
   )
-}
-
-export type TreeItem = {
-  key: string;
-  label: ReactNode;
-  children?: TreeItem[];
 }
 
 interface TreeItemProps {
@@ -77,37 +93,34 @@ function TreeItem({ item, onClick, defaultOpen }: TreeItemProps) {
     onClick?.(item.key);
   };
 
-  const containerClasses = classNames(
-    'themedText flex items-center space-x-1 cursor-pointer w-fit px-2 rounded-sm hover:underline underline-offset-4',
-    {
-      'ml-6': !hasChildren,
-    },
-  );
-  const childClasses = classNames(
-    'transition-all ml-0 opacity-0 h-0',
-    {
-      '-z-1': !open,
-      'ml-4 opacity-100 h-full z-10': open,
-    },
-  );
-  const svgClasses = classNames(
-    'size-5 transition-transform rotate-270',
-    {
-      'rotate-360': open,
-      'hidden': !hasChildren,
-      'fill-slate-600 dark:fill-slate-200': hasChildren,
-    },
-  );
-
   return (
-    <div data-testid="Tree" className="flex flex-col space-y-1">
-      <div className={containerClasses} onClickCapture={onClickItem}>
-        <svg className={svgClasses} viewBox="0 0 24 24">
-          <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
-        </svg>
-        <Typography type="text">{item.label}</Typography>
+    <div data-testid="Tree" className={classNames(
+      "Tree__item",
+      {
+        'Tree__content-single': !hasChildren,
+      },
+    )}>
+      <div className="Tree__content" onClickCapture={onClickItem}>
+        <Icon
+          type="Caret"
+          className={classNames(
+            'Tree__caret',
+            {
+              'Tree__caret--open': open,
+              'Tree__caret--single': !hasChildren,
+            },
+          )}
+        />
+        <Typography type="text" id={item.key}>{item.label}</Typography>
       </div>
-      <div className={childClasses} >
+      <div
+        className={classNames(
+          'Tree__label',
+          {
+            'Tree__label--open': open,
+          },
+        )}
+      >
         {item.children?.map(childItem => (
           <TreeItem key={childItem.key} item={childItem} onClick={onClick} defaultOpen={defaultOpen} />
         ))}

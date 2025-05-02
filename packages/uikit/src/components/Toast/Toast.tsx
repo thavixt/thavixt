@@ -20,7 +20,7 @@ const TOAST_COLORS: Record<ToastType, string> = {
 
 export type ToastType = 'info' | 'success' | 'warning';
 
-interface Toast {
+export interface Toast {
   /** If provided, override the previous Toast with the same key, restarting it's timer */
   id: string;
   /** 'info' | 'success' | 'warning' */
@@ -51,7 +51,7 @@ const ToastContext = createContext<ToastContextType>({
   side: 'right',
 });
 
-interface ToastProviderProps {
+export interface ToastProviderProps {
   /**
    * `left` | `right`
    */
