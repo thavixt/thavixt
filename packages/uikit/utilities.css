@@ -10,36 +10,36 @@
     - 24 unit = 96px
     - 32 unit = 128px
 
-    also: https://tailwind-to-css.vercel.app/
+    CSS conversion site: https://tailwind-to-css.vercel.app/
   */
   --scale: 4;
 
-  --white: rgb(245, 245, 245);
-  --black: rgb(25, 25, 25);
+  /*
+    colors from:
+    https://tailwindcss.com/docs/colors#default-color-palette-reference
+  */
 
-  --gray-1: rgb(220, 220, 220);
-  --gray-2: rgb(180, 180, 180);
-  --gray-3: rgb(120, 120, 120);
-  --gray-4: rgb(80, 80, 80);
-  --gray-5: rgb(40, 40, 40);
-  --slate-1: rgb(200, 221, 245);
-  --slate-2: rgb(148, 164, 189);
-  --slate-3: rgb(78, 102, 129);
-  --slate-4: rgb(40, 63, 88);
-  --slate-5: rgb(22, 40, 59);
+  --white: oklch(0.97 0 0); /* neutral-100 */
+  --black: oklch(0.269 0 0); /* neutral-800 */
+  --gray: oklch(0.928 0.006 264.531); /* gray-100 */
+  --gray-dark: oklch(0.373 0.034 259.733); /* grey-700 */
+  --slate: oklch(0.929 0.013 255.508); /* slate-200 */
+  --slate-dark: oklch(0.446 0.043 257.281); /* slate-600 */
 
-  --green-1: rgb(90, 223, 90);
-  --green-2: rgb(51, 180, 51);
-  --green-3: rgb(22, 143, 22);
-  --blue-1: rgb(162, 187, 255);
-  --blue-2: rgb(85, 141, 245);
-  --blue-3: rgb(11, 115, 201);
-  --indigo-1: rgb(113, 96, 241);
-  --indigo-2: rgb(65, 45, 219);
-  --indigo-3: rgb(69, 15, 170);
-  --red-1: rgb(243, 90, 98);
-  --red-2: rgb(228, 56, 65);
-  --red-3: rgb(189, 27, 35);
+  --lime: oklch(0.841 0.238 128.85); /* lime-400 */
+  --green: oklch(0.792 0.209 151.711); /* green-400 */
+  --emerald: oklch(0.696 0.17 162.48); /* emerald-500 */
+  --teal: oklch(0.511 0.096 186.391); /* teal-700 */
+
+  --sky: oklch(0.746 0.16 232.661); /* sky-400 */
+  --blue: oklch(0.623 0.214 259.815); /* blue-500 */
+  --indigo: oklch(0.673 0.182 276.935); /* indigo-400 */
+  --violet: oklch(0.606 0.25 292.717); /* violet-500 */
+
+  --yellow: oklch(0.852 0.199 91.936); /* yellow-400 */
+  --orange: oklch(0.75 0.183 55.934); /* orange-400 */
+  --red: oklch(0.637 0.237 25.331); /* red-500 */
+  --pink: oklch(0.592 0.249 0.584); /* pink-600 */
 }
 
 .themedText {

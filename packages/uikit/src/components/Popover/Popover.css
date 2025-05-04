@@ -3,8 +3,8 @@
 } */
 
 .Popover {
-  --bg: var(--white);
-  --shadow: var(--gray-2);
+  --bg: var(--gray);
+  --shadow: var(--gray);
   --offset: 12px;
 
   background: var(--bg);
@@ -17,8 +17,8 @@
   margin: 0;
 
   [data-theme=dark] & {
-    --bg: var(--black);
-    --shadow: var(--gray-5);
+    --bg: var(--gray-dark);
+    --shadow: var(--gray-dark);
   }
 
   .Popover__icon {
@@ -49,8 +49,9 @@
 }
 
 .Popover__item {
-  font-size: 14px;
   --hoverBg: var(--gray-1);
+
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: start;

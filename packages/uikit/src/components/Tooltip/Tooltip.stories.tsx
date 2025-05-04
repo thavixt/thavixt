@@ -17,7 +17,7 @@ const meta = {
   },
   args: {
     children: 'Hover me',
-    Tooltip: 'just about anything goes here i guess ¯\\_(ツ)_/¯',
+    tooltip: 'just about anything goes here i guess ¯\\_(ツ)_/¯',
     position: 'bottom',
     visible: false,
   },
@@ -39,7 +39,7 @@ export const Default: Story = {};
 export const AlwaysVisible: Story = {
   args: {
     visible: true,
-    Tooltip: (side) => (
+    tooltip: (side) => (
       <>
         <Icon
           type="Arrow"

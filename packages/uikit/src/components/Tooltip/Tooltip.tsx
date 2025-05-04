@@ -8,15 +8,16 @@ import "./Tooltip.css";
 type TooltipPosition = 'left' | 'right' | 'top' | 'bottom';
 
 interface TooltipProps extends CommonProps {
-  Tooltip: ReactNode | ((position: TooltipPosition) => ReactNode)
+  tooltip: ReactNode | ((position: TooltipPosition) => ReactNode)
   position?: TooltipPosition;
   visible?: boolean;
   className?: string;
+  tooltipClassName?: string;
 }
 
-export function Tooltip({ ref, className, children, Tooltip, position = 'bottom', visible }: TooltipProps) {
+export function Tooltip({ ref, className, tooltipClassName, children, tooltip: Tooltip, position = 'bottom', visible }: TooltipProps) {
   const TooltipClasses = classNames(
-    'Tooltip__content', className,
+    'Tooltip__content', tooltipClassName,
     visible && 'Tooltip__content--visible',
     position === 'top' && 'Tooltip__content--top',
     position === 'bottom' && 'Tooltip__content--bottom',
@@ -25,7 +26,7 @@ export function Tooltip({ ref, className, children, Tooltip, position = 'bottom'
   );
 
   return (
-    <div data-testid="Tooltip" ref={ref} className="Tooltip">
+    <div data-testid="Tooltip" ref={ref} className={classNames("Tooltip", className)}>
       <Typography type="text" className="Tooltip__target">
         {children}
       </Typography>

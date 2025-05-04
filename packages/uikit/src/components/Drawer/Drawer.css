@@ -45,9 +45,9 @@
     }
   }
 
-  background: var(--white);
+  background: var(--gray);
   [data-theme=dark] & {
-    background: var(--slate-5);
+    background: var(--gray-dark);
   }
 }
 

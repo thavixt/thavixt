@@ -1,7 +1,7 @@
 .Link {
-  --default: var(--blue-2);
-  --hover: var(--blue-1);
-  --visited: var(--indigo-3);
+  --default: var(--blue);
+  --hover: var(--blue);
+  --visited: var(--indigo);
   --current: var(--default);
 
   display: inline-flex;

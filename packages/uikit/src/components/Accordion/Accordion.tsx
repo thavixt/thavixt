@@ -3,6 +3,7 @@ import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from "
 import { CommonProps } from "../../common/commonProps";
 import { Icon } from "../Icon/Icon";
 import './Accordion.css';
+import { Typography } from "../Typography/Typography";
 
 export interface AccordionProps extends PropsWithChildren<CommonProps<HTMLDivElement>>, HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean;
@@ -71,7 +72,7 @@ export function AccordionBase({
           data-testid={open ? 'AccordionOpenTitle' : 'AccordionTitle'}
           className={open ? 'AccordionOpenTitle' : 'AccordionTitle'}
         >
-          {open ? openTitle ?? title : title}
+          <Typography type="text">{open ? openTitle ?? title : title}</Typography>
         </div>
       </div>
       <AccordionBody open={open}>{children}</AccordionBody>

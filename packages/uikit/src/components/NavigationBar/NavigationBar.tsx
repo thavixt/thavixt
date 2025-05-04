@@ -89,7 +89,7 @@ export function NavigationBar({
               isOpen && 'NavigationBar--navContainer-open',
             )}
           >
-            <div className="NavigationBar--navItem">
+            <div className="NavigationBar--navItemList">
               {navItems.map((item) => (
                 <Button
                   data-testid="NavigationBarListItem"

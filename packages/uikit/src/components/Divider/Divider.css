@@ -3,9 +3,9 @@
   border-radius: 0.5rem;
   color: transparent;
 
-  background-color: var(--gray-1);
+  background-color: var(--gray);
   [data-theme=dark] & {
-    background-color: var(--gray-3);
+    background-color: var(--slate-dark);
   }
 
   &.Divider--vertical {

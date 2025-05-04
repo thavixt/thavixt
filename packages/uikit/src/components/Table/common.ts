@@ -25,7 +25,7 @@ export const CHECK_COL_CLASSES = 'Table__checkCol'
 export const SCROLLCONTAINER_CLASSES_DATATABLE = 'Table__scrollcontainer Table__scrollcontainer--datatable';
 export const SCROLLCONTAINER_CLASSES = 'Table__scrollcontainer';
 
-export const TABLE_CLASSES_DATATABLE = 'Table';
+export const TABLE_CLASSES_DATATABLE = 'Table Table--full';
 export const TABLE_CLASSES = 'Table Table--full';
 export const TABLE_CONTAINER_CLASSES = 'Table__container';
 export const TABLE_ROW_HEIGHT = 44; // 4 * 11

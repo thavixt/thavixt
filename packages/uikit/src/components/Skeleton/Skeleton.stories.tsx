@@ -27,15 +27,15 @@ export const Variants = {
   render: function StoryComponent() {
     return (
       <div className='grid grid-cols-[1fr_3fr] gap-4'>
-        SkeletonListItem
+        <Typography>SkeletonListItem</Typography>
         <SkeletonListItem />
-        SkeletonCircle
+        <Typography>SkeletonCircle</Typography>
         <SkeletonCircle />
-        SkeletonRectangle
+        <Typography>SkeletonRectangle</Typography>
         <SkeletonRectangle />
-        SkeletonRow
+        <Typography>SkeletonRow</Typography>
         <SkeletonRow />
-        SkeletonSquare
+        <Typography>SkeletonSquare</Typography>
         <SkeletonSquare />
       </div>
     )

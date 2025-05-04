@@ -42,7 +42,7 @@
   }
 
   [data-theme=dark] & {
-    background: var(--slate-5);
+    background: var(--gray-dark);
   }
 }
 

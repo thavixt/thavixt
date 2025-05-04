@@ -12,12 +12,12 @@
   place-self: center;
 
   background: var(--white);
-  border: 1px solid var(--gray-2);
+  border: 1px solid var(--gray);
   border-radius: 8px;
 
   [data-theme=dark] & {
-    background: var(--gray-4);
-    border: 1px solid var(--gray-5);
+    background: var(--gray-dark);
+    border: 1px solid var(--slate-dark);
   }
 
   container-type: inline-size;
@@ -98,12 +98,12 @@
   opacity: 0;
 
   background: var(--white);
-  border: 1px solid var(--gray-2);
+  border: 1px solid var(--gray);
   border-radius: 8px;
 
   [data-theme=dark] & {
-    background: var(--gray-4);
-    border: 1px solid var(--gray-5);
+    background: var(--gray-dark);
+    border: 1px solid var(--slate-dark);
   }
 
   &.NavigationBar--navContainer-open {
@@ -111,15 +111,13 @@
   }
 }
 
-.NavigationBar--navItem {
+.NavigationBar--navItemList {
   display: flex;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 0.25rem  0.5rem;
   margin-top: 0.25rem;
   flex-direction: column;
   align-items: flex-end;
+  gap: 4px;
 
   & .Button {
     white-space: nowrap;

@@ -17,19 +17,19 @@ type TypographyVariant =
   "code";
 
 export type TypographyProps<T = HTMLElement> = CommonProps<T> & HTMLAttributes<T> & {
-  type: TypographyVariant;
+  type?: TypographyVariant;
 } & (
-    ({ type: 'h1' }) |
-    ({ type: 'h2' }) |
-    ({ type: 'title' }) |
-    ({ type: 'subtitle' }) |
-    ({ type: 'caption' }) |
-    ({ type: 'body' }) |
-    ({ type: 'body2' }) |
-    ({ type: 'text' }) |
-    ({ type: 'label' } & LabelHTMLAttributes<T>) |
-    ({ type: 'button' }) |
-    ({ type: 'code' })
+    ({ type?: 'h1' }) |
+    ({ type?: 'h2' }) |
+    ({ type?: 'title' }) |
+    ({ type?: 'subtitle' }) |
+    ({ type?: 'caption' }) |
+    ({ type?: 'body' }) |
+    ({ type?: 'body2' }) |
+    ({ type?: 'text' }) |
+    ({ type?: 'label' } & LabelHTMLAttributes<T>) |
+    ({ type?: 'button' }) |
+    ({ type?: 'code' })
   );
 
 export function Typography({

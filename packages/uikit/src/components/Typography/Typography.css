@@ -69,11 +69,11 @@
     padding: 0 0.25rem;
     border-radius: 4px;
     color: var(--white);
-    background: var(--slate-3);
+    background: var(--slate-dark);
     
     [data-theme=dark] & {
-      color: var(--slate-4);
-      background: var(--gray-1);
+      color: var(--gray-dark);
+      background: var(--slate);
     }
   }
 
@@ -81,7 +81,7 @@
     display: inline-flex;
     font-size: 0.875rem;
     font-weight: 600;
-    text-transform: uppercase;
+    text-transform: capitalize;
   }
 
   display: block;

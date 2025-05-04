@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Popover } from './Popover';
 import { fn } from '@storybook/test';
 import { Button } from '../Button/Button';
+import { Typography } from '../Typography/Typography';
 import { userEvent, within, expect } from '@storybook/test';
 import { sleep } from '../../common/utils';
 
@@ -35,7 +36,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    target: "Click here for a dropdown menu",
+    target: (
+      <Typography type='caption'>Click here for a dropdown menu</Typography>
+    ),
     onClick: fn(),
     children: [
       <Popover.Item id="1">Option 1</Popover.Item>,

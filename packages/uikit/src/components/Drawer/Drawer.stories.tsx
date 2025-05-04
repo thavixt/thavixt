@@ -7,12 +7,12 @@ import { Divider } from '../Divider/Divider';
 import { ButtonBar } from '../ButtonBar/ButtonBar';
 import { Link } from '../Link/Link';
 import { ComponentProps, useState } from 'react';
-import { SkeletonListItem, SkeletonRectangle, SkeletonRow } from '../Skeleton/Skeleton';
+import { SkeletonListItem, SkeletonRow } from '../Skeleton/Skeleton';
 import classNames from 'classnames';
 import { fn, userEvent, within, expect } from '@storybook/test';
 import { sleep } from '../../common/utils';
 
-const listItemCount = 2;
+const listItemCount = 5;
 
 const meta = {
   title: 'Layout/Drawer',
@@ -43,16 +43,10 @@ const meta = {
       <>
         <Typography type="subtitle">Sidebar</Typography>
         <div className="flex flex-col space-y-4">
-          <SkeletonRow />
           <SkeletonListItem />
           <SkeletonRow />
           <SkeletonRow />
           <SkeletonRow />
-          <SkeletonListItem />
-          <SkeletonRow />
-          <SkeletonRow />
-          <SkeletonRow />
-          <SkeletonRectangle />
         </div>
         <Divider />
         <Scrollbar>
@@ -93,11 +87,7 @@ const meta = {
                 <Typography type="caption" id={`link${i + 1}`}>
                   List item #{i + 1}
                 </Typography>
-                <div className="flex flex-col space-y-4">
-                  <SkeletonListItem />
-                  <SkeletonListItem />
-                  <SkeletonListItem />
-                </div>
+                <SkeletonListItem />
               </div>
             ))}
           </div>

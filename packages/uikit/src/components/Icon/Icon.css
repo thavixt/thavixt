@@ -12,8 +12,8 @@
 }
 
 .Icon {
-  color: var(--slate-4);
+  color: var(--slate-dark);
   [data-theme=dark] & {
-    color: var(--slate-1);
+    color: var(--slate);
   }
 }
